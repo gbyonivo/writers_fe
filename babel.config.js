@@ -4,7 +4,6 @@ module.exports = function (api) {
     presets: ['babel-preset-expo'],
     plugins: [
       'transform-inline-environment-variables',
-      'expo-router/babel',
       [
         '@tamagui/babel-plugin',
         {
