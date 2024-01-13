@@ -4,15 +4,22 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
 
 import login from './slices/login'
+import settings from './slices/settings'
 
 const loginPersistConfig = {
   key: 'login',
   storage: AsyncStorage,
 }
 
+const settingsPersistConfig = {
+  key: 'settings',
+  storage: AsyncStorage,
+}
+
 export const createStore = () => {
   const reducer = combineReducers({
     login: persistReducer(loginPersistConfig, login),
+    settings: persistReducer(settingsPersistConfig, settings),
   })
   const store = configureStore({
     reducer,

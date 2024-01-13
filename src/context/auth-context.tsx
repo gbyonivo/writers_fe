@@ -40,7 +40,6 @@ function AuthContextProvider({ children }) {
     if (userId) {
       router.replace('/(tabs)')
     } else {
-      console.log('struggles')
       router.replace('/(auth)/sign-in')
     }
   }, [userId])

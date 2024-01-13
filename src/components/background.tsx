@@ -10,7 +10,7 @@ export function Background({ children }: Props) {
   const { colors } = useTheme()
   return (
     <SafeAreaView
-      style={[styles.backgound, { backgroundColor: colors.onTertiary }]}
+      style={[styles.backgound, { backgroundColor: colors.background }]}
     >
       {children}
     </SafeAreaView>
