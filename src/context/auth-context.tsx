@@ -1,15 +1,16 @@
+import { router } from 'expo-router'
 import PropTypes from 'prop-types'
 import React, { useEffect, useMemo } from 'react'
-import { User } from 'writers_shared'
-import { AppState } from '../types/states/AppState'
 import { useSelector } from 'react-redux'
-import { router, useNavigation, useRootNavigationState } from 'expo-router'
-import { useAuth } from '../hooks/useAuth'
+import { User } from 'writers_shared'
+
+import { useAuth } from '../hooks/use-auth'
+import { useProtectedRoute } from '../hooks/use-protected-route'
+import { AppState } from '../types/states/AppState'
 import {
   AuthenticateParams,
   AuthenticateReturn,
 } from '../types/states/LoginState'
-import { useProtectedRoute } from '../hooks/useProtectedRoute'
 
 interface IAuthContext {
   user: User
@@ -52,7 +53,6 @@ function AuthContextProvider({ children }) {
     }),
     [user],
   )
-  if (!user?.id) return null
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 

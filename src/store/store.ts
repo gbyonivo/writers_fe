@@ -1,7 +1,8 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { persistStore, persistReducer } from 'redux-persist'
 import { composeWithDevTools } from '@redux-devtools/extension'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { persistStore, persistReducer } from 'redux-persist'
+
 import login from './slices/login'
 
 const loginPersistConfig = {

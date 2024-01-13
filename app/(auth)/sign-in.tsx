@@ -1,11 +1,12 @@
+import { useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, HelperText, Text } from 'react-native-paper'
-import { useRef, useState } from 'react'
 import PhoneInput from 'react-native-phone-number-input'
-import { Background } from '../../src/components/background'
 import { useDispatch } from 'react-redux'
-import { addUser } from '../../src/store/slices/login'
+
+import { Background } from '../../src/components/background'
 import { useAuthContext } from '../../src/context/auth-context'
+import { addUser } from '../../src/store/slices/login'
 import {
   AddUserParams,
   LoginAttemptStatus,

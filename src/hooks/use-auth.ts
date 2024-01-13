@@ -1,12 +1,13 @@
-import jwtDecode from 'jwt-decode'
 import axios from 'axios'
+import jwtDecode from 'jwt-decode'
+import { useDispatch } from 'react-redux'
+
+import { removeUser } from '../store/slices/login'
 import {
   AuthenticateReturn,
   LoginAttemptStatus,
   UseAuthReturn,
 } from '../types/states/LoginState'
-import { useDispatch } from 'react-redux'
-import { removeUser } from '../store/slices/login'
 
 export const useAuth = (): UseAuthReturn => {
   const dispatch = useDispatch()
