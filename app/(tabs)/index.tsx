@@ -1,10 +1,11 @@
-import { Background } from '../../src/components/background'
 import { Text } from 'react-native-paper'
+
+import { WriterBackground } from '../../src/components/writer-background'
 
 export default function Profile() {
   return (
-    <Background>
-      <Text>Index rab off</Text>
-    </Background>
+    <WriterBackground>
+      <Text>Index rab ofsssfsss</Text>
+    </WriterBackground>
   )
 }

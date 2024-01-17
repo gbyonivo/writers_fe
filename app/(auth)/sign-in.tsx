@@ -1,10 +1,13 @@
-import { useRef, useState } from 'react'
+import { SplashScreen, router } from 'expo-router'
+import { useEffect, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Button, HelperText, Text } from 'react-native-paper'
+import { HelperText, Text } from 'react-native-paper'
 import PhoneInput from 'react-native-phone-number-input'
 import { useDispatch } from 'react-redux'
 
-import { Background } from '../../src/components/background'
+import { WriterBackground } from '../../src/components/writer-background'
+import { WriterButton } from '../../src/components/writer-button'
+import { WriterHeader } from '../../src/components/writer-header'
 import { useAuthContext } from '../../src/context/auth-context'
 import { addUser } from '../../src/store/slices/login'
 import {
@@ -13,7 +16,7 @@ import {
 } from '../../src/types/states/LoginState'
 
 export default function Index() {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState('743522334')
   const [formattedValue, setFormattedValue] = useState('')
   const [message, setMessage] = useState<string | null>(null)
   const phoneInput = useRef<PhoneInput>(null)
@@ -27,10 +30,13 @@ export default function Index() {
       isValidNumber: phoneInput.current?.isValidNumber,
     })
 
+    console.log(status)
+
     if (status === LoginAttemptStatus.SUCCESS) {
       dispatch(addUser(userAndToken as AddUserParams))
     } else if (status === LoginAttemptStatus.NOT_FOUND) {
-      console.log('Go to registration', formattedPhone)
+      console.log('Go to registrations', formattedPhone)
+      router.replace(`/sign-up/${formattedPhone}`)
     } else if (status === LoginAttemptStatus.INVALID_NUMBER) {
       setMessage('Your number is invalid')
     } else {
@@ -38,12 +44,14 @@ export default function Index() {
     }
   }
 
+  useEffect(() => {
+    SplashScreen.hideAsync()
+  }, [])
+
   return (
-    <Background>
+    <WriterBackground>
       <>
-        <Text variant="displayMedium" style={styles.appName}>
-          Writers
-        </Text>
+        <WriterHeader style={styles.appHeaderContainer} />
         <Text variant="bodyLarge" style={styles.appDescription}>
           Enter your number to start writing
         </Text>
@@ -74,29 +82,27 @@ export default function Index() {
         </HelperText>
 
         <View style={styles.buttonContainer}>
-          <Button
+          <WriterButton
             icon="script"
-            mode="outlined"
             onPress={verifyNumber}
             style={styles.button}
+            disabled={!formattedValue}
           >
             Verify
-          </Button>
+          </WriterButton>
         </View>
       </>
-    </Background>
+    </WriterBackground>
   )
 }
 
 const styles = StyleSheet.create({
-  appName: {
-    marginBottom: 16,
-    textAlign: 'center',
-    marginTop: 64,
+  appHeaderContainer: {
+    marginVertical: 64,
   },
   appDescription: {
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: 8,
   },
   phoneInput: {
     marginTop: 24,
@@ -119,7 +125,8 @@ const styles = StyleSheet.create({
     width: 128,
   },
   buttonContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-end',
     width: '100%',
+    paddingHorizontal: 40,
   },
 })

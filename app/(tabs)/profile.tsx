@@ -1,7 +1,8 @@
-import { Background } from '../../src/components/background'
-import { Button } from 'react-native-paper'
-import { useAuthContext } from '../../src/context/auth-context'
 import { StyleSheet } from 'react-native'
+import { Button } from 'react-native-paper'
+
+import { WriterBackground } from '../../src/components/writer-background'
+import { useAuthContext } from '../../src/context/auth-context'
 import { useUser } from '../../src/hooks/apollo/use-user'
 
 export default function Profile() {
@@ -9,16 +10,16 @@ export default function Profile() {
   const { loading, user, error } = useUser(loggedInUser?.id)
   console.log(loading, error, user)
   return (
-    <Background>
+    <WriterBackground>
       <Button
         icon="logout"
         mode="outlined"
         onPress={logout}
         style={styles.button}
       >
-        Log out
+        Log outffff
       </Button>
-    </Background>
+    </WriterBackground>
   )
 }
 

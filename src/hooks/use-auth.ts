@@ -36,6 +36,7 @@ export const useAuth = (): UseAuthReturn => {
           formattedPhone: formattedValue,
         }
       }
+      console.log(e)
       return { status: LoginAttemptStatus.FAILED }
     }
   }

@@ -14,7 +14,7 @@ export const useProtectedRoute = (user: User) => {
     const inAuthGroup = segments[0] === '(auth)'
 
     if (!user?.id && !inAuthGroup) {
-      router.replace('/(auth)/login')
+      router.replace('/(auth)/sign-in')
       setHasNavigated(true)
     } else if (user?.id && inAuthGroup) {
       router.replace('/(tabs)')
