@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import { useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import jwtDecode from 'jwt-decode'
-import React, { useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { HelperText, Text, TextInput } from 'react-native-paper'
+import { MD3Colors, ProgressBar, TextInput } from 'react-native-paper'
 import {
   DatePickerInput,
   enGB,
@@ -13,20 +13,31 @@ import {
 import { useDispatch } from 'react-redux'
 import { User, userSchema } from 'writers_shared/dist/index'
 
+import { AnimatedPager } from '../../../src/components/page-scroller'
+import { PageContainer } from '../../../src/components/profile/page-container'
 import { WriterBackground } from '../../../src/components/writer-background'
-import { WriterButton } from '../../../src/components/writer-button'
-import { WriterHeader } from '../../../src/components/writer-header'
+import { WriterIconButton } from '../../../src/components/writer-icon-button'
+import { WriterText } from '../../../src/components/writer-text'
 import { addUser } from '../../../src/store/slices/login'
 import { DATE_FORMATS } from '../../../src/utils/date'
+import { handleAppErrors } from '../../../src/utils/errors'
 
 registerTranslation('en-GB', enGB)
 
+type ScreenName = keyof User
+
+const screenNames: ScreenName[] = ['name', 'email', 'dob']
+
 export default function () {
+  const pagerViewRef = useRef(null)
   const { phone } = useLocalSearchParams()
+  const [pageIndex, setPageIndex] = useState(0)
   const [user, setUser] = useState<Partial<User>>({})
   const [date, setDate] = useState<Date>()
   const [errorMessage, setErrorMessage] = useState<string | null>('')
-  const [errors, setErrors] = useState<any>({})
+  const [token, setToken] = useState<null | string>(null)
+  const [submittingForm, setSubmittingForm] = useState(false)
+  const showHeader = [0, 1, 2].includes(pageIndex) && !token
   const dispatch = useDispatch()
 
   const onChange = (value: string, key: keyof User) => {
@@ -34,82 +45,152 @@ export default function () {
       ...user,
       [key]: value,
     })
+    setErrorMessage('')
   }
 
+  const createdUser = useMemo(
+    () => ({
+      ...user,
+      phone: phone as string,
+      dob: date ? format(date, DATE_FORMATS.BIRTHDAY) : '',
+    }),
+    [phone, user, date],
+  )
+
   const onSubmit = async () => {
+    await userSchema.validateSyncAt(screenNames[pageIndex], createdUser)
+    setSubmittingForm(true)
     try {
-      const createdUser = {
-        ...user,
-        phone: phone as string,
-        dob: format(date, DATE_FORMATS.BIRTHDAY),
-      }
-      console.log(createdUser)
-      await userSchema.validate(createdUser)
-      const { data: token } = await axios.post(
+      const { data } = await axios.post(
         `http://localhost:4000/user`,
         createdUser,
       )
-      dispatch(addUser({ user: jwtDecode(token), token }))
+      setToken(data)
+      pagerViewRef.current.setPage(pageIndex + 1)
+      setSubmittingForm(false)
     } catch (e) {
-      console.log('hello', e)
-      setErrors(e)
-      setErrorMessage('We encountered an issue. Please try again later')
+      setErrorMessage(handleAppErrors(e, true))
+    }
+  }
+
+  const onComplete = () => {
+    dispatch(addUser({ user: jwtDecode(token), token }))
+  }
+
+  const onPressContinue = async () => {
+    try {
+      await userSchema.validateSyncAt(screenNames[pageIndex], createdUser)
+      pagerViewRef.current.setPage(pageIndex + 1)
+    } catch (e) {
+      setErrorMessage(handleAppErrors(e, true))
+    }
+  }
+
+  const onPressBack = () => {
+    if (pageIndex > 0) {
+      pagerViewRef.current.setPage(pageIndex - 1)
+      return
+    }
+    if (router.canGoBack()) {
+      router.back()
     }
   }
 
   return (
     <WriterBackground style={styles.container}>
       <>
-        <WriterHeader style={styles.appHeaderContainer} />
-        <Text variant="headlineSmall" style={styles.phoneContainer}>
-          {phone}
-        </Text>
-        <View style={styles.formContainer}>
-          <View style={styles.formElement}>
-            <TextInput
-              label="Email"
-              value={user.email}
-              onChangeText={(value) => onChange(value, 'email')}
-              mode="outlined"
-              error={!!errors?.email}
+        {showHeader && (
+          <View style={styles.headerContainer}>
+            <WriterIconButton
+              icon="keyboard-backspace"
+              onPress={onPressBack}
+              style={{ marginRight: 8 }}
+              disabled={submittingForm}
             />
+            <View style={{ flex: 1, paddingTop: 24 }}>
+              <ProgressBar
+                progress={(pageIndex + 1) / 4}
+                color={MD3Colors.primary40}
+              />
+            </View>
           </View>
-          <View style={styles.formElement}>
-            <TextInput
-              label="Name"
-              value={user.name}
-              onChangeText={(value) => onChange(value, 'name')}
-              mode="outlined"
-            />
+        )}
+        <AnimatedPager
+          style={styles.pagerView}
+          initialPage={0}
+          ref={pagerViewRef}
+          onPageSelected={(e) => setPageIndex(e.nativeEvent.position)}
+          scrollEnabled={false}
+        >
+          <View key={0} style={styles.formElement}>
+            <PageContainer
+              label=" What's your name so we know what to call you?"
+              onPress={onPressContinue}
+              error={errorMessage}
+            >
+              <TextInput
+                label="Name"
+                value={user.name}
+                onChangeText={(value) => onChange(value, 'name')}
+                mode="outlined"
+              />
+            </PageContainer>
           </View>
-          <View style={styles.formElementDate}>
-            <DatePickerInput
-              locale="en"
-              label="Date of Birth"
-              value={date}
-              onChange={(d) => setDate(d)}
-              inputMode="start"
-              style={styles.datePicker}
-              mode="outlined"
-            />
+          <View key={1} style={styles.formElement}>
+            <PageContainer
+              label="What's your Email?"
+              onPress={onPressContinue}
+              error={errorMessage}
+            >
+              <TextInput
+                label="Email"
+                value={user.email}
+                onChangeText={(value) => onChange(value, 'email')}
+                mode="outlined"
+              />
+            </PageContainer>
           </View>
-        </View>
-        <HelperText type="error" visible={!!errorMessage} style={styles.error}>
-          {errorMessage}
-        </HelperText>
-        <View style={styles.buttonContainer}>
-          <WriterButton onPress={onSubmit} style={styles.button}>
-            Join
-          </WriterButton>
-        </View>
+          <View key={3} style={styles.formElement}>
+            <PageContainer
+              label="Tell us you date of birth so we can send you cards"
+              onPress={onSubmit}
+              error={errorMessage}
+              buttonLabel="Join AiitPoet"
+            >
+              <View>
+                <DatePickerInput
+                  locale="en"
+                  label="Date of Birth"
+                  value={date}
+                  onChange={(d) => setDate(d)}
+                  inputMode="start"
+                  style={styles.datePicker}
+                  mode="outlined"
+                />
+              </View>
+            </PageContainer>
+          </View>
+          <View key={4} style={styles.formElement}>
+            <PageContainer
+              label="Tell us you date of birth so we can send you cards"
+              onPress={onComplete}
+              buttonLabel="Start"
+              buttonDisabled={submittingForm}
+            >
+              <WriterText>Welcome Buddy</WriterText>
+            </PageContainer>
+          </View>
+        </AnimatedPager>
       </>
     </WriterBackground>
   )
 }
 
 const styles = StyleSheet.create({
-  appHeaderContainer: {
+  headerContainer: {
     marginVertical: 16,
+    flexDirection: 'row',
+    paddingHorizontal: 16,
   },
   container: {
     paddingTop: 8,
@@ -119,9 +200,7 @@ const styles = StyleSheet.create({
   },
   formElement: {
     marginVertical: 8,
-  },
-  formElementDate: {
-    marginTop: 32,
+    paddingHorizontal: 24,
   },
   phoneContainer: {
     textAlign: 'center',
@@ -138,8 +217,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginTop: 24,
   },
-  error: {
-    marginTop: 32,
-    paddingHorizontal: 16,
+  pagerView: {
+    flex: 1,
   },
 })

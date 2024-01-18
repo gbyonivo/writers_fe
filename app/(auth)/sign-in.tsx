@@ -1,13 +1,14 @@
 import { SplashScreen, router } from 'expo-router'
 import { useEffect, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { HelperText, Text } from 'react-native-paper'
+import { HelperText } from 'react-native-paper'
 import PhoneInput from 'react-native-phone-number-input'
 import { useDispatch } from 'react-redux'
 
 import { WriterBackground } from '../../src/components/writer-background'
 import { WriterButton } from '../../src/components/writer-button'
 import { WriterHeader } from '../../src/components/writer-header'
+import { WriterText } from '../../src/components/writer-text'
 import { useAuthContext } from '../../src/context/auth-context'
 import { addUser } from '../../src/store/slices/login'
 import {
@@ -30,13 +31,10 @@ export default function Index() {
       isValidNumber: phoneInput.current?.isValidNumber,
     })
 
-    console.log(status)
-
     if (status === LoginAttemptStatus.SUCCESS) {
       dispatch(addUser(userAndToken as AddUserParams))
     } else if (status === LoginAttemptStatus.NOT_FOUND) {
-      console.log('Go to registrations', formattedPhone)
-      router.replace(`/sign-up/${formattedPhone}`)
+      router.push(`/sign-up/${formattedPhone}`)
     } else if (status === LoginAttemptStatus.INVALID_NUMBER) {
       setMessage('Your number is invalid')
     } else {
@@ -52,9 +50,9 @@ export default function Index() {
     <WriterBackground>
       <>
         <WriterHeader style={styles.appHeaderContainer} />
-        <Text variant="bodyLarge" style={styles.appDescription}>
+        <WriterText variant="bodyLarge" style={styles.appDescription}>
           Enter your number to start writing
-        </Text>
+        </WriterText>
         <View style={styles.phoneInput}>
           <PhoneInput
             ref={phoneInput}

@@ -1,6 +1,8 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { Text } from 'react-native-paper'
 
+import { WriterText } from './writer-text'
+
 interface Props {
   style?: StyleProp<ViewStyle>
 }
@@ -8,12 +10,12 @@ interface Props {
 export const WriterHeader = ({ style }: Props) => {
   return (
     <View style={style}>
-      <Text variant="displayMedium" style={styles.appName}>
+      <WriterText variant="displayMedium" style={styles.appName}>
         AiitPoet
-      </Text>
-      <Text variant="labelSmall" style={styles.appSlogan}>
+      </WriterText>
+      <WriterText variant="labelSmall" style={styles.appSlogan}>
         Aiit Poet, take it easy!
-      </Text>
+      </WriterText>
     </View>
   )
 }

@@ -42,7 +42,7 @@ function SelectedColorSchemeContextProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      theme: theme || 'dark',
+      theme: theme || 'light',
       removeTheme,
       selectTheme,
     }),
