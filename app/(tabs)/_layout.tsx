@@ -1,10 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'
-import { Link, Tabs } from 'expo-router'
-import { Button } from 'react-native'
+import { Tabs } from 'expo-router'
+import { useTheme } from 'react-native-paper'
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name']
   color: string
@@ -13,17 +10,24 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
+  const theme = useTheme()
   return (
-    <Tabs screenOptions={{}}>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: theme.colors.onBackground,
+        tabBarStyle: {
+          backgroundColor: theme.colors.background,
+        },
+        headerStyle: {
+          backgroundColor: theme.colors.background,
+        },
+        headerTintColor: theme.colors.onBackground,
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          headerRight: () => (
-            <Link asChild href={'/createTodo'}>
-              <Button title="Add" />
-            </Link>
-          ),
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />

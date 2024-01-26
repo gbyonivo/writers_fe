@@ -1,14 +1,14 @@
 import {
   ApolloClient,
-  createHttpLink,
-  InMemoryCache,
   ApolloProvider,
+  InMemoryCache,
+  createHttpLink,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { AppState } from '../types/states/AppState'
+import { AppState } from '../../types/states/AppState'
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000/graphql',

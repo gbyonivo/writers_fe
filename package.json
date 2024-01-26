@@ -40,7 +40,7 @@
     "react-native-vector-icons": "^10.0.3",
     "react-redux": "^9.0.4",
     "redux-persist": "^6.0.0",
-    "writers_shared": "^1.1.4"
+    "writers_shared": "^1.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -5,10 +5,10 @@ import { HelperText } from 'react-native-paper'
 import PhoneInput from 'react-native-phone-number-input'
 import { useDispatch } from 'react-redux'
 
-import { WriterBackground } from '../../src/components/writer-background'
-import { WriterButton } from '../../src/components/writer-button'
-import { WriterHeader } from '../../src/components/writer-header'
-import { WriterText } from '../../src/components/writer-text'
+import { WriterBackground } from '../../src/components/common/writer-background'
+import { WriterButton } from '../../src/components/common/writer-button'
+import { WriterHeader } from '../../src/components/common/writer-header'
+import { WriterText } from '../../src/components/common/writer-text'
 import { useAuthContext } from '../../src/context/auth-context'
 import { addUser } from '../../src/store/slices/login'
 import {
@@ -17,7 +17,7 @@ import {
 } from '../../src/types/states/LoginState'
 
 export default function Index() {
-  const [value, setValue] = useState('743522334')
+  const [value, setValue] = useState('743521334')
   const [formattedValue, setFormattedValue] = useState('')
   const [message, setMessage] = useState<string | null>(null)
   const phoneInput = useRef<PhoneInput>(null)

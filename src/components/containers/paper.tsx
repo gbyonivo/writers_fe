@@ -1,8 +1,8 @@
 import React from 'react'
 import { useColorScheme } from 'react-native'
-import { PaperProvider, MD3DarkTheme, MD3LightTheme } from 'react-native-paper'
+import { MD3DarkTheme, MD3LightTheme, PaperProvider } from 'react-native-paper'
 
-import { useSelectedColorSchemeContext } from '../context/selected-color-scheme-context'
+import { useSelectedColorSchemeContext } from '../../context/selected-color-scheme-context'
 
 interface Props {
   children: JSX.Element

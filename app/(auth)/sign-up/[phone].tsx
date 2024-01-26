@@ -13,11 +13,11 @@ import {
 import { useDispatch } from 'react-redux'
 import { User, userSchema } from 'writers_shared/dist/index'
 
-import { AnimatedPager } from '../../../src/components/page-scroller'
-import { PageContainer } from '../../../src/components/profile/page-container'
-import { WriterBackground } from '../../../src/components/writer-background'
-import { WriterIconButton } from '../../../src/components/writer-icon-button'
-import { WriterText } from '../../../src/components/writer-text'
+import { PageContainer } from '../../../src/components/account-setup/page-container'
+import { WriterBackground } from '../../../src/components/common/writer-background'
+import { WriterIconButton } from '../../../src/components/common/writer-icon-button'
+import { WriterText } from '../../../src/components/common/writer-text'
+import { AnimatedPager } from '../../../src/components/containers/page-scroller'
 import { addUser } from '../../../src/store/slices/login'
 import { DATE_FORMATS } from '../../../src/utils/date'
 import { handleAppErrors } from '../../../src/utils/errors'
@@ -26,7 +26,7 @@ registerTranslation('en-GB', enGB)
 
 type ScreenName = keyof User
 
-const screenNames: ScreenName[] = ['name', 'email', 'dob']
+const screenNames: ScreenName[] = ['name', 'username', 'email', 'dob']
 
 export default function () {
   const pagerViewRef = useRef(null)
@@ -37,7 +37,7 @@ export default function () {
   const [errorMessage, setErrorMessage] = useState<string | null>('')
   const [token, setToken] = useState<null | string>(null)
   const [submittingForm, setSubmittingForm] = useState(false)
-  const showHeader = [0, 1, 2].includes(pageIndex) && !token
+  const showHeader = [0, 1, 2, 3].includes(pageIndex) && !token
   const dispatch = useDispatch()
 
   const onChange = (value: string, key: keyof User) => {
@@ -109,7 +109,7 @@ export default function () {
             />
             <View style={{ flex: 1, paddingTop: 24 }}>
               <ProgressBar
-                progress={(pageIndex + 1) / 4}
+                progress={(pageIndex + 1) / 5}
                 color={MD3Colors.primary40}
               />
             </View>
@@ -124,7 +124,7 @@ export default function () {
         >
           <View key={0} style={styles.formElement}>
             <PageContainer
-              label=" What's your name so we know what to call you?"
+              label="What's your name so we know what to call you?"
               onPress={onPressContinue}
               error={errorMessage}
             >
@@ -137,6 +137,20 @@ export default function () {
             </PageContainer>
           </View>
           <View key={1} style={styles.formElement}>
+            <PageContainer
+              label="Pick a username"
+              onPress={onPressContinue}
+              error={errorMessage}
+            >
+              <TextInput
+                label="Username"
+                value={user.username}
+                onChangeText={(value) => onChange(value, 'username')}
+                mode="outlined"
+              />
+            </PageContainer>
+          </View>
+          <View key={2} style={styles.formElement}>
             <PageContainer
               label="What's your Email?"
               onPress={onPressContinue}
@@ -159,7 +173,7 @@ export default function () {
             >
               <View>
                 <DatePickerInput
-                  locale="en"
+                  locale="pl"
                   label="Date of Birth"
                   value={date}
                   onChange={(d) => setDate(d)}

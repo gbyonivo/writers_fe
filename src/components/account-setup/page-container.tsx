@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native'
 import { HelperText } from 'react-native-paper'
 
-import { WriterButton } from '../writer-button'
-import { WriterText } from '../writer-text'
+import { WriterButton } from '../common/writer-button'
+import { WriterText } from '../common/writer-text'
 
 interface Props {
   children: JSX.Element
