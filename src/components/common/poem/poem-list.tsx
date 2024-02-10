@@ -5,7 +5,6 @@ import { PoemItem } from './poem-item'
 
 export const PoemList = () => {
   const { poemIds } = usePoemListContext()
-  console.log(poemIds)
   return (
     <FlatList
       data={poemIds}

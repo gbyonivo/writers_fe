@@ -35,6 +35,5 @@ export const Apollo = ({ children }: Props) => {
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   })
-  console.log(token)
   return <ApolloProvider client={client}>{children}</ApolloProvider>
 }

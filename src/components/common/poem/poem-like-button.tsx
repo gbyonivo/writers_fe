@@ -30,7 +30,6 @@ export const PoemLikeButton = ({
     (state: AppState) => state.poem.likes[poemId],
   )
   const { colors } = useTheme()
-  console.log(useSelector((state: AppState) => state.poem.likes))
   const togglePoemLike = () => {
     dispatch(toggleLike({ poemId }))
   }

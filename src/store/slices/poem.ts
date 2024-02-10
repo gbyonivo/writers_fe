@@ -12,8 +12,11 @@ export const poemSlice = createSlice({
   initialState,
   reducers: {
     setLikes: (state, { payload }: PayloadAction<any | null>) => ({
-      ...payload,
       ...state,
+      likes: {
+        ...state.likes,
+        ...payload,
+      },
     }),
     toggleLike: (
       state,

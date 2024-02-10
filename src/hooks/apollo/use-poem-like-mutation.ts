@@ -10,7 +10,6 @@ export const usePoemLikeMutation = ({
 }: MutationHooKParams = {}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [action] = useMutation(LIKE_POEM)
-  console.log(loading)
 
   const likePoem = async (poemId: number) => {
     try {
