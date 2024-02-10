@@ -1,0 +1,73 @@
+import PropTypes from 'prop-types'
+import React, { useCallback, useMemo } from 'react'
+import { useDispatch } from 'react-redux'
+import { Poem } from 'writers_shared'
+
+import { usePoems } from '../hooks/apollo/use-poems'
+import { setLikes } from '../store/slices/poem'
+
+interface IPoemListContext {
+  getPoem: (poemId: number) => Poem | null
+  poemIds: number[]
+  loading: boolean
+  error: any | null
+}
+
+interface Props {
+  children: JSX.Element
+  userId?: number
+}
+
+export const PoemListContext = React.createContext<IPoemListContext>(
+  {} as IPoemListContext,
+)
+
+export function usePoemListContext(): IPoemListContext {
+  return React.useContext<IPoemListContext>(PoemListContext)
+}
+
+function PoemListContextProvider({ children, userId }: Props) {
+  const { loading, error, poems } = usePoems(userId)
+  const dispatch = useDispatch()
+  const poemMap = useMemo(() => {
+    let likes = {}
+    const map = (poems?.edges || []).reduce((acc, curr) => {
+      likes = {
+        ...likes,
+        [curr.node.id]: curr.node.hasBeenLiked,
+      }
+      return {
+        ...acc,
+        [curr.node.id]: curr.node,
+      }
+    }, {})
+    dispatch(setLikes(likes))
+    return map
+  }, [poems])
+  const poemIds = useMemo(() => Object.keys(poemMap), [poemMap])
+  const getPoem = useCallback(
+    (poemId: number) => poemMap[poemId] || null,
+    [poemMap],
+  )
+  const value = useMemo(
+    () => ({
+      getPoem,
+      poemIds,
+      loading,
+      error,
+    }),
+    [loading, error, poemIds, getPoem],
+  )
+  return (
+    // @ts-ignore
+    <PoemListContext.Provider value={value}>
+      {children}
+    </PoemListContext.Provider>
+  )
+}
+
+PoemListContextProvider.propTypes = {
+  children: PropTypes.any.isRequired,
+}
+
+export default PoemListContextProvider

@@ -8,6 +8,7 @@ interface Props {
   children: JSX.Element | string
   icon?: IconSource
   disabled?: boolean
+  textColor?: string
 }
 
 export const WriterButton = ({
@@ -16,6 +17,7 @@ export const WriterButton = ({
   children,
   icon,
   disabled,
+  textColor,
 }: Props) => {
   return (
     <Button
@@ -25,6 +27,7 @@ export const WriterButton = ({
       style={style}
       uppercase
       disabled={disabled}
+      textColor={textColor}
     >
       {children}
     </Button>

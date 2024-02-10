@@ -5,6 +5,10 @@ export const GET_USER = gql`
     user(id: $id) {
       name
       id
+      username
+      email
+      poemCount
+      stanzaCount
     }
   }
 `

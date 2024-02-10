@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { AddUserParams, LoginState } from '../../types/states/LoginState'
-import { SettingsState } from '../../types/states/SettingState'
 import { Theme } from '../../types/Theme'
+import { SettingsState } from '../../types/states/SettingState'
 
 const initialState: SettingsState = {
   theme: null,
