@@ -1,6 +1,13 @@
+import { Dimensions } from 'react-native'
+
 export const getInitials = (name: string) =>
   name
     .split(' ')
     .map((part) => part.substring(0, 1))
     .join('')
     .toUpperCase()
+
+export const getWidthByRatio = (ratio: number): number =>
+  Dimensions.get('screen').width * ratio
+export const getHeighByRatio = (ratio: number): number =>
+  Dimensions.get('screen').height * ratio

@@ -17,7 +17,7 @@ export const useProtectedRoute = (user: User) => {
       router.replace('/(auth)/sign-in')
       setHasNavigated(true)
     } else if (user?.id && inAuthGroup) {
-      router.replace('/(tabs)')
+      router.replace('/(tabs)/home')
       setHasNavigated(true)
     }
   }, [userId, segments, navigationState, hasNavigated])

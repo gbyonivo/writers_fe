@@ -23,18 +23,36 @@ export default function TabLayout() {
         },
         headerTintColor: theme.colors.onBackground,
       }}
+      backBehavior="history"
+      initialRouteName="home"
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <Tabs.Screen
+        name="new-poem"
+        options={{
+          title: 'Add New',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="plus-square" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: 'Search',
+          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="user-o" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
           title: 'Profile',
         }}
       />

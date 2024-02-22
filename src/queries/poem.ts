@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 
 import { PAGINATION_META } from './common'
+import { STANZA_DETAILS } from './stanza'
 
 const POEM_DETAILS = `
   title
@@ -27,6 +28,14 @@ export const GET_POEM = gql`
   query Poem($id: Int) {
     poem(id: $id) {
       ${POEM_DETAILS}
+    }
+  }
+`
+
+export const GET_POEM_STANZAS = gql`
+  query PoemStanzas($id: Int) {
+    poemStanzas(id: $id) {
+      ${STANZA_DETAILS}
     }
   }
 `
