@@ -2,16 +2,14 @@ import { gql } from '@apollo/client'
 
 import { PAGINATION_META } from './common'
 
-const STANZA_DETAILS = `
+export const STANZA_DETAILS = `
   detectedLanguage
   id
   createdAt
   updatedAt
-  statusLength
   aiAssisted
   content
   likes
-  stanzaId
   position
   userId
 `

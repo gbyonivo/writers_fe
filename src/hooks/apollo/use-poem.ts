@@ -3,8 +3,8 @@ import { Poem } from 'writers_shared'
 
 import { GET_POEM } from '../../queries/poem'
 
-export const usePoems = (poemId: number) => {
-  const { data, loading, error } = useQuery(GET_POEM, {
+export const usePoem = (poemId: number) => {
+  const { data, loading, error, refetch } = useQuery(GET_POEM, {
     variables: { id: poemId },
   })
 
@@ -13,5 +13,9 @@ export const usePoems = (poemId: number) => {
     loading,
     error,
     poem,
+    refetch: () => {
+      if (loading) return
+      refetch()
+    },
   }
 }

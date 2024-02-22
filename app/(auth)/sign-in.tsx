@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 
 import { WriterBackground } from '../../src/components/common/writer-background'
 import { WriterButton } from '../../src/components/common/writer-button'
-import { WriterHeader } from '../../src/components/common/writer-header'
+import { WriterLoginHeader } from '../../src/components/common/writer-login-header'
 import { WriterText } from '../../src/components/common/writer-text'
 import { useAuthContext } from '../../src/context/auth-context'
 import { addUser } from '../../src/store/slices/login'
@@ -49,7 +49,7 @@ export default function Index() {
   return (
     <WriterBackground>
       <>
-        <WriterHeader style={styles.appHeaderContainer} />
+        <WriterLoginHeader style={styles.appHeaderContainer} />
         <WriterText variant="bodyLarge" style={styles.appDescription}>
           Enter your number to start writing
         </WriterText>
