@@ -24,13 +24,14 @@ export const PoemItem = ({ poemId }: Props) => {
     borderBottomColor: theme.colors.backdrop,
   }
   const onPress = () => {
-    router.replace(`/poem/${poemId}?name=${poem?.title}`)
+    router.push(`/poem/${poemId}?name=${poem?.title}`)
   }
+
   if (!poem) return null
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.container, containerStyle]}>
-        <View style={styles.poemTitle}>
+        <View>
           <WriterText color={theme.colors.onSurfaceVariant} size={18}>
             {poem.title}
           </WriterText>
@@ -64,10 +65,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     marginVertical: 16,
     borderBottomWidth: 2,
-  },
-  poemTitle: {
-    flex: 1,
-    fontWeight: '500',
   },
   poemContent: {
     marginTop: 20,

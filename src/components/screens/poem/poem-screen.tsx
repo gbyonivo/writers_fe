@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router'
 import { StyleSheet, View } from 'react-native'
 import { RefreshControl, ScrollView } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
