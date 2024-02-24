@@ -29,9 +29,6 @@ function BottomSheetContextProvider({ children }) {
   const [bottomSheet, setBottomSheet] = useState<BottomSheet | null>(null)
   const [params, setParams] = useState<{ [key: string]: any } | null>(null)
 
-  const { testing } = useAuthContext()
-  console.log(testing)
-
   const selectBottomSheet = ({
     bottomSheet,
     params,

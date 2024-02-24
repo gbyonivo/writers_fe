@@ -18,11 +18,11 @@ export const LogoutBottomSheet = ({
   const theme = useTheme()
 
   const bottomSheetIndicator = {
-    backgroundColor: theme.colors.onBackground,
+    backgroundColor: theme.colors.background,
   }
 
   const bottomSheetStyle = {
-    backgroundColor: theme.colors.tertiaryContainer,
+    backgroundColor: theme.colors.primary,
   }
 
   return (
@@ -32,8 +32,13 @@ export const LogoutBottomSheet = ({
       onClose={onClose}
       backgroundStyle={bottomSheetStyle}
       enablePanDownToClose
-      backdropComponent={(backfdropProps) => (
-        <BottomSheetBackdrop {...backfdropProps} />
+      backdropComponent={(backdropProps) => (
+        <BottomSheetBackdrop
+          {...backdropProps}
+          disappearsOnIndex={-1}
+          enableTouchThrough
+          opacity={0.6}
+        />
       )}
     >
       <View style={[styles.contentContainer]}>

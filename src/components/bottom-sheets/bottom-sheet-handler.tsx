@@ -4,10 +4,6 @@ import { useBottomSheetContext } from '../../context/bottom-sheet-context'
 import { BottomSheet } from '../../types/bottom-sheet'
 import { LogoutBottomSheet } from './logout-bottom-sheet'
 
-const bottomSheetMap = {
-  [BottomSheet.LOGOUT]: LogoutBottomSheet,
-}
-
 export const BottomSheetHandler = () => {
   const { bottomSheet, resetBottomSheet, params } = useBottomSheetContext()
   let element = null
