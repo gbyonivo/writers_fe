@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useMemo, useState } from 'react'
 
 import { BottomSheet } from '../types/bottom-sheet'
+import { useAuthContext } from './auth-context'
 
 interface SelectBottomSheetParam {
   bottomSheet: BottomSheet
@@ -12,6 +13,7 @@ interface IBottomSheetContext {
   bottomSheet?: BottomSheet
   selectBottomSheet?: (value: SelectBottomSheetParam) => void
   resetBottomSheet?: () => void
+  params?: { [key: string]: any }
 }
 
 export const BottomSheetContext = React.createContext<IBottomSheetContext>(
@@ -26,6 +28,9 @@ export function useBottomSheetContext(): IBottomSheetContext {
 function BottomSheetContextProvider({ children }) {
   const [bottomSheet, setBottomSheet] = useState<BottomSheet | null>(null)
   const [params, setParams] = useState<{ [key: string]: any } | null>(null)
+
+  const { testing } = useAuthContext()
+  console.log(testing)
 
   const selectBottomSheet = ({
     bottomSheet,

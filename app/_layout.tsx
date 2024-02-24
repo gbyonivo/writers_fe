@@ -1,9 +1,11 @@
+import { PortalProvider } from '@gorhom/portal'
 import { Slot, SplashScreen } from 'expo-router'
 import { Suspense, useEffect } from 'react'
 import { Text } from 'react-native'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
+import { BottomSheetHandler } from '../src/components/bottom-sheets/bottom-sheet-handler'
 import { Apollo } from '../src/components/containers/apollo'
 import { Paper } from '../src/components/containers/paper'
 import AuthContextProvider from '../src/context/auth-context'
@@ -29,11 +31,16 @@ export default function AppLayout() {
           <Paper>
             <Suspense fallback={<Text>Loading...</Text>}>
               <AuthContextProvider>
-                <BottomSheetContextProvider>
-                  <Apollo>
-                    <Slot />
-                  </Apollo>
-                </BottomSheetContextProvider>
+                <PortalProvider>
+                  <BottomSheetContextProvider>
+                    <Apollo>
+                      <>
+                        <BottomSheetHandler />
+                        <Slot />
+                      </>
+                    </Apollo>
+                  </BottomSheetContextProvider>
+                </PortalProvider>
               </AuthContextProvider>
             </Suspense>
           </Paper>

@@ -1,6 +1,9 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
+import { useAuthContext } from '../../../context/auth-context'
+import { useBottomSheetContext } from '../../../context/bottom-sheet-context'
 import { useUser } from '../../../hooks/apollo/use-user'
+import { BottomSheet } from '../../../types/bottom-sheet'
 import { getInitials } from '../../../utils/common'
 import { WriterActivityIndicator } from '../../common/writer-activity-indicator'
 import { WriterAvatarText } from '../../common/writer-avatar-text'
@@ -8,18 +11,31 @@ import { WriterText } from '../../common/writer-text'
 
 interface Props {
   userId: number
-  openLogoutBottomSheet?: () => void
 }
 
-export const UserDetails = ({ userId, openLogoutBottomSheet }: Props) => {
+export const UserDetails = ({ userId }: Props) => {
   const { loading, user } = useUser(userId)
+  const { selectBottomSheet, resetBottomSheet } = useBottomSheetContext()
+  const { logout } = useAuthContext()
 
   return (
     <View style={[styles.avatarImageWrapper]}>
       {loading ? (
         <WriterActivityIndicator />
       ) : (
-        <TouchableOpacity onPress={openLogoutBottomSheet}>
+        <TouchableOpacity
+          onPress={() =>
+            selectBottomSheet({
+              bottomSheet: BottomSheet.LOGOUT,
+              params: {
+                onPressLogout: () => {
+                  logout()
+                  resetBottomSheet()
+                },
+              },
+            })
+          }
+        >
           <WriterAvatarText label={getInitials(user?.name || '')} size={64} />
         </TouchableOpacity>
       )}

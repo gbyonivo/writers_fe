@@ -1,41 +1,43 @@
-import BottomSheet from '@gorhom/bottom-sheet'
-import React, { useCallback, useMemo } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
+import React, { useMemo } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
-import { useAuthContext } from '../../context/auth-context'
 import { WriterButton } from '../common/writer-button'
 
-interface Props {
-  bottomSheetRef: any
+export interface LogoutBottomSheetProps {
+  onClose: () => void
+  onPressLogout: () => void
 }
 
-export const LogoutBottomSheet = ({ bottomSheetRef }: Props) => {
-  const snapPoints = useMemo(() => ['1%', '20%'], [])
+export const LogoutBottomSheet = ({
+  onClose,
+  onPressLogout,
+}: LogoutBottomSheetProps) => {
+  const snapPoints = useMemo(() => ['20%'], [])
   const theme = useTheme()
-  const { logout } = useAuthContext()
-
-  const bottomSheetBg = {
-    backgroundColor: theme.colors.background,
-  }
 
   const bottomSheetIndicator = {
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.colors.onBackground,
   }
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index)
-  }, [])
+  const bottomSheetStyle = {
+    backgroundColor: theme.colors.tertiaryContainer,
+  }
+
   return (
     <BottomSheet
-      ref={bottomSheetRef}
-      index={-1}
       snapPoints={snapPoints}
-      onChange={handleSheetChanges}
       handleIndicatorStyle={bottomSheetIndicator}
+      onClose={onClose}
+      backgroundStyle={bottomSheetStyle}
+      enablePanDownToClose
+      backdropComponent={(backfdropProps) => (
+        <BottomSheetBackdrop {...backfdropProps} />
+      )}
     >
-      <View style={[styles.contentContainer, bottomSheetBg]}>
-        <WriterButton onPress={logout}>Logout</WriterButton>
+      <View style={[styles.contentContainer]}>
+        <WriterButton onPress={onPressLogout}>Logout</WriterButton>
       </View>
     </BottomSheet>
   )
@@ -49,6 +51,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    padding: 16,
   },
 })

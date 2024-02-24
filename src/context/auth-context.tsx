@@ -16,6 +16,7 @@ interface IAuthContext {
   user: User
   login: (value: AuthenticateParams) => Promise<AuthenticateReturn>
   logout: () => void
+  testing: number
 }
 
 export const AuthContext = React.createContext<IAuthContext>({} as IAuthContext)
@@ -49,6 +50,7 @@ function AuthContextProvider({ children }) {
       user,
       login,
       logout,
+      testing: 8,
     }),
     [user],
   )
