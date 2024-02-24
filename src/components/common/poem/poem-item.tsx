@@ -5,7 +5,6 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
 import { usePoemListContext } from '../../../context/poem-list-context'
-import { WriterIconButton } from '../writer-icon-button'
 import { WriterText } from '../writer-text'
 import { PoemLikeButton } from './poem-like-button'
 

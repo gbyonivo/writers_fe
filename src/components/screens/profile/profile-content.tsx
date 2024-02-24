@@ -1,10 +1,7 @@
 /* eslint-disable import/order */
-import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet'
-import { useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import { useAuthContext } from '../../../context/auth-context'
-import { LogoutBottomSheet } from '../../bottom-sheets/logout-bottom-sheet'
 import { WriterBackground } from '../../common/writer-background'
 import { WriterButton } from '../../common/writer-button'
 import { UserDetails } from './user-details'
@@ -18,17 +15,12 @@ interface Props {
 export const ProfileContent = ({ userId, showLogout = false }: Props) => {
   const { logout, user: loggedInUser } = useAuthContext()
   const isLoggedInUserProfile = userId === loggedInUser?.id
-  const bottomSheetRef = useRef<BottomSheet>()
-  const openLogout = () => {
-    if (!bottomSheetRef.current) return
-    bottomSheetRef.current.expand()
-  }
   return (
     <WriterBackground style={{ flex: 1 }} isView>
       <>
         <View style={styles.container}>
           <View style={styles.detailsContainer}>
-            <UserDetails userId={userId} openLogoutBottomSheet={openLogout} />
+            <UserDetails userId={userId} />
           </View>
           <UserTabs />
           {showLogout && isLoggedInUserProfile && (
@@ -37,7 +29,6 @@ export const ProfileContent = ({ userId, showLogout = false }: Props) => {
             </WriterButton>
           )}
         </View>
-        <LogoutBottomSheet bottomSheetRef={bottomSheetRef} />
       </>
     </WriterBackground>
   )
