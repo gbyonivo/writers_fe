@@ -1,20 +1,23 @@
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
+import { Poem } from 'writers_shared'
 
-import { LIKE_POEM } from '../../queries/poem'
+import { CREATE_POEM } from '../../queries/poem'
 import { MutationHooKParams } from '../../types/mutation'
 
-export const usePoemLikeMutation = ({
+export const usePoemMutation = ({
   onSuccess,
   onFail,
 }: MutationHooKParams = {}) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [action] = useMutation(LIKE_POEM)
+  const [action] = useMutation(CREATE_POEM)
 
-  const likePoem = async (poemId: number) => {
+  const createPoem = async (poem: Partial<Poem>) => {
     try {
       setLoading(true)
-      const response = await action({ variables: { id: poemId } })
+      const response = await action({
+        variables: { ...poem, genre: 'Unknown' },
+      })
       setLoading(false)
       onSuccess && onSuccess(response)
     } catch (e) {
@@ -24,7 +27,7 @@ export const usePoemLikeMutation = ({
   }
 
   return {
-    likePoem,
+    createPoem,
     loading,
   }
 }

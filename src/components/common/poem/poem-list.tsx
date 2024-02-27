@@ -1,4 +1,5 @@
 import { FlatList, StyleSheet } from 'react-native'
+import { RefreshControl } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
 
 import { usePoemListContext } from '../../../context/poem-list-context'
@@ -6,7 +7,7 @@ import { PoemItem } from './poem-item'
 
 export const PoemList = () => {
   const theme = useTheme()
-  const { poemIds } = usePoemListContext()
+  const { poemIds, refetch, loading } = usePoemListContext()
   return (
     <FlatList
       data={poemIds}
@@ -15,12 +16,24 @@ export const PoemList = () => {
         styles.container,
         { backgroundColor: theme.colors.background },
       ]}
+      refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={refetch} />
+      }
+      style={{ backgroundColor: theme.colors.background }}
+      scrollsToTop={false}
+      initialNumToRender={5}
+      maxToRenderPerBatch={5}
+      windowSize={7}
+      onScroll={() => {}}
+      showsHorizontalScrollIndicator={false}
+      disableIntervalMomentum
+      pagingEnabled
     />
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 0,
   },
 })

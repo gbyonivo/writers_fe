@@ -1,5 +1,4 @@
 import { StyleSheet, View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
 import { Stanza } from 'writers_shared'
 
@@ -14,6 +13,10 @@ interface Props {
 export const StanzaLine = ({ stanzas }: Props) => {
   const renderItem = ({ item }: { item: Stanza }) => {
     return <StanzaItem stanza={item} containerStyle={styles.stanzaContainer} />
+  }
+
+  const onPressAdd = () => {
+    console.log('here we go')
   }
 
   return (

@@ -23,6 +23,7 @@ export const StanzaListForPoem = ({ poemId }: Props) => {
       stanzas={memoedStanza}
       refetch={refetchPoemStanzas}
       loading={loadingPoemStanzas}
+      poemId={poemId}
     />
   )
 }

@@ -58,3 +58,19 @@ export const LIKE_POEM = gql`
     likePoem(id: $id)
   }
 `
+
+export const CREATE_POEM = gql`
+  mutation CreatePoem(
+    $title: String
+    $genre: String
+    $firstStanza: FirstStanzaInput
+  ) {
+    createPoem(
+      title: $title
+      firstStanza: $firstStanza
+      genre: $genre
+    ) {
+      ${POEM_DETAILS}
+    }
+  }
+`

@@ -11,6 +11,7 @@ interface IPoemListContext {
   poemIds: number[]
   loading: boolean
   error: any | null
+  refetch: () => void
 }
 
 interface Props {
@@ -27,8 +28,9 @@ export function usePoemListContext(): IPoemListContext {
 }
 
 function PoemListContextProvider({ children, userId }: Props) {
-  const { loading, error, poems } = usePoems(userId)
+  const { loading, error, poems, refetch } = usePoems(userId)
   const dispatch = useDispatch()
+  const poemIds = []
   const poemMap = useMemo(() => {
     let likes = {}
     const map = (poems?.edges || []).reduce((acc, curr) => {
@@ -36,6 +38,7 @@ function PoemListContextProvider({ children, userId }: Props) {
         ...likes,
         [curr.node.id]: curr.node.hasBeenLiked,
       }
+      poemIds.push(curr.node.id)
       return {
         ...acc,
         [curr.node.id]: curr.node,
@@ -44,7 +47,6 @@ function PoemListContextProvider({ children, userId }: Props) {
     dispatch(setLikes(likes))
     return map
   }, [poems])
-  const poemIds = useMemo(() => Object.keys(poemMap), [poemMap])
   const getPoem = useCallback(
     (poemId: number) => poemMap[poemId] || null,
     [poemMap],
@@ -55,6 +57,7 @@ function PoemListContextProvider({ children, userId }: Props) {
       poemIds,
       loading,
       error,
+      refetch,
     }),
     [loading, error, poemIds, getPoem],
   )

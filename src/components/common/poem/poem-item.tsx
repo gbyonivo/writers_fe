@@ -35,11 +35,13 @@ export const PoemItem = ({ poemId }: Props) => {
             {poem.title}
           </WriterText>
         </View>
-        <View style={styles.poemContent}>
-          <WriterText
-            style={styles.poemContentText}
-          >{`${poem.firstStanza.content}`}</WriterText>
-        </View>
+        {poem.firstStanza && (
+          <View style={styles.poemContent}>
+            <WriterText
+              style={styles.poemContentText}
+            >{`${poem.firstStanza.content}`}</WriterText>
+          </View>
+        )}
         <View style={styles.poemFooter}>
           <View>
             <WriterText style={styles.poemWriter}>
