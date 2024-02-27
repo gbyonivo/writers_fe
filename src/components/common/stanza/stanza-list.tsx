@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { Stanza } from 'writers_shared'
 
-import { WriterText } from '../writer-text'
+import { NewStanza } from './new-stanza'
 import { StanzaLine } from './stanza-line'
 
 interface Props {
@@ -11,9 +11,10 @@ interface Props {
   error: any
   stanzas?: Stanza[]
   loading: boolean
+  poemId: number
 }
 
-export const StanzaList = ({ stanzas = [] }: Props) => {
+export const StanzaList = ({ stanzas = [], poemId, refetch }: Props) => {
   const groupedStanzas = useMemo(() => {
     return stanzas.reduce(
       (acc, curr) => ({
@@ -39,6 +40,9 @@ export const StanzaList = ({ stanzas = [] }: Props) => {
         keyExtractor={(item, index) => (item[0] ? item[0].id : index)}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         showsHorizontalScrollIndicator={false}
+        ListFooterComponent={
+          <NewStanza poemId={poemId} position={3} onSuccess={refetch} />
+        }
       />
     </View>
   )

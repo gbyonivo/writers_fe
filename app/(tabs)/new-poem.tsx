@@ -1,10 +1,5 @@
-import { WriterBackground } from '../../src/components/common/writer-background'
-import { WriterText } from '../../src/components/common/writer-text'
+import { PoemCreationScreen } from '../../src/components/screens/poem/poem-creation-screen'
 
 export default function NewPoem() {
-  return (
-    <WriterBackground>
-      <WriterText>Adding new Poem</WriterText>
-    </WriterBackground>
-  )
+  return <PoemCreationScreen />
 }

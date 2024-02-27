@@ -40,3 +40,19 @@ export const RATE_STANZA = gql`
     rateStanza(id: $rateStanzaId, rating: $rating)
   }
 `
+
+export const CREATE_STANZA = gql`
+  mutation CreateStanza(
+    $content: String
+    $poemId: Int
+    $position: Int
+  ) {
+    createStanza(
+      content: $content
+      poemId: $poemId
+      position: $position
+    ) {
+      ${STANZA_DETAILS}
+    }
+  }
+`

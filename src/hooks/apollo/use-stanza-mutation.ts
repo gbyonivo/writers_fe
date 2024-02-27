@@ -1,20 +1,23 @@
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
+import { Stanza } from 'writers_shared'
 
-import { LIKE_POEM } from '../../queries/poem'
+import { CREATE_STANZA } from '../../queries/stanza'
 import { MutationHooKParams } from '../../types/mutation'
 
-export const usePoemLikeMutation = ({
+export const useStanzaMutation = ({
   onSuccess,
   onFail,
 }: MutationHooKParams = {}) => {
   const [loading, setLoading] = useState<boolean>(false)
-  const [action] = useMutation(LIKE_POEM)
+  const [action] = useMutation(CREATE_STANZA)
 
-  const likePoem = async (poemId: number) => {
+  const createStanza = async (stanza: Partial<Stanza>) => {
     try {
       setLoading(true)
-      const response = await action({ variables: { id: poemId } })
+      const response = await action({
+        variables: { ...stanza },
+      })
       setLoading(false)
       onSuccess && onSuccess(response)
     } catch (e) {
@@ -24,7 +27,7 @@ export const usePoemLikeMutation = ({
   }
 
   return {
-    likePoem,
+    createStanza,
     loading,
   }
 }
