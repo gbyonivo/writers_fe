@@ -12,6 +12,7 @@ export const STANZA_DETAILS = `
   likes
   position
   userId
+  stanzaId
 `
 
 export const GET_STANZA = gql`
@@ -46,11 +47,13 @@ export const CREATE_STANZA = gql`
     $content: String
     $poemId: Int
     $position: Int
+    $stanzaId: Int
   ) {
     createStanza(
       content: $content
       poemId: $poemId
       position: $position
+      stanzaId: $stanzaId
     ) {
       ${STANZA_DETAILS}
     }

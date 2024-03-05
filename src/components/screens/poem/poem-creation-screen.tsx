@@ -21,7 +21,6 @@ export const PoemCreationScreen = () => {
       stanzaLength: undefined,
     },
     onSubmit: async (value: Partial<Poem>) => {
-      console.log(value)
       await createPoem(value)
     },
   })

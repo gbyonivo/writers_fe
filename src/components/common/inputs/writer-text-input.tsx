@@ -8,9 +8,10 @@ interface Props {
   name: string
   value: string
   handleChange: any
-  label: string
+  label?: string
   containerStyle?: StyleProp<ViewStyle>
   multiline?: boolean
+  labelComponent?: JSX.Element
 }
 
 export const WriterTextInput = ({
@@ -20,10 +21,12 @@ export const WriterTextInput = ({
   label,
   containerStyle,
   multiline,
+  labelComponent,
 }: Props) => {
   return (
     <View style={containerStyle}>
       {!!label && <WriterText mb={8}>{label}</WriterText>}
+      {!!labelComponent && <>{labelComponent}</>}
       <RNPTextInput
         value={value}
         onChangeText={(text) => handleChange({ target: { name, value: text } })}

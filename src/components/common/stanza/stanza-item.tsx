@@ -11,7 +11,9 @@ interface Props {
 export const StanzaItem = ({ stanza, containerStyle }: Props) => {
   return (
     <View style={[styles.poemContentContainer, containerStyle]}>
-      <WriterText style={styles.poemContentText}>{stanza.content}</WriterText>
+      <WriterText style={styles.poemContentText}>
+        {stanza.content} - {`${stanza.id}`} - {`${stanza.stanzaId || 'none'}`}
+      </WriterText>
     </View>
   )
 }
