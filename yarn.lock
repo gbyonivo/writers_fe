@@ -6136,7 +6136,7 @@ lodash.toarray@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.toarray/-/lodash.toarray-4.4.0.tgz#24c4bfcd6b2fba38bfd0594db1179d8e9b656561"
   integrity sha512-QyffEA3i5dma5q2490+SgCvDN0pXLmRGSyAANuVi0HQ01Pkfr9fuoKQW8wm1wGBnJITs/mS7wQvS6VshUEBFCw==
 
-lodash@^4.17.13, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.3.0:
+lodash@^4.17.13, lodash@^4.17.15, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -7593,6 +7593,13 @@ react-native-phone-number-input@^2.1.0:
   dependencies:
     google-libphonenumber "^3.2.10"
     react-native-country-picker-modal "^2.0.0"
+
+react-native-ratings@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-8.1.0.tgz#3fa9ad29128dc3a88e59518ba151e61c59dd0647"
+  integrity sha512-+QOJ4G3NjVkI1D+tk4EGx1dCvVfbD2nQdkrj9cXrcAoEiwmbep4z4bZbCKmWMpQ5h2dqbxABU8/eBnbDmvAc3g==
+  dependencies:
+    lodash "^4.17.15"
 
 react-native-reanimated@3.3.0:
   version "3.3.0"
@@ -9328,10 +9335,10 @@ write-file-atomic@^2.3.0:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.2"
 
-writers_shared@^1.1.11:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/writers_shared/-/writers_shared-1.1.11.tgz#b6f87fbd2838266978fa02f53325288d6057bf17"
-  integrity sha512-xyq6VkOJVsvfikH7zlUO0r1hWGBeodyAcS+/+HEf2RYPXaDwnLwLqRtZkyAzaHy8Bz2gw8NyPBlCIDsZKzX0nQ==
+writers_shared@^1.1.12:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/writers_shared/-/writers_shared-1.1.12.tgz#cc690849b2a159c97ee40d958df0f2a55770117a"
+  integrity sha512-2LTFqYCkMsyzo0mFdwWHfpARvN3cWKGoJatFNT77cAAY2XwYoMHkH5ce19v/ZTv9Fi60S0Yv5mjeW/0VE5nXPQ==
   dependencies:
     tsup "^8.0.1"
     typescript "^5.3.3"
