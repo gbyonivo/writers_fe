@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Stanza } from 'writers_shared'
@@ -5,6 +6,7 @@ import { Stanza } from 'writers_shared'
 import { useBottomSheetContext } from '../../../context/bottom-sheet-context'
 import { useRateStanzaMutation } from '../../../hooks/apollo/use-rate-stanza-mutation'
 import { BottomSheet } from '../../../types/bottom-sheet'
+import { PROCESSING_STAGE } from '../../../types/common'
 import { WriterText } from '../writer-text'
 
 interface Props {
@@ -22,8 +24,9 @@ export const StanzaItem = ({ stanza, containerStyle }: Props) => {
           bottomSheet: BottomSheet.STANZA_RATING,
           params: {
             stanza,
-            rateStanza: (rating: number) =>
-              rateStanza({ stanzaId: stanza.id, rating }),
+            rateStanza: (rating: number) => {
+              rateStanza({ stanzaId: stanza.id, rating })
+            },
           },
         })
       }}

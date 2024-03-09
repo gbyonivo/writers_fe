@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { useMemo, useState } from 'react'
 
 import { BottomSheet } from '../types/bottom-sheet'
-import { useAuthContext } from './auth-context'
 
 interface SelectBottomSheetParam {
   bottomSheet: BottomSheet
@@ -25,31 +24,33 @@ export function useBottomSheetContext(): IBottomSheetContext {
   return context
 }
 
+interface BottomSheetAndParams {
+  bottomSheet: BottomSheet | null
+  params: { [key: string]: any } | null
+}
+
 function BottomSheetContextProvider({ children }) {
-  const [bottomSheet, setBottomSheet] = useState<BottomSheet | null>(null)
-  const [params, setParams] = useState<{ [key: string]: any } | null>(null)
+  const [bottomSheetAndParams, setBottomSheetAndParams] =
+    useState<BottomSheetAndParams>({ bottomSheet: null, params: null })
 
   const selectBottomSheet = ({
     bottomSheet,
     params,
   }: SelectBottomSheetParam) => {
-    setParams(params || null)
-    setBottomSheet(bottomSheet)
+    setBottomSheetAndParams({ bottomSheet, params })
   }
 
   const resetBottomSheet = () => {
-    setParams(null)
-    setBottomSheet(null)
+    setBottomSheetAndParams({ bottomSheet: null, params: null })
   }
 
   const value = useMemo(
     () => ({
-      bottomSheet,
-      params,
+      ...bottomSheetAndParams,
       selectBottomSheet,
       resetBottomSheet,
     }),
-    [bottomSheet],
+    [bottomSheetAndParams.bottomSheet, bottomSheetAndParams.params],
   )
   return (
     <BottomSheetContext.Provider value={value}>

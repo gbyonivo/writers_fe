@@ -23,7 +23,6 @@ export const BottomSheetHandler = () => {
           onClose={() => resetBottomSheet()}
           stanza={params.stanza}
           rateStanza={params.rateStanza}
-          loading={params.loading}
         />
       )
       break
