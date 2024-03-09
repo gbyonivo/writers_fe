@@ -13,6 +13,9 @@ export const STANZA_DETAILS = `
   position
   userId
   stanzaId
+  userRating
+  rating
+  numberOfRatings
 `
 
 export const GET_STANZA = gql`
@@ -37,8 +40,10 @@ export const GET_STANZAS = gql`
 `
 
 export const RATE_STANZA = gql`
-  mutation RateStanza($rateStanzaId: Int, $rating: Int) {
-    rateStanza(id: $rateStanzaId, rating: $rating)
+  mutation RateStanza($id: Int, $rating: Int) {
+    rateStanza(id: $id, rating: $rating) {
+      ${STANZA_DETAILS}
+    }
   }
 `
 

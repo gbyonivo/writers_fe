@@ -11,3 +11,12 @@ export const getWidthByRatio = (ratio: number): number =>
   Dimensions.get('screen').width * ratio
 export const getHeighByRatio = (ratio: number): number =>
   Dimensions.get('screen').height * ratio
+
+export const getRatingDefaultConfig = (theme) => ({
+  type: 'star',
+  tintColor: theme.colors.background,
+  ratingColor: theme.colors.error,
+  ratingBackgroundColor: theme.colors.primary,
+  ratingTextColor: theme.colors.onBackground,
+  ratingCount: 5,
+})

@@ -1,18 +1,16 @@
 import { TouchableOpacity } from '@gorhom/bottom-sheet'
 import { useRouter } from 'expo-router'
-import TimeAgo from 'javascript-time-ago'
 import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
 import { usePoemListContext } from '../../../context/poem-list-context'
 import { WriterText } from '../writer-text'
+import { WrittenBy } from '../written-by'
 import { PoemLikeButton } from './poem-like-button'
 
 interface Props {
   poemId: number
 }
-
-const timeAgo = new TimeAgo('en-US')
 
 export const PoemItem = ({ poemId }: Props) => {
   const { getPoem } = usePoemListContext()
@@ -28,13 +26,11 @@ export const PoemItem = ({ poemId }: Props) => {
 
   if (!poem) return null
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={[styles.container, containerStyle]}>
-        <View>
-          <WriterText color={theme.colors.onSurfaceVariant} size={18}>
-            {poem.title}
-          </WriterText>
-        </View>
+    <View style={[styles.container, containerStyle]}>
+      <TouchableOpacity onPress={onPress}>
+        <WriterText color={theme.colors.onSurfaceVariant} size={18}>
+          {poem.title}
+        </WriterText>
         {poem.firstStanza && (
           <View style={styles.poemContent}>
             <WriterText
@@ -42,21 +38,14 @@ export const PoemItem = ({ poemId }: Props) => {
             >{`${poem.firstStanza.content}`}</WriterText>
           </View>
         )}
-        <View style={styles.poemFooter}>
-          <View>
-            <WriterText style={styles.poemWriter}>
-              by {poem.user.name}
-            </WriterText>
-            <WriterText>
-              {timeAgo.format(parseInt(poem.createdAt, 10))}
-            </WriterText>
-          </View>
-          <View>
-            <PoemLikeButton poemId={poem.id} likes={poem.likes} />
-          </View>
+      </TouchableOpacity>
+      <View style={styles.poemFooter}>
+        <WrittenBy name={poem.user.name} createdAt={poem.createdAt} />
+        <View>
+          <PoemLikeButton poemId={poem.id} likes={poem.likes} />
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   )
 }
 
@@ -64,7 +53,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 8,
     marginHorizontal: 8,
-    marginVertical: 16,
+    marginVertical: 8,
     borderBottomWidth: 2,
   },
   poemContent: {

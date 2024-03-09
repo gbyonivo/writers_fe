@@ -1,16 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { composeWithDevTools } from '@redux-devtools/extension'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en.json'
 import { registerTranslation } from 'react-native-paper-dates'
 import { persistReducer, persistStore } from 'redux-persist'
 
 import login from './slices/login'
 import poem from './slices/poem'
 import settings from './slices/settings'
-
-TimeAgo.addDefaultLocale(en)
 
 registerTranslation('pl', {
   save: 'Done',
