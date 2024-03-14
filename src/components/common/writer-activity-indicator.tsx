@@ -5,7 +5,7 @@ interface Props {
   color?: string
 }
 
-export const WriterActivityIndicator = ({ size = 'large', color }: Props) => {
+export function WriterActivityIndicator({ size = 'large', color }: Props) {
   const { colors } = useTheme()
   return (
     <ActivityIndicator

@@ -22,14 +22,16 @@ export const useAuth = (): UseAuthReturn => {
       return { status: LoginAttemptStatus.INVALID_NUMBER }
     }
     try {
+      console.log(`${process.env.EXPO_PUBLIC_API_URL}/login/${formattedValue}`)
       const { data: token } = await axios.get(
-        `http://localhost:4000/login/${formattedValue}`,
+        `${process.env.EXPO_PUBLIC_API_URL}/login/${formattedValue}`,
       )
       return {
         status: LoginAttemptStatus.SUCCESS,
         userAndToken: { user: jwtDecode(token), token },
       }
     } catch (e) {
+      console.log(e)
       if (e.request.status === 404) {
         return {
           status: LoginAttemptStatus.NOT_FOUND,

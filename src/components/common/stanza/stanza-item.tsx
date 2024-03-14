@@ -14,7 +14,7 @@ interface Props {
   containerStyle?: StyleProp<ViewStyle>
 }
 
-export const StanzaItem = ({ stanza, containerStyle }: Props) => {
+export function StanzaItem({ stanza, containerStyle }: Props) {
   const { selectBottomSheet } = useBottomSheetContext()
   const { rateStanza } = useRateStanzaMutation()
   return (

@@ -18,13 +18,13 @@ interface Props {
   likes: number
 }
 
-export const PoemLikeButton = ({
+export function PoemLikeButton({
   poemId,
   style,
   icon = 'heart',
   disabled,
   likes,
-}: Props) => {
+}: Props) {
   const dispatch = useDispatch()
   const hasLikedPoem = useSelector(
     (state: AppState) => state.poem.likes[poemId],

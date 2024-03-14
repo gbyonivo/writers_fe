@@ -14,9 +14,9 @@ interface Props {
   poemName: string
 }
 
-export const PoemScreen = ({ poemId, poemName }: Props) => {
+export function PoemScreen({ poemId, poemName }: Props) {
   const theme = useTheme()
-  const { loading, poem, refetch } = usePoem(poemId)
+  const { loading, poem } = usePoem(poemId)
   return (
     <WriterBackground isView>
       <View style={[styles.container]}>

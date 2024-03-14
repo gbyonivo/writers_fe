@@ -13,10 +13,10 @@ export interface StanzaRatingBottomSheetProps {
   newRating: number | null
 }
 
-export const StanzaRatingBottomSheetHeader = ({
+export function StanzaRatingBottomSheetHeader({
   stanza,
   newRating,
-}: StanzaRatingBottomSheetProps) => {
+}: StanzaRatingBottomSheetProps) {
   const theme = useTheme()
   const initialNumberOfRatings = stanza.numberOfRatings || 0
   const numberOfRatings = initialNumberOfRatings + (newRating ? 1 : 0)

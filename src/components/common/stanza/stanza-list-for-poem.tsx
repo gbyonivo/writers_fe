@@ -7,7 +7,7 @@ interface Props {
   poemId: number
 }
 
-export const StanzaListForPoem = ({ poemId }: Props) => {
+export function StanzaListForPoem({ poemId }: Props) {
   const {
     loading: loadingPoemStanzas,
     stanzas,

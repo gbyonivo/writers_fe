@@ -11,14 +11,14 @@ import { useSelector } from 'react-redux'
 import { AppState } from '../../types/states/AppState'
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: `${process.env.EXPO_PUBLIC_API_URL}/graphql`,
 })
 
 interface Props {
   children: JSX.Element
 }
 
-export const Apollo = ({ children }: Props) => {
+export function Apollo({ children }: Props) {
   const token = useSelector((state: AppState) => state.login.token)
 
   const authLink = setContext((_, { headers }) => {

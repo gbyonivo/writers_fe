@@ -13,14 +13,14 @@ interface Props {
   buttonDisabled?: boolean
 }
 
-export const PageContainer = ({
+export function PageContainer({
   children,
   label,
   onPress,
   buttonLabel = 'Continue',
   error,
   buttonDisabled,
-}: Props) => {
+}: Props) {
   return (
     <View>
       <WriterText style={styles.label}>{label}</WriterText>

@@ -12,7 +12,7 @@ interface Props {
   showLogout?: boolean
 }
 
-export const ProfileContent = ({ userId, showLogout = false }: Props) => {
+export function ProfileContent({ userId, showLogout = false }: Props) {
   const { logout, user: loggedInUser } = useAuthContext()
   const isLoggedInUserProfile = userId === loggedInUser?.id
   return (

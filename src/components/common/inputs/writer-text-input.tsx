@@ -14,7 +14,7 @@ interface Props {
   labelComponent?: JSX.Element
 }
 
-export const WriterTextInput = ({
+export function WriterTextInput({
   name,
   value,
   handleChange,
@@ -22,7 +22,7 @@ export const WriterTextInput = ({
   containerStyle,
   multiline,
   labelComponent,
-}: Props) => {
+}: Props) {
   return (
     <View style={containerStyle}>
       {!!label && <WriterText mb={8}>{label}</WriterText>}

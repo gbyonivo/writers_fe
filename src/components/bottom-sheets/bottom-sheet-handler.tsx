@@ -5,7 +5,7 @@ import { BottomSheet } from '../../types/bottom-sheet'
 import { LogoutBottomSheet } from './logout-bottom-sheet'
 import { StanzaRatingBottomSheet } from './stanza-rating-bottom-sheet'
 
-export const BottomSheetHandler = () => {
+export function BottomSheetHandler() {
   const { bottomSheet, resetBottomSheet, params } = useBottomSheetContext()
   let element = null
   switch (bottomSheet) {
