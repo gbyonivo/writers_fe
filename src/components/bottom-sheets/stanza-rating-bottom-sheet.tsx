@@ -15,11 +15,11 @@ export interface StanzaRatingBottomSheetProps {
   rateStanza: (rating: number) => void
 }
 
-export const StanzaRatingBottomSheet = ({
+export function StanzaRatingBottomSheet({
   onClose,
   stanza,
   rateStanza,
-}: StanzaRatingBottomSheetProps) => {
+}: StanzaRatingBottomSheetProps) {
   const snapPoints = useMemo(() => ['80%'], [])
   const theme = useTheme()
   const [newRating, setNewRating] = useState<null | number>(null)

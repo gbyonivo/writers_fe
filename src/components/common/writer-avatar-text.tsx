@@ -5,6 +5,6 @@ interface Props {
   size?: number
 }
 
-export const WriterAvatarText = ({ label, size = 24 }: Props) => (
-  <Avatar.Text size={size} label={label} />
-)
+export function WriterAvatarText({ label, size = 24 }: Props) {
+  return <Avatar.Text size={size} label={label} />
+}

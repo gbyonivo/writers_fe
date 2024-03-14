@@ -9,7 +9,7 @@ interface Props {
   disabled?: boolean
 }
 
-export const WriterIconButton = ({ onPress, style, icon, disabled }: Props) => {
+export function WriterIconButton({ onPress, style, icon, disabled }: Props) {
   return (
     <IconButton
       icon={icon}

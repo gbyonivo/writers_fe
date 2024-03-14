@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { Poem } from 'writers_shared'
 
@@ -31,7 +31,7 @@ function PoemListContextProvider({ children, userId }: Props) {
   const { loading, error, poems, refetch } = usePoems(userId)
   const dispatch = useDispatch()
   const poemIds = []
-  const poemMap = useMemo(() => {
+  const { map: poemMap, likes } = useMemo(() => {
     let likes = {}
     const map = (poems?.edges || []).reduce((acc, curr) => {
       likes = {
@@ -44,13 +44,15 @@ function PoemListContextProvider({ children, userId }: Props) {
         [curr.node.id]: curr.node,
       }
     }, {})
-    dispatch(setLikes(likes))
-    return map
+    return { map, likes }
   }, [poems])
   const getPoem = useCallback(
     (poemId: number) => poemMap[poemId] || null,
     [poemMap],
   )
+  useEffect(() => {
+    dispatch(setLikes(likes))
+  }, [likes])
   const value = useMemo(
     () => ({
       getPoem,

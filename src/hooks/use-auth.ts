@@ -23,7 +23,7 @@ export const useAuth = (): UseAuthReturn => {
     }
     try {
       const { data: token } = await axios.get(
-        `http://localhost:4000/login/${formattedValue}`,
+        `${process.env.EXPO_PUBLIC_API_URL}/login/${formattedValue}`,
       )
       return {
         status: LoginAttemptStatus.SUCCESS,

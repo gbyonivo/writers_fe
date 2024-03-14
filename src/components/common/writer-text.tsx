@@ -20,7 +20,7 @@ interface Props {
   color?: string
 }
 
-export const WriterText = ({
+export function WriterText({
   style,
   variant,
   children,
@@ -33,7 +33,7 @@ export const WriterText = ({
   mv,
   size = 16,
   color,
-}: Props) => {
+}: Props) {
   const alignmentStyle = useMemo(() => {
     return {
       left: styles.leftAlign,

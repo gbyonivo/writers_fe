@@ -8,7 +8,7 @@ interface Props {
   createdAt: string
 }
 
-export const WrittenBy = ({ name, createdAt }: Props) => {
+export function WrittenBy({ name, createdAt }: Props) {
   return (
     <View>
       <WriterText style={styles.name}>by {name}</WriterText>

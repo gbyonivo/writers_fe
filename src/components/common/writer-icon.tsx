@@ -7,7 +7,7 @@ interface Props {
   color?: string
 }
 
-export const WriterIcon = ({ size = 14, icon, color }: Props) => {
+export function WriterIcon({ size = 14, icon, color }: Props) {
   const theme = useTheme()
   return (
     <Icon

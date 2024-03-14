@@ -11,14 +11,14 @@ interface Props {
   textColor?: string
 }
 
-export const WriterButton = ({
+export function WriterButton({
   onPress,
   style,
   children,
   icon,
   disabled,
   textColor,
-}: Props) => {
+}: Props) {
   return (
     <Button
       icon={icon}

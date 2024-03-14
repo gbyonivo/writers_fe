@@ -10,11 +10,11 @@ interface Props {
   style?: StyleProp<ViewStyle>
 }
 
-export const WriterAvatarImage = ({
+export function WriterAvatarImage({
   imageUri = eagleImgUri,
   size = 128,
   style,
-}: Props) => {
+}: Props) {
   return (
     <Avatar.Image
       source={{ uri: imageUri }}

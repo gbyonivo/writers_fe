@@ -12,7 +12,7 @@ interface Props {
   poemId: number
 }
 
-export const PoemItem = ({ poemId }: Props) => {
+export function PoemItem({ poemId }: Props) {
   const { getPoem } = usePoemListContext()
   const router = useRouter()
   const theme = useTheme()

@@ -5,7 +5,7 @@ import { useTheme } from 'react-native-paper'
 import { usePoemListContext } from '../../../context/poem-list-context'
 import { PoemItem } from './poem-item'
 
-export const PoemList = () => {
+export function PoemList() {
   const theme = useTheme()
   const { poemIds, refetch, loading } = usePoemListContext()
   return (

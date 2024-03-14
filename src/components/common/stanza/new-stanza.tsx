@@ -19,7 +19,7 @@ interface Props {
   parentStanzaId?: number
 }
 
-export const NewStanza = ({
+export function NewStanza({
   poemId,
   position,
   onSuccess,
@@ -28,7 +28,7 @@ export const NewStanza = ({
   shouldShowForm,
   shouldShowToggleButton,
   parentStanzaId,
-}: Props) => {
+}: Props) {
   const [created, setCreated] = useState(false)
   const { createStanza } = useStanzaMutation({
     onSuccess: () => {

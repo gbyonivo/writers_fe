@@ -6,7 +6,7 @@ interface Props {
   userId?: number
 }
 
-export const PoemListContainer = ({ userId }: Props) => {
+export function PoemListContainer({ userId }: Props) {
   return (
     <PoemListContextProvider userId={userId}>
       <PoemList />

@@ -33,7 +33,7 @@ const getPosition = ({
   }
 }
 
-export const StanzaList = ({ stanzas = [], poemId, refetch }: Props) => {
+export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
   const [shouldShowAddStanzaForm, setShouldShowAddStanzaForm] = useState(false)
   const [positionToStanzaIdMap, setPositionToStanzaIdMap] = useState({})
 

@@ -8,7 +8,7 @@ import { PoemCreateForm } from '../../common/poem/poem-create-form'
 import { WriterBackground } from '../../common/writer-background'
 import { WriterText } from '../../common/writer-text'
 
-export const PoemCreationScreen = () => {
+export function PoemCreationScreen() {
   const [created, setCreated] = useState(false)
   const { createPoem } = usePoemMutation({ onSuccess: () => setCreated(true) })
   const form = useFormik({

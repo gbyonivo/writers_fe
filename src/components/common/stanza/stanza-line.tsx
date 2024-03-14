@@ -15,13 +15,13 @@ interface Props {
   setStanzaIdForPosition: (stanzaId: number) => void
 }
 
-export const StanzaLine = ({
+export function StanzaLine({
   stanzas,
   onPressAdd,
   shouldShowAddButton,
   disabled,
   setStanzaIdForPosition,
-}: Props) => {
+}: Props) {
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
     setStanzaIdForPosition(viewableItems[0]?.item?.id)
   }).current

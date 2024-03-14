@@ -10,10 +10,10 @@ export interface LogoutBottomSheetProps {
   onPressLogout: () => void
 }
 
-export const LogoutBottomSheet = ({
+export function LogoutBottomSheet({
   onClose,
   onPressLogout,
-}: LogoutBottomSheetProps) => {
+}: LogoutBottomSheetProps) {
   const snapPoints = useMemo(() => ['20%'], [])
   const theme = useTheme()
 

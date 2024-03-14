@@ -8,7 +8,7 @@ interface Props {
   children: JSX.Element
 }
 
-export const Paper = ({ children }: Props) => {
+export function Paper({ children }: Props) {
   const colorScheme = useColorScheme()
   const { theme } = useSelectedColorSchemeContext()
   let paperTheme = colorScheme !== 'light' ? MD3LightTheme : MD3DarkTheme

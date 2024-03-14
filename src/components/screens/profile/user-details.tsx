@@ -13,7 +13,7 @@ interface Props {
   userId: number
 }
 
-export const UserDetails = ({ userId }: Props) => {
+export function UserDetails({ userId }: Props) {
   const { loading, user } = useUser(userId)
   const { selectBottomSheet, resetBottomSheet } = useBottomSheetContext()
   const { logout } = useAuthContext()

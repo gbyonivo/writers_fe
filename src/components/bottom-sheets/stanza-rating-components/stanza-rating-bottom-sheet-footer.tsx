@@ -14,11 +14,11 @@ export interface StanzaRatingBottomSheetProps {
   setNewRating: (val: number) => void
 }
 
-export const StanzaRatingBottomSheetFooter = ({
+export function StanzaRatingBottomSheetFooter({
   userRating,
   rateStanza,
   setNewRating,
-}: StanzaRatingBottomSheetProps) => {
+}: StanzaRatingBottomSheetProps) {
   const theme = useTheme()
   const [rating, setRating] = useState(3)
   const [submitted, setSubmitted] = useState(false)

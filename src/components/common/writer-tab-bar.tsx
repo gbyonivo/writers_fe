@@ -8,7 +8,7 @@ interface Props extends SceneRendererProps {
   [key: string]: any
 }
 
-export const WriterTabBar = ({ icon, ...props }: Props) => {
+export function WriterTabBar({ icon, ...props }: Props) {
   const theme = useTheme()
   return (
     // @ts-ignore

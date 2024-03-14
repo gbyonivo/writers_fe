@@ -10,7 +10,7 @@ interface Props {
   onSubmit: any
 }
 
-export const PoemCreateForm = ({ values, handleChange, onSubmit }: Props) => {
+export function PoemCreateForm({ values, handleChange, onSubmit }: Props) {
   return (
     <View>
       <WriterTextInput

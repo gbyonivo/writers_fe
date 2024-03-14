@@ -7,7 +7,7 @@ interface Props {
   style?: StyleProp<ViewStyle>
 }
 
-export const WriterLoginHeader = ({ style }: Props) => {
+export function WriterLoginHeader({ style }: Props) {
   return (
     <View style={style}>
       <WriterText variant="displayMedium" style={styles.appName}>

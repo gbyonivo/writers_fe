@@ -22,7 +22,7 @@ const renderScene = SceneMap({
   groupPoems: SecondRoute,
 })
 
-export const UserTabs = () => {
+export function UserTabs() {
   const layout = useWindowDimensions()
 
   const [index, setIndex] = useState(0)
