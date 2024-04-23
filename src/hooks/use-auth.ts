@@ -22,6 +22,7 @@ export const useAuth = (): UseAuthReturn => {
       return { status: LoginAttemptStatus.INVALID_NUMBER }
     }
     try {
+      console.log(`${process.env.EXPO_PUBLIC_API_URL}/login/${formattedValue}`)
       const { data: token } = await axios.get(
         `${process.env.EXPO_PUBLIC_API_URL}/login/${formattedValue}`,
       )

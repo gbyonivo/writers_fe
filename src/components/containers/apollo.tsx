@@ -14,6 +14,8 @@ const httpLink = createHttpLink({
   uri: `${process.env.EXPO_PUBLIC_API_URL}/graphql`,
 })
 
+console.log(`${process.env.EXPO_PUBLIC_API_URL}/graphql`)
+
 interface Props {
   children: JSX.Element
 }

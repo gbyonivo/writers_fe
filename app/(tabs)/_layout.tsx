@@ -36,7 +36,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="new-poem"
         options={{
-          title: 'Add New',
+          title: 'Create Poem',
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="plus-square" color={color} />
           ),

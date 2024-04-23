@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { TextInput as RNPTextInput } from 'react-native-paper'
+import { HelperText, TextInput as RNPTextInput } from 'react-native-paper'
 
 import { WriterText } from '../writer-text'
 
@@ -12,6 +12,8 @@ interface Props {
   containerStyle?: StyleProp<ViewStyle>
   multiline?: boolean
   labelComponent?: JSX.Element
+  disabled?: boolean
+  error?: string
 }
 
 export function WriterTextInput({
@@ -22,6 +24,8 @@ export function WriterTextInput({
   containerStyle,
   multiline,
   labelComponent,
+  disabled,
+  error,
 }: Props) {
   return (
     <View style={containerStyle}>
@@ -33,7 +37,11 @@ export function WriterTextInput({
         mode="outlined"
         multiline={multiline}
         style={multiline ? styles.multilineStyle : undefined}
+        disabled={disabled}
       />
+      <HelperText type="error" visible={!!error}>
+        {error}
+      </HelperText>
     </View>
   )
 }
@@ -41,6 +49,6 @@ export function WriterTextInput({
 const styles = StyleSheet.create({
   multilineStyle: {
     lineHeight: 28,
-    minHeight: 100,
+    height: 250,
   },
 })

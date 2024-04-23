@@ -1,0 +1,52 @@
+{
+  "cli": {
+    "version": ">= 7.8.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "APP_VARIANT": "development"
+      },
+      "channel": "development"
+    },
+    "development-phone": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": false
+      },
+      "env": {
+        "APP_VARIANT": "development"
+      },
+      "channel": "development"
+    },
+    "preview": {
+      "developmentClient": true,
+      "ios": {
+        "simulator": false
+      },
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "development"
+      },
+      "channel": "preview"
+    },
+    "preview-prod": {
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "production"
+      },
+      "channel": "preview"
+    },
+    "production": {
+      "channel": "production"
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

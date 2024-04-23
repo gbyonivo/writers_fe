@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native'
+import { Dimensions, Platform } from 'react-native'
 
 export const getInitials = (name: string) =>
   name
@@ -20,3 +20,5 @@ export const getRatingDefaultConfig = (theme) => ({
   ratingTextColor: theme.colors.onBackground,
   ratingCount: 5,
 })
+
+export const isIos = Platform.OS === 'ios'

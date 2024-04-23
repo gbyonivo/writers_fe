@@ -62,7 +62,7 @@ export default function () {
     setSubmittingForm(true)
     try {
       const { data } = await axios.post(
-        `http://localhost:4000/user`,
+        `${process.env.EXPO_PUBLIC_API_URL}/user`,
         createdUser,
       )
       setToken(data)
@@ -169,7 +169,7 @@ export default function () {
               label="Tell us you date of birth so we can send you cards"
               onPress={onSubmit}
               error={errorMessage}
-              buttonLabel="Join AiitPoet"
+              buttonLabel="Join AiitPoets"
             >
               <View>
                 <DatePickerInput

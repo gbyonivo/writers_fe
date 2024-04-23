@@ -2,6 +2,7 @@ import { PortalProvider } from '@gorhom/portal'
 import { Slot, SplashScreen } from 'expo-router'
 import { Suspense, useEffect } from 'react'
 import { Text } from 'react-native'
+import { ToastProvider } from 'react-native-toast-notifications'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -34,10 +35,12 @@ export default function AppLayout() {
                 <PortalProvider>
                   <BottomSheetContextProvider>
                     <Apollo>
-                      <>
-                        <BottomSheetHandler />
-                        <Slot />
-                      </>
+                      <ToastProvider>
+                        <>
+                          <BottomSheetHandler />
+                          <Slot />
+                        </>
+                      </ToastProvider>
                     </Apollo>
                   </BottomSheetContextProvider>
                 </PortalProvider>
