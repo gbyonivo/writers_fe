@@ -5,12 +5,13 @@
   "scripts": {
     "start": "expo start",
     "start:dev:client": "npx expo start --dev-client",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "eslint .",
     "use": "source $(brew --prefix nvm)/nvm.sh && nvm use 18",
     "build:dev:phone": "NODE_ENV=development eas build -p ios --clear-cache --profile development-phone --local",
+    "build:dev": "NODE_ENV=development eas build -p ios --clear-cache --profile development --local",
     "build:preview": "NODE_ENV=development eas build --profile preview --platform ios --local --clear-cache",
     "build:preview-prod": "NODE_ENV=production eas build --profile preview-prod --platform ios --local --clear-cache"
   },
@@ -36,6 +37,7 @@
     "graphql": "^16.8.1",
     "javascript-time-ago": "^2.5.9",
     "jwt-decode": "3.1.2",
+    "lodash.compact": "^3.0.1",
     "lodash.isinteger": "^4.0.4",
     "lodash.sortby": "^4.7.0",
     "millify": "^6.1.0",
@@ -57,7 +59,8 @@
     "react-native-vector-icons": "^10.0.3",
     "react-redux": "^9.0.4",
     "redux-persist": "^6.0.0",
-    "writers_shared": "^1.1.12"
+    "writers_shared": "^1.1.12",
+    "expo-splash-screen": "~0.20.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
