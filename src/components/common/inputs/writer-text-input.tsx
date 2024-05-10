@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
 import { HelperText, TextInput as RNPTextInput } from 'react-native-paper'
 
 import { WriterText } from '../writer-text'
@@ -14,6 +14,11 @@ interface Props {
   labelComponent?: JSX.Element
   disabled?: boolean
   error?: string
+  style?: StyleProp<TextStyle>
+  outlineStyle?: StyleProp<ViewStyle>
+  mode?: 'outlined' | 'flat'
+  autoFocus?: boolean
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters'
 }
 
 export function WriterTextInput({
@@ -22,26 +27,35 @@ export function WriterTextInput({
   handleChange,
   label,
   containerStyle,
+  outlineStyle,
   multiline,
   labelComponent,
   disabled,
   error,
+  style,
+  mode = 'outlined',
+  autoFocus = false,
+  autoCapitalize = 'none',
 }: Props) {
   return (
     <View style={containerStyle}>
       {!!label && <WriterText mb={8}>{label}</WriterText>}
       {!!labelComponent && <>{labelComponent}</>}
+      <HelperText type="error" visible={!!error} style={style}>
+        {error}
+      </HelperText>
       <RNPTextInput
         value={value}
         onChangeText={(text) => handleChange({ target: { name, value: text } })}
-        mode="outlined"
+        mode={mode}
         multiline={multiline}
-        style={multiline ? styles.multilineStyle : undefined}
+        style={[style, multiline ? styles.multilineStyle : undefined]}
         disabled={disabled}
+        outlineColor="transparent"
+        outlineStyle={outlineStyle}
+        autoFocus={autoFocus}
+        autoCapitalize={autoCapitalize}
       />
-      <HelperText type="error" visible={!!error}>
-        {error}
-      </HelperText>
     </View>
   )
 }

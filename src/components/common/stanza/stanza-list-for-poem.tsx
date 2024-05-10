@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { View } from 'react-native'
 
 import { usePoemStanzas } from '../../../hooks/apollo/use-poem-stanzas'
 import { StanzaList } from './stanza-list'
@@ -15,9 +16,9 @@ export function StanzaListForPoem({ poemId }: Props) {
     refetch: refetchPoemStanzas,
   } = usePoemStanzas(poemId)
 
-  const memoedStanza = useMemo(() => stanzas, [stanzas])
+  const memoedStanza = useMemo(() => (stanzas ? stanzas : []), [stanzas])
 
-  return (
+  return !!memoedStanza && memoedStanza.length > 0 ? (
     <StanzaList
       error={errorFetchingPoemStanzas}
       stanzas={memoedStanza}
@@ -25,5 +26,7 @@ export function StanzaListForPoem({ poemId }: Props) {
       loading={loadingPoemStanzas}
       poemId={poemId}
     />
+  ) : (
+    <View />
   )
 }
