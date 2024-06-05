@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
+import { useRouter } from 'expo-router'
+import { useCallback, useMemo, useRef, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { Stanza } from 'writers_shared'
 
 import { useBottomSheetContext } from '../../../context/bottom-sheet-context'
 import { useStanzaMutation } from '../../../hooks/apollo/use-stanza-mutation'
 import { BottomSheet } from '../../../types/bottom-sheet'
-import { NewStanza } from './new-stanza'
+import { NewStanzaButton } from './new-stanza-button'
 import { StanzaLine } from './stanza-line'
 
 interface Props {
@@ -23,8 +24,9 @@ interface OnSwipeToStanzaParams {
 }
 
 export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
+  const router = useRouter()
   const { selectBottomSheet } = useBottomSheetContext()
-  const { createStanza } = useStanzaMutation()
+  const { createStanza } = useStanzaMutation({ poemId })
   const positionToStanzaIdMapRef = useRef({})
   const [positionToStanzaIdMap, setPositionToStanzaIdMap] = useState(() => ({}))
   const stanzaMap = useMemo(
@@ -58,34 +60,25 @@ export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
     const positions = Object.keys(positionToStanzaIdMap)
     const highestPosition = positions[positions.length - 1]
     const numberOfStanzasInHighestPosition = map[highestPosition].length
-    const shouldGoNextLine = numberOfStanzasInHighestPosition === 1
+    const shouldGoNextLine = numberOfStanzasInHighestPosition === 3
 
     let newStanzaPosition =
-      parseInt(highestPosition, 10) === 1 ? 2 : highestPosition
+      parseInt(highestPosition, 10) === 1 ? 2 : parseInt(highestPosition, 10)
     if (shouldGoNextLine) {
-      newStanzaPosition = highestPosition + 1
+      newStanzaPosition = parseInt(highestPosition, 10) + 1
     }
 
     const previousStanzas = Object.keys(positionToStanzaIdMap)
-      .filter((pos) => pos !== newStanzaPosition)
+      .filter((pos) => parseInt(pos, 10) !== newStanzaPosition)
       .map((pos) => {
-        console.log(positionToStanzaIdMap[pos])
         return stanzaMap[positionToStanzaIdMap[pos]]
       })
 
     const parentStanzaId = previousStanzas[previousStanzas.length - 1]?.id
 
-    selectBottomSheet({
-      bottomSheet: BottomSheet.ADD_STANZA,
-      params: {
-        poemId,
-        position: newStanzaPosition,
-        parentStanzaId,
-        previousStanzas,
-        createStanza,
-        onSuccess: refetch,
-      },
-    })
+    router.push(
+      `/poem/${poemId}/new-stanza?parentStanzaId=${parentStanzaId}&position=${newStanzaPosition}&previousStanzaId=${Object.keys(positionToStanzaIdMap).join(',')}`,
+    )
   }, [poemId, map, positionToStanzaIdMap, stanzaMap])
 
   const renderItem = ({ item, index }) => {
@@ -111,7 +104,12 @@ export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         showsHorizontalScrollIndicator={false}
         ListFooterComponent={
-          <NewStanza onPressAdd={onPressAddStanza} shouldShowToggleButton />
+          <NewStanzaButton
+            poemId={poemId}
+            parentStanzaId={1}
+            newStanzaPosition={2}
+            shouldShowToggleButton
+          />
         }
       />
     </View>

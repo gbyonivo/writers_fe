@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
 import { usePoemListContext } from '../../../context/poem-list-context'
+import { usePoem } from '../../../hooks/apollo/use-poem'
 import { WriterText } from '../writer-text'
 import { WrittenBy } from '../written-by'
 import { PoemLikeButton } from './poem-like-button'
@@ -13,10 +14,9 @@ interface Props {
 }
 
 export function PoemItem({ poemId }: Props) {
-  const { getPoem } = usePoemListContext()
   const router = useRouter()
   const theme = useTheme()
-  const poem = getPoem(poemId)
+  const { poem } = usePoem(poemId)
   const containerStyle = {
     borderBottomColor: theme.colors.backdrop,
   }

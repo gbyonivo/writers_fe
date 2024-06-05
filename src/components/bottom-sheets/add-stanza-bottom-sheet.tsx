@@ -1,16 +1,15 @@
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetScrollView,
-} from '@gorhom/bottom-sheet'
-import { useFormik } from 'formik'
-import React, { useMemo } from 'react'
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
-import { HelperText, useTheme } from 'react-native-paper'
+import { useTheme } from 'react-native-paper'
+import Animated from 'react-native-reanimated'
 import { Stanza } from 'writers_shared'
 
-import { StanzaSchema } from '../../validation-schema/stanza-schema'
-import { WriterTextInput } from '../common/inputs/writer-text-input'
-import { WriterButton } from '../common/writer-button'
+import {
+  onChangeStanzaSignal,
+  onPressCreateStanzaSignal,
+} from '../../utils/signal'
+import { AddStanzaForm } from '../common/stanza/add-stanza-form'
 import { WriterIconButton } from '../common/writer-icon-button'
 import { WriterText } from '../common/writer-text'
 
@@ -33,24 +32,12 @@ export function AddStanzaBottomSheet({
 }: AddStanzaBottomSheetProps) {
   const snapPoints = useMemo(() => ['100%'], [])
   const theme = useTheme()
+  const ref = useRef(null)
+  const [hasContent, setHasContent] = useState(false)
 
-  console.log(previousStanzas)
-
-  const form = useFormik({
-    enableReinitialize: false,
-    validationSchema: StanzaSchema,
-    initialValues: {
-      content: '',
-    },
-    onSubmit: async (value: { content: string }) => {
-      await createStanza({
-        ...value,
-        poemId,
-        position,
-        stanzaId: parentStanzaId,
-      })
-    },
-  })
+  const stanzas = useMemo(() => {
+    return [...previousStanzas, null]
+  }, [])
 
   const bottomSheetIndicator = {
     backgroundColor: theme.colors.background,
@@ -60,7 +47,35 @@ export function AddStanzaBottomSheet({
     backgroundColor: theme.colors.background,
   }
 
-  const hasContent = !!form.values.content
+  useEffect(() => {
+    if (onPressCreateStanzaSignal.getNumberOfListeners() < 1) {
+      onPressCreateStanzaSignal.listen((values) => {
+        console.log(values, 'it could be huge')
+      })
+      onChangeStanzaSignal.listen((values) => {
+        console.log(values)
+      })
+    }
+  }, [])
+
+  const renderItem = ({ item }: { item: Stanza }) => {
+    if (!item) {
+      return (
+        <AddStanzaForm
+          position={position}
+          poemId={poemId}
+          parentStanzaId={parentStanzaId}
+        />
+      )
+    }
+    return (
+      <View pointerEvents="none">
+        <WriterText key={item.id} size={18} style={styles.previousText}>
+          {item.content}
+        </WriterText>
+      </View>
+    )
+  }
 
   return (
     <BottomSheet
@@ -78,48 +93,28 @@ export function AddStanzaBottomSheet({
         />
       )}
     >
-      <SafeAreaView style={styles.bottomSheetHeader}>
+      {/* <SafeAreaView style={styles.bottomSheetHeader}>
         <WriterIconButton
           onPress={() => {
-            form.resetForm()
             onClose()
           }}
           icon="minus"
         />
-        <WriterIconButton
-          onPress={form.submitForm}
-          icon="plus"
-          disabled={form.dirty && !form.isValid}
-        />
-      </SafeAreaView>
-      <BottomSheetScrollView>
-        <View style={styles.bottomSheetInnerContainer}>
-          <>
-            <View style={styles.previousContetnContainer}>
-              {previousStanzas.map((stanza) => (
-                <WriterText
-                  key={stanza.id}
-                  size={18}
-                  style={styles.previousText}
-                >
-                  {stanza.content}
-                </WriterText>
-              ))}
-            </View>
-            <WriterTextInput
-              value={form.values.content}
-              name="content"
-              handleChange={form.handleChange}
-              containerStyle={styles.contentContainer}
-              multiline
-              outlineStyle={styles.inputOutlineStyle}
-              autoFocus
-              style={styles.textStyle}
-              error={form.errors.content}
-            />
-          </>
-        </View>
-      </BottomSheetScrollView>
+        <WriterIconButton onPress={() => {}} icon="plus" />
+      </SafeAreaView> */}
+      <Animated.FlatList
+        ref={ref}
+        style={{ flex: 1, marginBottom: 100 }}
+        data={stanzas}
+        renderItem={renderItem}
+        keyExtractor={(item) => `${item?.id || 'my-key'}`}
+        scrollsToTop={false}
+        initialNumToRender={5}
+        maxToRenderPerBatch={5}
+        windowSize={7}
+        showsVerticalScrollIndicator={false}
+        initialScrollIndex={previousStanzas.length}
+      />
     </BottomSheet>
   )
 }
@@ -130,29 +125,22 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    margin: 16,
     borderColor: 'transparent',
     borderWidth: 0,
   },
 
-  bottomSheetHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 16,
+  bottomSheetInnerContainer: {
+    marginTop: 16,
   },
-
-  bottomSheetInnerContainer: { marginTop: 16 },
 
   previousContetnContainer: {
     marginHorizontal: 24,
   },
 
-  previousText: { lineHeight: 32 },
-
-  labelContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  previousText: {
+    lineHeight: 32,
     marginBottom: 16,
+    paddingHorizontal: 16,
   },
 
   inputOutlineStyle: {

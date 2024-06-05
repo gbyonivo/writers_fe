@@ -63,6 +63,5 @@ export function WriterTextInput({
 const styles = StyleSheet.create({
   multilineStyle: {
     lineHeight: 28,
-    height: 250,
   },
 })

@@ -2,11 +2,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { composeWithDevTools } from '@redux-devtools/extension'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { registerTranslation } from 'react-native-paper-dates'
+import Reactotron from 'reactotron-react-native'
 import { persistReducer, persistStore } from 'redux-persist'
 
 import login from './slices/login'
 import poem from './slices/poem'
 import settings from './slices/settings'
+
+Reactotron.configure({ host: '192.168.1.150', port: 8081 })
+  .useReactNative()
+  .connect()
 
 registerTranslation('pl', {
   save: 'Done',

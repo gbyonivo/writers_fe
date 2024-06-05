@@ -1,13 +1,10 @@
-import { useIsFocused } from '@react-navigation/native'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { useTheme } from 'react-native-paper'
 import Animated from 'react-native-reanimated'
 import { Stanza } from 'writers_shared'
 
 import { getWidthByRatio } from '../../../utils/common'
 import { WriterIconButton } from '../writer-icon-button'
-import { WriterText } from '../writer-text'
 import { StanzaItem } from './stanza-item'
 
 interface Props {
@@ -27,8 +24,8 @@ export function StanzaLine({
   setStanzaIdForPosition,
   position,
 }: Props) {
-  const isFocused = useIsFocused()
-  const { colors } = useTheme()
+  // const isFocused = useIsFocused()
+  // const { colors } = useTheme()
   const flatlistRef = useRef<Animated.FlatList<Stanza>>()
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
     setStanzaIdForPosition({ stanzaId: viewableItems[0]?.item?.id, position })
@@ -38,15 +35,15 @@ export function StanzaLine({
     return <StanzaItem stanza={item} containerStyle={styles.stanzaContainer} />
   }
 
-  useEffect(() => {
-    if (isFocused) {
-      // @ts-ignore
-      flatlistRef.current?.scrollToOffset?.({
-        offset: 100,
-      })
-      setStanzaIdForPosition({ stanzaId: stanzas[0]?.id, position })
-    }
-  }, [isFocused])
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     // @ts-ignore
+  //     flatlistRef.current?.scrollToOffset?.({
+  //       offset: 100,
+  //     })
+  //     setStanzaIdForPosition({ stanzaId: stanzas[0]?.id, position })
+  //   }
+  // }, [isFocused])
 
   return (
     <Animated.FlatList
@@ -72,13 +69,13 @@ export function StanzaLine({
       pagingEnabled
       snapToAlignment="start"
       snapToInterval={getWidthByRatio(1)}
-      ListHeaderComponent={
-        <View style={[styles.position, { backgroundColor: colors.backdrop }]}>
-          <WriterText size={64} align="center">
-            {position}
-          </WriterText>
-        </View>
-      }
+      // ListHeaderComponent={
+      //   <View style={[styles.position, { backgroundColor: colors.backdrop }]}>
+      //     <WriterText size={64} align="center">
+      //       {position}
+      //     </WriterText>
+      //   </View>
+      // }
       ListFooterComponent={
         shouldShowAddButton ? (
           <View style={[styles.stanzaContainer, styles.buttonContainer]}>
