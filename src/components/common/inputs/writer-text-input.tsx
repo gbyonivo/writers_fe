@@ -15,6 +15,7 @@ interface Props {
   disabled?: boolean
   error?: string
   style?: StyleProp<TextStyle>
+  errorStyle?: StyleProp<TextStyle>
   outlineStyle?: StyleProp<ViewStyle>
   mode?: 'outlined' | 'flat'
   autoFocus?: boolean
@@ -31,8 +32,9 @@ export function WriterTextInput({
   multiline,
   labelComponent,
   disabled,
-  error,
   style,
+  error,
+  errorStyle,
   mode = 'outlined',
   autoFocus = false,
   autoCapitalize = 'none',
@@ -41,9 +43,15 @@ export function WriterTextInput({
     <View style={containerStyle}>
       {!!label && <WriterText mb={8}>{label}</WriterText>}
       {!!labelComponent && <>{labelComponent}</>}
-      <HelperText type="error" visible={!!error} style={style}>
-        {error}
-      </HelperText>
+      {!!error && (
+        <HelperText
+          type="error"
+          visible={!!error}
+          style={[errorStyle, styles.error]}
+        >
+          {error}
+        </HelperText>
+      )}
       <RNPTextInput
         value={value}
         onChangeText={(text) => handleChange({ target: { name, value: text } })}
@@ -51,7 +59,6 @@ export function WriterTextInput({
         multiline={multiline}
         style={[style, multiline ? styles.multilineStyle : undefined]}
         disabled={disabled}
-        outlineColor="transparent"
         outlineStyle={outlineStyle}
         autoFocus={autoFocus}
         autoCapitalize={autoCapitalize}
@@ -63,5 +70,9 @@ export function WriterTextInput({
 const styles = StyleSheet.create({
   multilineStyle: {
     lineHeight: 28,
+  },
+  error: {
+    fontSize: 12,
+    marginLeft: -12,
   },
 })

@@ -1,10 +1,10 @@
 import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
-import { useToast } from 'react-native-toast-notifications'
 import { Poem } from 'writers_shared'
 
 import { usePoemMutation } from '../../../hooks/apollo/use-poem-mutation'
+import { useAlert } from '../../../hooks/use-alert'
 import { PoemSchema } from '../../../validation-schema/poem-schema'
 import { PoemCreateForm } from '../../common/poem/poem-create-form'
 import { WriterBackground } from '../../common/writer-background'
@@ -12,15 +12,11 @@ import { WriterBackground } from '../../common/writer-background'
 export function PoemCreationScreen() {
   const [created, setCreated] = useState(false)
   const [error, setError] = useState(null)
-  const toast = useToast()
+  const { show } = useAlert()
   const { createPoem, loading } = usePoemMutation({
     onSuccess: () => {
       setCreated(true)
-      toast.show('Your poem has been created', {
-        type: 'success',
-        animationType: 'slide-in',
-        placement: 'top',
-      })
+      show({ message: 'Your poem has been created' })
     },
     onFail: (e) => setError(e),
   })

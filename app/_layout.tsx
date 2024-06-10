@@ -1,6 +1,6 @@
 import { PortalProvider } from '@gorhom/portal'
 import { Slot, SplashScreen } from 'expo-router'
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { Text } from 'react-native'
 import { ToastProvider } from 'react-native-toast-notifications'
 import { Provider } from 'react-redux'
@@ -19,15 +19,30 @@ export const unstable_settings = {
 }
 
 export default function AppLayout() {
-  const { store, persistor } = createStore()
+  const [appMounted, setAppMounted] = useState(false)
+  const storeItems = useRef({
+    store: null,
+    persistor: null,
+  })
 
   useEffect(() => {
     SplashScreen.hideAsync()
   }, [])
 
+  useEffect(() => {
+    const initApp = async () => {
+      const { store, persistor } = await createStore()
+      storeItems.current = { store, persistor }
+      setAppMounted(true)
+    }
+    initApp()
+  }, [])
+
+  if (!appMounted) return null
+
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+    <Provider store={storeItems.current.store}>
+      <PersistGate loading={null} persistor={storeItems.current.persistor}>
         <SelectedColorSchemeContextProvider>
           <Paper>
             <Suspense fallback={<Text>Loading...</Text>}>

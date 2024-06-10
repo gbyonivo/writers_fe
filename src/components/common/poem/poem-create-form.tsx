@@ -47,7 +47,7 @@ export function PoemCreateForm({
           name="title"
           handleChange={handleChange}
           disabled={loading}
-          error={formErrors?.firstStanza?.content}
+          error={formErrors?.title}
         />
         <WriterTextInput
           value={values.firstStanza.content}

@@ -1,36 +1,50 @@
-import {
-  useGlobalSearchParams,
-  useLocalSearchParams,
-  useRouter,
-} from 'expo-router'
+import { useLocalSearchParams } from 'expo-router'
 import { useMemo, useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { Stanza } from 'writers_shared'
 
+import { usePoemStanzas } from '../../../hooks/apollo/use-poem-stanzas'
+import { AddStanzaForm } from '../../common/stanza/add-stanza-form'
 import { WriterBackground } from '../../common/writer-background'
 import { WriterText } from '../../common/writer-text'
 
 export function StanzaCreationScreen() {
-  const previousStanzas = []
-  // const router = useRouter()
-  // const { id } = useGlobalSearchParams()
-  // const { name } = useLocalSearchParams()
+  const localSearchParams = useLocalSearchParams()
   const ref = useRef(null)
+
+  const position = parseInt(localSearchParams.position as string, 10)
+  const poemId = parseInt(localSearchParams.id as string, 10)
+  const parentStanzaId = parseInt(
+    localSearchParams.parentStanzaId as string,
+    10,
+  )
+  const joinPreviousStanzaIds = (localSearchParams.previousStanzaId ||
+    '') as string
+  const { stanzas: allPoemStanzas, loading, error } = usePoemStanzas(poemId)
+
   const stanzas = useMemo(() => {
-    return [...previousStanzas, null]
-  }, [])
+    const previousStanzas = joinPreviousStanzaIds
+      .split(',')
+      .reduce((acc, curr) => {
+        const stanza = allPoemStanzas.find(
+          (stanza) => stanza.id === parseInt(curr, 10),
+        )
+        if (!stanza) return acc
+        return [...acc, stanza]
+      }, [])
+    return [...previousStanzas, undefined]
+  }, [joinPreviousStanzaIds, allPoemStanzas])
 
   const renderItem = ({ item }: { item: Stanza }) => {
     if (!item) {
-      return <></>
-      // return (
-      //   <AddStanzaForm
-      //     position={position}
-      //     poemId={poemId}
-      //     parentStanzaId={parentStanzaId}
-      //   />
-      // )
+      return (
+        <AddStanzaForm
+          position={position}
+          poemId={poemId}
+          parentStanzaId={parentStanzaId}
+        />
+      )
     }
     return (
       <View pointerEvents="none">
@@ -38,6 +52,14 @@ export function StanzaCreationScreen() {
           {item.content}
         </WriterText>
       </View>
+    )
+  }
+
+  if (loading || error) {
+    return (
+      <WriterBackground isView>
+        <WriterText>Dance with me</WriterText>
+      </WriterBackground>
     )
   }
 
@@ -54,7 +76,8 @@ export function StanzaCreationScreen() {
         maxToRenderPerBatch={5}
         windowSize={7}
         showsVerticalScrollIndicator={false}
-        initialScrollIndex={previousStanzas.length}
+        initialScrollIndex={stanzas.length ? stanzas.length - 1 : 0}
+        onScrollToIndexFailed={() => {}}
       />
     </WriterBackground>
   )

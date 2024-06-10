@@ -1,7 +1,8 @@
-import { Stack, useNavigation, useRouter } from 'expo-router'
+import { Stack, useRouter } from 'expo-router'
 import { StyleSheet } from 'react-native'
 import { Appbar, useTheme } from 'react-native-paper'
 
+import { PostStanzaButton } from '../../../src/components/common/stanza/post-stanza-button'
 import { WriterButton } from '../../../src/components/common/writer-button'
 import { WriterDefaultHeaderTitle } from '../../../src/components/common/writer-default-header-title'
 
@@ -41,11 +42,7 @@ export default function Layout() {
               Cancel
             </WriterButton>
           ),
-          headerRight: () => (
-            <WriterButton onPress={() => {}} disabled>
-              Post
-            </WriterButton>
-          ),
+          headerRight: () => <PostStanzaButton />,
         }}
       />
     </Stack>

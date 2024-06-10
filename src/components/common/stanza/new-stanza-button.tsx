@@ -1,34 +1,21 @@
-import { useRouter } from 'expo-router'
-import { useEffect, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import { WriterButton } from '../writer-button'
 
 interface Props {
-  poemId: number
-  parentStanzaId: number
+  onPressAddStanza: () => void
   shouldShowToggleButton: boolean
-  newStanzaPosition: number
 }
-
-const id = 2
 
 export function NewStanzaButton({
   shouldShowToggleButton,
-  parentStanzaId,
-  poemId,
-  newStanzaPosition,
+  onPressAddStanza,
 }: Props) {
-  const router = useRouter()
   return (
     <View style={styles.container}>
       {shouldShowToggleButton && (
         <WriterButton
-          onPress={() => {
-            router.push(
-              `/poem/${poemId}/new-stanza?parentStanzaId=${parentStanzaId}&position=${newStanzaPosition}`,
-            )
-          }}
+          onPress={onPressAddStanza}
           icon="plus"
           style={styles.showFormButton}
         >

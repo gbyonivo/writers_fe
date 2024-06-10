@@ -25,14 +25,8 @@ interface OnSwipeToStanzaParams {
 
 export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
   const router = useRouter()
-  const { selectBottomSheet } = useBottomSheetContext()
-  const { createStanza } = useStanzaMutation({ poemId })
   const positionToStanzaIdMapRef = useRef({})
   const [positionToStanzaIdMap, setPositionToStanzaIdMap] = useState(() => ({}))
-  const stanzaMap = useMemo(
-    () => stanzas.reduce((acc, curr) => ({ ...acc, [curr.id]: curr }), {}),
-    [],
-  )
   const map = useMemo(
     () =>
       stanzas.reduce(
@@ -70,18 +64,18 @@ export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
 
     const previousStanzas = Object.keys(positionToStanzaIdMap)
       .filter((pos) => parseInt(pos, 10) !== newStanzaPosition)
-      .map((pos) => {
-        return stanzaMap[positionToStanzaIdMap[pos]]
-      })
+      .map((pos) => positionToStanzaIdMap[pos])
 
-    const parentStanzaId = previousStanzas[previousStanzas.length - 1]?.id
+    const parentStanzaId = previousStanzas[previousStanzas.length - 1]
+    const queryString = [
+      `parentStanzaId=${parentStanzaId}`,
+      `position=${newStanzaPosition}`,
+      `previousStanzaId=${previousStanzas.join(',')}`,
+    ].join('&')
+    router.push(`/poem/${poemId}/new-stanza?${queryString}`)
+  }, [poemId, map, positionToStanzaIdMap])
 
-    router.push(
-      `/poem/${poemId}/new-stanza?parentStanzaId=${parentStanzaId}&position=${newStanzaPosition}&previousStanzaId=${Object.keys(positionToStanzaIdMap).join(',')}`,
-    )
-  }, [poemId, map, positionToStanzaIdMap, stanzaMap])
-
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({ item }) => {
     const stanzaListForPosition = map[item]
     return (
       <StanzaLine
@@ -105,9 +99,7 @@ export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
         showsHorizontalScrollIndicator={false}
         ListFooterComponent={
           <NewStanzaButton
-            poemId={poemId}
-            parentStanzaId={1}
-            newStanzaPosition={2}
+            onPressAddStanza={onPressAddStanza}
             shouldShowToggleButton
           />
         }

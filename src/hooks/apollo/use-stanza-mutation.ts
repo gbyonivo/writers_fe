@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client'
 import { useState } from 'react'
 import { Stanza } from 'writers_shared'
 
-import { GET_POEM } from '../../queries/poem'
+import { GET_POEM_STANZAS } from '../../queries/poem'
 import { CREATE_STANZA } from '../../queries/stanza'
 import { MutationHooKParams } from '../../types/mutation'
 
@@ -17,7 +17,7 @@ export const useStanzaMutation = ({
 }: Params = {}) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [action] = useMutation(CREATE_STANZA, {
-    refetchQueries: [{ query: GET_POEM, variables: { id: poemId } }],
+    refetchQueries: [{ query: GET_POEM_STANZAS, variables: { id: poemId } }],
   })
 
   const createStanza = async (stanza: Partial<Stanza>) => {
