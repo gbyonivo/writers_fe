@@ -25,7 +25,7 @@ export function AddStanzaForm({
   position,
   poemId,
 }: AddStanzaFormProps) {
-  const { createStanza } = useStanzaMutation()
+  const { createStanza } = useStanzaMutation({ poemId })
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
   const router = useRouter()

@@ -2,6 +2,7 @@ import { TouchableOpacity } from '@gorhom/bottom-sheet'
 import { useRouter } from 'expo-router'
 import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
+import { Poem } from 'writers_shared'
 
 import { usePoemListContext } from '../../../context/poem-list-context'
 import { usePoem } from '../../../hooks/apollo/use-poem'
@@ -10,18 +11,17 @@ import { WrittenBy } from '../written-by'
 import { PoemLikeButton } from './poem-like-button'
 
 interface Props {
-  poemId: number
+  poem: Poem
 }
 
-export function PoemItem({ poemId }: Props) {
+export function PoemItem({ poem }: Props) {
   const router = useRouter()
   const theme = useTheme()
-  const { poem } = usePoem(poemId)
   const containerStyle = {
     borderBottomColor: theme.colors.backdrop,
   }
   const onPress = () => {
-    router.push(`/poem/${poemId}?name=${poem?.title}`)
+    router.push(`/poem/${poem.id}?name=${poem?.title}`)
   }
 
   if (!poem) return null

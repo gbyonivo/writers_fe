@@ -8,10 +8,6 @@ interface Props {
 }
 
 export function WriterLoginHeader({ style }: Props) {
-  console.log(
-    `${process.env.EXPO_PUBLIC_API_URL}/graphql`,
-    'http://192.168.1.150:4000',
-  )
   return (
     <View style={style}>
       <WriterText variant="headlineLarge" style={styles.appName}>

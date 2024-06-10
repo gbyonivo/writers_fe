@@ -27,19 +27,17 @@ export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
   const router = useRouter()
   const positionToStanzaIdMapRef = useRef({})
   const [positionToStanzaIdMap, setPositionToStanzaIdMap] = useState(() => ({}))
-  const map = useMemo(
-    () =>
-      stanzas.reduce(
-        (acc, stanza) => ({
-          ...acc,
-          [stanza.position]: acc[stanza.position]
-            ? [stanza, ...acc[stanza.position]]
-            : [stanza],
-        }),
-        {},
-      ),
-    [],
-  )
+  const map = useMemo(() => {
+    return stanzas.reduce(
+      (acc, stanza) => ({
+        ...acc,
+        [stanza.position]: acc[stanza.position]
+          ? [stanza, ...acc[stanza.position]]
+          : [stanza],
+      }),
+      {},
+    )
+  }, [stanzas])
   const onSwipeToStanza = ({ stanzaId, position }: OnSwipeToStanzaParams) => {
     if (!stanzaId) return
     const newValue = {
