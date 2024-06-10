@@ -1,1 +1,1 @@
-export const APP_TITLE = 'AiitPoet'
+export const APP_TITLE = 'Old Poet'

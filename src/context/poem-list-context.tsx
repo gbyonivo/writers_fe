@@ -8,7 +8,7 @@ import { setLikes } from '../store/slices/poem'
 
 interface IPoemListContext {
   getPoem: (poemId: number) => Poem | null
-  poemIds: number[]
+  poemList: Poem[]
   loading: boolean
   error: any | null
   refetch: () => void
@@ -30,7 +30,7 @@ export function usePoemListContext(): IPoemListContext {
 function PoemListContextProvider({ children, userId }: Props) {
   const { loading, error, poems, refetch } = usePoems(userId)
   const dispatch = useDispatch()
-  const poemIds = []
+  const poemList = []
   const { map: poemMap, likes } = useMemo(() => {
     let likes = {}
     const map = (poems?.edges || []).reduce((acc, curr) => {
@@ -38,7 +38,7 @@ function PoemListContextProvider({ children, userId }: Props) {
         ...likes,
         [curr.node.id]: curr.node.hasBeenLiked,
       }
-      poemIds.push(curr.node.id)
+      poemList.push(curr.node)
       return {
         ...acc,
         [curr.node.id]: curr.node,
@@ -56,12 +56,12 @@ function PoemListContextProvider({ children, userId }: Props) {
   const value = useMemo(
     () => ({
       getPoem,
-      poemIds,
+      poemList,
       loading,
       error,
       refetch,
     }),
-    [loading, error, poemIds, getPoem],
+    [loading, error, poemList, getPoem],
   )
   return (
     // @ts-ignore

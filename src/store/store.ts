@@ -1,12 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { composeWithDevTools } from '@redux-devtools/extension'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import compact from 'lodash.compact'
 import { registerTranslation } from 'react-native-paper-dates'
+import Reactotron from 'reactotron-react-native'
 import { persistReducer, persistStore } from 'redux-persist'
 
 import login from './slices/login'
 import poem from './slices/poem'
 import settings from './slices/settings'
+
+Reactotron.configure({ host: '192.168.1.150', port: 8081 })
+  .useReactNative()
+  .connect()
 
 registerTranslation('pl', {
   save: 'Done',
@@ -39,23 +45,35 @@ const settingsPersistConfig = {
   storage: AsyncStorage,
 }
 
-export const createStore = () => {
+export const createStore = async () => {
   const reducer = combineReducers({
     login: persistReducer(loginPersistConfig, login),
     settings: persistReducer(settingsPersistConfig, settings),
     poem,
   })
+
+  let reactotronEnhancer
+  if (__DEV__) {
+    const { reactotronConnect } = await import('./reactotron-config')
+    reactotronEnhancer = reactotronConnect().createEnhancer()
+  }
+
   const store = configureStore({
     reducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
       }),
-    enhancers: (getDefaultEnhancers) =>
-      // @ts-ignore
-      getDefaultEnhancers({
+    // @ts-ignore
+    enhancers: (getDefaultEnhancers) => {
+      const defaultEnhancers = compact([
+        composeWithDevTools,
+        reactotronEnhancer,
+      ])
+      return getDefaultEnhancers({
         autoBatch: false,
-      }).concat(composeWithDevTools),
+      }).concat(defaultEnhancers)
+    },
   })
 
   const persistor = persistStore(store)

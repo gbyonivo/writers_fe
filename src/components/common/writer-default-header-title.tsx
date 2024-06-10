@@ -1,6 +1,10 @@
 import { APP_TITLE } from '../../utils/constants'
 import { WriterText } from './writer-text'
 
-export function WriterDefaultHeaderTitle() {
-  return <WriterText>{APP_TITLE}</WriterText>
+interface Props {
+  title?: string
+}
+
+export function WriterDefaultHeaderTitle({ title = APP_TITLE }: Props) {
+  return <WriterText>{title}</WriterText>
 }

@@ -7,11 +7,11 @@ import { PoemItem } from './poem-item'
 
 export function PoemList() {
   const theme = useTheme()
-  const { poemIds, refetch, loading } = usePoemListContext()
+  const { poemList, refetch, loading } = usePoemListContext()
   return (
     <FlatList
-      data={poemIds}
-      renderItem={({ item }) => <PoemItem poemId={item} />}
+      data={poemList}
+      renderItem={({ item }) => <PoemItem poem={item} />}
       contentContainerStyle={[
         styles.container,
         { backgroundColor: theme.colors.background },

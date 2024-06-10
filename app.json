@@ -2,7 +2,7 @@
   "expo": {
     "name": "writers_fe",
     "slug": "writers_fe",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,7 +13,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "ivo.tertsegha"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,8 +24,18 @@
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "09c52d3c-4a82-4694-99a0-bd7547a0d98b"
+      }
+    },
+    "scheme": "writersfe",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/09c52d3c-4a82-4694-99a0-bd7547a0d98b"
     }
-  },
-  "entryPoint": "./app/_layout.tsx",
-  "scheme": "https://decoveo.com"
+  }
 }

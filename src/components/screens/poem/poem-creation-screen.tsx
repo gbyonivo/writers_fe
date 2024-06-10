@@ -1,18 +1,28 @@
 import { useFormik } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { Poem } from 'writers_shared'
 
 import { usePoemMutation } from '../../../hooks/apollo/use-poem-mutation'
+import { useAlert } from '../../../hooks/use-alert'
+import { PoemSchema } from '../../../validation-schema/poem-schema'
 import { PoemCreateForm } from '../../common/poem/poem-create-form'
 import { WriterBackground } from '../../common/writer-background'
-import { WriterText } from '../../common/writer-text'
 
 export function PoemCreationScreen() {
   const [created, setCreated] = useState(false)
-  const { createPoem } = usePoemMutation({ onSuccess: () => setCreated(true) })
+  const [error, setError] = useState(null)
+  const { show } = useAlert()
+  const { createPoem, loading } = usePoemMutation({
+    onSuccess: () => {
+      setCreated(true)
+      show({ message: 'Your poem has been created' })
+    },
+    onFail: (e) => setError(e),
+  })
   const form = useFormik({
     enableReinitialize: false,
+    validationSchema: PoemSchema,
     initialValues: {
       title: '',
       firstStanza: {
@@ -25,6 +35,12 @@ export function PoemCreationScreen() {
     },
   })
 
+  useEffect(() => {
+    if (created) {
+      form.resetForm()
+    }
+  }, [created])
+
   return (
     <WriterBackground isView style={styles.container}>
       <>
@@ -32,8 +48,12 @@ export function PoemCreationScreen() {
           values={form.values}
           handleChange={form.handleChange}
           onSubmit={form.submitForm}
+          loading={loading}
+          error={error}
+          created={created}
+          submitButtonDisabled={!form.isValid && form.dirty}
+          formErrors={form.errors}
         />
-        {created && <WriterText>Created</WriterText>}
       </>
     </WriterBackground>
   )
@@ -41,7 +61,6 @@ export function PoemCreationScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 32,
     paddingHorizontal: 16,
   },
 })
