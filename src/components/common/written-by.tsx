@@ -11,8 +11,12 @@ interface Props {
 export function WrittenBy({ name, createdAt }: Props) {
   return (
     <View>
-      <WriterText style={styles.name}>by {name}</WriterText>
-      <WriterText>{timeAgo.format(parseInt(createdAt, 10))}</WriterText>
+      <WriterText style={styles.name} fontFamily="ExtraLight">
+        by {name}
+      </WriterText>
+      <WriterText fontFamily="ExtraLight">
+        {timeAgo.format(parseInt(createdAt, 10))}
+      </WriterText>
     </View>
   )
 }

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
 import { HelperText, TextInput as RNPTextInput } from 'react-native-paper'
 
+import { FontFamily } from '../../../types/font'
 import { WriterText } from '../writer-text'
 
 interface Props {
@@ -20,6 +21,7 @@ interface Props {
   mode?: 'outlined' | 'flat'
   autoFocus?: boolean
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters'
+  fontFamily?: FontFamily
 }
 
 export function WriterTextInput({
@@ -38,16 +40,25 @@ export function WriterTextInput({
   mode = 'outlined',
   autoFocus = false,
   autoCapitalize = 'none',
+  fontFamily = 'Medium',
 }: Props) {
   return (
     <View style={containerStyle}>
-      {!!label && <WriterText mb={8}>{label}</WriterText>}
+      {!!label && (
+        <WriterText mb={8} fontFamily="Medium">
+          {label}
+        </WriterText>
+      )}
       {!!labelComponent && <>{labelComponent}</>}
       {!!error && (
         <HelperText
           type="error"
           visible={!!error}
-          style={[errorStyle, styles.error]}
+          style={[
+            errorStyle,
+            styles.error,
+            { fontFamily: 'Poppins-Light' as FontFamily },
+          ]}
         >
           {error}
         </HelperText>
@@ -57,7 +68,12 @@ export function WriterTextInput({
         onChangeText={(text) => handleChange({ target: { name, value: text } })}
         mode={mode}
         multiline={multiline}
-        style={[style, multiline ? styles.multilineStyle : undefined]}
+        style={[
+          style,
+          multiline ? styles.multilineStyle : undefined,
+          { fontFamily },
+        ]}
+        contentStyle={{ fontFamily }}
         disabled={disabled}
         outlineStyle={outlineStyle}
         autoFocus={autoFocus}

@@ -3,6 +3,8 @@ import { StyleProp, StyleSheet, TextStyle } from 'react-native'
 import { Text } from 'react-native-paper'
 import { VariantProp } from 'react-native-paper/lib/typescript/components/Typography/types'
 
+import { FontFamily } from '../../types/font'
+
 export type TextAlgin = 'left' | 'right' | 'center'
 
 interface Props {
@@ -18,6 +20,7 @@ interface Props {
   mh?: number
   size?: number
   color?: string
+  fontFamily?: FontFamily
 }
 
 export function WriterText({
@@ -33,6 +36,7 @@ export function WriterText({
   mv,
   size = 16,
   color,
+  fontFamily = 'Light',
 }: Props) {
   const alignmentStyle = useMemo(() => {
     return {
@@ -50,6 +54,7 @@ export function WriterText({
     marginTop: mt,
     marginBottom: mb,
     fontSize: size,
+    fontFamily,
   }
 
   const addedColorStyle = color

@@ -6,5 +6,7 @@ import { PoemListContainer } from './poem-list-container'
 export const PoemListForLoggedInUser = () => {
   const user = useSelector(({ login }: AppState) => login.user)
 
+  if (!user) return null
+
   return <PoemListContainer userId={user.id} />
 }

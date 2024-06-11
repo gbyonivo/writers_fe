@@ -42,10 +42,6 @@ export default function Index() {
     }
   }
 
-  useEffect(() => {
-    SplashScreen.hideAsync()
-  }, [])
-
   return (
     <WriterBackground>
       <>

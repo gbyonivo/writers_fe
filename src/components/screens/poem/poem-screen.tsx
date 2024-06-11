@@ -25,6 +25,7 @@ export function PoemScreen({ poemId, poemName }: Props) {
           style={styles.poemNameContainer}
           mb={8}
           mt={8}
+          fontFamily="Bold"
         >
           {poem?.title || poemName}
         </WriterText>
