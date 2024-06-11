@@ -26,7 +26,7 @@ registerTranslation('en-GB', enGB)
 
 type ScreenName = keyof User
 
-const screenNames: ScreenName[] = ['name', 'username', 'email', 'dob']
+const screenNames: ScreenName[] = ['name', 'email', 'dob']
 
 export default function () {
   const pagerViewRef = useRef(null)
@@ -37,7 +37,7 @@ export default function () {
   const [errorMessage, setErrorMessage] = useState<string | null>('')
   const [token, setToken] = useState<null | string>(null)
   const [submittingForm, setSubmittingForm] = useState(false)
-  const showHeader = [0, 1, 2, 3].includes(pageIndex) && !token
+  const showHeader = [0, 1, 2].includes(pageIndex) && !token
   const dispatch = useDispatch()
 
   const onChange = (value: string, key: keyof User) => {
@@ -138,20 +138,6 @@ export default function () {
           </View>
           <View key={1} style={styles.formElement}>
             <PageContainer
-              label="Pick a username"
-              onPress={onPressContinue}
-              error={errorMessage}
-            >
-              <TextInput
-                label="Username"
-                value={user.username}
-                onChangeText={(value) => onChange(value, 'username')}
-                mode="outlined"
-              />
-            </PageContainer>
-          </View>
-          <View key={2} style={styles.formElement}>
-            <PageContainer
               label="What's your Email?"
               onPress={onPressContinue}
               error={errorMessage}
@@ -164,7 +150,7 @@ export default function () {
               />
             </PageContainer>
           </View>
-          <View key={3} style={styles.formElement}>
+          <View key={2} style={styles.formElement}>
             <PageContainer
               label="Tell us you date of birth so we can send you cards"
               onPress={onSubmit}
@@ -184,7 +170,7 @@ export default function () {
               </View>
             </PageContainer>
           </View>
-          <View key={4} style={styles.formElement}>
+          <View key={3} style={styles.formElement}>
             <PageContainer
               label="Tell us you date of birth so we can send you cards"
               onPress={onComplete}
