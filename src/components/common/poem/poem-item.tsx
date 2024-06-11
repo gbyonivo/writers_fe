@@ -4,8 +4,6 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { Poem } from 'writers_shared'
 
-import { usePoemListContext } from '../../../context/poem-list-context'
-import { usePoem } from '../../../hooks/apollo/use-poem'
 import { WriterText } from '../writer-text'
 import { WrittenBy } from '../written-by'
 import { PoemLikeButton } from './poem-like-button'
@@ -28,13 +26,18 @@ export function PoemItem({ poem }: Props) {
   return (
     <View style={[styles.container, containerStyle]}>
       <TouchableOpacity onPress={onPress}>
-        <WriterText color={theme.colors.onSurfaceVariant} size={18}>
+        <WriterText
+          color={theme.colors.onSurfaceVariant}
+          size={18}
+          fontFamily="Bold"
+        >
           {poem.title}
         </WriterText>
         {poem.firstStanza && (
           <View style={styles.poemContent}>
             <WriterText
               style={styles.poemContentText}
+              fontFamily="SemiBold"
             >{`${poem.firstStanza.content}`}</WriterText>
           </View>
         )}

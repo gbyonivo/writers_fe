@@ -1,6 +1,7 @@
 import { PortalProvider } from '@gorhom/portal'
+import { useFonts } from 'expo-font'
 import { Slot, SplashScreen } from 'expo-router'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { Text } from 'react-native'
 import { ToastProvider } from 'react-native-toast-notifications'
 import { Provider } from 'react-redux'
@@ -18,8 +19,20 @@ export const unstable_settings = {
   initialRouteName: '(auth)/sign-in',
 }
 
+SplashScreen.preventAutoHideAsync()
+
 export default function AppLayout() {
   const [appMounted, setAppMounted] = useState(false)
+  const [fontsLoaded, fontError] = useFonts({
+    Light: require('../src/assets/fonts/Poppins-Light.ttf'),
+    Bold: require('../src/assets/fonts/Poppins-Bold.ttf'),
+    ExtraLight: require('../src/assets/fonts/Poppins-ExtraLight.ttf'),
+    Regular: require('../src/assets/fonts/Poppins-Regular.ttf'),
+    SemiBold: require('../src/assets/fonts/Poppins-SemiBold.ttf'),
+    Medium: require('../src/assets/fonts/Poppins-Medium.ttf'),
+    Thin: require('../src/assets/fonts/Poppins-Thin.ttf'),
+  })
+
   const storeItems = useRef({
     store: null,
     persistor: null,
@@ -39,6 +52,9 @@ export default function AppLayout() {
   }, [])
 
   if (!appMounted) return null
+  if (!fontsLoaded && !fontError) {
+    return null
+  }
 
   return (
     <Provider store={storeItems.current.store}>

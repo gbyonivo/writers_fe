@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 
 import { WriterButton } from '../writer-button'
+import { WriterText } from '../writer-text'
 
 interface Props {
   onPressAddStanza: () => void
@@ -19,7 +20,7 @@ export function NewStanzaButton({
           icon="plus"
           style={styles.showFormButton}
         >
-          <>Add Stanza</>
+          <WriterText>Add Stanza</WriterText>
         </WriterButton>
       )}
     </View>
