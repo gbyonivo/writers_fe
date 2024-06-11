@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { View, useWindowDimensions } from 'react-native'
 import { SceneMap, TabView } from 'react-native-tab-view'
 
-import { PoemListContainer } from '../../common/poem/poem-list-container'
+import { PoemListForLoggedInUser } from '../../common/poem/poem-list-for-logged-in-user'
 import { WriterTabBar } from '../../common/writer-tab-bar'
 import { WriterText } from '../../common/writer-text'
 
@@ -18,7 +18,7 @@ const routes = [
 ]
 
 const renderScene = SceneMap({
-  poems: PoemListContainer,
+  poems: PoemListForLoggedInUser,
   groupPoems: SecondRoute,
 })
 
