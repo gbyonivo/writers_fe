@@ -5,16 +5,16 @@ import { WriterText } from '../writer-text'
 
 interface Props {
   onPressAddStanza: () => void
-  shouldShowToggleButton: boolean
+  showAddStanzaToLineButton: boolean
 }
 
 export function NewStanzaButton({
-  shouldShowToggleButton,
+  showAddStanzaToLineButton,
   onPressAddStanza,
 }: Props) {
   return (
     <View style={styles.container}>
-      {shouldShowToggleButton && (
+      {showAddStanzaToLineButton && (
         <WriterButton
           onPress={onPressAddStanza}
           icon="plus"

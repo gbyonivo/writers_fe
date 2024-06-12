@@ -1,8 +1,9 @@
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { Stanza } from 'writers_shared'
 
+import { useShouldChainStanzas } from '../../../hooks/selectors/use-should-chain-stanzas'
 import { getWidthByRatio } from '../../../utils/common'
 import { WriterIconButton } from '../writer-icon-button'
 import { StanzaItem } from './stanza-item'
@@ -14,6 +15,7 @@ interface Props {
   disabled?: boolean
   setStanzaIdForPosition: (val: { stanzaId: number; position: number }) => void
   position: number
+  filterParentPoemId?: number
 }
 
 export function StanzaLine({
@@ -23,9 +25,9 @@ export function StanzaLine({
   disabled,
   setStanzaIdForPosition,
   position,
+  filterParentPoemId,
 }: Props) {
-  // const isFocused = useIsFocused()
-  // const { colors } = useTheme()
+  const shouldChainStanzas = useShouldChainStanzas()
   const flatlistRef = useRef<Animated.FlatList<Stanza>>()
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
     setStanzaIdForPosition({ stanzaId: viewableItems[0]?.item?.id, position })
@@ -35,15 +37,10 @@ export function StanzaLine({
     return <StanzaItem stanza={item} containerStyle={styles.stanzaContainer} />
   }
 
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     // @ts-ignore
-  //     flatlistRef.current?.scrollToOffset?.({
-  //       offset: 100,
-  //     })
-  //     setStanzaIdForPosition({ stanzaId: stanzas[0]?.id, position })
-  //   }
-  // }, [isFocused])
+  const filteredStanzas = useMemo(() => {
+    if (!filterParentPoemId || !shouldChainStanzas) return stanzas
+    return stanzas.filter((stanza) => stanza.stanzaId === filterParentPoemId)
+  }, [stanzas, filterParentPoemId, shouldChainStanzas])
 
   return (
     <Animated.FlatList
@@ -52,7 +49,7 @@ export function StanzaLine({
       viewabilityConfig={{
         itemVisiblePercentThreshold: 99,
       }}
-      data={stanzas}
+      data={filteredStanzas}
       renderItem={renderItem}
       keyExtractor={(item) => `${item.id}`}
       contentContainerStyle={styles.container}

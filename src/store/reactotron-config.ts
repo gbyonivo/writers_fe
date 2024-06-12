@@ -21,28 +21,7 @@ export const reactotronConnect = () => {
     // .setAsyncStorageHandler(AsyncStorage)
     .use(asyncStorage())
     .use(reactotronRedux())
-  const log = console.log
-  console.log = (...args) => {
-    log(...args)
-
-    Reactotron.display({
-      name: 'LOG',
-      value: args,
-      preview: args.length > 0 && typeof args[0] === 'string' ? args[0] : null,
-    })
-  }
-
-  const warn = console.warn
-  console.warn = (...args) => {
-    warn(...args)
-
-    Reactotron.display({
-      name: 'WARN',
-      value: args,
-      preview: args.length > 0 && typeof args[0] === 'string' ? args[0] : null,
-    })
-  }
-  Reactotron.connect()
+    .connect()
 
   return reactotron
 }
