@@ -1,6 +1,4 @@
-import { useRouter } from 'expo-router'
 import { StyleSheet, View } from 'react-native'
-import { RefreshControl, ScrollView } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
 
 import { usePoem } from '../../../hooks/apollo/use-poem'
@@ -20,14 +18,8 @@ export function PoemScreen({ poemId, poemName }: Props) {
   return (
     <WriterBackground isView>
       <View style={[styles.container]}>
-        <WriterText
-          align="center"
-          style={styles.poemNameContainer}
-          mb={8}
-          mt={8}
-          fontFamily="Bold"
-        >
-          {poem?.title || poemName}
+        <WriterText style={styles.poemNameContainer} mb={8} mt={8}>
+          Title: {poem?.title || poemName}
         </WriterText>
         {loading && <WriterActivityIndicator color={theme.colors.onPrimary} />}
         <StanzaListForPoem poemId={poemId} />
@@ -41,6 +33,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   poemNameContainer: {
-    paddingHorizontal: 2,
+    paddingHorizontal: 24,
   },
 })

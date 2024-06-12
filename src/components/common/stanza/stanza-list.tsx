@@ -4,9 +4,7 @@ import { StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { Stanza } from 'writers_shared'
 
-import { useBottomSheetContext } from '../../../context/bottom-sheet-context'
-import { useStanzaMutation } from '../../../hooks/apollo/use-stanza-mutation'
-import { BottomSheet } from '../../../types/bottom-sheet'
+import { useShouldChainStanzas } from '../../../hooks/selectors/use-should-chain-stanzas'
 import { NewStanzaButton } from './new-stanza-button'
 import { StanzaLine } from './stanza-line'
 
@@ -25,6 +23,8 @@ interface OnSwipeToStanzaParams {
 
 export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
   const router = useRouter()
+  const shouldChainStanzas = useShouldChainStanzas()
+  // the ref is needed coz the state keeps resetting
   const positionToStanzaIdMapRef = useRef({})
   const [positionToStanzaIdMap, setPositionToStanzaIdMap] = useState(() => ({}))
   const map = useMemo(() => {
@@ -73,7 +73,7 @@ export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
     router.push(`/poem/${poemId}/new-stanza?${queryString}`)
   }, [poemId, map, positionToStanzaIdMap])
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
     const stanzaListForPosition = map[item]
     return (
       <StanzaLine
@@ -82,6 +82,7 @@ export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
         shouldShowAddButton={false}
         setStanzaIdForPosition={onSwipeToStanza}
         position={item}
+        filterParentPoemId={positionToStanzaIdMap[item - 1]}
       />
     )
   }
@@ -98,7 +99,7 @@ export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
         ListFooterComponent={
           <NewStanzaButton
             onPressAddStanza={onPressAddStanza}
-            shouldShowToggleButton
+            showAddStanzaToLineButton={shouldChainStanzas}
           />
         }
       />

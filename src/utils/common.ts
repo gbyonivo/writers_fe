@@ -22,3 +22,19 @@ export const getRatingDefaultConfig = (theme) => ({
 })
 
 export const isIos = Platform.OS === 'ios'
+
+export const truncateString = ({
+  text,
+  maxLength,
+  ellipsis = '...',
+}: {
+  text: string
+  maxLength: number
+  ellipsis?: string
+}) => {
+  if (text.length <= maxLength) {
+    return text
+  }
+  const truncatedStr = text.slice(0, maxLength - ellipsis.length)
+  return `${truncatedStr}${ellipsis}`
+}

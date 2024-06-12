@@ -11,6 +11,7 @@ export function PoemList() {
   return (
     <FlatList
       data={poemList}
+      bounces={false}
       renderItem={({ item }) => <PoemItem poem={item} />}
       contentContainerStyle={[
         styles.container,
