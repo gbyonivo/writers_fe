@@ -20,11 +20,7 @@ interface Props {
 export function PoemCreateForm({
   values,
   handleChange,
-  onSubmit,
-  error,
   loading,
-  created,
-  submitButtonDisabled,
   formErrors,
 }: Props) {
   return (
@@ -34,13 +30,6 @@ export function PoemCreateForm({
       style={styles.container}
     >
       <ScrollView showsVerticalScrollIndicator={false}>
-        <WriterButton
-          style={styles.buttonStyle}
-          onPress={onSubmit}
-          disabled={loading || created || submitButtonDisabled}
-        >
-          Create
-        </WriterButton>
         <WriterTextInput
           value={values.title}
           label="Title"

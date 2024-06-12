@@ -5,6 +5,10 @@ import { Poem } from 'writers_shared'
 
 import { usePoemMutation } from '../../../hooks/apollo/use-poem-mutation'
 import { useAlert } from '../../../hooks/use-alert'
+import {
+  onChangePoemSignal,
+  onPressCreatePoemSignal,
+} from '../../../utils/signal'
 import { PoemSchema } from '../../../validation-schema/poem-schema'
 import { PoemCreateForm } from '../../common/poem/poem-create-form'
 import { WriterBackground } from '../../common/writer-background'
@@ -41,6 +45,27 @@ export function PoemCreationScreen() {
     }
   }, [created])
 
+  useEffect(() => {
+    let removeListener = null
+    if (onPressCreatePoemSignal.getNumberOfListeners() < 1) {
+      removeListener = onPressCreatePoemSignal.listen(() => {
+        form.submitForm()
+      })
+    }
+
+    return () => {
+      removeListener?.()
+    }
+  }, [])
+
+  useEffect(() => {
+    onChangePoemSignal.emit({
+      isValid: form.isValid,
+      isDirty: form.dirty,
+      submitting: loading,
+    })
+  }, [form.dirty, form.isValid, loading])
+
   return (
     <WriterBackground isView style={styles.container}>
       <>
@@ -61,6 +86,6 @@ export function PoemCreationScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
+    padding: 16,
   },
 })
