@@ -1,13 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
+import { useShouldChainStanzas } from '../../../hooks/selectors/use-should-chain-stanzas'
 import { toggleShouldChainStanza } from '../../../store/slices/settings'
-import { AppState } from '../../../types/states/AppState'
 import { WriterIconButton } from '../writer-icon-button'
 
 export function StanzaChainToggle() {
-  const shouldChainStanzas = useSelector(
-    (state: AppState) => state.settings.shouldChainStanzas,
-  )
+  const shouldChainStanzas = useShouldChainStanzas()
   const dispatch = useDispatch()
   const onPressLock = () => {
     dispatch(toggleShouldChainStanza())

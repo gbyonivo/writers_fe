@@ -1,10 +1,9 @@
 import { useMemo, useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Animated from 'react-native-reanimated'
-import { useSelector } from 'react-redux'
 import { Stanza } from 'writers_shared'
 
-import { AppState } from '../../../types/states/AppState'
+import { useShouldChainStanzas } from '../../../hooks/selectors/use-should-chain-stanzas'
 import { getWidthByRatio } from '../../../utils/common'
 import { WriterIconButton } from '../writer-icon-button'
 import { StanzaItem } from './stanza-item'
@@ -28,9 +27,7 @@ export function StanzaLine({
   position,
   filterParentPoemId,
 }: Props) {
-  const { shouldChainStanzas } = useSelector(
-    (state: AppState) => state.settings,
-  )
+  const shouldChainStanzas = useShouldChainStanzas()
   const flatlistRef = useRef<Animated.FlatList<Stanza>>()
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
     setStanzaIdForPosition({ stanzaId: viewableItems[0]?.item?.id, position })
