@@ -2,6 +2,8 @@ import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { Tabs } from 'expo-router'
 import { useTheme } from 'react-native-paper'
 
+import { CreatePoemButton } from '../../src/components/common/poem/create-poem-button'
+import { WriterText } from '../../src/components/common/writer-text'
 import { FontFamily } from '../../src/types/font'
 
 function TabBarIcon(props: {
@@ -11,8 +13,12 @@ function TabBarIcon(props: {
   return <FontAwesome size={26} style={{ marginBottom: -3 }} {...props} />
 }
 
-const headerTitleStyle = {
-  fontFamily: 'Light' as FontFamily,
+const commonProps: Record<string, any> = {
+  headerTitleStyle: {
+    fontFamily: 'Light' as FontFamily,
+  },
+  tabBarLabelStyle: { display: 'none' },
+  headerTitle: '',
 }
 
 export default function TabLayout() {
@@ -35,35 +41,52 @@ export default function TabLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerTitleStyle,
+          headerLeft: () => (
+            <WriterText ml={16} fontFamily="Bold">
+              Home
+            </WriterText>
+          ),
+          ...commonProps,
         }}
       />
       <Tabs.Screen
         name="new-poem"
         options={{
-          title: 'Create Poem',
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="plus-square" color={color} />
           ),
-          headerTitleStyle,
+          headerRight: () => <CreatePoemButton />,
+          headerLeft: () => (
+            <WriterText ml={16} fontFamily="Bold">
+              New Poem
+            </WriterText>
+          ),
+          ...commonProps,
         }}
       />
       <Tabs.Screen
         name="search"
         options={{
-          title: 'Search',
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
-          headerTitleStyle,
+          headerLeft: () => (
+            <WriterText ml={16} fontFamily="Bold">
+              Search
+            </WriterText>
+          ),
+          ...commonProps,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
-          title: 'Profile',
-          headerTitleStyle,
+          headerLeft: () => (
+            <WriterText ml={16} fontFamily="Bold">
+              Profile
+            </WriterText>
+          ),
+          ...commonProps,
         }}
       />
     </Tabs>

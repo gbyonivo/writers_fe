@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react'
 
 import {
-  onChangeStanzaSignal,
-  onPressCreateStanzaSignal,
+  onChangePoemSignal,
+  onPressCreatePoemSignal,
 } from '../../../utils/signal'
 import { WriterHeaderButton } from '../writer-header-button'
 
-export function PostStanzaButton() {
+export function CreatePoemButton() {
   const [enableButton, setEnableButton] = useState(false)
 
   useEffect(() => {
     let removeListener = null
-    if (onChangeStanzaSignal.getNumberOfListeners() < 1) {
-      removeListener = onChangeStanzaSignal.listen(
-        ({ isValid, submitting }) => {
-          setEnableButton(isValid && !submitting)
-        },
-      )
+    if (onChangePoemSignal.getNumberOfListeners() < 1) {
+      removeListener = onChangePoemSignal.listen(({ isValid, submitting }) => {
+        setEnableButton(isValid && !submitting)
+      })
     }
 
     return () => {
@@ -25,12 +23,12 @@ export function PostStanzaButton() {
   }, [])
 
   const onClickPost = () => {
-    onPressCreateStanzaSignal.emit()
+    onPressCreatePoemSignal.emit()
   }
 
   return (
     <WriterHeaderButton
-      label="Post"
+      label="Create"
       onPress={onClickPost}
       enableButton={enableButton}
     />
