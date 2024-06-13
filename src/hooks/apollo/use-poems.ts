@@ -5,7 +5,7 @@ import { GET_POEMS } from '../../queries/poem'
 import { Pagination } from '../../types/Pagination'
 
 export const usePoems = (userId?: number) => {
-  const { data, loading, error, refetch } = useQuery(GET_POEMS, {
+  const { data, loading, error, refetch, fetchMore } = useQuery(GET_POEMS, {
     variables: { pagination: { userId, first: 6 } },
   })
 
@@ -15,5 +15,6 @@ export const usePoems = (userId?: number) => {
     error,
     poems,
     refetch,
+    fetchMore,
   }
 }

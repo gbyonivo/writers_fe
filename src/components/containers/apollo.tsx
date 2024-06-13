@@ -1,14 +1,10 @@
-import {
-  ApolloClient,
-  ApolloProvider,
-  InMemoryCache,
-  createHttpLink,
-} from '@apollo/client'
+import { ApolloClient, ApolloProvider, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { AppState } from '../../types/states/AppState'
+import { IN_MEMORY_CACHE } from '../../utils/apollo-in-memory-cache'
 
 const httpLink = createHttpLink({
   uri: `${process.env.EXPO_PUBLIC_API_URL}/graphql`,
@@ -33,7 +29,7 @@ export function Apollo({ children }: Props) {
 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
+    cache: IN_MEMORY_CACHE,
   })
   return <ApolloProvider client={client}>{children}</ApolloProvider>
 }

@@ -7,11 +7,10 @@ import { PoemItem } from './poem-item'
 
 export function PoemList() {
   const theme = useTheme()
-  const { poemList, refetch, loading } = usePoemListContext()
+  const { poemList, refetch, loading, loadMore } = usePoemListContext()
   return (
     <FlatList
       data={poemList}
-      bounces={false}
       renderItem={({ item }) => <PoemItem poem={item} />}
       contentContainerStyle={[
         styles.container,
@@ -28,7 +27,7 @@ export function PoemList() {
       onScroll={() => {}}
       showsHorizontalScrollIndicator={false}
       disableIntervalMomentum
-      pagingEnabled
+      onEndReached={loadMore}
     />
   )
 }
