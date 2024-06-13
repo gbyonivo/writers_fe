@@ -41,8 +41,8 @@ export const GET_POEM_STANZAS = gql`
 `
 
 export const GET_POEMS = gql`
-  query Poems($pagination: PaginationInput) {
-    poems(pagination: $pagination) {
+  query Poems($pagination: PaginationInput, $after: String) {
+    poems(pagination: $pagination, after: $after) {
       ${PAGINATION_META}
       edges {
         node {

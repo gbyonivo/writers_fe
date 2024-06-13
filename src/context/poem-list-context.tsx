@@ -7,11 +7,12 @@ import { usePoems } from '../hooks/apollo/use-poems'
 import { setLikes } from '../store/slices/poem'
 
 interface IPoemListContext {
-  getPoem: (poemId: number) => Poem | null
   poemList: Poem[]
   loading: boolean
   error: any | null
   refetch: () => void
+  loadMore: () => void
+  hasNextPage: boolean
 }
 
 interface Props {
@@ -28,9 +29,12 @@ export function usePoemListContext(): IPoemListContext {
 }
 
 function PoemListContextProvider({ children, userId }: Props) {
-  const { loading, error, poems, refetch } = usePoems(userId)
   const dispatch = useDispatch()
+  const { loading, error, poems, refetch, fetchMore } = usePoems(userId)
   const poemList = []
+  const endCursor = poems?.pageInfo?.endCursor
+  const hasNextPage = !!poems?.pageInfo?.hasNextPage
+
   const { map: poemMap, likes } = useMemo(() => {
     let likes = {}
     const map = (poems?.edges || []).reduce((acc, curr) => {
@@ -46,25 +50,33 @@ function PoemListContextProvider({ children, userId }: Props) {
     }, {})
     return { map, likes }
   }, [poems])
-  const getPoem = useCallback(
-    (poemId: number) => poemMap[poemId] || null,
-    [poemMap],
-  )
+
+  const loadMore = useCallback(() => {
+    if (!hasNextPage) return
+    fetchMore({
+      variables: {
+        first: 6,
+        after: poems.pageInfo.endCursor,
+      },
+    })
+  }, [endCursor, fetchMore])
+
   useEffect(() => {
     dispatch(setLikes(likes))
   }, [likes])
+
   const value = useMemo(
     () => ({
-      getPoem,
       poemList,
       loading,
       error,
+      hasNextPage,
       refetch,
+      loadMore,
     }),
-    [loading, error, poemList, getPoem],
+    [loading, error, poemList, loadMore, hasNextPage],
   )
   return (
-    // @ts-ignore
     <PoemListContext.Provider value={value}>
       {children}
     </PoemListContext.Provider>
