@@ -1,10 +1,10 @@
 import { WriterBackground } from '../../src/components/common/writer-background'
-import { WriterText } from '../../src/components/common/writer-text'
+import { Results } from '../../src/components/screens/search/results'
 
 export default function Search() {
   return (
-    <WriterBackground>
-      <WriterText>Adding the search</WriterText>
+    <WriterBackground isView>
+      <Results />
     </WriterBackground>
   )
 }

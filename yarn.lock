@@ -4513,14 +4513,7 @@ expo-file-system@~15.4.0, expo-file-system@~15.4.5:
   dependencies:
     uuid "^3.4.0"
 
-expo-font@^12.0.7:
-  version "12.0.7"
-  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-12.0.7.tgz#4e81a90c72262f64d8a18ecc2f7a0da4446048bb"
-  integrity sha512-rbSdpjtT/A3M+u9xchR9tdD+5VGSxptUis7ngX5zfAVp3O5atOcPNSA82Jeo15HkrQE+w/upfFBOvi56lsGdsQ==
-  dependencies:
-    fontfaceobserver "^2.1.0"
-
-expo-font@~11.4.0:
+expo-font@11.4.0, expo-font@~11.4.0:
   version "11.4.0"
   resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-11.4.0.tgz#e2d31c0bb76ba3c37c2d84703a49aeafc3afef28"
   integrity sha512-nkmezCFD7gR/I6R+e3/ry18uEfF8uYrr6h+PdBJu+3dawoLOpo+wFb/RG9bHUekU1/cPanR58LR7G5MEMKHR2w==
@@ -9475,10 +9468,10 @@ write-file-atomic@^2.3.0:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.2"
 
-writers_shared@^1.1.12:
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/writers_shared/-/writers_shared-1.1.12.tgz#cc690849b2a159c97ee40d958df0f2a55770117a"
-  integrity sha512-2LTFqYCkMsyzo0mFdwWHfpARvN3cWKGoJatFNT77cAAY2XwYoMHkH5ce19v/ZTv9Fi60S0Yv5mjeW/0VE5nXPQ==
+writers_shared@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/writers_shared/-/writers_shared-1.1.13.tgz#01786106f437fb4c66ab0e3728e7744bab891f06"
+  integrity sha512-IyXRExg/WWs2EGjN0+amAoBI3Rpbkaxin74OnyaOtAdplqqSQ7zhJD5VMWMp8PL0vEtYUwaNHAGfH8oUE5oarQ==
   dependencies:
     tsup "^8.0.1"
     typescript "^5.3.3"

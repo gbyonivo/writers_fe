@@ -73,7 +73,7 @@ export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
     router.push(`/poem/${poemId}/new-stanza?${queryString}`)
   }, [poemId, map, positionToStanzaIdMap])
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({ item }) => {
     const stanzaListForPosition = map[item]
     return (
       <StanzaLine
