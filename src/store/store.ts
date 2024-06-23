@@ -8,6 +8,7 @@ import { persistReducer, persistStore } from 'redux-persist'
 
 import login from './slices/login'
 import poem from './slices/poem'
+import search from './slices/search'
 import settings from './slices/settings'
 
 Reactotron.configure({ host: '192.168.1.150', port: 8081 })
@@ -45,10 +46,16 @@ const settingsPersistConfig = {
   storage: AsyncStorage,
 }
 
+const searchPersistConfig = {
+  key: 'settings',
+  storage: AsyncStorage,
+}
+
 export const createStore = async () => {
   const reducer = combineReducers({
     login: persistReducer(loginPersistConfig, login),
     settings: persistReducer(settingsPersistConfig, settings),
+    search: persistReducer(searchPersistConfig, search),
     poem,
   })
 

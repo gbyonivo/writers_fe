@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router'
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { Stanza } from 'writers_shared'
 
 import { useShouldChainStanzas } from '../../../hooks/selectors/use-should-chain-stanzas'
@@ -70,10 +69,10 @@ export function StanzaList({ stanzas = [], poemId, refetch }: Props) {
       `position=${newStanzaPosition}`,
       `previousStanzaId=${previousStanzas.join(',')}`,
     ].join('&')
-    router.push(`/poem/${poemId}/new-stanza?${queryString}`)
+    router.push(`/poems/${poemId}/new-stanza?${queryString}`)
   }, [poemId, map, positionToStanzaIdMap])
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({ item }) => {
     const stanzaListForPosition = map[item]
     return (
       <StanzaLine

@@ -1,8 +1,9 @@
 import { PortalProvider } from '@gorhom/portal'
 import { useFonts } from 'expo-font'
 import { Slot, SplashScreen } from 'expo-router'
-import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { Text } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ToastProvider } from 'react-native-toast-notifications'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -63,18 +64,20 @@ export default function AppLayout() {
           <Paper>
             <Suspense fallback={<Text>Loading...</Text>}>
               <AuthContextProvider>
-                <PortalProvider>
-                  <BottomSheetContextProvider>
-                    <Apollo>
-                      <ToastProvider>
-                        <>
-                          <BottomSheetHandler />
-                          <Slot />
-                        </>
-                      </ToastProvider>
-                    </Apollo>
-                  </BottomSheetContextProvider>
-                </PortalProvider>
+                <GestureHandlerRootView>
+                  <PortalProvider>
+                    <BottomSheetContextProvider>
+                      <Apollo>
+                        <ToastProvider>
+                          <>
+                            <BottomSheetHandler />
+                            <Slot />
+                          </>
+                        </ToastProvider>
+                      </Apollo>
+                    </BottomSheetContextProvider>
+                  </PortalProvider>
+                </GestureHandlerRootView>
               </AuthContextProvider>
             </Suspense>
           </Paper>

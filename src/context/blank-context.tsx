@@ -38,7 +38,7 @@ function AuthContextProvider({ children }) {
 
   useEffect(() => {
     if (userId) {
-      router.replace('/(tabs)/home')
+      router.replace('(root)/(tabs)/home')
     } else {
       router.replace('/(auth)/sign-in')
     }

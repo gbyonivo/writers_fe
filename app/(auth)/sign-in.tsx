@@ -1,5 +1,5 @@
-import { SplashScreen, router } from 'expo-router'
-import { useEffect, useRef, useState } from 'react'
+import { router } from 'expo-router'
+import { useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { HelperText } from 'react-native-paper'
 import PhoneInput from 'react-native-phone-number-input'

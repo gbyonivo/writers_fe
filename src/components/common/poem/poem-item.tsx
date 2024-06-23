@@ -19,7 +19,7 @@ export function PoemItem({ poem }: Props) {
     borderBottomColor: theme.colors.backdrop,
   }
   const onPress = () => {
-    router.push(`/poem/${poem.id}?name=${poem?.title}`)
+    router.push(`/poems/${poem.id}?name=${poem?.title}`)
   }
 
   if (!poem) return null

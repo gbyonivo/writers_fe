@@ -1,10 +1,12 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { Tabs } from 'expo-router'
 import { useTheme } from 'react-native-paper'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { CreatePoemButton } from '../../src/components/common/poem/create-poem-button'
-import { WriterText } from '../../src/components/common/writer-text'
-import { FontFamily } from '../../src/types/font'
+import { CreatePoemButton } from '../../../src/components/common/poem/create-poem-button'
+import WriterSearchBar from '../../../src/components/common/writer-search-bar'
+import { WriterText } from '../../../src/components/common/writer-text'
+import { FontFamily } from '../../../src/types/font'
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name']
@@ -35,7 +37,7 @@ export default function TabLayout() {
         },
         headerTintColor: theme.colors.onBackground,
       }}
-      backBehavior="history"
+      backBehavior="none"
       initialRouteName="home"
     >
       <Tabs.Screen
@@ -69,12 +71,12 @@ export default function TabLayout() {
         name="search"
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
-          headerLeft: () => (
-            <WriterText ml={16} fontFamily="Bold">
-              Search
-            </WriterText>
-          ),
           ...commonProps,
+          header: () => (
+            <SafeAreaView style={{ backgroundColor: theme.colors.background }}>
+              <WriterSearchBar />
+            </SafeAreaView>
+          ),
         }}
       />
       <Tabs.Screen

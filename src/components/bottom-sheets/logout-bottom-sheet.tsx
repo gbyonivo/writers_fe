@@ -1,6 +1,7 @@
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
 import React, { useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
 
 import { WriterButton } from '../common/writer-button'
@@ -26,25 +27,27 @@ export function LogoutBottomSheet({
   }
 
   return (
-    <BottomSheet
-      snapPoints={snapPoints}
-      handleIndicatorStyle={bottomSheetIndicator}
-      onClose={onClose}
-      backgroundStyle={bottomSheetStyle}
-      enablePanDownToClose
-      backdropComponent={(backdropProps) => (
-        <BottomSheetBackdrop
-          {...backdropProps}
-          disappearsOnIndex={-1}
-          enableTouchThrough
-          opacity={0.6}
-        />
-      )}
-    >
-      <View style={[styles.contentContainer]}>
-        <WriterButton onPress={onPressLogout}>Logout</WriterButton>
-      </View>
-    </BottomSheet>
+    <GestureHandlerRootView>
+      <BottomSheet
+        snapPoints={snapPoints}
+        handleIndicatorStyle={bottomSheetIndicator}
+        onClose={onClose}
+        backgroundStyle={bottomSheetStyle}
+        enablePanDownToClose
+        backdropComponent={(backdropProps) => (
+          <BottomSheetBackdrop
+            {...backdropProps}
+            disappearsOnIndex={-1}
+            enableTouchThrough
+            opacity={0.6}
+          />
+        )}
+      >
+        <View style={[styles.contentContainer]}>
+          <WriterButton onPress={onPressLogout}>Logout</WriterButton>
+        </View>
+      </BottomSheet>
+    </GestureHandlerRootView>
   )
 }
 

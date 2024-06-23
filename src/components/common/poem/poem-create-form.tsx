@@ -1,10 +1,8 @@
-import { KeyboardAvoidingView, StyleSheet } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { KeyboardAvoidingView, ScrollView, StyleSheet } from 'react-native'
 import { Poem } from 'writers_shared'
 
 import { isIos } from '../../../utils/common'
 import { WriterTextInput } from '../inputs/writer-text-input'
-import { WriterButton } from '../writer-button'
 
 interface Props {
   values: Partial<Poem>

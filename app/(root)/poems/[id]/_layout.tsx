@@ -2,10 +2,10 @@ import { Stack, useRouter } from 'expo-router'
 import { StyleSheet } from 'react-native'
 import { Appbar, useTheme } from 'react-native-paper'
 
-import { PostStanzaButton } from '../../../src/components/common/stanza/post-stanza-button'
-import { StanzaChainToggle } from '../../../src/components/common/stanza/stanza-chain-toggle'
-import { WriterButton } from '../../../src/components/common/writer-button'
-import { WriterDefaultHeaderTitle } from '../../../src/components/common/writer-default-header-title'
+import { PostStanzaButton } from '../../../../src/components/common/stanza/post-stanza-button'
+import { StanzaChainToggle } from '../../../../src/components/common/stanza/stanza-chain-toggle'
+import { WriterButton } from '../../../../src/components/common/writer-button'
+import { WriterDefaultHeaderTitle } from '../../../../src/components/common/writer-default-header-title'
 
 export default function Layout() {
   const { colors } = useTheme()
