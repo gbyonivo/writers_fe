@@ -3,10 +3,10 @@ import { Tabs } from 'expo-router'
 import { useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { CreatePoemButton } from '../../src/components/common/poem/create-poem-button'
-import WriterSearchBar from '../../src/components/common/writer-search-bar'
-import { WriterText } from '../../src/components/common/writer-text'
-import { FontFamily } from '../../src/types/font'
+import { CreatePoemButton } from '../../../src/components/common/poem/create-poem-button'
+import WriterSearchBar from '../../../src/components/common/writer-search-bar'
+import { WriterText } from '../../../src/components/common/writer-text'
+import { FontFamily } from '../../../src/types/font'
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name']
@@ -37,7 +37,7 @@ export default function TabLayout() {
         },
         headerTintColor: theme.colors.onBackground,
       }}
-      backBehavior="history"
+      backBehavior="none"
       initialRouteName="home"
     >
       <Tabs.Screen
