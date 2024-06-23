@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import { useSearchUserResults } from '../../../hooks/apollo/use-search-user-results'
@@ -19,7 +18,6 @@ export function SearchUsersTab() {
   }, [result.users])
 
   const renderItem = ({ item }) => {
-    console.log(item.node.title)
     return (
       <View style={{ paddingVertical: 8 }}>
         <WriterText>

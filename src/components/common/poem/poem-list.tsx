@@ -1,5 +1,4 @@
-import { FlatList, StyleSheet } from 'react-native'
-import { RefreshControl } from 'react-native-gesture-handler'
+import { FlatList, RefreshControl, StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
 import { usePoemListContext } from '../../../context/poem-list-context'

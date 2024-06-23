@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "ivo.tertsegha"
@@ -51,7 +53,8 @@
             "./src/assets/fonts/Poppins-Thin.ttf"
           ]
         }
-      ]
+      ],
+      "expo-asset"
     ]
   }
 }

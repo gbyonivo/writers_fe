@@ -1,6 +1,6 @@
+import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import { useSearchPoems } from '../../../hooks/apollo/use-search-poem-result'
@@ -12,6 +12,7 @@ export function SearchPoemsTab() {
   const searchValue = useSelector((state: AppState) => state.search.searchValue)
   const poemResult = useSearchPoems(searchValue)
   const [displayedResult, setDisplayedResult] = useState([])
+  const router = useRouter()
 
   useEffect(() => {
     if (poemResult.loading || poemResult.error) return
@@ -19,13 +20,17 @@ export function SearchPoemsTab() {
   }, [poemResult.poems])
 
   const renderItem = ({ item }) => {
-    console.log(item.node.title)
+    const poem = item.node
     return (
-      <View style={{ paddingVertical: 8 }}>
-        <WriterText>
-          {truncateString({ text: item.node.title, maxLength: 40 })}
-        </WriterText>
-      </View>
+      <TouchableOpacity
+        onPress={() => router.push(`/poems/${poem.id}?name=${poem?.title}`)}
+      >
+        <View style={{ paddingVertical: 8 }}>
+          <WriterText>
+            {truncateString({ text: poem.title, maxLength: 40 })}
+          </WriterText>
+        </View>
+      </TouchableOpacity>
     )
   }
 

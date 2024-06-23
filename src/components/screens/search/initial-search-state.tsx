@@ -1,12 +1,12 @@
 import { useMemo } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
-import { CommonGenre } from 'writers_shared'
 
+// import { CommonGenre } from 'writers_shared'
 import { WriterText } from '../../common/writer-text'
 
 export function InitialSearchState() {
   const genreList = useMemo(() => {
-    return Object.values(CommonGenre)
+    return Object.values({})
   }, [])
 
   const renderItem = ({ item }) => {

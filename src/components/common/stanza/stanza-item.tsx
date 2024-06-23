@@ -1,6 +1,10 @@
-import { useState } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native'
 import { Stanza } from 'writers_shared'
 
 import { useBottomSheetContext } from '../../../context/bottom-sheet-context'

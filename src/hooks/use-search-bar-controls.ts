@@ -2,14 +2,14 @@ import { useCallback } from 'react'
 import { LayoutChangeEvent } from 'react-native'
 
 export interface SearchBarControls {
-  onFocus: () => void
-  onBlur: () => void
-  onSubmitEditing: () => void
-  onChangeText: (value: string) => void
-  isFocus: any
-  refInput: any
-  cancelButtonWidth: any
-  clearButton: any
+  onFocus?: () => void
+  onBlur?: () => void
+  onSubmitEditing?: () => void
+  onChangeText?: (value: string) => void
+  isFocus?: any
+  refInput?: any
+  cancelButtonWidth?: any
+  clearButton?: any
 }
 
 export const useSearchBarControls = ({
