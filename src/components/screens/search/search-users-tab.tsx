@@ -1,6 +1,8 @@
+import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import { User } from 'writers_shared'
 
 import { useSearchUserResults } from '../../../hooks/apollo/use-search-user-results'
 import { AppState } from '../../../types/states/AppState'
@@ -11,6 +13,7 @@ export function SearchUsersTab() {
   const searchValue = useSelector((state: AppState) => state.search.searchValue)
   const result = useSearchUserResults(searchValue)
   const [displayedResult, setDisplayedResult] = useState([])
+  const router = useRouter()
 
   useEffect(() => {
     if (result.loading || result.error) return
@@ -18,12 +21,15 @@ export function SearchUsersTab() {
   }, [result.users])
 
   const renderItem = ({ item }) => {
+    const user = item.node as User
     return (
-      <View style={{ paddingVertical: 8 }}>
-        <WriterText>
-          {truncateString({ text: item.node.name, maxLength: 40 })}
-        </WriterText>
-      </View>
+      <TouchableOpacity onPress={() => router.push(`/users/${user.id}`)}>
+        <View style={{ paddingVertical: 8 }}>
+          <WriterText>
+            {truncateString({ text: user.name, maxLength: 40 })}
+          </WriterText>
+        </View>
+      </TouchableOpacity>
     )
   }
 

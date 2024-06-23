@@ -22,7 +22,7 @@ export function ProfileContent({ userId, showLogout = false }: Props) {
           <View style={styles.detailsContainer}>
             <UserDetails userId={userId} />
           </View>
-          <UserTabs />
+          <UserTabs userId={userId} />
           {showLogout && isLoggedInUserProfile && (
             <WriterButton icon="logout" onPress={logout} style={styles.button}>
               Log out
