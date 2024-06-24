@@ -1,5 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'
+import { BlurView } from 'expo-blur'
 import { Tabs } from 'expo-router'
+import { StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -30,12 +32,23 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: theme.colors.onBackground,
         tabBarStyle: {
-          backgroundColor: theme.colors.background,
+          position: 'absolute',
         },
         headerStyle: {
           backgroundColor: theme.colors.background,
         },
         headerTintColor: theme.colors.onBackground,
+        headerShadowVisible: false,
+        tabBarBackground: () => (
+          <BlurView
+            intensity={30}
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              backgroundColor: 'transparent',
+              overflow: 'hidden',
+            }}
+          />
+        ),
       }}
       backBehavior="none"
       initialRouteName="home"
@@ -76,6 +89,7 @@ export default function TabLayout() {
               Home
             </WriterText>
           ),
+          headerShadowVisible: false,
           ...commonProps,
         }}
       />

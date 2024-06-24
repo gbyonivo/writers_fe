@@ -1,5 +1,4 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { Text } from 'react-native-paper'
 
 import { WriterText } from './writer-text'
 
@@ -13,8 +12,12 @@ export function WriterLoginHeader({ style }: Props) {
       <WriterText variant="headlineLarge" style={styles.appName}>
         AiitPoet
       </WriterText>
-      <WriterText variant="labelSmall" style={styles.appSlogan}>
-        You are Poet and I am about to show it
+      <WriterText
+        variant="labelSmall"
+        fontFamily="ExtraLight"
+        style={styles.appSlogan}
+      >
+        {`Lets twist it a little bit, tweak it a little bit.\nSee what we get`}
       </WriterText>
     </View>
   )
