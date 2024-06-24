@@ -14,7 +14,6 @@ interface Props {
 
 export function ProfileContent({ userId, showLogout = false }: Props) {
   const { logout, user: loggedInUser } = useAuthContext()
-  const isLoggedInUserProfile = userId === loggedInUser?.id
   return (
     <WriterBackground style={{ flex: 1 }} isView>
       <>
@@ -23,11 +22,6 @@ export function ProfileContent({ userId, showLogout = false }: Props) {
             <UserDetails userId={userId} />
           </View>
           <UserTabs userId={userId} />
-          {showLogout && isLoggedInUserProfile && (
-            <WriterButton icon="logout" onPress={logout} style={styles.button}>
-              Log out
-            </WriterButton>
-          )}
         </View>
       </>
     </WriterBackground>

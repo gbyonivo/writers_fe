@@ -1,0 +1,27 @@
+import { useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import { Switch } from 'react-native-paper'
+
+import { WriterText } from '../../common/writer-text'
+import { SettingsItemContainer } from './settings-item-container'
+
+export function ToggleNotification() {
+  const [isSwitchOn, setIsSwitchOn] = useState(false)
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn)
+
+  return (
+    <SettingsItemContainer>
+      <View style={style.container}>
+        <WriterText fontFamily="Bold">Notificatons</WriterText>
+        <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
+      </View>
+    </SettingsItemContainer>
+  )
+}
+
+const style = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+})

@@ -41,15 +41,15 @@ export default function TabLayout() {
       initialRouteName="home"
     >
       <Tabs.Screen
-        name="home"
+        name="search"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerLeft: () => (
-            <WriterText ml={16} fontFamily="Bold">
-              Home
-            </WriterText>
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
           ...commonProps,
+          header: () => (
+            <SafeAreaView style={{ backgroundColor: theme.colors.background }}>
+              <WriterSearchBar />
+            </SafeAreaView>
+          ),
         }}
       />
       <Tabs.Screen
@@ -68,15 +68,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="search"
+        name="home"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
-          ...commonProps,
-          header: () => (
-            <SafeAreaView style={{ backgroundColor: theme.colors.background }}>
-              <WriterSearchBar />
-            </SafeAreaView>
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          headerLeft: () => (
+            <WriterText ml={16} fontFamily="Bold">
+              Home
+            </WriterText>
           ),
+          ...commonProps,
         }}
       />
       <Tabs.Screen
@@ -86,6 +86,18 @@ export default function TabLayout() {
           headerLeft: () => (
             <WriterText ml={16} fontFamily="Bold">
               Profile
+            </WriterText>
+          ),
+          ...commonProps,
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
+          headerLeft: () => (
+            <WriterText ml={16} fontFamily="Bold">
+              Settings
             </WriterText>
           ),
           ...commonProps,
