@@ -65,7 +65,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="new-poem"
+        name="new-piece"
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="plus-square" color={color} />

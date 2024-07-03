@@ -3,7 +3,7 @@ import { Portal } from 'react-native-paper'
 import { useBottomSheetContext } from '../../context/bottom-sheet-context'
 import { BottomSheet } from '../../types/bottom-sheet'
 import { LogoutBottomSheet } from './logout-bottom-sheet'
-import { StanzaRatingBottomSheet } from './stanza-rating-bottom-sheet'
+import { PartRatingBottomSheet } from './part-rating-bottom-sheet'
 
 export function BottomSheetHandler() {
   const { bottomSheet, resetBottomSheet, params } = useBottomSheetContext()
@@ -17,12 +17,12 @@ export function BottomSheetHandler() {
         />
       )
       break
-    case BottomSheet.STANZA_RATING:
+    case BottomSheet.PART_RATING:
       element = (
-        <StanzaRatingBottomSheet
+        <PartRatingBottomSheet
           onClose={() => resetBottomSheet()}
-          stanza={params.stanza}
-          rateStanza={params.rateStanza}
+          part={params.part}
+          ratePart={params.ratePart}
         />
       )
       break

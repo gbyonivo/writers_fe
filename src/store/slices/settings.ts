@@ -6,7 +6,7 @@ import { SettingsState } from '../../types/states/SettingState'
 
 const initialState: SettingsState = {
   theme: null,
-  shouldChainStanzas: false,
+  shouldChainParts: false,
 }
 
 export const settingsSlice = createSlice({
@@ -19,15 +19,15 @@ export const settingsSlice = createSlice({
         theme: payload,
       }
     },
-    toggleShouldChainStanza: (state) => {
+    toggleShouldChainPart: (state) => {
       return {
         ...state,
-        shouldChainStanzas: !state.shouldChainStanzas,
+        shouldChainParts: !state.shouldChainParts,
       }
     },
   },
 })
 
-export const { setTheme, toggleShouldChainStanza } = settingsSlice.actions
+export const { setTheme, toggleShouldChainPart } = settingsSlice.actions
 
 export default settingsSlice.reducer

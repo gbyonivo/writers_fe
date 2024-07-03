@@ -1,11 +1,11 @@
 import { LoginState } from './LoginState'
-import { PoemState } from './PoemState'
+import { PieceState } from './PieceState'
 import { SearchState } from './SearchState'
 import { SettingsState } from './SettingState'
 
 export interface AppState {
   login: LoginState
   settings: SettingsState
-  poem: PoemState
+  piece: PieceState
   search: SearchState
 }

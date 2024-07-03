@@ -5,7 +5,7 @@ import { WriterText } from '../../common/writer-text'
 import { ChooseReader } from './choose-reader'
 import { DeleteAccount } from './delete-account'
 import { GoPremium } from './go-premium'
-import { LockStanzas } from './lock-stanzas'
+import { LockParts } from './lock-parts'
 import { Logout } from './logout'
 import { TermsAndConditions } from './terms-and-conditions'
 import { ToggleNotification } from './toggle-notification'
@@ -18,7 +18,7 @@ export function SettingsScreen() {
       <ScrollView style={styles.container}>
         <ToggleTheme />
         <ChooseReader />
-        <LockStanzas />
+        <LockParts />
         <ToggleNotification />
         <GoPremium />
         <Logout />

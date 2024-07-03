@@ -7,7 +7,7 @@ import Reactotron from 'reactotron-react-native'
 import { persistReducer, persistStore } from 'redux-persist'
 
 import login from './slices/login'
-import poem from './slices/poem'
+import piece from './slices/piece'
 import search from './slices/search'
 import settings from './slices/settings'
 
@@ -56,7 +56,7 @@ export const createStore = async () => {
     login: persistReducer(loginPersistConfig, login),
     settings: persistReducer(settingsPersistConfig, settings),
     search: persistReducer(searchPersistConfig, search),
-    poem,
+    piece,
   })
 
   let reactotronEnhancer

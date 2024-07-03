@@ -50,11 +50,11 @@ export function UserDetails({ userId }: Props) {
             align="right"
             mr={4}
             mb={8}
-          >{`Poems: ${user?.poemCount}`}</WriterText>
+          >{`Pieces: ${user?.pieceCount}`}</WriterText>
           <WriterText
             align="right"
             mr={4}
-          >{`Stanzas: ${user?.stanzaCount}`}</WriterText>
+          >{`Parts: ${user?.partCount}`}</WriterText>
         </View>
       </View>
     </View>

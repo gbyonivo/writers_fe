@@ -68,7 +68,7 @@
     "reactotron-react-native": "^5.1.7",
     "reactotron-redux": "^3.1.9",
     "redux-persist": "^6.0.0",
-    "writers_shared": "^1.1.16"
+    "writers_shared": "^1.1.18"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
