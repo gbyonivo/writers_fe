@@ -30,4 +30,4 @@ export const createSignal = <T = any>(): Signal<T> => {
 export const onPressCreateStanzaSignal = createSignal()
 export const onChangeStanzaSignal = createSignal()
 export const onChangePoemSignal = createSignal()
-export const onPressCreatePoemSignal = createSignal()
+export const onPressNextOnCreationScreenSignal = createSignal()

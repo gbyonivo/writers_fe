@@ -7396,6 +7396,11 @@ react-native-paper-dates@^0.21.7:
   dependencies:
     color "^4.2.3"
 
+react-native-paper-dropdown@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-paper-dropdown/-/react-native-paper-dropdown-1.0.7.tgz#64fe004b05b73ca5c781873d800ac5062b35bdc9"
+  integrity sha512-St0rZFw5sC7mbXtFCOGsyEa0fIBaG6Cfz78RsjFNzTj+rKd1i9qlDY2O7eOa2zAUEnFlL+C7FXdXUY9RUNELNw==
+
 react-native-paper@^5.11.6:
   version "5.12.3"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.12.3.tgz#d583119722ebbfbb7fe40400181d63748cca3683"
@@ -9245,10 +9250,10 @@ write-file-atomic@^2.3.0:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.2"
 
-writers_shared@^1.1.13:
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/writers_shared/-/writers_shared-1.1.13.tgz#01786106f437fb4c66ab0e3728e7744bab891f06"
-  integrity sha512-IyXRExg/WWs2EGjN0+amAoBI3Rpbkaxin74OnyaOtAdplqqSQ7zhJD5VMWMp8PL0vEtYUwaNHAGfH8oUE5oarQ==
+writers_shared@^1.1.16:
+  version "1.1.16"
+  resolved "https://registry.yarnpkg.com/writers_shared/-/writers_shared-1.1.16.tgz#e0acad0d636a0f72d798a602b2d04ef7609c4de0"
+  integrity sha512-ebXQccxI5v1EdGdbNNfdOEPnsCU1RUIPA8tmYXt+Xp04QvLo5YWJX0o6qZ8B7fQyjVLpleR5zmvF416KaPISbg==
   dependencies:
     tsup "^8.0.1"
     typescript "^5.3.3"

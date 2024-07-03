@@ -5,7 +5,6 @@ import { StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { CreatePoemButton } from '../../../src/components/common/poem/create-poem-button'
 import WriterSearchBar from '../../../src/components/common/writer-search-bar'
 import { WriterText } from '../../../src/components/common/writer-text'
 import { FontFamily } from '../../../src/types/font'
@@ -71,13 +70,8 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="plus-square" color={color} />
           ),
-          headerRight: () => <CreatePoemButton />,
-          headerLeft: () => (
-            <WriterText ml={16} fontFamily="Bold">
-              New Poem
-            </WriterText>
-          ),
           ...commonProps,
+          header: () => <></>,
         }}
       />
       <Tabs.Screen
