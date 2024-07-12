@@ -9,6 +9,7 @@ interface Props {
   icon?: IconSource
   disabled?: boolean
   textColor?: string
+  iconRight?: boolean
 }
 
 export function WriterButton({
@@ -18,6 +19,7 @@ export function WriterButton({
   icon,
   disabled,
   textColor,
+  iconRight,
 }: Props) {
   return (
     <Button
@@ -25,6 +27,7 @@ export function WriterButton({
       mode="contained-tonal"
       onPress={onPress}
       style={style}
+      contentStyle={[iconRight ? { flexDirection: 'row-reverse' } : {}]}
       uppercase
       disabled={disabled}
       textColor={textColor}

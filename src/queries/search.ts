@@ -2,9 +2,9 @@ import { gql } from '@apollo/client'
 
 import { PAGINATION_META } from './common'
 
-export const SEARCH_POEMS = gql`
-  query PoemSearchResults($pagination: PaginationInput, $after: String) {
-    poemSearchResults(pagination: $pagination, after: $after) {
+export const SEARCH_PIECES = gql`
+  query PieceSearchResults($pagination: PaginationInput, $after: String) {
+    pieceSearchResults(pagination: $pagination, after: $after) {
       ${PAGINATION_META}
       edges {
         node {

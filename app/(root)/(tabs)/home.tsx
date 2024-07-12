@@ -1,5 +1,5 @@
-import { PoemListContainer } from '../../../src/components/common/poem/poem-list-container'
+import { PieceListContainer } from '../../../src/components/common/piece/piece-list-container'
 
 export default function Home() {
-  return <PoemListContainer />
+  return <PieceListContainer />
 }

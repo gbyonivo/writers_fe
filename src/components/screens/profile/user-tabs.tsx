@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { View, useWindowDimensions } from 'react-native'
 import { SceneMap, TabView } from 'react-native-tab-view'
 
-import { PoemListForUser } from '../../common/poem/poem-list-for-user'
+import { PieceListForUser } from '../../common/piece/piece-list-for-user'
 import { WriterTabBar } from '../../common/writer-tab-bar'
 import { WriterText } from '../../common/writer-text'
 
@@ -13,16 +13,16 @@ const SecondRoute = () => (
 )
 
 const routes = [
-  { key: 'poems', title: 'Poems' },
-  { key: 'groupPoems', title: 'Stories' },
+  { key: 'pieces', title: 'Pieces' },
+  { key: 'groupPieces', title: 'Stories' },
 ]
 
 export function UserTabs({ userId }: { userId: number }) {
   const layout = useWindowDimensions()
 
   const renderScene = SceneMap({
-    poems: () => <PoemListForUser userId={userId} />,
-    groupPoems: SecondRoute,
+    pieces: () => <PieceListForUser userId={userId} />,
+    groupPieces: SecondRoute,
   })
 
   const [index, setIndex] = useState(0)

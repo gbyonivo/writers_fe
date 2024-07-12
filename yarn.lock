@@ -6019,6 +6019,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
+lodash.get@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
+  integrity sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==
+
 lodash.isinteger@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz#619c0af3d03f8b04c31f5882840b77b11cd68343"
@@ -7395,6 +7400,11 @@ react-native-paper-dates@^0.21.7:
   integrity sha512-fseKdJSEajlKHbSRwvUybyw/IeYlUcnU/NoUHzqNRkc38gGhFgVFMqT5dCPedks+Z+eeUQyzrqnjPd+oVReI1A==
   dependencies:
     color "^4.2.3"
+
+react-native-paper-dropdown@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-paper-dropdown/-/react-native-paper-dropdown-1.0.7.tgz#64fe004b05b73ca5c781873d800ac5062b35bdc9"
+  integrity sha512-St0rZFw5sC7mbXtFCOGsyEa0fIBaG6Cfz78RsjFNzTj+rKd1i9qlDY2O7eOa2zAUEnFlL+C7FXdXUY9RUNELNw==
 
 react-native-paper@^5.11.6:
   version "5.12.3"
@@ -9245,10 +9255,10 @@ write-file-atomic@^2.3.0:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.2"
 
-writers_shared@^1.1.13:
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/writers_shared/-/writers_shared-1.1.13.tgz#01786106f437fb4c66ab0e3728e7744bab891f06"
-  integrity sha512-IyXRExg/WWs2EGjN0+amAoBI3Rpbkaxin74OnyaOtAdplqqSQ7zhJD5VMWMp8PL0vEtYUwaNHAGfH8oUE5oarQ==
+writers_shared@^1.1.20:
+  version "1.1.20"
+  resolved "https://registry.yarnpkg.com/writers_shared/-/writers_shared-1.1.20.tgz#3c75ec739cd6c004d448d1e665254ee177796418"
+  integrity sha512-PGSigwlHF6RiDl3Z1m/sZY5ePoAn/HdoyFzKuEeQNJJxu2NNe1rm1u7v3FoQesiyWO61/hjFLm03mJONFaFlKw==
   dependencies:
     tsup "^8.0.1"
     typescript "^5.3.3"

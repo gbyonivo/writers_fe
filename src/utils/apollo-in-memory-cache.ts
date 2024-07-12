@@ -5,7 +5,7 @@ export const IN_MEMORY_CACHE = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
-        poems: {
+        pieces: {
           ...relayStylePagination(),
           keyArgs: ['pagination'],
         },

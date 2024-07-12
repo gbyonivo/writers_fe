@@ -3,18 +3,18 @@ import { useWindowDimensions } from 'react-native'
 import { SceneMap, TabView } from 'react-native-tab-view'
 
 import { WriterTabBar } from '../../common/writer-tab-bar'
-import { SearchPoemsTab } from './search-poems-tab'
+import { SearchPiecesTab } from './search-pieces-tab'
 import { SearchUsersTab } from './search-users-tab'
 
 const routes = [
-  { key: 'poems', title: 'Poems' },
-  // { key: 'stanzas', title: 'Stanzas' },
+  { key: 'pieces', title: 'Pieces' },
+  // { key: 'parts', title: 'Parts' },
   { key: 'writers', title: 'Writers' },
 ]
 
 const renderScene = SceneMap({
-  poems: SearchPoemsTab,
-  // stanzas: SearchPoemsTab,
+  pieces: SearchPiecesTab,
+  // parts: SearchPiecesTab,
   writers: SearchUsersTab,
 })
 

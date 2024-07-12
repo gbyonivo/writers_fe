@@ -1,5 +1,5 @@
 export enum BottomSheet {
   LOGOUT = 'Logout',
-  STANZA_RATING = 'StanzaRating',
-  ADD_STANZA = 'AddStanza',
+  PART_RATING = 'PartRating',
+  ADD_PART = 'AddPart',
 }

@@ -1,5 +1,5 @@
-import { SearchPoemsTab } from './search-poems-tab'
+import { SearchPiecesTab } from './search-pieces-tab'
 
 export function TypingSearchValueState() {
-  return <SearchPoemsTab />
+  return <SearchPiecesTab />
 }

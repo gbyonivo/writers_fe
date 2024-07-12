@@ -27,7 +27,7 @@ export const createSignal = <T = any>(): Signal<T> => {
   }
 }
 
-export const onPressCreateStanzaSignal = createSignal()
-export const onChangeStanzaSignal = createSignal()
-export const onChangePoemSignal = createSignal()
-export const onPressCreatePoemSignal = createSignal()
+export const onPressCreatePartSignal = createSignal()
+export const onChangePartSignal = createSignal()
+export const onChangePieceSignal = createSignal()
+export const onPressNextOnCreationScreenSignal = createSignal()
