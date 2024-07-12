@@ -1,9 +1,31 @@
 import { Stack, useRouter } from 'expo-router'
 import { Appbar, useTheme } from 'react-native-paper'
 
+import { WriterBackground } from '../../src/components/common/writer-background'
+import { WriterText } from '../../src/components/common/writer-text'
+import { useInitializeApp } from '../../src/hooks/use-initialize-app'
+
 export default function RootLayout() {
   const router = useRouter()
   const { colors } = useTheme()
+
+  const { loading: initializingApp, error: errorInitializingApp } =
+    useInitializeApp()
+
+  if (initializingApp) {
+    return (
+      <WriterBackground>
+        <WriterText> </WriterText>
+      </WriterBackground>
+    )
+  }
+  if (errorInitializingApp) {
+    return (
+      <WriterBackground>
+        <WriterText> </WriterText>
+      </WriterBackground>
+    )
+  }
 
   return (
     <Stack>

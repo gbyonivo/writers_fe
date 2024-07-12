@@ -1,9 +1,11 @@
-import { useRef, useState } from 'react'
+import { useRouter } from 'expo-router'
+import get from 'lodash.get'
+import { useEffect, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { CommonGenre, Piece, PieceType } from 'writers_shared/dist/index'
+import { Piece, PieceType } from 'writers_shared/dist/index'
 
 import { AnimatedPager } from '../../containers/page-scroller'
-import { GenreSelect } from '../inputs/genre-select'
+import { GenreMultiSelect } from '../inputs/genre-multi-select'
 import { WriterSegmentedButtons } from '../inputs/writer-segmented-buttons'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { WriterHeaderButton } from '../writer-header-button'
@@ -14,6 +16,7 @@ interface Props {
   loading: boolean
   formErrors?: any
   submitForm: () => void
+  created?: boolean
 }
 
 const typeOptions = Object.keys(PieceType).map((val) => ({
@@ -21,9 +24,9 @@ const typeOptions = Object.keys(PieceType).map((val) => ({
   value: val,
 }))
 
-const errorKeys = ['type', 'genre', 'title', 'firstPart.content']
+const errorKeys = ['type', 'genreIds', 'title', 'firstPart.content']
 const nextButtonLabel = ['Genre', 'Title', 'First Content', 'Create']
-const previousButtonLabel = ['', 'Type', 'Genre', 'Title']
+const previousButtonLabel = ['', 'Type', 'Genres', 'Title']
 
 export function PieceCreateForm({
   values,
@@ -31,6 +34,7 @@ export function PieceCreateForm({
   loading,
   formErrors,
   submitForm,
+  created,
 }: Props) {
   const pagerViewRef = useRef(null)
   const [pageIndex, setPageIndex] = useState(0)
@@ -45,6 +49,12 @@ export function PieceCreateForm({
     pagerViewRef.current.setPage(pageIndex - 1)
   }
 
+  useEffect(() => {
+    if (created) {
+      setPageIndex(0)
+    }
+  }, [])
+
   return (
     <>
       <View style={styles.header}>
@@ -58,7 +68,7 @@ export function PieceCreateForm({
         <WriterHeaderButton
           label={nextButtonLabel[pageIndex] || 'Next'}
           onPress={onPressNext}
-          enableButton={!formErrors[errorKeys[pageIndex]]}
+          enableButton={!get(formErrors, errorKeys[pageIndex])}
           iconRight
           icon="arrow-right"
         />
@@ -79,11 +89,11 @@ export function PieceCreateForm({
           />
         </View>
         <View key={1} style={styles.formElement}>
-          <GenreSelect
-            value={values.genre[0] || CommonGenre.OTHERS}
+          <GenreMultiSelect
+            value={values.genreIds}
             handleChange={handleChange}
-            name="genre"
-            // error={formErrors?.title}
+            name="genreIds"
+            error={formErrors?.genreIds}
           />
         </View>
         <View key={2} style={styles.formElement}>

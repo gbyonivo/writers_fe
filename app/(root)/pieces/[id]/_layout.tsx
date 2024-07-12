@@ -1,4 +1,4 @@
-import { Stack, useRouter } from 'expo-router'
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import { StyleSheet } from 'react-native'
 import { Appbar, useTheme } from 'react-native-paper'
 
@@ -10,6 +10,15 @@ import { WriterDefaultHeaderTitle } from '../../../../src/components/common/writ
 export default function Layout() {
   const { colors } = useTheme()
   const router = useRouter()
+  const { backOverride } = useLocalSearchParams()
+
+  const onPressBack = () => {
+    if (backOverride) {
+      router.push(backOverride as string)
+      return
+    }
+    router.back()
+  }
 
   return (
     <Stack>
@@ -19,7 +28,7 @@ export default function Layout() {
           headerStyle: { backgroundColor: colors.background },
           headerTintColor: colors.onBackground,
           headerTitle: () => <></>,
-          headerLeft: () => <Appbar.BackAction onPress={() => router.back()} />,
+          headerLeft: () => <Appbar.BackAction onPress={onPressBack} />,
           headerRight: () => <PartChainToggle />,
         }}
       />

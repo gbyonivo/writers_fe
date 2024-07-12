@@ -36,9 +36,7 @@ export function PartItem({ part, containerStyle }: Props) {
       }}
     >
       <View style={[styles.pieceContentContainer, containerStyle]}>
-        <WriterText style={styles.pieceContentText}>
-          {part.content} - {`${part.id}`} - {`${part.partId || 'none'}`}
-        </WriterText>
+        <WriterText style={styles.pieceContentText}>{part.content}</WriterText>
       </View>
     </TouchableOpacity>
   )

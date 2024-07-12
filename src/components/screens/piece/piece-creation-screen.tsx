@@ -1,41 +1,39 @@
+import { useRouter } from 'expo-router'
 import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
-import { StyleSheet } from 'react-native'
-import { CommonGenre, Piece, PieceType } from 'writers_shared/dist/index'
+import { Piece, PieceType } from 'writers_shared/dist/index'
 
 import { usePieceMutation } from '../../../hooks/apollo/use-piece-mutation'
 import { useAlert } from '../../../hooks/use-alert'
-import {
-  onChangePieceSignal,
-  onPressNextOnCreationScreenSignal,
-} from '../../../utils/signal'
+import { onChangePieceSignal } from '../../../utils/signal'
 import { PieceSchema } from '../../../validation-schema/piece-schema'
 import { PieceCreateForm } from '../../common/piece/piece-create-form'
 import { WriterBackground } from '../../common/writer-background'
 
 export function PieceCreationScreen() {
   const [created, setCreated] = useState(false)
-  const [error, setError] = useState(null)
-  const [nextCounter, setNextCounter] = useState(0)
   const { show } = useAlert()
+  const router = useRouter()
   const { createPiece, loading } = usePieceMutation({
-    onSuccess: () => {
+    onSuccess: (response) => {
       setCreated(true)
       show({ message: 'Your piece has been created' })
+      router.push(`/pieces/${response.data.createPiece.id}?backOverride=/home`)
     },
-    onFail: (e) => setError(e),
+    onFail: () => {
+      show({ message: 'Your piece has been created', type: 'danger' })
+    },
   })
   const form = useFormik({
     enableReinitialize: false,
     validationSchema: PieceSchema,
     initialValues: {
       title: '',
-      genre: [CommonGenre.OTHERS],
-      type: PieceType.POEM,
+      genreIds: [],
+      type: undefined,
       firstPart: {
         content: '',
       },
-      partLength: undefined,
     },
     onSubmit: async (value: Partial<Piece>) => {
       await createPiece(value)
@@ -43,8 +41,13 @@ export function PieceCreationScreen() {
   })
 
   useEffect(() => {
+    form.validateForm()
+  }, [])
+
+  useEffect(() => {
     if (created) {
       form.resetForm()
+      setCreated(false)
     }
   }, [created])
 
@@ -64,6 +67,7 @@ export function PieceCreationScreen() {
         loading={loading}
         formErrors={form.errors}
         submitForm={form.submitForm}
+        created={created}
       />
     </WriterBackground>
   )

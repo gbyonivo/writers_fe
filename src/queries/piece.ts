@@ -9,8 +9,9 @@ const PIECE_DETAILS = `
   createdAt
   updatedAt
   partLength
-  genre
+  genreIds
   status
+  type
   firstPart {
     id,
     content
@@ -62,13 +63,15 @@ export const LIKE_PIECE = gql`
 export const CREATE_PIECE = gql`
   mutation CreatePiece(
     $title: String
-    $genre: String
+    $type: String
+    $genreIds: [Int]
     $firstPart: FirstPartInput
   ) {
     createPiece(
       title: $title
+      type: $type
       firstPart: $firstPart
-      genre: $genre
+      genreIds: $genreIds
     ) {
       ${PIECE_DETAILS}
     }
