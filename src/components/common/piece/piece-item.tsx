@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { Piece } from 'writers_shared'
 
+import { GenreList } from '../genre/genre-list'
 import { WriterText } from '../writer-text'
 import { WrittenBy } from '../written-by'
 import { PieceLikeButton } from './piece-like-button'
@@ -33,6 +34,12 @@ export function PieceItem({ piece }: Props) {
         >
           {piece.title}
         </WriterText>
+        {!!piece.genreIds.length && (
+          <GenreList
+            genreIds={piece.genreIds}
+            containerStyle={styles.genreListContainer}
+          />
+        )}
         {piece.firstPart && (
           <View style={styles.pieceContent}>
             <WriterText
@@ -73,5 +80,8 @@ const styles = StyleSheet.create({
     marginTop: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  genreListContainer: {
+    marginTop: 8,
   },
 })

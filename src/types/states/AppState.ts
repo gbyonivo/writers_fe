@@ -1,3 +1,4 @@
+import { GenreState } from './GenreState'
 import { LoginState } from './LoginState'
 import { PieceState } from './PieceState'
 import { SearchState } from './SearchState'
@@ -8,4 +9,5 @@ export interface AppState {
   settings: SettingsState
   piece: PieceState
   search: SearchState
+  genre: GenreState
 }
