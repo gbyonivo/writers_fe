@@ -1,5 +1,8 @@
 import { useCallback } from 'react'
 import { LayoutChangeEvent } from 'react-native'
+import { useDispatch } from 'react-redux'
+
+import { setGenreValue, setSearchValue } from '../store/slices/search'
 
 export interface SearchBarControls {
   onFocus?: () => void
@@ -22,8 +25,13 @@ export const useSearchBarControls = ({
   onSubmitEditing,
   onBlur,
 }: SearchBarControls) => {
+  const dispatch = useDispatch()
+
   const onCancel = useCallback(() => {
     refInput.current?.blur()
+    onChangeText?.('')
+    dispatch(setSearchValue(''))
+    dispatch(setGenreValue(''))
   }, [refInput])
 
   const onCancelLayout = useCallback(

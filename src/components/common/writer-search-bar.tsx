@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import { Icon } from 'react-native-paper'
 import Animated, { useSharedValue } from 'react-native-reanimated'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { useSearchValue } from '../../hooks/selectors/use-search-value'
 import {
@@ -20,7 +20,12 @@ import {
   useSearchBarControls,
 } from '../../hooks/use-search-bar-controls'
 import { useSearchBarStyles } from '../../hooks/use-search-bar-styles'
-import { onDoneTyping, setSearchValue } from '../../store/slices/search'
+import {
+  onDoneTyping,
+  setGenreValue,
+  setSearchValue,
+} from '../../store/slices/search'
+import { AppState } from '../../types/states/AppState'
 import { getWidthByRatio, isIos } from '../../utils/common'
 
 const hitSlop = {
@@ -60,7 +65,7 @@ function SearchBarComponent(props: SearchBarProps, ref: React.Ref<any>) {
     clearIcon,
     searchIcon,
   } = props
-
+  const genreValue = useSelector((state: AppState) => state.search.genreValue)
   const initialSearchValue = useRef(useSearchValue())
   const refInput = useRef<TextInput>(null)
   const isFocus = useSharedValue(false)
@@ -72,6 +77,14 @@ function SearchBarComponent(props: SearchBarProps, ref: React.Ref<any>) {
   useEffect(() => {
     setSearchValue(initialSearchValue.current)
   }, [])
+
+  useEffect(() => {
+    if (genreValue) {
+      setValue(genreValue)
+      dispatch(setSearchValue(genreValue))
+      dispatch(setGenreValue(''))
+    }
+  }, [genreValue])
 
   const {
     onCancel,

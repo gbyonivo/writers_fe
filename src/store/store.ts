@@ -46,16 +46,11 @@ const settingsPersistConfig = {
   storage: AsyncStorage,
 }
 
-const searchPersistConfig = {
-  key: 'settings',
-  storage: AsyncStorage,
-}
-
 export const createStore = async () => {
   const reducer = combineReducers({
     login: persistReducer(loginPersistConfig, login),
     settings: persistReducer(settingsPersistConfig, settings),
-    search: persistReducer(searchPersistConfig, search),
+    search,
     piece,
   })
 

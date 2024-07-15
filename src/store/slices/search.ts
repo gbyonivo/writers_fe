@@ -7,6 +7,7 @@ import { SearchState } from '../../types/states/SearchState'
 const initialState: SearchState = {
   searchValue: '',
   searchValueStatus: SearchValueStatus.EMPTY,
+  genreValue: '',
 }
 
 export const searchSlice = createSlice({
@@ -14,22 +15,33 @@ export const searchSlice = createSlice({
   initialState,
   reducers: {
     setSearchValue: (state, { payload }: PayloadAction<string | null>) => {
+      let searchValueStatus =
+        payload.length > 0 ? SearchValueStatus.TYPING : SearchValueStatus.EMPTY
+      if (state.genreValue) {
+        searchValueStatus = state.searchValueStatus
+      }
       return {
         ...state,
         searchValue: payload,
-        searchValueStatus:
-          payload.length > 0
-            ? SearchValueStatus.TYPING
-            : SearchValueStatus.EMPTY,
+        searchValueStatus,
       }
     },
     onDoneTyping: (state) => ({
       ...state,
       searchValueStatus: SearchValueStatus.DONE,
     }),
+    setGenreValue: (state, { payload }: PayloadAction<string | null>) => {
+      return {
+        ...state,
+        genreValue: payload,
+        searchValueStatus:
+          payload.length > 0 ? SearchValueStatus.DONE : state.searchValueStatus,
+      }
+    },
   },
 })
 
-export const { setSearchValue, onDoneTyping } = searchSlice.actions
+export const { setSearchValue, onDoneTyping, setGenreValue } =
+  searchSlice.actions
 
 export default searchSlice.reducer
