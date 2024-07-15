@@ -19,12 +19,19 @@ export function PieceScreen({ pieceId, pieceName }: Props) {
   return (
     <WriterBackground isView>
       <View style={[styles.container]}>
-        <WriterText style={styles.pieceNameContainer} mb={8} mt={8}>
-          Title: {piece?.title || pieceName}
+        <WriterText
+          style={styles.pieceNameContainer}
+          mb={8}
+          mt={8}
+          fontFamily="Bold"
+          size={24}
+          align="center"
+        >
+          {piece?.title || pieceName}
         </WriterText>
-        {!!piece.genreIds.length && (
+        {!!piece?.genreIds?.length && (
           <GenreList
-            genreIds={piece.genreIds}
+            genreIds={piece?.genreIds || []}
             containerStyle={styles.genreListContainer}
           />
         )}
@@ -44,5 +51,6 @@ const styles = StyleSheet.create({
   },
   genreListContainer: {
     paddingHorizontal: 24,
+    justifyContent: 'center',
   },
 })

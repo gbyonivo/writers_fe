@@ -25,6 +25,9 @@ export function GenreList({ genreIds, containerStyle, chipStyle }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flexWrap: 'wrap', flexDirection: 'row' },
+  container: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
   chip: { marginRight: 8 },
 })
