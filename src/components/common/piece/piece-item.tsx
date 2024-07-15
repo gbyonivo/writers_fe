@@ -37,7 +37,7 @@ export function PieceItem({ piece }: Props) {
           <View style={styles.pieceContent}>
             <WriterText
               style={styles.pieceContentText}
-              fontFamily="SemiBold"
+              fontFamily="Medium"
             >{`${piece.firstPart.content}`}</WriterText>
           </View>
         )}
