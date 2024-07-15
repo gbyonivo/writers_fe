@@ -6,6 +6,7 @@ import { registerTranslation } from 'react-native-paper-dates'
 import Reactotron from 'reactotron-react-native'
 import { persistReducer, persistStore } from 'redux-persist'
 
+import genre from './slices/genre'
 import login from './slices/login'
 import piece from './slices/piece'
 import search from './slices/search'
@@ -52,6 +53,7 @@ export const createStore = async () => {
     settings: persistReducer(settingsPersistConfig, settings),
     search,
     piece,
+    genre,
   })
 
   let reactotronEnhancer
