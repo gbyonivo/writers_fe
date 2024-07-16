@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
-import { Piece } from 'writers_shared'
+import { Piece, PieceType } from 'writers_shared'
 
 import { usePieces } from '../hooks/apollo/use-pieces'
 import { setLikes } from '../store/slices/piece'
@@ -18,6 +18,7 @@ interface IPieceListContext {
 interface Props {
   children: JSX.Element
   userId?: number
+  type?: PieceType
 }
 
 export const PieceListContext = React.createContext<IPieceListContext>(
@@ -28,9 +29,12 @@ export function usePieceListContext(): IPieceListContext {
   return React.useContext<IPieceListContext>(PieceListContext)
 }
 
-function PieceListContextProvider({ children, userId }: Props) {
+function PieceListContextProvider({ children, userId, type }: Props) {
   const dispatch = useDispatch()
-  const { loading, error, pieces, refetch, fetchMore } = usePieces(userId)
+  const { loading, error, pieces, refetch, fetchMore } = usePieces({
+    userId,
+    type,
+  })
   const pieceList = []
   const endCursor = pieces?.pageInfo?.endCursor
   const hasNextPage = !!pieces?.pageInfo?.hasNextPage

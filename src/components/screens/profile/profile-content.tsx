@@ -3,9 +3,8 @@ import { StyleSheet, View } from 'react-native'
 
 import { useAuthContext } from '../../../context/auth-context'
 import { WriterBackground } from '../../common/writer-background'
-import { WriterButton } from '../../common/writer-button'
+import { PieceListInTabs } from '../piece/piece-list-in-tabs'
 import { UserDetails } from './user-details'
-import { UserTabs } from './user-tabs'
 
 interface Props {
   userId: number
@@ -21,7 +20,7 @@ export function ProfileContent({ userId, showLogout = false }: Props) {
           <View style={styles.detailsContainer}>
             <UserDetails userId={userId} />
           </View>
-          <UserTabs userId={userId} />
+          <PieceListInTabs userId={loggedInUser?.id} />
         </View>
       </>
     </WriterBackground>

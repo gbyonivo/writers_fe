@@ -14,9 +14,11 @@ export function WriterTabBar({ icon, ...props }: Props) {
     // @ts-ignore
     <TabBar
       {...props}
-      style={{ backgroundColor: theme.colors.background }}
-      indicatorStyle={{ backgroundColor: 'white' }}
-      renderIcon={({ route, focused, color }) =>
+      style={{
+        backgroundColor: theme.colors.background,
+      }}
+      indicatorStyle={{ backgroundColor: theme.colors.onBackground }}
+      renderIcon={({ focused, color }) =>
         icon ? (
           <Icon
             source={focused ? 'account' : 'album'}
