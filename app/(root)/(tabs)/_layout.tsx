@@ -53,6 +53,19 @@ export default function TabLayout() {
       initialRouteName="home"
     >
       <Tabs.Screen
+        name="home"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          headerLeft: () => (
+            <WriterText ml={16} fontFamily="Bold">
+              Home
+            </WriterText>
+          ),
+          headerShadowVisible: false,
+          ...commonProps,
+        }}
+      />
+      <Tabs.Screen
         name="search"
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
@@ -72,19 +85,6 @@ export default function TabLayout() {
           ),
           ...commonProps,
           header: () => <></>,
-        }}
-      />
-      <Tabs.Screen
-        name="home"
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerLeft: () => (
-            <WriterText ml={16} fontFamily="Bold">
-              Home
-            </WriterText>
-          ),
-          headerShadowVisible: false,
-          ...commonProps,
         }}
       />
       <Tabs.Screen

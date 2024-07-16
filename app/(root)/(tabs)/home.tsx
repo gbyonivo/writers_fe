@@ -1,5 +1,22 @@
-import { PieceListContainer } from '../../../src/components/common/piece/piece-list-container'
+import { StyleSheet } from 'react-native'
+import { useTheme } from 'react-native-paper'
+
+import { PieceListInTabs } from '../../../src/components/screens/piece/piece-list-in-tabs'
 
 export default function Home() {
-  return <PieceListContainer />
+  const theme = useTheme()
+  return (
+    <PieceListInTabs
+      containerStyle={[
+        styles.containerStyle,
+        { backgroundColor: theme.colors.background },
+      ]}
+    />
+  )
 }
+
+const styles = StyleSheet.create({
+  containerStyle: {
+    padding: 4,
+  },
+})
