@@ -5,7 +5,6 @@ import { Piece, PieceType } from 'writers_shared/dist/index'
 
 import { usePieceMutation } from '../../../hooks/apollo/use-piece-mutation'
 import { useAlert } from '../../../hooks/use-alert'
-import { onChangePieceSignal } from '../../../utils/signal'
 import { PieceSchema } from '../../../validation-schema/piece-schema'
 import { PieceCreateForm } from '../../common/piece/piece-create-form'
 import { WriterBackground } from '../../common/writer-background'
@@ -50,14 +49,6 @@ export function PieceCreationScreen() {
       setCreated(false)
     }
   }, [created])
-
-  useEffect(() => {
-    onChangePieceSignal.emit({
-      isValid: form.isValid,
-      isDirty: form.dirty,
-      submitting: loading,
-    })
-  }, [form.dirty, form.isValid, loading])
 
   return (
     <WriterBackground>

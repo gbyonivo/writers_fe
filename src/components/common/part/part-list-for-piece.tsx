@@ -6,9 +6,10 @@ import { PartList } from './part-list'
 
 interface Props {
   pieceId: number
+  preselectedPartIds?: string
 }
 
-export function PartListForPiece({ pieceId }: Props) {
+export function PartListForPiece({ pieceId, preselectedPartIds }: Props) {
   const {
     loading: loadingPieceParts,
     parts,
@@ -25,6 +26,7 @@ export function PartListForPiece({ pieceId }: Props) {
       refetch={refetchPieceParts}
       loading={loadingPieceParts}
       pieceId={pieceId}
+      preselectedPartIds={preselectedPartIds}
     />
   ) : (
     <View />

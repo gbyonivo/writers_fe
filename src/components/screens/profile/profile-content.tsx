@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function ProfileContent({ userId, showLogout = false }: Props) {
-  const { logout, user: loggedInUser } = useAuthContext()
+  const { user: loggedInUser } = useAuthContext()
   return (
     <WriterBackground style={{ flex: 1 }} isView>
       <>
@@ -20,7 +20,7 @@ export function ProfileContent({ userId, showLogout = false }: Props) {
           <View style={styles.detailsContainer}>
             <UserDetails userId={userId} />
           </View>
-          <PieceListInTabs userId={loggedInUser?.id} />
+          <PieceListInTabs userId={loggedInUser?.id} showBookmark />
         </View>
       </>
     </WriterBackground>

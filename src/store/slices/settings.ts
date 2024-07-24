@@ -25,9 +25,16 @@ export const settingsSlice = createSlice({
         shouldChainParts: !state.shouldChainParts,
       }
     },
+    setShouldChainPart: (state, { payload }: PayloadAction<boolean>) => {
+      return {
+        ...state,
+        shouldChainParts: payload,
+      }
+    },
   },
 })
 
-export const { setTheme, toggleShouldChainPart } = settingsSlice.actions
+export const { setTheme, toggleShouldChainPart, setShouldChainPart } =
+  settingsSlice.actions
 
 export default settingsSlice.reducer

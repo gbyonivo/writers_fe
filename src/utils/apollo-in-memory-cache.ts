@@ -9,6 +9,14 @@ export const IN_MEMORY_CACHE = new InMemoryCache({
           ...relayStylePagination(),
           keyArgs: ['pagination'],
         },
+        users: {
+          ...relayStylePagination(),
+          keyArgs: ['pagination'],
+        },
+        bookmarks: {
+          ...relayStylePagination(),
+          keyArgs: ['pagination'],
+        },
       },
     },
   },
