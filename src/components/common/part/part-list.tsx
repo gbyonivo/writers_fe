@@ -1,9 +1,12 @@
 import { useRouter } from 'expo-router'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { Part } from 'writers_shared'
 
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
+import { setShouldChainPart } from '../../../store/slices/settings'
+import { BookmarkDialog } from './bookmark-dialog'
 import { NewPartButton } from './new-part-button'
 import { PartLine } from './part-line'
 
@@ -13,6 +16,7 @@ interface Props {
   parts?: Part[]
   loading: boolean
   pieceId: number
+  preselectedPartIds?: string
 }
 
 interface OnSwipeToPartParams {
@@ -20,12 +24,21 @@ interface OnSwipeToPartParams {
   position: number
 }
 
-export function PartList({ parts = [], pieceId, refetch }: Props) {
+export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
+  const dispatch = useDispatch()
   const router = useRouter()
   const shouldChainParts = useShouldChainParts()
+  const partIds = useMemo(() => {
+    if (!!preselectedPartIds) {
+      dispatch(setShouldChainPart(false))
+    }
+    return !!preselectedPartIds ? preselectedPartIds.split(',') : []
+  }, [preselectedPartIds])
+
   // the ref is needed coz the state keeps resetting
   const positionToPartIdMapRef = useRef({})
   const [positionToPartIdMap, setPositionToPartIdMap] = useState(() => ({}))
+
   const map = useMemo(() => {
     return parts.reduce(
       (acc, part) => ({
@@ -37,6 +50,7 @@ export function PartList({ parts = [], pieceId, refetch }: Props) {
       {},
     )
   }, [parts])
+
   const onSwipeToPart = ({ partId, position }: OnSwipeToPartParams) => {
     if (!partId) return
     const newValue = {
@@ -72,7 +86,7 @@ export function PartList({ parts = [], pieceId, refetch }: Props) {
     router.push(`/pieces/${pieceId}/new-part?${queryString}`)
   }, [pieceId, map, positionToPartIdMap])
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
     const partListForPosition = map[item]
     return (
       <PartLine
@@ -82,12 +96,17 @@ export function PartList({ parts = [], pieceId, refetch }: Props) {
         setPartIdForPosition={onSwipeToPart}
         position={item}
         filterParentPieceId={positionToPartIdMap[item - 1]}
+        preselectedPartId={partIds[index]}
       />
     )
   }
 
   return (
     <View style={styles.container}>
+      <BookmarkDialog
+        pieceId={pieceId}
+        partIds={Object.values(positionToPartIdMapRef.current)}
+      />
       <FlatList
         contentContainerStyle={styles.listContainer}
         data={Object.keys(map)}
@@ -115,5 +134,11 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 8,
+  },
+  bookmarkButtonWrapper: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    marginTop: 8,
   },
 })

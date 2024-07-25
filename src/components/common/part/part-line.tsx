@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { Part } from 'writers_shared'
@@ -16,6 +16,7 @@ interface Props {
   setPartIdForPosition: (val: { partId: number; position: number }) => void
   position: number
   filterParentPieceId?: number
+  preselectedPartId?: string
 }
 
 export function PartLine({
@@ -26,6 +27,7 @@ export function PartLine({
   setPartIdForPosition,
   position,
   filterParentPieceId,
+  preselectedPartId,
 }: Props) {
   const shouldChainParts = useShouldChainParts()
   const flatlistRef = useRef<Animated.FlatList<Part>>()
@@ -36,6 +38,23 @@ export function PartLine({
   const renderItem = ({ item }: { item: Part }) => {
     return <PartItem part={item} containerStyle={styles.partContainer} />
   }
+
+  const initialPartIdIndex = useMemo(() => {
+    if (!preselectedPartId) return 0
+    const index = parts.findIndex(
+      ({ id }) => id === parseInt(preselectedPartId, 10),
+    )
+    return index > -1 ? index : 0
+  }, [preselectedPartId, parts])
+
+  useEffect(() => {
+    setTimeout(() => {
+      flatlistRef?.current?.scrollToIndex({
+        animated: true,
+        index: initialPartIdIndex,
+      })
+    }, 500)
+  }, [initialPartIdIndex])
 
   const filteredParts = useMemo(() => {
     if (!filterParentPieceId || !shouldChainParts) return parts
@@ -54,7 +73,6 @@ export function PartLine({
       keyExtractor={(item) => `${item.id}`}
       contentContainerStyle={styles.container}
       horizontal
-      // bounces={false}
       scrollEnabled={!disabled}
       scrollsToTop={false}
       initialNumToRender={5}
@@ -65,14 +83,8 @@ export function PartLine({
       disableIntervalMomentum
       pagingEnabled
       snapToAlignment="start"
+      onScrollToIndexFailed={(e) => console.log(e)}
       snapToInterval={getWidthByRatio(1)}
-      // ListHeaderComponent={
-      //   <View style={[styles.position, { backgroundColor: colors.backdrop }]}>
-      //     <WriterText size={64} align="center">
-      //       {position}
-      //     </WriterText>
-      //   </View>
-      // }
       ListFooterComponent={
         shouldShowAddButton ? (
           <View style={[styles.partContainer, styles.buttonContainer]}>

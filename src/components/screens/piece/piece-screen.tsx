@@ -11,11 +11,13 @@ import { WriterText } from '../../common/writer-text'
 interface Props {
   pieceId: number
   pieceName: string
+  preselectedPartIds?: string
 }
 
-export function PieceScreen({ pieceId, pieceName }: Props) {
+export function PieceScreen({ pieceId, pieceName, preselectedPartIds }: Props) {
   const theme = useTheme()
   const { loading, piece } = usePiece(pieceId)
+
   return (
     <WriterBackground isView>
       <View style={[styles.container]}>
@@ -36,7 +38,10 @@ export function PieceScreen({ pieceId, pieceName }: Props) {
           />
         )}
         {loading && <WriterActivityIndicator color={theme.colors.onPrimary} />}
-        <PartListForPiece pieceId={pieceId} />
+        <PartListForPiece
+          pieceId={pieceId}
+          preselectedPartIds={preselectedPartIds}
+        />
       </View>
     </WriterBackground>
   )
