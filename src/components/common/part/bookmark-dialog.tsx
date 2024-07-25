@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Dialog, Portal } from 'react-native-paper'
 
 import { useBookmarkMutation } from '../../../hooks/apollo/use-bookmark-mutation'
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
 import { onBookmarkPiece } from '../../../utils/signal'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { WriterButton } from '../writer-button'
+import { WriterDialog } from '../writer-dialog'
 
 interface Props {
   partIds?: number[]
@@ -16,11 +16,11 @@ interface Props {
 export function BookmarkDialog({ partIds = [], pieceId }: Props) {
   const [name, setName] = useState('')
   const [visible, setVisible] = useState(false)
+  const locked = useShouldChainParts()
   const { createBookmark, loading } = useBookmarkMutation({
     onSuccess: () => setVisible(false),
     showAlert: true,
   })
-  const locked = useShouldChainParts()
 
   useEffect(() => {
     let removeListener = null
@@ -44,24 +44,20 @@ export function BookmarkDialog({ partIds = [], pieceId }: Props) {
     })
 
   return (
-    <Portal>
-      <Dialog
-        visible={visible}
-        onDismiss={() => setVisible(false)}
-        dismissable={!loading}
-      >
-        <Dialog.Content>
-          <WriterTextInput
-            value={name}
-            handleChange={({ target: { value } }) => setName(value)}
-            name="name"
-          />
-          <View style={styles.bookmarkButtonWrapper}>
-            <WriterButton onPress={onPressSubmitBookmark}>Done</WriterButton>
-          </View>
-        </Dialog.Content>
-      </Dialog>
-    </Portal>
+    <WriterDialog
+      dismissable={!loading}
+      onDismiss={() => setVisible(false)}
+      visible={visible}
+    >
+      <WriterTextInput
+        value={name}
+        handleChange={({ target: { value } }) => setName(value)}
+        name="name"
+      />
+      <View style={styles.bookmarkButtonWrapper}>
+        <WriterButton onPress={onPressSubmitBookmark}>Done</WriterButton>
+      </View>
+    </WriterDialog>
   )
 }
 

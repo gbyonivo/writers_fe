@@ -52,3 +52,9 @@ export const CREATE_BOOKMARK = gql`
     }
   }
 `
+
+export const DELETE_BOOKMARK = gql`
+  mutation DeleteBookmark($id: Int) {
+    deleteBookmark(id: $id)
+  }
+`

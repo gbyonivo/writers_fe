@@ -15,6 +15,11 @@ export function PartChainToggle({ style }: { style?: StyleProp<ViewStyle> }) {
   return (
     <View style={styles.container}>
       <WriterIconButton
+        icon="share"
+        onPress={() => console.log('share')}
+        style={[{ backgroundColor: 'transparent' }, style]}
+      />
+      <WriterIconButton
         icon="bookmark"
         onPress={() => onBookmarkPiece.emit()}
         style={[{ backgroundColor: 'transparent' }, style]}

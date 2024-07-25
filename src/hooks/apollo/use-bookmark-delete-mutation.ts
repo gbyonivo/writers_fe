@@ -1,41 +1,37 @@
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
-import { Bookmark } from 'writers_shared'
 
 import { useAuthContext } from '../../context/auth-context'
-import { CREATE_BOOKMARK, GET_BOOKMARKS } from '../../queries/bookmark'
+import { DELETE_BOOKMARK, GET_BOOKMARKS } from '../../queries/bookmark'
 import { MutationHooKParams } from '../../types/mutation'
 import { useAlert } from '../use-alert'
-import { useBookmarks } from './use-bookmarks'
 
 interface Params extends MutationHooKParams {
   pieceId?: number
 }
 
-export const useBookmarkMutation = (
+export const useBookmarkDeleteMutation = (
   { onSuccess, onFail, showAlert }: Params = { showAlert: true },
 ) => {
   const { show } = useAlert()
   const { user } = useAuthContext()
   const [loading, setLoading] = useState<boolean>(false)
-  const { refetch: refetchBookmarks } = useBookmarks({ userId: user.id })
-  const [action] = useMutation(CREATE_BOOKMARK, {
+  const [action] = useMutation(DELETE_BOOKMARK, {
     refetchQueries: [
       { query: GET_BOOKMARKS, variables: { userId: user.id, first: 12 } },
     ],
   })
 
-  const createBookmark = async (bookmark: Partial<Bookmark>) => {
+  const deleteBookmark = async (bookmarkId: number) => {
     try {
       setLoading(true)
       const response = await action({
-        variables: { ...bookmark },
+        variables: { id: bookmarkId },
       })
       setLoading(false)
       onSuccess && onSuccess(response)
-      refetchBookmarks()
       if (showAlert) {
-        show({ message: 'Successfully bookmarked' })
+        show({ message: 'Successfully deleted' })
       }
     } catch (e) {
       onFail && onFail(e)
@@ -47,7 +43,7 @@ export const useBookmarkMutation = (
   }
 
   return {
-    createBookmark,
+    deleteBookmark,
     loading,
   }
 }
