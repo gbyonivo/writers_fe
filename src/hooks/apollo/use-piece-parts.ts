@@ -6,6 +6,7 @@ import { GET_PIECE_PARTS } from '../../queries/piece'
 export const usePieceParts = (pieceId: number) => {
   const { data, loading, error, refetch } = useQuery(GET_PIECE_PARTS, {
     variables: { id: pieceId },
+    skip: !pieceId,
   })
 
   const parts: Part[] | null = data?.pieceParts

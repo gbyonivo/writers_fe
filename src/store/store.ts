@@ -9,6 +9,7 @@ import { persistReducer, persistStore } from 'redux-persist'
 import genre from './slices/genre'
 import login from './slices/login'
 import piece from './slices/piece'
+import player from './slices/player'
 import search from './slices/search'
 import settings from './slices/settings'
 
@@ -54,6 +55,7 @@ export const createStore = async () => {
     search,
     piece,
     genre,
+    player,
   })
 
   let reactotronEnhancer
