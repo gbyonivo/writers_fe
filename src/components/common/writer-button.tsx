@@ -1,10 +1,11 @@
-import { StyleProp, ViewStyle } from 'react-native'
+import { StyleProp, TextStyle, ViewStyle } from 'react-native'
 import { Button } from 'react-native-paper'
 import { IconSource } from 'react-native-paper/lib/typescript/components/Icon'
 
 interface Props {
   onPress: () => void
   style?: StyleProp<ViewStyle>
+  labelStyle?: StyleProp<TextStyle>
   children: JSX.Element | string
   icon?: IconSource
   disabled?: boolean
@@ -20,6 +21,7 @@ export function WriterButton({
   disabled,
   textColor,
   iconRight,
+  labelStyle,
 }: Props) {
   return (
     <Button
@@ -31,6 +33,7 @@ export function WriterButton({
       uppercase
       disabled={disabled}
       textColor={textColor}
+      labelStyle={labelStyle}
     >
       {children}
     </Button>

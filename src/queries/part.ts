@@ -16,6 +16,9 @@ export const PART_DETAILS = `
   userRating
   rating
   numberOfRatings
+  rate
+  pitch
+  identifier
 `
 
 export const GET_PART = gql`
@@ -53,12 +56,18 @@ export const CREATE_PART = gql`
     $pieceId: Int
     $position: Int
     $partId: Int
+    $pitch: Float
+    $rate: Float
+    $identifier: String
   ) {
     createPart(
       content: $content
       pieceId: $pieceId
       position: $position
       partId: $partId
+      pitch: $pitch
+      rate: $rate
+      identifier: $identifier
     ) {
       ${PART_DETAILS}
     }

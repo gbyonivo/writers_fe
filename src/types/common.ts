@@ -4,3 +4,8 @@ export enum PROCESSING_STAGE {
   ERROR_PROCESSING = 'ERROR_PROCESSING',
   DONE_PROCESSING = 'DONE_PROCESSING',
 }
+
+export interface Option {
+  label: string
+  value: string | number
+}

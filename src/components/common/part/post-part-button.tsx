@@ -28,7 +28,7 @@ export function PostPartButton() {
 
   return (
     <WriterHeaderButton
-      label="Post"
+      label="Voice"
       onPress={onClickPost}
       enableButton={enableButton}
     />

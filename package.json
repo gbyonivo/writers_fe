@@ -56,7 +56,6 @@
     "react-native-pager-view": "6.3.0",
     "react-native-paper": "^5.11.6",
     "react-native-paper-dates": "^0.21.7",
-    "react-native-paper-dropdown": "^2.3.0",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-ratings": "^8.1.0",
     "react-native-reanimated": "~3.10.1",
@@ -70,7 +69,8 @@
     "reactotron-react-native": "^5.1.7",
     "reactotron-redux": "^3.1.9",
     "redux-persist": "^6.0.0",
-    "writers_shared": "^1.1.24"
+    "rn-range-slider": "^2.2.2",
+    "writers_shared": "^1.1.25"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

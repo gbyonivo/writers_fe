@@ -46,7 +46,7 @@ export function PieceCreateForm({
   const pagerViewRef = useRef(null)
   const [pageIndex, setPageIndex] = useState(0)
   const onPressNext = () => {
-    if (pageIndex === 3) {
+    if (pageIndex === 4) {
       submitForm()
       return
     }
@@ -125,7 +125,21 @@ export function PieceCreateForm({
           />
         </View>
         <View key={4} style={styles.formElement}>
-          <VoiceSetUp />
+          <VoiceSetUp
+            // @ts-ignore
+            identifier={values.firstPart.identifier}
+            identifierName="firstPart.identifier"
+            // @ts-ignore
+            pitch={values.firstPart.pitch}
+            pitchName="firstPart.pitch"
+            pitchLabel="Pitch"
+            // @ts-ignore
+            rate={values.firstPart.rate}
+            rateName="firstPart.rate"
+            rateLabel="Rate"
+            handleChange={handleChange}
+            testText={values.firstPart.content}
+          />
         </View>
       </AnimatedPager>
     </>
