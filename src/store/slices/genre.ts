@@ -8,7 +8,7 @@ const initialState: GenreState = {
 }
 
 export const genreSlice = createSlice({
-  name: 'login',
+  name: 'genre',
   initialState,
   reducers: {
     setGenreIdToGenre: (state, { payload }: PayloadAction<any>) => {

@@ -20,7 +20,7 @@ export function PieceCreationScreen() {
       router.push(`/pieces/${response.data.createPiece.id}?backOverride=/home`)
     },
     onFail: () => {
-      show({ message: 'Your piece has been created', type: 'danger' })
+      show({ message: 'Sorry we encountered an error', type: 'danger' })
     },
   })
   const form = useFormik({
@@ -32,6 +32,9 @@ export function PieceCreationScreen() {
       type: undefined,
       firstPart: {
         content: '',
+        identifier: null,
+        pitch: 1,
+        rate: 1,
       },
     },
     onSubmit: async (value: Partial<Piece>) => {

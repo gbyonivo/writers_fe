@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { Part } from 'writers_shared'
@@ -48,6 +48,7 @@ export function PartLine({
   }, [preselectedPartId, parts])
 
   useEffect(() => {
+    if (!initialPartIdIndex) return
     setTimeout(() => {
       flatlistRef?.current?.scrollToIndex({
         animated: true,

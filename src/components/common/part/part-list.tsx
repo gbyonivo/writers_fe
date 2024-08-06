@@ -1,11 +1,15 @@
 import { useRouter } from 'expo-router'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { Part } from 'writers_shared'
 
+import { usePiece } from '../../../hooks/apollo/use-piece'
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
+import { startPlayer } from '../../../store/slices/player'
 import { setShouldChainPart } from '../../../store/slices/settings'
+import { onPlayPiece } from '../../../utils/signal'
+import { FloatingPlayer } from '../voice-player/floating-player'
 import { BookmarkDialog } from './bookmark-dialog'
 import { NewPartButton } from './new-part-button'
 import { PartLine } from './part-line'
@@ -50,6 +54,24 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
       {},
     )
   }, [parts])
+
+  useEffect(() => {
+    let removeListener = null
+    if (onPlayPiece.getNumberOfListeners() < 1) {
+      removeListener = onPlayPiece.listen(() => {
+        dispatch(
+          startPlayer({
+            partIds: Object.values(positionToPartIdMapRef.current),
+            pieceId,
+          }),
+        )
+      })
+    }
+
+    return () => {
+      removeListener?.()
+    }
+  }, [])
 
   const onSwipeToPart = ({ partId, position }: OnSwipeToPartParams) => {
     if (!partId) return
@@ -115,12 +137,16 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         showsHorizontalScrollIndicator={false}
         ListFooterComponent={
-          <NewPartButton
-            onPressAddPart={onPressAddPart}
-            showAddPartToLineButton={shouldChainParts}
-          />
+          <>
+            <NewPartButton
+              onPressAddPart={onPressAddPart}
+              showAddPartToLineButton={shouldChainParts}
+            />
+          </>
         }
       />
+
+      <FloatingPlayer />
     </View>
   )
 }

@@ -8,6 +8,7 @@ import { AnimatedPager } from '../../containers/page-scroller'
 import { GenreMultiSelect } from '../inputs/genre-multi-select'
 import { WriterSegmentedButtons } from '../inputs/writer-segmented-buttons'
 import { WriterTextInput } from '../inputs/writer-text-input'
+import { VoiceSetUp } from '../voice-set-up'
 import { WriterHeaderButton } from '../writer-header-button'
 
 interface Props {
@@ -24,9 +25,15 @@ const typeOptions = Object.keys(PieceType).map((val) => ({
   value: val,
 }))
 
-const errorKeys = ['type', 'genreIds', 'title', 'firstPart.content']
-const nextButtonLabel = ['Genre', 'Title', 'First Content', 'Create']
-const previousButtonLabel = ['', 'Type', 'Genres', 'Title']
+const errorKeys = ['type', 'genreIds', 'title', 'firstPart.content', 'voice']
+const nextButtonLabel = [
+  'Genre',
+  'Title',
+  'First Content',
+  'Voice (optional)',
+  'Create',
+]
+const previousButtonLabel = ['', 'Type', 'Genres', 'Title', 'First Content']
 
 export function PieceCreateForm({
   values,
@@ -39,7 +46,7 @@ export function PieceCreateForm({
   const pagerViewRef = useRef(null)
   const [pageIndex, setPageIndex] = useState(0)
   const onPressNext = () => {
-    if (pageIndex === 3) {
+    if (pageIndex === 4) {
       submitForm()
       return
     }
@@ -115,6 +122,23 @@ export function PieceCreateForm({
             multiline
             disabled={loading}
             // error={formErrors?.firstPart?.content}
+          />
+        </View>
+        <View key={4} style={styles.formElement}>
+          <VoiceSetUp
+            // @ts-ignore
+            identifier={values.firstPart.identifier}
+            identifierName="firstPart.identifier"
+            // @ts-ignore
+            pitch={values.firstPart.pitch}
+            pitchName="firstPart.pitch"
+            pitchLabel="Pitch"
+            // @ts-ignore
+            rate={values.firstPart.rate}
+            rateName="firstPart.rate"
+            rateLabel="Rate"
+            handleChange={handleChange}
+            testText={values.firstPart.content}
           />
         </View>
       </AnimatedPager>
