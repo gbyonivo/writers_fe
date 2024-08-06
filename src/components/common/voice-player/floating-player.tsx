@@ -4,6 +4,7 @@ import { StyleSheet, TouchableOpacity, View, ViewProps } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 
+import { usePiece } from '../../../hooks/apollo/use-piece'
 import { useSpeaker } from '../../../hooks/use-speaker'
 import { AppState } from '../../../types/states/AppState'
 import { MovingText } from './moving-text'
@@ -12,14 +13,15 @@ import { PlayPauseButton } from './play-pause-button'
 export function FloatingPlayer() {
   const router = useRouter()
   const theme = useTheme()
-  const { title } = useSelector((state: AppState) => state.player)
+  const { pieceId } = useSelector((state: AppState) => state.player)
+  const { piece, loading } = usePiece(pieceId)
   useSpeaker()
 
   const handlePress = () => {
     router.navigate('/player')
   }
 
-  if (!title) return null
+  if (loading || !piece?.title) return null
 
   return (
     <TouchableOpacity
@@ -30,7 +32,7 @@ export function FloatingPlayer() {
         <View style={styles.trackTitleContainer}>
           <MovingText
             style={{ ...styles.trackTitle, color: theme.colors.onSecondary }}
-            text={title ?? ''}
+            text={piece.title ?? ''}
             animationThreshold={25}
           />
         </View>

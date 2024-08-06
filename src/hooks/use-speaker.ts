@@ -17,21 +17,20 @@ export const useSpeaker = () => {
     const partsToRead = (parts || []).filter((part) =>
       player.partIds.includes(part.id),
     )
-    Speech.speak(partsToRead.map((p) => p.content).join('.'), {
-      onDone: () => {
-        dispatch(stopPlayer())
+    Speech.speak(
+      partsToRead.map((p) => p.content.split('\n').join(',')).join('.'),
+      {
+        onDone: () => {
+          dispatch(stopPlayer())
+        },
+        onStopped: () => {
+          dispatch(stopPlayer())
+        },
+        pitch: 1,
+        rate: 0.8,
+        voice: 'com.apple.voice.compact.en-IE.Moira',
       },
-      onStopped: () => {
-        dispatch(stopPlayer())
-      },
-      pitch: 1,
-      rate: 0.8,
-      voice: 'com.apple.voice.compact.en-IE.Moira',
-    })
-
-    return () => {
-      Speech.stop()
-    }
+    )
   }, [parts])
 
   useEffect(() => {

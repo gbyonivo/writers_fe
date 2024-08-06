@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
 import { toggleShouldChainPart } from '../../../store/slices/settings'
-import { onBookmarkPiece } from '../../../utils/signal'
+import { onBookmarkPiece, onPlayPiece } from '../../../utils/signal'
 import { WriterIconButton } from '../writer-icon-button'
 
 export function PartChainToggle({ style }: { style?: StyleProp<ViewStyle> }) {
@@ -14,6 +14,11 @@ export function PartChainToggle({ style }: { style?: StyleProp<ViewStyle> }) {
   }
   return (
     <View style={styles.container}>
+      <WriterIconButton
+        icon="play"
+        onPress={() => onPlayPiece.emit()}
+        style={[{ backgroundColor: 'transparent' }, style]}
+      />
       <WriterIconButton
         icon="share"
         onPress={() => console.log('share')}

@@ -30,3 +30,4 @@ export const createSignal = <T = any>(): Signal<T> => {
 export const onPressCreatePartSignal = createSignal()
 export const onChangePartSignal = createSignal()
 export const onBookmarkPiece = createSignal()
+export const onPlayPiece = createSignal()
