@@ -19,6 +19,7 @@ import { WriterIconButton } from '../../../src/components/common/writer-icon-but
 import { WriterText } from '../../../src/components/common/writer-text'
 import { AnimatedPager } from '../../../src/components/containers/page-scroller'
 import { addUser } from '../../../src/store/slices/login'
+import { apiUrl } from '../../../src/utils/constants'
 import { DATE_FORMATS } from '../../../src/utils/date'
 import { handleAppErrors } from '../../../src/utils/errors'
 
@@ -61,10 +62,7 @@ export default function () {
     await userSchema.validateSyncAt(screenNames[pageIndex], createdUser)
     setSubmittingForm(true)
     try {
-      const { data } = await axios.post(
-        `${process.env.EXPO_PUBLIC_API_URL}/user`,
-        createdUser,
-      )
+      const { data } = await axios.post(`${apiUrl}/user`, createdUser)
       setToken(data)
       pagerViewRef.current.setPage(pageIndex + 1)
       setSubmittingForm(false)

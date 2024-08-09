@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { router } from 'expo-router'
 import { useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -5,6 +6,7 @@ import { HelperText } from 'react-native-paper'
 import PhoneInput from 'react-native-phone-number-input'
 import { useDispatch } from 'react-redux'
 
+import { WakeUpServerButton } from '../../src/components/common/wake-up-server-button'
 import { WriterBackground } from '../../src/components/common/writer-background'
 import { WriterButton } from '../../src/components/common/writer-button'
 import { WriterLoginHeader } from '../../src/components/common/writer-login-header'
@@ -85,6 +87,10 @@ export default function Index() {
             Verify
           </WriterButton>
         </View>
+
+        <View style={styles.wakeUpServerButtonContainer}>
+          <WakeUpServerButton />
+        </View>
       </>
     </WriterBackground>
   )
@@ -122,5 +128,11 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     width: '100%',
     paddingHorizontal: 40,
+  },
+  wakeUpServerButtonContainer: {
+    alignItems: 'flex-end',
+    width: '100%',
+    paddingHorizontal: 40,
+    marginTop: 24,
   },
 })

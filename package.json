@@ -13,7 +13,8 @@
     "build:dev:phone": "NODE_ENV=development eas build -p ios --clear-cache --profile development-phone --local",
     "build:dev": "NODE_ENV=development eas build -p ios --clear-cache --profile development --local",
     "build:preview": "NODE_ENV=development eas build --profile preview --platform ios --local --clear-cache",
-    "build:preview-prod": "NODE_ENV=production eas build --profile preview-prod --platform ios --local --clear-cache"
+    "build:preview-prod": "NODE_ENV=production eas build --profile preview-prod --platform ios --local --clear-cache",
+    "build:testflight": "eas build -p ios --auto-submit"
   },
   "dependencies": {
     "@apollo/client": "^3.8.9",
