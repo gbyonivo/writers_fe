@@ -11,12 +11,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "ivo.tertsegha"
+      "bundleIdentifier": "ivo.tertsegha",
+      "buildNumber": "10"
     },
     "android": {
       "adaptiveIcon": {

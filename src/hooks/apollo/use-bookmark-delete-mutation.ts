@@ -18,7 +18,7 @@ export const useBookmarkDeleteMutation = (
   const [loading, setLoading] = useState<boolean>(false)
   const [action] = useMutation(DELETE_BOOKMARK, {
     refetchQueries: [
-      { query: GET_BOOKMARKS, variables: { userId: user.id, first: 12 } },
+      { query: GET_BOOKMARKS, variables: { userId: user?.id, first: 12 } },
     ],
   })
 

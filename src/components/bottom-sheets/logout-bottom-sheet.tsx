@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
 
+import { WakeUpServerButton } from '../common/wake-up-server-button'
 import { WriterButton } from '../common/writer-button'
 
 export interface LogoutBottomSheetProps {
@@ -43,6 +44,9 @@ export function LogoutBottomSheet({
           />
         )}
       >
+        <View style={[styles.contentContainer]}>
+          <WakeUpServerButton />
+        </View>
         <View style={[styles.contentContainer]}>
           <WriterButton onPress={onPressLogout}>Logout</WriterButton>
         </View>

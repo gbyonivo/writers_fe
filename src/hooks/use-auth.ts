@@ -8,6 +8,7 @@ import {
   LoginAttemptStatus,
   UseAuthReturn,
 } from '../types/states/LoginState'
+import { apiUrl } from '../utils/constants'
 
 export const useAuth = (): UseAuthReturn => {
   const dispatch = useDispatch()
@@ -23,7 +24,7 @@ export const useAuth = (): UseAuthReturn => {
     }
     try {
       const { data: token } = await axios.get(
-        `${process.env.EXPO_PUBLIC_API_URL}/login/${formattedValue}`,
+        `${apiUrl}/login/${formattedValue}`,
       )
       return {
         status: LoginAttemptStatus.SUCCESS,

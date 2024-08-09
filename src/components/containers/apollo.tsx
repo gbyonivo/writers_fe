@@ -5,9 +5,10 @@ import { useSelector } from 'react-redux'
 
 import { AppState } from '../../types/states/AppState'
 import { IN_MEMORY_CACHE } from '../../utils/apollo-in-memory-cache'
+import { apiUrl } from '../../utils/constants'
 
 const httpLink = createHttpLink({
-  uri: `${process.env.EXPO_PUBLIC_API_URL}/graphql`,
+  uri: `${apiUrl}/graphql`,
 })
 
 interface Props {
