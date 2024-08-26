@@ -79,7 +79,6 @@ export default function Index() {
 
         <View style={styles.buttonContainer}>
           <WriterButton
-            icon="script"
             onPress={verifyNumber}
             style={styles.button}
             disabled={!formattedValue}

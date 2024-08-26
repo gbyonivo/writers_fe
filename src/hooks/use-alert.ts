@@ -3,7 +3,7 @@ import { useToast } from 'react-native-toast-notifications'
 
 interface ShowAlertParams {
   message: string
-  type?: string
+  type?: 'success' | 'danger'
   animationType?: 'slide-in' | 'zoom-in'
   placement?: 'top' | 'bottom' | 'center'
 }

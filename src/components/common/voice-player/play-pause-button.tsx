@@ -1,4 +1,7 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Audio } from 'expo-av'
+import { Camera } from 'expo-camera/legacy'
+import { useCallback } from 'react'
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -9,9 +12,11 @@ import {
 } from '../../../store/slices/player'
 import { AppState } from '../../../types/states/AppState'
 import { PlayingStatus } from '../../../types/states/PlayerState'
+import { isIos } from '../../../utils/common'
 import { WriterIcon } from '../writer-icon'
 
 export const PlayPauseButton = () => {
+  const [permission, requestPermission] = Camera.useMicrophonePermissions()
   const { status } = useSelector((state: AppState) => state.player)
   const playing = status === PlayingStatus.PLAYING
   const dispatch = useDispatch()
@@ -21,13 +26,37 @@ export const PlayPauseButton = () => {
     backgroundColor: theme.colors.backdrop,
   }
 
+  const play = useCallback(() => {
+    const press = async () => {
+      if (!permission) {
+        Alert.alert(
+          'Microphone Access',
+          'Allow Writers to access your microphone',
+          [
+            { onPress: requestPermission, text: 'Allow' },
+            { onPress: () => {}, text: 'Cancel' },
+          ],
+        )
+        return
+      }
+      if (isIos) {
+        await Audio.setAudioModeAsync({
+          playsInSilentModeIOS: true,
+        })
+      }
+      await Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+      })
+      dispatch(playing ? pausePlayer() : playPlayer())
+    }
+    press()
+  }, [permission])
+
   return (
     <View style={[styles.container]}>
       <TouchableOpacity
         activeOpacity={0.85}
-        onPress={() => {
-          playing ? dispatch(pausePlayer()) : dispatch(playPlayer())
-        }}
+        onPress={play}
         style={[styles.button, additionButtonStyle]}
       >
         <WriterIcon

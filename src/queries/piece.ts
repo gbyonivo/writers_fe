@@ -12,6 +12,7 @@ const PIECE_DETAILS = `
   genreIds
   status
   type
+  imageUrl
   firstPart {
     id,
     content
@@ -63,6 +64,7 @@ export const LIKE_PIECE = gql`
 export const CREATE_PIECE = gql`
   mutation CreatePiece(
     $title: String
+    $imageUrl: String
     $type: String
     $genreIds: [Int]
     $firstPart: FirstPartInput
@@ -72,6 +74,7 @@ export const CREATE_PIECE = gql`
       type: $type
       firstPart: $firstPart
       genreIds: $genreIds
+      imageUrl: $imageUrl
     ) {
       ${PIECE_DETAILS}
     }

@@ -36,6 +36,7 @@ export function PieceCreationScreen() {
         pitch: 1,
         rate: 1,
       },
+      imageUrl: '',
     },
     onSubmit: async (value: Partial<Piece>) => {
       await createPiece(value)
