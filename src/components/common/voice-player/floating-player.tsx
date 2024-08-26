@@ -1,6 +1,5 @@
-import { BlurView } from 'expo-blur'
 import { useRouter } from 'expo-router'
-import { StyleSheet, TouchableOpacity, View, ViewProps } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 

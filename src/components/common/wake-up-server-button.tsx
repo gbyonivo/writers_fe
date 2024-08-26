@@ -15,7 +15,7 @@ export function WakeUpServerButton() {
       Alert.alert('Server is up', apiUrl)
       setWaking(false)
     } catch (e) {
-      Alert.alert('', 'Problems connecting to server')
+      Alert.alert('Problems connecting to server', apiUrl)
       setWaking(false)
     }
   }

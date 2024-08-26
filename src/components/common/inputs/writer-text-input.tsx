@@ -22,6 +22,7 @@ interface Props {
   autoFocus?: boolean
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters'
   fontFamily?: FontFamily
+  numberOfLines?: number
 }
 
 export function WriterTextInput({
@@ -41,6 +42,7 @@ export function WriterTextInput({
   autoFocus = false,
   autoCapitalize = 'none',
   fontFamily = 'Medium',
+  numberOfLines,
 }: Props) {
   return (
     <View style={containerStyle}>
@@ -68,6 +70,7 @@ export function WriterTextInput({
         onChangeText={(text) => handleChange({ target: { name, value: text } })}
         mode={mode}
         multiline={multiline}
+        numberOfLines={numberOfLines}
         style={[
           style,
           multiline ? styles.multilineStyle : undefined,
