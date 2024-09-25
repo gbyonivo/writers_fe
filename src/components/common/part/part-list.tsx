@@ -4,9 +4,8 @@ import { FlatList, StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { Part } from 'writers_shared'
 
-import { usePiece } from '../../../hooks/apollo/use-piece'
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
-import { startPlayer } from '../../../store/slices/player'
+import { usePlayAudio } from '../../../hooks/use-audio'
 import { setShouldChainPart } from '../../../store/slices/settings'
 import { onPlayPiece } from '../../../utils/signal'
 import { FloatingPlayer } from '../voice-player/floating-player'
@@ -32,6 +31,7 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
   const dispatch = useDispatch()
   const router = useRouter()
   const shouldChainParts = useShouldChainParts()
+  const playAudio = usePlayAudio()
   const partIds = useMemo(() => {
     if (!!preselectedPartIds) {
       dispatch(setShouldChainPart(false))
@@ -59,12 +59,10 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
     let removeListener = null
     if (onPlayPiece.getNumberOfListeners() < 1) {
       removeListener = onPlayPiece.listen(() => {
-        dispatch(
-          startPlayer({
-            partIds: Object.values(positionToPartIdMapRef.current),
-            pieceId,
-          }),
-        )
+        playAudio({
+          partIds: Object.values(positionToPartIdMapRef.current),
+          pieceId,
+        })
       })
     }
 

@@ -10,6 +10,7 @@ export const SEARCH_PIECES = gql`
         node {
           title,
           id
+          imageUrl
         }
       }
     }

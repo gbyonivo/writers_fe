@@ -17,6 +17,12 @@ import BottomSheetContextProvider from '../src/context/bottom-sheet-context'
 import SelectedColorSchemeContextProvider from '../src/context/selected-color-scheme-context'
 import { createStore } from '../src/store/store'
 
+const error = console.error
+console.error = (...args: any) => {
+  if (/defaultProps/.test(args[0])) return
+  error(...args)
+}
+
 export const unstable_settings = {
   initialRouteName: '(auth)/sign-in',
 }

@@ -7,6 +7,7 @@ import { SettingsState } from '../../types/states/SettingState'
 const initialState: SettingsState = {
   theme: null,
   shouldChainParts: false,
+  shouldShowTextBasedDesgin: true,
 }
 
 export const settingsSlice = createSlice({
@@ -31,10 +32,23 @@ export const settingsSlice = createSlice({
         shouldChainParts: payload,
       }
     },
+    setShouldShowTextBasedDesign: (
+      state,
+      { payload }: PayloadAction<boolean>,
+    ) => {
+      return {
+        ...state,
+        shouldShowTextBasedDesgin: payload,
+      }
+    },
   },
 })
 
-export const { setTheme, toggleShouldChainPart, setShouldChainPart } =
-  settingsSlice.actions
+export const {
+  setTheme,
+  toggleShouldChainPart,
+  setShouldChainPart,
+  setShouldShowTextBasedDesign,
+} = settingsSlice.actions
 
 export default settingsSlice.reducer

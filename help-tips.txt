@@ -1,0 +1,4 @@
+Problem:
+Instead change the require of index.js in 
+/Users/orkumaivo/workspace/writers_fe/node_modules/@expo/cli/build/src/start/interface/commandsTable.js 
+to a dynamic import() which is available in all CommonJS modules.

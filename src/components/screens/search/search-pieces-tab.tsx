@@ -10,7 +10,7 @@ import { WriterText } from '../../common/writer-text'
 
 export function SearchPiecesTab() {
   const searchValue = useSelector((state: AppState) => state.search.searchValue)
-  const pieceResult = useSearchPieces(searchValue)
+  const pieceResult = useSearchPieces({ searchValue })
   const [displayedResult, setDisplayedResult] = useState([])
   const router = useRouter()
 
