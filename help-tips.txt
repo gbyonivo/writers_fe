@@ -2,3 +2,13 @@ Problem:
 Instead change the require of index.js in 
 /Users/orkumaivo/workspace/writers_fe/node_modules/@expo/cli/build/src/start/interface/commandsTable.js 
 to a dynamic import() which is available in all CommonJS modules.
+
+solution
+delete yarn lock, node modules, run yarn
+
+Porblem
+Error [ERR_REQUIRE_ESM]: require() of ES Module /Users/orkumaivo/workspace/writers_fe/node_modules/wrap-ansi/index.js from /Users/orkumaivo/workspace/writers_fe/node_modules/@expo/cli/build/src/start/interface/commandsTable.js not supported.
+Instead change the require of index.js in /Users/orkumaivo/workspace/writers_fe/node_modules/@expo/cli/build/src/start/interface/commandsTable.js to a dynamic import() which is available in all CommonJS modules.
+
+solution
+Delete 
