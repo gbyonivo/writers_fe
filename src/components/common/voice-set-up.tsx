@@ -1,118 +1,96 @@
-import { useIsFocused } from '@react-navigation/native'
-import * as Speech from 'expo-speech'
-import { useEffect } from 'react'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { Country, Sex, SpeakerStyle } from 'writers_shared/dist'
 
-import { ChipsSingleSelect } from './inputs/chips-single-select'
-import { VoiceSelect } from './inputs/voice-select'
-import { WriterRangeSlider } from './inputs/writer-range-slider'
-import { WriterButton } from './writer-button'
-import { WriterText } from './writer-text'
+import { createOptionsFromEnum } from '../../utils/common'
+import { WriterSelect } from './inputs/writer-select'
+import { WriterTextInput } from './inputs/writer-text-input'
+
+export interface VoiceSetUpValue {
+  sex: Sex
+  country: Country
+  style: SpeakerStyle
+  preDelay: number
+  postDelay: number
+}
 
 interface VoiceSetUpProps {
-  testText?: string
-  identifier?: string
-  identifierName: string
-  identifierError?: string
-
-  pitch: number
-  pitchName: string
-  pitchLabel?: string
-  pitchError?: string
-
-  rate: number
-  rateName: string
-  rateLabel?: string
-  rateError?: string
-
+  value: VoiceSetUpValue
   handleChange: any
 }
 
-const RATE_OPTIONS = [
-  { value: 0.5, label: 'Slow' },
-  { value: 1, label: 'Normal' },
-  { value: 1.1, label: 'Fast' },
-]
+const sexOptions = createOptionsFromEnum({
+  enumObject: Sex,
+})
+
+const countryOptions = createOptionsFromEnum({
+  enumObject: Country,
+})
+
+const styleOptions = createOptionsFromEnum({
+  enumObject: SpeakerStyle,
+})
+
+const defaultValue: VoiceSetUpValue = {
+  sex: Sex.FEMALE,
+  country: Country.NG,
+  style: SpeakerStyle.calm,
+  preDelay: 1,
+  postDelay: 1,
+}
 
 export function VoiceSetUp({
-  testText = 'You look beautiful today!',
-  identifier,
-  identifierName,
-  identifierError,
+  value = defaultValue,
   handleChange,
-  pitch,
-  pitchName,
-  pitchLabel,
-  rate,
-  rateName,
-  rateLabel,
 }: VoiceSetUpProps) {
-  const isFocussed = useIsFocused()
-  const onPressTest = () => {
-    Speech.speak(testText.split('\n').join(','), {
-      voice: identifier,
-      pitch,
-      rate,
-    })
+  const onChange = ({ target: { value } }, fieldName: string) => {
+    handleChange({ target: { value, name: fieldName } })
   }
-
-  useEffect(() => {
-    Speech.stop()
-  }, [identifier, rate, pitch])
-
-  useEffect(() => {
-    if (!isFocussed) Speech.stop()
-    return () => {
-      Speech.stop()
-    }
-  }, [isFocussed])
-
   return (
     <View>
-      <VoiceSelect
-        name={identifierName}
-        error={identifierError}
+      <WriterSelect
+        value={value.country}
         handleChange={handleChange}
-        value={identifier}
+        name="voiceSetup.country"
+        options={countryOptions}
+        label="Country"
+        containerStyle={styles.container}
       />
-      <WriterRangeSlider
+      <WriterSelect
+        value={value.sex}
         handleChange={handleChange}
-        label={pitchLabel}
-        name={pitchName}
-        multiplier={0.1}
-        valueMultiplier={10}
-        containerStyle={{ marginVertical: 16 }}
-        value={pitch}
+        name="voiceSetup.sex"
+        options={sexOptions}
+        label="Sex"
+        containerStyle={styles.container}
       />
-      <ChipsSingleSelect
+      <WriterSelect
+        value={value.style}
         handleChange={handleChange}
-        label={rateLabel}
-        name={rateName}
-        options={RATE_OPTIONS}
-        value={rate}
+        name="voiceSetup.style"
+        options={styleOptions}
+        label="Style"
+        containerStyle={styles.container}
       />
-      <WriterButton
-        onPress={onPressTest}
-        style={{ alignSelf: 'flex-start', marginTop: 8 }}
-        disabled={!identifier}
-      >
-        <WriterText>Test sound</WriterText>
-      </WriterButton>
+      <WriterTextInput
+        value={value.preDelay}
+        handleChange={(e) => onChange(e, 'voiceSetup.preDelay')}
+        name="preDelay"
+        label="Pre Delay"
+        containerStyle={styles.container}
+      />
+      <WriterTextInput
+        value={value.postDelay}
+        handleChange={(e) => onChange(e, 'voiceSetup.postDelay')}
+        name="postDelay"
+        label="Post Delay"
+        containerStyle={styles.container}
+      />
     </View>
   )
 }
 
-// const readThis = async () => {
-//   setLoading(true)
-//   try {
-//     const res = await openai.audio.speech.create({
-//       model: 'tts-1',
-//       voice: 'alloy',
-//       input: 'Today is a wonderful day to build something people love!',
-//     })
-//   } catch (error) {
-//     setLoading(false)
-//     setError(`${error}`)
-//     console.error(`Error reading text ${error}`)
-//   }
-// }
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 16,
+  },
+})

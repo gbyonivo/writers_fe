@@ -33,15 +33,16 @@ export function BookmarkItem({ bookmark, setBookmarkToDelete }: Props) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonWrapper}
-        onPress={() =>
-          dispatch(
-            startPlayer({
-              title: bookmark.name,
-              partIds: bookmark.partIds,
-              pieceId: bookmark.pieceId,
-            }),
-          )
-        }
+        onPress={() => {
+          console.log('daningddd')
+          // dispatch(
+          //   startPlayer({
+          //     title: bookmark.name,
+          //     partIds: bookmark.partIds,
+          //     pieceId: bookmark.pieceId,
+          //   }),
+          // )
+        }}
       >
         <WriterIcon icon="play" size={22} />
       </TouchableOpacity>

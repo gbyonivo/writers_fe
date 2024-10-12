@@ -8,7 +8,6 @@ import { GenreMultiSelect } from '../inputs/genre-multi-select'
 import { WriterSegmentedButtons } from '../inputs/writer-segmented-buttons'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { VoiceSetUp } from '../voice-set-up'
-import { WriterCoverImage } from '../writer-cover-image'
 import { WriterHeaderButton } from '../writer-header-button'
 
 interface Props {
@@ -25,19 +24,11 @@ const typeOptions = Object.keys(PieceType).map((val) => ({
   value: val,
 }))
 
-const errorKeys = [
-  'type',
-  'genreIds',
-  'title',
-  'firstPart.content',
-  'cover',
-  'voice',
-]
+const errorKeys = ['type', 'genreIds', 'title', 'firstPart.content', 'voice']
 const nextButtonLabel = [
   'Genre',
   'Title',
   'First Content',
-  'Cover Image',
   'Voice (optional)',
   'Create',
 ]
@@ -47,7 +38,6 @@ const previousButtonLabel = [
   'Genres',
   'Title',
   'First Content',
-  'Cover',
   'Voice',
 ]
 
@@ -62,7 +52,7 @@ export function PieceCreateForm({
   const pagerViewRef = useRef(null)
   const [pageIndex, setPageIndex] = useState(0)
   const onPressNext = () => {
-    if (pageIndex === 5) {
+    if (pageIndex === nextButtonLabel.length - 1) {
       submitForm()
       return
     }
@@ -141,30 +131,7 @@ export function PieceCreateForm({
           />
         </View>
         <View key={4} style={styles.formElement}>
-          <WriterCoverImage
-            handleChange={handleChange}
-            title={values.title}
-            name="imageUrl"
-            value={values.imageUrl}
-            error={formErrors?.imageUrl}
-          />
-        </View>
-        <View key={5} style={styles.formElement}>
-          <VoiceSetUp
-            // @ts-ignore
-            identifier={values.firstPart.identifier}
-            identifierName="firstPart.identifier"
-            // @ts-ignore
-            pitch={values.firstPart.pitch}
-            pitchName="firstPart.pitch"
-            pitchLabel="Pitch"
-            // @ts-ignore
-            rate={values.firstPart.rate}
-            rateName="firstPart.rate"
-            rateLabel="Rate"
-            handleChange={handleChange}
-            testText={values.firstPart.content}
-          />
+          <VoiceSetUp handleChange={handleChange} value={voiceSetup} />
         </View>
       </AnimatedPager>
     </>

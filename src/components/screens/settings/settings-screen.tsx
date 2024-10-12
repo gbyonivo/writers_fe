@@ -8,6 +8,7 @@ import { GoPremium } from './go-premium'
 import { LockParts } from './lock-parts'
 import { Logout } from './logout'
 import { TermsAndConditions } from './terms-and-conditions'
+import { ToggleDesign } from './toggle-design'
 import { ToggleNotification } from './toggle-notification'
 import { ToggleTheme } from './toggle-theme'
 import { Version } from './version'
@@ -17,6 +18,7 @@ export function SettingsScreen() {
     <WriterBackground style={{ flex: 1 }} isView>
       <ScrollView style={styles.container}>
         <ToggleTheme />
+        <ToggleDesign />
         <ChooseReader />
         <LockParts />
         <ToggleNotification />

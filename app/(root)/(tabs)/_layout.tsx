@@ -1,7 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { BlurView } from 'expo-blur'
 import { Tabs } from 'expo-router'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -9,6 +9,7 @@ import { FloatingPlayer } from '../../../src/components/common/voice-player/floa
 import WriterSearchBar from '../../../src/components/common/writer-search-bar'
 import { WriterText } from '../../../src/components/common/writer-text'
 import { FontFamily } from '../../../src/types/font'
+import { getHeighByRatio } from '../../../src/utils/common'
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name']
@@ -23,6 +24,12 @@ const commonProps: Record<string, any> = {
   },
   tabBarLabelStyle: { display: 'none' },
   headerTitle: '',
+}
+
+const headerStyle = {
+  ml: 16,
+  fontFamily: 'Bold' as FontFamily,
+  size: 24,
 }
 
 export default function TabLayout() {
@@ -58,12 +65,20 @@ export default function TabLayout() {
           name="home"
           options={{
             tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-            headerLeft: () => (
-              <WriterText ml={16} fontFamily="Bold">
-                Home
-              </WriterText>
-            ),
+            headerLeft: () => <WriterText {...headerStyle}>Narate</WriterText>,
             headerShadowVisible: false,
+            // header: () => (
+            //   <View style={{ width: getHeighByRatio(1) }}>
+            //     <BlurView
+            //       intensity={30}
+            //       style={{
+            //         ...StyleSheet.absoluteFillObject,
+            //         backgroundColor: 'transparent',
+            //         overflow: 'hidden',
+            //       }}
+            //     />
+            //   </View>
+            // ),
             ...commonProps,
           }}
         />
@@ -97,11 +112,7 @@ export default function TabLayout() {
           name="profile"
           options={{
             tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
-            headerLeft: () => (
-              <WriterText ml={16} fontFamily="Bold">
-                Profile
-              </WriterText>
-            ),
+            headerLeft: () => <WriterText {...headerStyle}>Profile</WriterText>,
             ...commonProps,
           }}
         />
@@ -110,9 +121,7 @@ export default function TabLayout() {
           options={{
             tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
             headerLeft: () => (
-              <WriterText ml={16} fontFamily="Bold">
-                Settings
-              </WriterText>
+              <WriterText {...headerStyle}>Settings</WriterText>
             ),
             ...commonProps,
           }}

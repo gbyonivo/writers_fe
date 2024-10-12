@@ -1,36 +1,29 @@
 import * as Speech from 'expo-speech'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Part } from 'writers_shared'
 
 import { stopPlayer } from '../store/slices/player'
 import { AppState } from '../types/states/AppState'
 import { PlayingStatus } from '../types/states/PlayerState'
 import { usePieceParts } from './apollo/use-piece-parts'
+import { usePlayAudio } from './use-audio'
 
-export const useSpeaker = () => {
+export function useSpeaker() {
   const player = useSelector((state: AppState) => state.player)
   const { parts } = usePieceParts(player.pieceId)
   const dispatch = useDispatch()
+  const playSound = usePlayAudio()
 
   useEffect(() => {
     if (!player.pieceId) return
-    const partsToRead = (parts || []).filter((part) =>
-      player.partIds.includes(part.id),
-    )
-    Speech.speak(
-      partsToRead.map((p) => p.content.split('\n').join(',')).join('.'),
-      {
-        onDone: () => {
-          dispatch(stopPlayer())
-        },
-        onStopped: () => {
-          dispatch(stopPlayer())
-        },
-        pitch: 1,
-        rate: 0.8,
-        voice: 'com.apple.voice.compact.en-IE.Moira',
-      },
-    )
+    const partIds = [] as number[]
+    ;(parts || []).forEach((part: Part) => {
+      if (player.partIds.includes(part.id)) {
+        partIds.push(part.id)
+      }
+    })
+    playSound({ pieceId: player.pieceId, partIds })
   }, [parts])
 
   useEffect(() => {

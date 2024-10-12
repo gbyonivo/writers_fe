@@ -13,7 +13,7 @@ import player from './slices/player'
 import search from './slices/search'
 import settings from './slices/settings'
 
-Reactotron.configure({ host: '192.168.1.150', port: 8081 })
+Reactotron.configure({ host: '192.168.1.104', port: 8081 })
   .useReactNative()
   .connect()
 

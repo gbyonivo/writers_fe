@@ -6,7 +6,13 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
-import { Part } from 'writers_shared'
+import {
+  Country,
+  Part,
+  Sex,
+  SpeakerNamesByCountryAndSex,
+  SpeakerStyle,
+} from 'writers_shared/dist'
 
 import { usePartMutation } from '../../../hooks/apollo/use-part-mutation'
 import { useAlert } from '../../../hooks/use-alert'
@@ -17,7 +23,7 @@ import {
 } from '../../../utils/signal'
 import { PartSchema } from '../../../validation-schema/part-schema'
 import { WriterTextInput } from '../inputs/writer-text-input'
-import { VoiceSetUp } from '../voice-set-up'
+import { VoiceSetUp, VoiceSetUpValue } from '../voice-set-up'
 import { WriterButton } from '../writer-button'
 
 export interface AddPartFormProps {
@@ -44,19 +50,35 @@ export function AddPartForm({
     validationSchema: PartSchema,
     initialValues: {
       content: '',
-      pitch: 1,
-      rate: 1,
-      identifier: '',
+      voiceSetup: {
+        sex: Sex.FEMALE,
+        style: SpeakerStyle.calm,
+        country: Country.UK,
+        preDelay: 1,
+        postDelay: 1,
+      },
     },
-    onSubmit: async (value: Partial<Part>) => {
+    onSubmit: async (value: {
+      content: string
+      voiceSetup: VoiceSetUpValue
+    }) => {
       setSubmitting(true)
       try {
-        await createPart({
-          ...value,
+        const part: Part = {
+          content: value.content,
+          speakerPostBreakTime: value.voiceSetup.postDelay,
+          speakerPreBreakTime: value.voiceSetup.preDelay,
+          speakerName:
+            SpeakerNamesByCountryAndSex[value.voiceSetup.country][
+              value.voiceSetup.sex
+            ],
           pieceId,
           position,
           partId: parentPartId,
-        })
+          // @ts-ignore
+          speakerStyle: value.voiceSetup.style,
+        }
+        await createPart(part)
         bottomSheetRef.current.collapse()
         setSubmitting(false)
         show({ message: 'Your part has been added' })
@@ -132,22 +154,14 @@ export function AddPartForm({
             <View style={styles.voiceSetUpContainer}>
               <VoiceSetUp
                 handleChange={form.handleChange}
-                pitch={form.values.pitch}
-                pitchName="pitch"
-                identifier={form.values.identifier}
-                identifierName="identifier"
-                rate={form.values.rate}
-                rateName="rate"
-                testText={form.values.content}
-                pitchLabel="Pitch"
+                value={form.values.voiceSetup}
               />
               <WriterButton
                 onPress={() => form.submitForm()}
                 style={styles.button}
-                labelStyle={styles.buttonLabel}
                 disabled={submitting}
               >
-                Post Your Part
+                Add part
               </WriterButton>
             </View>
           </BottomSheet>
@@ -174,16 +188,9 @@ const styles = StyleSheet.create({
   voiceSetUpContainer: {
     paddingTop: 16,
     paddingHorizontal: 24,
-    paddingBottom: 48,
-    justifyContent: 'space-between',
-    height: '100%',
   },
   button: {
-    borderRadius: 4,
-    height: 54,
-    paddingTop: 8,
-  },
-  buttonLabel: {
-    fontSize: 20,
+    borderRadius: 8,
+    alignSelf: 'flex-end',
   },
 })
