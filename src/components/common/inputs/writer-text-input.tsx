@@ -7,7 +7,7 @@ import { WriterText } from '../writer-text'
 
 interface Props {
   name: string
-  value: string
+  value: string | number
   handleChange: any
   label?: string
   containerStyle?: StyleProp<ViewStyle>
@@ -46,12 +46,6 @@ export function WriterTextInput({
 }: Props) {
   return (
     <View style={containerStyle}>
-      {!!label && (
-        <WriterText mb={8} fontFamily="Medium">
-          {label}
-        </WriterText>
-      )}
-      {!!labelComponent && <>{labelComponent}</>}
       {!!error && (
         <HelperText
           type="error"
@@ -66,7 +60,8 @@ export function WriterTextInput({
         </HelperText>
       )}
       <RNPTextInput
-        value={value}
+        label={label}
+        value={`${value}`}
         onChangeText={(text) => handleChange({ target: { name, value: text } })}
         mode={mode}
         multiline={multiline}

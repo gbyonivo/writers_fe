@@ -3,22 +3,30 @@ import { gql } from '@apollo/client'
 import { PAGINATION_META } from './common'
 
 export const PART_DETAILS = `
+  content
   detectedLanguage
+  likes
+  aiAssisted
+  pieceId
+  partId
+  position
+  status
+  speakerName
+  speakerStyle
+  speakerRatePercentage
+  speakerPitchPercentage
+  speakerPreBreakTime
+  speakerPostBreakTime
+  naratorPreContent
+  naratorPostContent
+  naratorPreBreakTime
+  naratorPostBreakTime
   id
   createdAt
   updatedAt
-  aiAssisted
-  content
-  likes
-  position
-  userId
-  partId
   userRating
   rating
   numberOfRatings
-  rate
-  pitch
-  identifier
 `
 
 export const GET_PART = gql`
@@ -53,21 +61,43 @@ export const RATE_PART = gql`
 export const CREATE_PART = gql`
   mutation CreatePart(
     $content: String
+    $detectedLanguage: String
+    $likes: Int
+    $aiAssisted: Int
     $pieceId: Int
-    $position: Int
     $partId: Int
-    $pitch: Float
-    $rate: Float
-    $identifier: String
+    $position: Int
+    $status: String
+    $speakerName: String
+    $speakerStyle: String
+    $speakerRatePercentage: Int
+    $speakerPitchPercentage: Int
+    $speakerPreBreakTime: Int
+    $speakerPostBreakTime: Int
+    $naratorPreContent: String
+    $naratorPostContent: String
+    $naratorPreBreakTime: Int
+    $naratorPostBreakTime: Int
   ) {
     createPart(
       content: $content
+      detectedLanguage: $detectedLanguage
+      likes: $likes
+      aiAssisted: $aiAssisted
       pieceId: $pieceId
-      position: $position
       partId: $partId
-      pitch: $pitch
-      rate: $rate
-      identifier: $identifier
+      position: $position
+      status: $status
+      speakerName: $speakerName
+      speakerStyle: $speakerStyle
+      speakerRatePercentage: $speakerRatePercentage
+      speakerPitchPercentage: $speakerPitchPercentage
+      speakerPreBreakTime: $speakerPreBreakTime
+      speakerPostBreakTime: $speakerPostBreakTime
+      naratorPreContent: $naratorPreContent
+      naratorPostContent: $naratorPostContent
+      naratorPreBreakTime: $naratorPreBreakTime
+      naratorPostBreakTime: $naratorPostBreakTime
     ) {
       ${PART_DETAILS}
     }

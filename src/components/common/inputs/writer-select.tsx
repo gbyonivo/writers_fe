@@ -2,6 +2,7 @@ import { StyleProp, TextStyle, View, ViewStyle } from 'react-native'
 import { HelperText } from 'react-native-paper'
 import { PaperSelect } from 'react-native-paper-select'
 
+import { SelectOption } from '../../../types/common'
 import { FontFamily } from '../../../types/font'
 import { WriterText } from '../writer-text'
 
@@ -17,6 +18,7 @@ interface Props {
   errorStyle?: TextStyle
   outlineStyle?: ViewStyle
   fontFamily?: FontFamily
+  options: SelectOption[]
 }
 
 export function WriterSelect({
@@ -30,14 +32,10 @@ export function WriterSelect({
   containerStyle,
   label,
   labelComponent,
+  options,
 }: Props) {
   return (
     <View style={containerStyle}>
-      {!!label && (
-        <WriterText mb={8} fontFamily="Medium">
-          {label}
-        </WriterText>
-      )}
       {!!labelComponent && <>{labelComponent}</>}
       {!!error && (
         <HelperText
@@ -49,12 +47,17 @@ export function WriterSelect({
         </HelperText>
       )}
       <PaperSelect
-        label="Select Gender"
+        label={label}
         value={value}
-        onSelection={(val: any) =>
-          handleChange({ target: { value: val, name } })
-        }
-        arrayList={[]}
+        onSelection={(val: any) => {
+          handleChange({
+            target: {
+              value: val.selectedList[0]?._id,
+              name,
+            },
+          })
+        }}
+        arrayList={options}
         selectedArrayList={[]}
         errorText={error}
         multiEnable={false}

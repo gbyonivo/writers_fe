@@ -9,3 +9,19 @@ export interface Option {
   label: string
   value: string | number
 }
+
+export interface CommonFormTarget {
+  name: string
+  value: any
+}
+
+export type OnChangeParams = { target: CommonFormTarget }
+
+export type OnChange = (val: OnChangeParams) => void
+
+export interface SelectOption {
+  _id: string
+  value: string
+  extraLabel?: string
+  disabled?: boolean
+}
