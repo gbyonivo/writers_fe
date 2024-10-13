@@ -17,6 +17,7 @@ import {
 import { usePartMutation } from '../../../hooks/apollo/use-part-mutation'
 import { useAlert } from '../../../hooks/use-alert'
 import { getHeighByRatio } from '../../../utils/common'
+import { createPartWithVoiceSetup } from '../../../utils/part'
 import {
   onChangePartSignal,
   onPressCreatePartSignal,
@@ -64,20 +65,12 @@ export function AddPartForm({
     }) => {
       setSubmitting(true)
       try {
-        const part: Part = {
-          content: value.content,
-          speakerPostBreakTime: value.voiceSetup.postDelay,
-          speakerPreBreakTime: value.voiceSetup.preDelay,
-          speakerName:
-            SpeakerNamesByCountryAndSex[value.voiceSetup.country][
-              value.voiceSetup.sex
-            ],
-          pieceId,
+        const part: Part = createPartWithVoiceSetup({
+          value,
+          parentPartId,
           position,
-          partId: parentPartId,
-          // @ts-ignore
-          speakerStyle: value.voiceSetup.style,
-        }
+          pieceId,
+        })
         await createPart(part)
         bottomSheetRef.current.collapse()
         setSubmitting(false)

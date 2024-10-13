@@ -2,6 +2,7 @@ import { SafeAreaView, StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 
+import { WriterBackground } from '../../../src/components/common/writer-background'
 import { PieceListInGenres } from '../../../src/components/screens/piece/piece-list-in-genres'
 import { PieceListInTabs } from '../../../src/components/screens/piece/piece-list-in-tabs'
 import { AppState } from '../../../src/types/states/AppState'
@@ -19,13 +20,13 @@ export default function Home() {
       ]}
     />
   ) : (
-    <SafeAreaView style={{ backgroundColor: theme.colors.background }}>
+    <WriterBackground style={{ backgroundColor: theme.colors.background }}>
       <PieceListInGenres
         containerStyle={[
           { backgroundColor: theme.colors.background, paddingBottom: 96 },
         ]}
       />
-    </SafeAreaView>
+    </WriterBackground>
   )
 }
 
