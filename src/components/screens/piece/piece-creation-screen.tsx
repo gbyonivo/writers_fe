@@ -1,12 +1,20 @@
 import { useRouter } from 'expo-router'
 import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
-import { Piece, PieceType } from 'writers_shared/dist/index'
+import {
+  Country,
+  Piece,
+  PieceType,
+  Sex,
+  SpeakerStyle,
+} from 'writers_shared/dist/index'
 
 import { usePieceMutation } from '../../../hooks/apollo/use-piece-mutation'
 import { useAlert } from '../../../hooks/use-alert'
+import { createPartWithVoiceSetup } from '../../../utils/part'
 import { PieceSchema } from '../../../validation-schema/piece-schema'
 import { PieceCreateForm } from '../../common/piece/piece-create-form'
+import { VoiceSetUpValue } from '../../common/voice-set-up'
 import { WriterBackground } from '../../common/writer-background'
 
 export function PieceCreationScreen() {
@@ -32,13 +40,24 @@ export function PieceCreationScreen() {
       type: undefined,
       firstPart: {
         content: '',
-        identifier: null,
-        pitch: 1,
-        rate: 1,
+        voiceSetup: {
+          sex: Sex.FEMALE,
+          style: SpeakerStyle.calm,
+          country: Country.UK,
+          preDelay: 1,
+          postDelay: 1,
+        },
       },
     },
-    onSubmit: async (value: Partial<Piece>) => {
-      await createPiece(value)
+    // todo: onSubmit: async (value: Partial<Piece>) => {
+    onSubmit: async (value: Partial<any>) => {
+      await createPiece({
+        ...value,
+        firstPart: createPartWithVoiceSetup({
+          value: value.firstPart,
+          position: 1,
+        }),
+      })
     },
   })
 

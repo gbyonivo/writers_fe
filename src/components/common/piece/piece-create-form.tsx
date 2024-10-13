@@ -131,7 +131,12 @@ export function PieceCreateForm({
           />
         </View>
         <View key={4} style={styles.formElement}>
-          <VoiceSetUp handleChange={handleChange} value={voiceSetup} />
+          <VoiceSetUp
+            handleChange={handleChange}
+            // @ts-ignore
+            value={values.firstPart.voiceSetup}
+            prefix="firstPart."
+          />
         </View>
       </AnimatedPager>
     </>

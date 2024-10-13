@@ -34,7 +34,6 @@ export function BookmarkItem({ bookmark, setBookmarkToDelete }: Props) {
       <TouchableOpacity
         style={styles.buttonWrapper}
         onPress={() => {
-          console.log('daningddd')
           // dispatch(
           //   startPlayer({
           //     title: bookmark.name,

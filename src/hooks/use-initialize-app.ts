@@ -19,7 +19,6 @@ export const useInitializeApp = () => {
         setFetchingVoices(false)
       } catch (e) {
         setFetchingVoices(false)
-        console.log(e)
       }
     }
     fetchVoices()

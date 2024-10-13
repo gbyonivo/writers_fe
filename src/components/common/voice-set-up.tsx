@@ -16,6 +16,7 @@ export interface VoiceSetUpValue {
 interface VoiceSetUpProps {
   value: VoiceSetUpValue
   handleChange: any
+  prefix?: string
 }
 
 const sexOptions = createOptionsFromEnum({
@@ -41,15 +42,16 @@ const defaultValue: VoiceSetUpValue = {
 export function VoiceSetUp({
   value = defaultValue,
   handleChange,
+  prefix = '',
 }: VoiceSetUpProps) {
   const onChange = ({ target: { value } }, fieldName: string) => {
-    handleChange({ target: { value, name: fieldName } })
+    handleChange({ target: { value, name: `${prefix}${fieldName}` } })
   }
   return (
     <View>
       <WriterSelect
         value={value.country}
-        handleChange={handleChange}
+        handleChange={(e) => onChange(e, 'voiceSetup.country')}
         name="voiceSetup.country"
         options={countryOptions}
         label="Country"
@@ -57,7 +59,7 @@ export function VoiceSetUp({
       />
       <WriterSelect
         value={value.sex}
-        handleChange={handleChange}
+        handleChange={(e) => onChange(e, 'voiceSetup.sex')}
         name="voiceSetup.sex"
         options={sexOptions}
         label="Sex"
@@ -65,7 +67,7 @@ export function VoiceSetUp({
       />
       <WriterSelect
         value={value.style}
-        handleChange={handleChange}
+        handleChange={(e) => onChange(e, 'voiceSetup.style')}
         name="voiceSetup.style"
         options={styleOptions}
         label="Style"
