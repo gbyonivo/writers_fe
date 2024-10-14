@@ -3,12 +3,34 @@ import { useEffect, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Piece, PieceType } from 'writers_shared/dist/index'
 
+import { images } from '../../../assets/images/images'
+import { SelectOption } from '../../../types/common'
 import { AnimatedPager } from '../../containers/page-scroller'
 import { GenreMultiSelect } from '../inputs/genre-multi-select'
+import { WriterImageSegmentedControl } from '../inputs/writer-image-segmented-control'
 import { WriterSegmentedButtons } from '../inputs/writer-segmented-buttons'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { VoiceSetUp } from '../voice-set-up'
 import { WriterHeaderButton } from '../writer-header-button'
+import { WriterText } from '../writer-text'
+
+const typeOptions: SelectOption[] = [
+  {
+    value: PieceType.POEM,
+    _id: PieceType.POEM,
+    image: images.icons.poem,
+  },
+  {
+    value: PieceType.STORY,
+    _id: PieceType.STORY,
+    image: images.icons.story,
+  },
+]
+
+const poemDescription =
+  'A poem is a form of literary art that uses rhythmic and often metaphorical language to evoke emotions, convey ideas, or tell a story. It can take various forms, including sonnets, haikus, free verse, and more.'
+const storyDescription =
+  'A story is a structured narrative that conveys a series of events, whether real or imaginary, designed to engage the reader or listener. It typically includes characters, a plot, and a setting, and can be expressed through various forms such as written text, oral tradition, or performance.'
 
 interface Props {
   values: Partial<Piece>
@@ -18,11 +40,6 @@ interface Props {
   submitForm: () => void
   created?: boolean
 }
-
-const typeOptions = Object.keys(PieceType).map((val) => ({
-  label: val,
-  value: val,
-}))
 
 const errorKeys = ['type', 'genreIds', 'title', 'firstPart.content', 'voice']
 const nextButtonLabel = [
@@ -94,20 +111,33 @@ export function PieceCreateForm({
         scrollEnabled={false}
       >
         <View key={0} style={styles.formElement}>
-          <WriterSegmentedButtons
-            options={typeOptions}
-            value={values.type}
-            handleChange={handleChange}
-            name="type"
-          />
+          <View>
+            <WriterText mb={16}>What do you want to create?</WriterText>
+            <WriterImageSegmentedControl
+              handleChange={handleChange}
+              name="type"
+              options={typeOptions}
+              value={values.type}
+            />
+            <WriterText mt={24}>
+              {values.type === PieceType.POEM
+                ? poemDescription
+                : storyDescription}
+            </WriterText>
+          </View>
         </View>
         <View key={1} style={styles.formElement}>
-          <GenreMultiSelect
-            value={values.genreIds}
-            handleChange={handleChange}
-            name="genreIds"
-            error={formErrors?.genreIds}
-          />
+          <View>
+            <WriterText align="center">
+              Select genres that best describe what you want to create
+            </WriterText>
+            <GenreMultiSelect
+              value={values.genreIds}
+              handleChange={handleChange}
+              name="genreIds"
+              error={formErrors?.genreIds}
+            />
+          </View>
         </View>
         <View key={2} style={styles.formElement}>
           <WriterTextInput
