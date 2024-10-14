@@ -10,14 +10,14 @@ export function WriterLoginHeader({ style }: Props) {
   return (
     <View style={style}>
       <WriterText variant="headlineLarge" style={styles.appName}>
-        AiitPoet
+        Narate
       </WriterText>
       <WriterText
         variant="labelSmall"
         fontFamily="ExtraLight"
         style={styles.appSlogan}
       >
-        {`Lets twist it a little bit, tweak it a little bit.\nSee what we get`}
+        Let's spin a few tales
       </WriterText>
     </View>
   )
