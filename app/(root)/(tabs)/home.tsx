@@ -20,12 +20,8 @@ export default function Home() {
       ]}
     />
   ) : (
-    <WriterBackground style={{ backgroundColor: theme.colors.background }}>
-      <PieceListInGenres
-        containerStyle={[
-          { backgroundColor: theme.colors.background, paddingBottom: 96 },
-        ]}
-      />
+    <WriterBackground isView>
+      <PieceListInGenres containerStyle={[{ paddingBottom: 96 }]} />
     </WriterBackground>
   )
 }

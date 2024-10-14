@@ -1,7 +1,11 @@
 import { StyleSheet, View } from 'react-native'
-import { Chip } from 'react-native-paper'
+import { ScrollView } from 'react-native-gesture-handler'
 
+import { images } from '../../../assets/images/images'
 import { useGenres } from '../../../hooks/apollo/use-genres'
+import { SelectOption } from '../../../types/common'
+import { getWidthByRatio } from '../../../utils/common'
+import { WriterImageSegmentedControlItem } from './writer-images-segmented-control-item'
 
 interface GenreSelectProps {
   value: number[]
@@ -18,32 +22,44 @@ export function GenreMultiSelect({
   const { genres } = useGenres()
 
   return (
-    <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
-      {genres.map((option) => {
-        const isSelected = value.includes(option.id)
-        const onPress = () => {
-          const newValue = isSelected
-            ? value.filter((id) => id !== option.id)
-            : [...value, option.id]
-          handleChange({ target: { name, value: newValue } })
-        }
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={styles.container}>
+        {genres.map((genre) => {
+          const isSelected = value.includes(genre.id)
+          const onPress = () => {
+            const newValue = isSelected
+              ? value.filter((id) => id !== genre.id)
+              : [...value, genre.id]
+            handleChange({ target: { name, value: newValue } })
+          }
+          const option: SelectOption = {
+            image: images.icons[genre.name.toLowerCase()] || images.icons.poem,
+            _id: genre.id,
+            value: genre.name,
+          }
 
-        return (
-          <Chip
-            selected={isSelected}
-            key={option.id}
-            style={styles.container}
-            mode="outlined"
-            onPress={onPress}
-          >
-            {option.name}
-          </Chip>
-        )
-      })}
-    </View>
+          return (
+            <WriterImageSegmentedControlItem
+              selected={isSelected}
+              key={genre.id}
+              onPress={onPress}
+              option={option}
+              indicatorSize={20}
+              imageWidth={getWidthByRatio(0.35)}
+              selectedIndicationStyle={{ top: 24, left: 8 }}
+            />
+          )
+        })}
+      </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { marginBottom: 24, marginRight: 12 },
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    paddingBottom: 96,
+  },
 })

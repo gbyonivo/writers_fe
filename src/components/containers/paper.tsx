@@ -22,7 +22,21 @@ const darkTheme = {
   // Specify a custom property in nested object
   colors: {
     ...MD3DarkTheme.colors,
-    background: '#0c0a09',
+    background: '#111827',
+    primary: '#dbeafe',
+  },
+}
+
+const lightTheme = {
+  ...MD3LightTheme,
+
+  // Specify a custom property
+  custom: 'property',
+
+  // Specify a custom property in nested object
+  colors: {
+    ...MD3LightTheme.colors,
+    background: '#dcfce7',
   },
 }
 
@@ -33,9 +47,9 @@ export type AppTheme = typeof darkTheme
 export function Paper({ children }: Props) {
   const colorScheme = useColorScheme()
   const { theme } = useSelectedColorSchemeContext()
-  let paperTheme = colorScheme !== 'light' ? MD3LightTheme : darkTheme
+  let paperTheme = colorScheme !== 'light' ? lightTheme : darkTheme
   if (theme) {
-    paperTheme = theme === 'light' ? MD3LightTheme : darkTheme
+    paperTheme = theme === 'light' ? lightTheme : darkTheme
   }
 
   return <PaperProvider theme={paperTheme}>{children}</PaperProvider>

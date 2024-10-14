@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from 'react-native'
+
 export enum PROCESSING_STAGE {
   PRE_PROCESSING = 'PRE_PROCESSING',
   PROCESSING = 'PROCESSING',
@@ -24,4 +26,5 @@ export interface SelectOption {
   value: string
   extraLabel?: string
   disabled?: boolean
+  image?: ImageSourcePropType
 }

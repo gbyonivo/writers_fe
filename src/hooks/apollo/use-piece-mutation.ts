@@ -13,7 +13,6 @@ export const usePieceMutation = ({
   const [action] = useMutation(CREATE_PIECE)
 
   const createPiece = async (piece: Partial<Piece>) => {
-    console.log(piece)
     try {
       setLoading(true)
       const response = await action({

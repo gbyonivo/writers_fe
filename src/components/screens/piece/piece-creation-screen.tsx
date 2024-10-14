@@ -14,7 +14,6 @@ import { useAlert } from '../../../hooks/use-alert'
 import { createPartWithVoiceSetup } from '../../../utils/part'
 import { PieceSchema } from '../../../validation-schema/piece-schema'
 import { PieceCreateForm } from '../../common/piece/piece-create-form'
-import { VoiceSetUpValue } from '../../common/voice-set-up'
 import { WriterBackground } from '../../common/writer-background'
 
 export function PieceCreationScreen() {
@@ -37,7 +36,7 @@ export function PieceCreationScreen() {
     initialValues: {
       title: '',
       genreIds: [],
-      type: undefined,
+      type: PieceType.STORY,
       firstPart: {
         content: '',
         voiceSetup: {

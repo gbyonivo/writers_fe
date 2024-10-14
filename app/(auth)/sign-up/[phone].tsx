@@ -153,7 +153,7 @@ export default function () {
               label="Tell us you date of birth so we can send you cards"
               onPress={onSubmit}
               error={errorMessage}
-              buttonLabel="Join AiitPoets"
+              buttonLabel="Join Narate"
             >
               <View>
                 <DatePickerInput
