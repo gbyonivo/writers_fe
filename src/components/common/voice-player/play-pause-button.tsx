@@ -5,7 +5,7 @@ import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 
-import {
+import player, {
   pausePlayer,
   playPlayer,
   stopPlayer,
@@ -47,10 +47,14 @@ export const PlayPauseButton = () => {
       await Audio.setAudioModeAsync({
         playsInSilentModeIOS: true,
       })
-      dispatch(playing ? pausePlayer() : playPlayer())
+      if (status === PlayingStatus.PAUSED || status === PlayingStatus.STOP) {
+        dispatch(playPlayer())
+      } else if (status === PlayingStatus.PLAYING) {
+        dispatch(pausePlayer())
+      }
     }
     press()
-  }, [permission])
+  }, [permission, status])
 
   return (
     <View style={[styles.container]}>

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { Sound } from 'expo-av/build/Audio'
 
 import {
   ExpoVoice,
@@ -11,8 +12,8 @@ const initialState: PlayerState = {
   partIds: null,
   pieceId: null,
   title: null,
-  status: PlayingStatus.PLAYING,
-  voices: [],
+  status: PlayingStatus.STOP,
+  currentSound: null,
 }
 
 export const playerSlice = createSlice({
@@ -58,16 +59,21 @@ export const playerSlice = createSlice({
         status: PlayingStatus.PLAYING,
       }
     },
-    setVoices: (state, { payload }: PayloadAction<ExpoVoice[]>) => {
+    setCurrentSound: (state, { payload }: PayloadAction<Sound | null>) => {
       return {
         ...state,
-        voices: payload,
+        currentSound: payload,
       }
     },
   },
 })
 
-export const { startPlayer, stopPlayer, playPlayer, pausePlayer, setVoices } =
-  playerSlice.actions
+export const {
+  startPlayer,
+  stopPlayer,
+  playPlayer,
+  pausePlayer,
+  setCurrentSound,
+} = playerSlice.actions
 
 export default playerSlice.reducer

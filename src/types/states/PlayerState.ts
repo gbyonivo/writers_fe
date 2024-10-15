@@ -1,3 +1,5 @@
+import { Sound } from 'expo-av/build/Audio'
+
 export enum PlayingStatus {
   STOP = 'STOP',
   PAUSED = 'PAUSED',
@@ -16,5 +18,5 @@ export interface PlayerState {
   partIds?: number[]
   title?: string
   status: PlayingStatus
-  voices: ExpoVoice[]
+  currentSound: Sound | null
 }

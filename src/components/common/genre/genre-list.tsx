@@ -29,5 +29,5 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
   },
-  chip: { marginRight: 8 },
+  chip: { margin: 4 },
 })

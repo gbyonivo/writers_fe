@@ -22,7 +22,8 @@ const darkTheme = {
   // Specify a custom property in nested object
   colors: {
     ...MD3DarkTheme.colors,
-    background: '#111827',
+    // background: '#111827',
+    background: '#083344',
     primary: '#dbeafe',
   },
 }
