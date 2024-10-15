@@ -81,7 +81,7 @@ export const PiecesGroupedByGenre = forwardRef(
               { backgroundColor: theme.colors.primaryContainer },
             ]}
           />
-          <WriterText size={12} align="center">
+          <WriterText size={12} align="center" fontFamily="Bold">
             {truncateString({ text: piece.title, maxLength: 17 })}
           </WriterText>
         </TouchableOpacity>
@@ -118,12 +118,6 @@ export const PiecesGroupedByGenre = forwardRef(
           horizontal
           bounces
           disableIntervalMomentum
-          refreshControl={
-            <RefreshControl
-              refreshing={pieceResult.loading}
-              onRefresh={pieceResult.refetch}
-            />
-          }
         />
       </View>
     )

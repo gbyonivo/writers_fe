@@ -5,7 +5,6 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { FloatingPlayer } from '../../../src/components/common/voice-player/floating-player'
 import WriterSearchBar from '../../../src/components/common/writer-search-bar'
 import { WriterText } from '../../../src/components/common/writer-text'
 import { FontFamily } from '../../../src/types/font'
@@ -127,7 +126,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-      <FloatingPlayer />
     </>
   )
 }

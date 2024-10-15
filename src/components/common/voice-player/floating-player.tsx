@@ -14,7 +14,6 @@ export function FloatingPlayer() {
   const theme = useTheme()
   const { pieceId } = useSelector((state: AppState) => state.player)
   const { piece, loading } = usePiece(pieceId)
-  useSpeaker()
 
   const handlePress = () => {
     router.navigate('/player')
@@ -55,6 +54,7 @@ const styles = StyleSheet.create({
     left: 8,
     right: 8,
     bottom: 84,
+    zIndex: 900,
   },
   trackArtworkImage: {
     width: 40,
