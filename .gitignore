@@ -36,6 +36,7 @@ yarn-error.*
 *.tsbuildinfo
 build*
 ios/
+android/
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend

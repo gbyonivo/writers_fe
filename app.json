@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "narate",
-    "slug": "narate",
-    "version": "1.0.16",
+    "slug": "writers_fe",
+    "version": "1.0.27",
     "orientation": "portrait",
     "icon": "./src/assets/images/app/icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "ivo.tertsegha",
-      "buildNumber": "16",
+      "buildNumber": "27",
       "infoPlist": {
         "NSCameraUsageDescription": "Allow Writers to access your camera",
         "NSMicrophoneUsageDescription": "Allow Writers to access your microphone"
@@ -25,7 +25,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/app/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "ivo.tertsegha"
     },
     "web": {
       "favicon": "./src/assets/images/app/favicon.png"
