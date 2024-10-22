@@ -1,6 +1,6 @@
 {
   "name": "writers_fe",
-  "version": "1.0.16",
+  "version": "1.0.27",
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.9",
-    "@cloudinary/url-gen": "^1.20.0",
     "@gorhom/bottom-sheet": "^4",
     "@gorhom/portal": "^1.0.14",
     "@react-native-async-storage/async-storage": "1.23.1",
@@ -28,7 +27,6 @@
     "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.6.4",
-    "cloudinary-react-native": "^1.0.0",
     "date-fns": "^3.2.0",
     "expo": "^51.0.32",
     "expo-asset": "~10.0.10",
@@ -93,7 +91,7 @@
   },
   "resolutions": {
     "jackspeak": "2.1.1",
-    "string-width": "^4.2.0"
+    "string-width": "4.2.0"
   },
   "private": true
 }
