@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "ivo.tertsegha",
@@ -25,7 +27,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/app/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "ivo.tertsegha"
     },
     "web": {
       "favicon": "./src/assets/images/app/favicon.png"
