@@ -2,7 +2,7 @@
   "expo": {
     "name": "narate",
     "slug": "writers_fe",
-    "version": "1.0.27",
+    "version": "1.0.28",
     "orientation": "portrait",
     "icon": "./src/assets/images/app/icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "ivo.tertsegha",
-      "buildNumber": "27",
+      "buildNumber": "28",
       "infoPlist": {
         "NSCameraUsageDescription": "Allow Writers to access your camera",
         "NSMicrophoneUsageDescription": "Allow Writers to access your microphone"

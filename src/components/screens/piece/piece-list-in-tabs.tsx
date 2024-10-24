@@ -38,18 +38,12 @@ export function PieceListInTabs({
   }, [showBookmark])
 
   const renderScene = SceneMap({
-    poems: () =>
-      shouldShowTextBasedDesgin ? (
-        <PieceListContainer userId={userId} type={PieceType.POEM} />
-      ) : (
-        <PieceListInGenres userId={userId} type={PieceType.POEM} />
-      ),
-    stories: () =>
-      shouldShowTextBasedDesgin ? (
-        <PieceListContainer userId={userId} type={PieceType.STORY} />
-      ) : (
-        <PieceListInGenres userId={userId} type={PieceType.STORY} />
-      ),
+    poems: () => <PieceListContainer userId={userId} type={PieceType.POEM} />,
+
+    stories: () => (
+      <PieceListContainer userId={userId} type={PieceType.STORY} />
+    ),
+
     bookmarks: () => <Bookmarks userId={userId} />,
   })
   return (

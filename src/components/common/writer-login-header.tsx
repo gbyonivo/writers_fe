@@ -1,5 +1,6 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
+import { APP_TITLE } from '../../utils/constants'
 import { WriterText } from './writer-text'
 
 interface Props {
@@ -10,7 +11,7 @@ export function WriterLoginHeader({ style }: Props) {
   return (
     <View style={style}>
       <WriterText variant="headlineLarge" style={styles.appName}>
-        Narate
+        {APP_TITLE}
       </WriterText>
       <WriterText
         variant="labelSmall"

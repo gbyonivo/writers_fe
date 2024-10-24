@@ -20,7 +20,6 @@ export function SettingsScreen() {
         <ToggleTheme />
         <ToggleDesign />
         <ChooseReader />
-        <LockParts />
         <ToggleNotification />
         <GoPremium />
         <Logout />

@@ -1,9 +1,20 @@
-import { useRef, useState } from 'react'
-import { FlatList, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { useState } from 'react'
+import {
+  FlatList,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native'
 import { RefreshControl } from 'react-native-gesture-handler'
-import { PieceType } from 'writers_shared'
+import { useTheme } from 'react-native-paper'
+import { PieceType } from 'writers_shared/dist'
 
 import { useGenres } from '../../../hooks/apollo/use-genres'
+import { getWidthByRatio } from '../../../utils/common'
+import { WriterChip } from '../../common/writer-chip'
+import { PieceListCarousel } from './piece-list-carousel'
 import { PiecesGroupedByGenre } from './piece-list-group-by-genre'
 
 interface Props {
@@ -15,13 +26,15 @@ interface Props {
 export function PieceListInGenres({ containerStyle, userId, type }: Props) {
   const { loading, error, genres } = useGenres()
   const [refetchCount, setRefetchCount] = useState(0)
+  const [pieceType, setPieceType] = useState(() => type)
+  const theme = useTheme()
 
   const renderItem = ({ item }) => {
     return (
       <PiecesGroupedByGenre
         searchValue={`#${item.name}`}
         userId={userId}
-        type={type}
+        type={pieceType}
         refetchCount={refetchCount}
       />
     )
@@ -47,6 +60,29 @@ export function PieceListInGenres({ containerStyle, userId, type }: Props) {
       contentContainerStyle={containerStyle}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       showsHorizontalScrollIndicator={false}
+      ListHeaderComponent={() => (
+        <View style={{ flex: 1 }}>
+          <View style={styles.chipContainer}>
+            {Object.values(PieceType).map((pType) => (
+              <TouchableOpacity key={pType} onPress={() => setPieceType(pType)}>
+                <WriterChip
+                  label={pType}
+                  style={[
+                    styles.chipStyle,
+                    {
+                      backgroundColor:
+                        pieceType === pType
+                          ? theme.colors.secondaryContainer
+                          : theme.colors.backdrop,
+                    },
+                  ]}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+          <PieceListCarousel pieceType={pieceType} />
+        </View>
+      )}
     />
   )
 }
@@ -61,4 +97,11 @@ const styles = StyleSheet.create({
     height: 3,
   },
   genreListContainerStyle: {},
+  chipStyle: {
+    marginRight: 16,
+  },
+  chipContainer: {
+    marginHorizontal: getWidthByRatio(0.05),
+    flexDirection: 'row',
+  },
 })

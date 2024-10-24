@@ -1,3 +1,4 @@
+import { BlurView } from 'expo-blur'
 import { useRouter } from 'expo-router'
 import random from 'lodash.random'
 import {
@@ -44,7 +45,6 @@ export const PiecesGroupedByGenre = forwardRef(
     const [displayedResult, setDisplayedResult] = useState([])
     const router = useRouter()
     const theme = useTheme()
-    const refetchCountRef = useRef(refetchCount)
 
     useEffect(() => {
       if (pieceResult.loading) return
@@ -81,9 +81,30 @@ export const PiecesGroupedByGenre = forwardRef(
               { backgroundColor: theme.colors.primaryContainer },
             ]}
           />
-          <WriterText size={12} align="center" fontFamily="Bold">
-            {truncateString({ text: piece.title, maxLength: 17 })}
-          </WriterText>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 20,
+              width: '100%',
+            }}
+          >
+            <BlurView
+              intensity={20}
+              style={{
+                ...StyleSheet.absoluteFillObject,
+                backgroundColor: 'transparent',
+                overflow: 'hidden',
+              }}
+            />
+            <WriterText
+              size={14}
+              align="center"
+              fontFamily="Bold"
+              color={theme.colors.error}
+            >
+              {truncateString({ text: piece.title, maxLength: 17 })}
+            </WriterText>
+          </View>
         </TouchableOpacity>
       )
     }
