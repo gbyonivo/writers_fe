@@ -1,6 +1,12 @@
 import { useIsFocused } from '@react-navigation/native'
 import { BlurView } from 'expo-blur'
-import { ImageBackground, StyleSheet, View } from 'react-native'
+import { useRouter } from 'expo-router'
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { useTheme } from 'react-native-paper'
 import Carousel from 'react-native-reanimated-carousel'
 import { PieceType } from 'writers_shared/dist'
@@ -16,60 +22,80 @@ interface Props {
 export function PieceListCarousel({ pieceType }: Props) {
   const { colors } = useTheme()
   const isFcoused = useIsFocused()
+  const router = useRouter()
   const { loading, error, pieces } = usePieces({ type: pieceType })
   if (loading) return null
   if (error) return null
   return (
-    <Carousel
-      loop
-      width={getWidthByRatio(0.9)}
-      height={getHeighByRatio(0.5)}
-      autoPlay={isFcoused}
-      data={pieces.edges}
-      scrollAnimationDuration={1000}
-      // onSnapToItem={(index) => console.log('current index:', index, isFcoused)}
-      style={{
-        marginVertical: 16,
-        marginHorizontal: getWidthByRatio(0.05),
-        borderRadius: 16,
-      }}
-      renderItem={({ index, item }) => (
-        <ImageBackground
-          style={{
-            flex: 1,
-          }}
-          source={{ uri: item.node.imageUrl }}
-          resizeMode="cover"
-        >
-          <View
-            style={{
-              position: 'absolute',
-              height: 100,
-              width: '100%',
-              bottom: 0,
-              justifyContent: 'center',
-            }}
+    <View>
+      <Carousel
+        loop
+        width={getWidthByRatio(0.9)}
+        height={getHeighByRatio(0.5)}
+        autoPlay={isFcoused}
+        data={pieces.edges}
+        scrollAnimationDuration={1000}
+        // onSnapToItem={(index) => console.log('current index:', index, isFcoused)}
+        style={styles.carouselStyle}
+        renderItem={({ index, item }) => (
+          <TouchableOpacity
+            onPress={() =>
+              router.push(`/pieces/${item.node.id}?name=${item.node.title}`)
+            }
+            style={styles.container}
           >
-            <BlurView
-              intensity={10}
-              style={{
-                ...StyleSheet.absoluteFillObject,
-                backgroundColor: colors.onBackground,
-                overflow: 'hidden',
-                opacity: 0.2,
-              }}
-            />
-            <WriterText
-              align="center"
-              size={24}
-              fontFamily="SemiBold"
-              color={colors.background}
+            <ImageBackground
+              source={{ uri: item.node.imageUrl }}
+              resizeMode="cover"
+              style={styles.innerContainer}
             >
-              {item.node.title}
-            </WriterText>
-          </View>
-        </ImageBackground>
-      )}
-    />
+              <View style={styles.blurContainer}>
+                <BlurView
+                  intensity={10}
+                  style={[
+                    styles.blur,
+                    { backgroundColor: colors.onBackground },
+                  ]}
+                />
+                <WriterText
+                  align="center"
+                  size={24}
+                  fontFamily="SemiBold"
+                  color={colors.background}
+                >
+                  {item.node.title}
+                </WriterText>
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  innerContainer: {
+    flex: 1,
+  },
+  blur: {
+    ...StyleSheet.absoluteFillObject,
+    overflow: 'hidden',
+    opacity: 0.2,
+  },
+  blurContainer: {
+    position: 'absolute',
+    height: 100,
+    width: '100%',
+    bottom: 0,
+    justifyContent: 'center',
+  },
+  carouselStyle: {
+    marginVertical: 16,
+    marginHorizontal: getWidthByRatio(0.05),
+    borderRadius: 16,
+  },
+})

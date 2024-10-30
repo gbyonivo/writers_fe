@@ -68,6 +68,8 @@ const styles = StyleSheet.create({
   },
   pieceContent: {
     marginTop: 20,
+    overflow: 'hidden',
+    height: 100,
   },
   pieceContentText: {
     lineHeight: 28,

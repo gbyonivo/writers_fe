@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import { setCurrentSound, stopPlayer } from '../store/slices/player'
 import { apiUrl } from '../utils/constants'
+import { useAudioMutation } from './apollo/use-audio-mutation'
 
 interface Return {
   playSound: (val: { pieceId: number; partIds: number[] }) => Promise<void>
@@ -35,6 +36,14 @@ export function usePlayAudio(): Return {
     }
   }
 
+  const { createAudios } = useAudioMutation({
+    onSuccess: ({ data: { createAudios: urls } }) => {
+      console.log('urls', urls)
+      setAudioUrls(audioUrls)
+      play(urls)
+    },
+  })
+
   const playSound = async ({
     pieceId,
     partIds,
@@ -42,18 +51,11 @@ export function usePlayAudio(): Return {
     pieceId: number
     partIds: number[]
   }) => {
-    // if (audioUrls?.length) {
-    //   play(audioUrls)
-    //   return
-    // }
     try {
-      const response = await axios.post(`${apiUrl}/generate-audio`, {
+      await createAudios({
         pieceId,
         partIds,
       })
-      const audioUrls = response.data as string[]
-      setAudioUrls(audioUrls)
-      play(audioUrls)
     } catch (error) {
       console.error('Error fetching or playing audio:', error)
     }

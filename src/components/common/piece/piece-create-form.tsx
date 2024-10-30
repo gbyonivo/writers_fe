@@ -4,8 +4,12 @@ import { StyleSheet, View } from 'react-native'
 import { Piece, PieceType } from 'writers_shared/dist/index'
 
 import { images } from '../../../assets/images/images'
+import { useFirstPartSuggestionsMutation } from '../../../hooks/apollo/use-first-part-suggestions-mutation'
+import { useGenres } from '../../../hooks/apollo/use-genres'
 import { SelectOption } from '../../../types/common'
+import { getWidthByRatio } from '../../../utils/common'
 import { AnimatedPager } from '../../containers/page-scroller'
+import { WriterFloatingButton } from '../buttons/writer-floating-button'
 import { GenreMultiSelect } from '../inputs/genre-multi-select'
 import { WriterImageSegmentedControl } from '../inputs/writer-image-segmented-control'
 import { WriterSegmentedButtons } from '../inputs/writer-segmented-buttons'
@@ -67,6 +71,7 @@ export function PieceCreateForm({
   created,
 }: Props) {
   const pagerViewRef = useRef(null)
+  const { genres } = useGenres()
   const [pageIndex, setPageIndex] = useState(0)
   const onPressNext = () => {
     if (pageIndex === nextButtonLabel.length - 1) {
@@ -84,6 +89,12 @@ export function PieceCreateForm({
       setPageIndex(0)
     }
   }, [])
+
+  const { createFirstPartSuggestions } = useFirstPartSuggestionsMutation({
+    onSuccess: ([suggestion]) => {
+      handleChange({ target: { value: suggestion, name: 'firstPart.content' } })
+    },
+  })
 
   return (
     <>
@@ -118,6 +129,10 @@ export function PieceCreateForm({
               name="type"
               options={typeOptions}
               value={values.type}
+              imageStyle={{
+                width: getWidthByRatio(0.35),
+                height: getWidthByRatio(0.35),
+              }}
             />
             <WriterText mt={24}>
               {values.type === PieceType.POEM
@@ -128,15 +143,19 @@ export function PieceCreateForm({
         </View>
         <View key={1} style={styles.formElement}>
           <View>
-            <WriterText align="center">
+            <WriterText align="center" mb={32}>
               Select genres that best describe what you want to create
             </WriterText>
-            <GenreMultiSelect
-              value={values.genreIds}
-              handleChange={handleChange}
-              name="genreIds"
-              error={formErrors?.genreIds}
-            />
+            <View>
+              <GenreMultiSelect
+                genres={genres}
+                value={values.genreIds}
+                handleChange={handleChange}
+                name="genreIds"
+                error={formErrors?.genreIds}
+                hideImage
+              />
+            </View>
           </View>
         </View>
         <View key={2} style={styles.formElement}>
@@ -169,6 +188,19 @@ export function PieceCreateForm({
           />
         </View>
       </AnimatedPager>
+      {pageIndex === 3 && (
+        <WriterFloatingButton
+          onPress={async () => {
+            await createFirstPartSuggestions({
+              title: values.title,
+              genreIds: values.genreIds,
+              type: values.type,
+            })
+          }}
+          icon="plus"
+          style={styles.floatingButton}
+        />
+      )}
     </>
   )
 }
@@ -189,5 +221,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 32,
+  },
+  floatingButton: {
+    bottom: 100,
   },
 })

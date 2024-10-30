@@ -1,0 +1,54 @@
+import { BlurView } from 'expo-blur'
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native'
+import { useTheme } from 'react-native-paper'
+
+import { WriterIcon } from '../writer-icon'
+
+interface Props {
+  onPress: () => void
+  style?: StyleProp<ViewStyle>
+  icon: string
+  iconSize?: number
+}
+
+export function WriterFloatingButton({
+  onPress,
+  style,
+  icon,
+  iconSize = 40,
+}: Props) {
+  const { colors } = useTheme()
+  return (
+    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+      <BlurView
+        intensity={10}
+        style={[styles.blur, { backgroundColor: colors.onBackground }]}
+      />
+      <WriterIcon icon={icon} size={iconSize} />
+    </TouchableOpacity>
+  )
+}
+
+const styles = StyleSheet.create({
+  button: {
+    position: 'absolute',
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 20,
+    bottom: 20,
+  },
+  blur: {
+    ...StyleSheet.absoluteFillObject,
+    overflow: 'hidden',
+    opacity: 0.2,
+    borderRadius: 35,
+  },
+})
