@@ -42,7 +42,11 @@ export function PieceListCarousel({ pieceType }: Props) {
             onPress={() =>
               router.push(`/pieces/${item.node.id}?name=${item.node.title}`)
             }
-            style={styles.container}
+            style={[
+              styles.container,
+              styles.shadowBorder,
+              { shadowColor: 'transparent' },
+            ]}
           >
             <ImageBackground
               source={{ uri: item.node.imageUrl }}
@@ -75,6 +79,15 @@ export function PieceListCarousel({ pieceType }: Props) {
 }
 
 const styles = StyleSheet.create({
+  shadowBorder: {
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.8,
+    shadowRadius: 16,
+    elevation: 10,
+  },
   container: {
     flex: 1,
   },
