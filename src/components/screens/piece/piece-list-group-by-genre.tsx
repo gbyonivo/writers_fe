@@ -1,13 +1,6 @@
 import { BlurView } from 'expo-blur'
 import { useRouter } from 'expo-router'
-import random from 'lodash.random'
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import {
   FlatList,
   Image,
@@ -15,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { RefreshControl } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
 import { PieceType } from 'writers_shared'
@@ -25,7 +17,6 @@ import { useSearchPieces } from '../../../hooks/apollo/use-search-piece-result'
 import { setSearchValue } from '../../../store/slices/search'
 import { truncateString } from '../../../utils/common'
 import { WriterIcon } from '../../common/writer-icon'
-import { WriterIconButton } from '../../common/writer-icon-button'
 import { WriterText } from '../../common/writer-text'
 
 interface Props {

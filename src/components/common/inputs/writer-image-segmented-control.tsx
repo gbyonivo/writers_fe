@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+  Image,
+  ImageStyle,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { useTheme } from 'react-native-paper'
 
 import { OnChange, SelectOption } from '../../../types/common'
-import { getHeighByRatio, getWidthByRatio } from '../../../utils/common'
-import { WriterText } from '../writer-text'
 import { WriterImageSegmentedControlItem } from './writer-images-segmented-control-item'
 
 interface Props {
@@ -12,6 +17,7 @@ interface Props {
   handleChange: OnChange
   name: string
   value: string
+  imageStyle?: StyleProp<ImageStyle>
 }
 
 export function WriterImageSegmentedControl({
@@ -19,6 +25,7 @@ export function WriterImageSegmentedControl({
   handleChange,
   name,
   value,
+  imageStyle,
 }: Props) {
   const theme = useTheme()
   const handlePress = (option: SelectOption) => {
@@ -33,6 +40,7 @@ export function WriterImageSegmentedControl({
           key={option._id}
           onPress={handlePress}
           option={option}
+          imageStyle={imageStyle}
         />
       ))}
     </View>

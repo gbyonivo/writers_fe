@@ -1,8 +1,7 @@
-import { StyleSheet, View } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
 import { images } from '../../../assets/images/images'
-import { useGenres } from '../../../hooks/apollo/use-genres'
 import { SelectOption } from '../../../types/common'
 import { getWidthByRatio } from '../../../utils/common'
 import { WriterImageSegmentedControlItem } from './writer-images-segmented-control-item'
@@ -12,18 +11,22 @@ interface GenreSelectProps {
   name: string
   handleChange: any
   error?: string
+  genres: any[]
+  hideImage?: boolean
+  containerStyle?: StyleProp<ViewStyle>
 }
 
 export function GenreMultiSelect({
   value,
   name,
   handleChange,
+  genres,
+  hideImage,
+  containerStyle,
 }: GenreSelectProps) {
-  const { genres } = useGenres()
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
+      <View style={[styles.container, containerStyle, ,]}>
         {genres.map((genre) => {
           const isSelected = value.includes(genre.id)
           const onPress = () => {
@@ -38,6 +41,21 @@ export function GenreMultiSelect({
             value: genre.name,
           }
 
+          if (hideImage) {
+            return (
+              <WriterImageSegmentedControlItem
+                selected={isSelected}
+                key={genre.id}
+                onPress={onPress}
+                option={option}
+                indicatorSize={20}
+                imageStyle={{ width: 32, height: 32 }}
+                containerStyle={{ flexDirection: 'row', marginBottom: 32 }}
+                labelStyle={{ marginLeft: 8 }}
+              />
+            )
+          }
+
           return (
             <WriterImageSegmentedControlItem
               selected={isSelected}
@@ -45,7 +63,10 @@ export function GenreMultiSelect({
               onPress={onPress}
               option={option}
               indicatorSize={20}
-              imageWidth={getWidthByRatio(0.35)}
+              imageStyle={{
+                width: getWidthByRatio(0.35),
+                height: getWidthByRatio(0.35),
+              }}
               selectedIndicationStyle={{ top: 24, left: 8 }}
             />
           )
@@ -57,9 +78,18 @@ export function GenreMultiSelect({
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    paddingBottom: 96,
+  },
+  section: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  paragraph: {
+    fontSize: 15,
+  },
+  checkbox: {
+    margin: 8,
   },
 })

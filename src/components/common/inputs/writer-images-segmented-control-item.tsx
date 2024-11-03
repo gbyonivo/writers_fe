@@ -1,8 +1,10 @@
 import {
   Image,
+  ImageStyle,
   StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   TouchableOpacity,
   View,
   ViewStyle,
@@ -18,9 +20,10 @@ interface Props {
   onPress: (option: SelectOption) => void
   selected: boolean
   indicatorSize?: number
-  imageWidth?: number
-  imageHeight?: number
   selectedIndicationStyle?: StyleProp<ViewStyle>
+  containerStyle?: StyleProp<ViewStyle>
+  labelStyle?: StyleProp<TextStyle>
+  imageStyle?: StyleProp<ImageStyle>
 }
 
 export function WriterImageSegmentedControlItem({
@@ -28,28 +31,24 @@ export function WriterImageSegmentedControlItem({
   onPress,
   selected,
   indicatorSize = 24,
-  imageHeight = getHeighByRatio(0.2),
-  imageWidth = getWidthByRatio(0.4),
   selectedIndicationStyle = styles.selectedIndication,
+  containerStyle,
+  labelStyle,
+  imageStyle,
 }: Props) {
   const theme = useTheme()
   return (
     <Text>
       <TouchableOpacity
         key={option._id}
-        style={[styles.segment, selected && styles.selectedSegment]}
+        style={[
+          styles.segment,
+          selected && styles.selectedSegment,
+          containerStyle,
+        ]}
         onPress={() => onPress(option)}
       >
-        <Image
-          source={option.image}
-          style={[
-            styles.image,
-            {
-              width: imageWidth,
-              height: imageHeight,
-            },
-          ]}
-        />
+        <Image source={option.image} style={[styles.image, imageStyle]} />
         {selected && (
           <View
             style={[
@@ -66,7 +65,7 @@ export function WriterImageSegmentedControlItem({
             ]}
           />
         )}
-        <WriterText>{option.value}</WriterText>
+        <WriterText style={labelStyle}>{option.value}</WriterText>
       </TouchableOpacity>
     </Text>
   )

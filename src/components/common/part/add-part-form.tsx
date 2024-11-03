@@ -2,18 +2,20 @@ import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
 import { Portal } from '@gorhom/portal'
 import { useRouter } from 'expo-router'
 import { useFormik } from 'formik'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react'
 import { StyleSheet, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
-import {
-  Country,
-  Part,
-  Sex,
-  SpeakerNamesByCountryAndSex,
-  SpeakerStyle,
-} from 'writers_shared/dist'
+import { Country, Part, Sex, SpeakerStyle } from 'writers_shared/dist'
 
+import { useGenres } from '../../../hooks/apollo/use-genres'
+import { useNextPartSuggestionsMutation } from '../../../hooks/apollo/use-next-part-suggestions-mutation'
 import { usePartMutation } from '../../../hooks/apollo/use-part-mutation'
 import { useAlert } from '../../../hooks/use-alert'
 import { getHeighByRatio } from '../../../utils/common'
@@ -26,25 +28,53 @@ import { PartSchema } from '../../../validation-schema/part-schema'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { VoiceSetUp, VoiceSetUpValue } from '../voice-set-up'
 import { WriterButton } from '../writer-button'
+import { SparkForm } from './spark-form'
 
 export interface AddPartFormProps {
   pieceId: number
   position: number
   parentPartId: number
+  joinedPreviousPartIds: string
+  setInitialText: (val: string) => void
+  setAiSuggestion: (val: string) => void
 }
 
-export function AddPartForm({
-  parentPartId,
-  position,
-  pieceId,
-}: AddPartFormProps) {
+enum BottomSheetContentType {
+  VOICE_FORM,
+  AI_HELP,
+}
+
+const snapPoints = ['80%']
+
+export const AddPartForm = forwardRef(function AddPartForm(
+  {
+    parentPartId,
+    position,
+    pieceId,
+    joinedPreviousPartIds,
+    setAiSuggestion,
+    setInitialText,
+  }: AddPartFormProps,
+  ref,
+) {
   const { createPart } = usePartMutation({ pieceId })
   const [submitting, setSubmitting] = useState(false)
+  const [bottomSheetContentType, setBottomSheetContentType] = useState(
+    BottomSheetContentType.VOICE_FORM,
+  )
   const [error, setError] = useState(null)
   const router = useRouter()
   const { show } = useAlert()
+  const { genres } = useGenres()
   const theme = useTheme()
   const bottomSheetRef = useRef<BottomSheet>(null)
+  const bottomSheetIndicator = {
+    backgroundColor: theme.colors.background,
+  }
+
+  const bottomSheetStyle = {
+    backgroundColor: theme.colors.background,
+  }
 
   const form = useFormik({
     enableReinitialize: false,
@@ -83,10 +113,37 @@ export function AddPartForm({
     },
   })
 
+  useImperativeHandle(ref, () => {
+    return {
+      showAiHelp: (aiSuggestion: string) => {
+        if (aiSuggestion) {
+          setInitialText(form.values.content)
+          form.setFieldValue('content', aiSuggestion)
+          return
+        }
+        setBottomSheetContentType(BottomSheetContentType.AI_HELP)
+        bottomSheetRef.current.expand()
+      },
+      undo: (initialText: string) => {
+        form.setFieldValue('content', initialText)
+      },
+    }
+  }, [])
+
+  const { createNextPartSuggestions } = useNextPartSuggestionsMutation({
+    onSuccess: ([suggestion]) => {
+      setInitialText(form.values.content)
+      setAiSuggestion(suggestion)
+      form.setFieldValue('content', suggestion)
+      bottomSheetRef.current.expand()
+    },
+  })
+
   useEffect(() => {
     let removeListener = null
     if (onPressCreatePartSignal.getNumberOfListeners() < 1) {
       removeListener = onPressCreatePartSignal.listen(() => {
+        setBottomSheetContentType(BottomSheetContentType.VOICE_FORM)
         bottomSheetRef.current.expand()
       })
     }
@@ -103,14 +160,6 @@ export function AddPartForm({
       submitting,
     })
   }, [form.dirty, form.isValid, submitting])
-  const snapPoints = useMemo(() => ['80%'], [])
-  const bottomSheetIndicator = {
-    backgroundColor: theme.colors.background,
-  }
-
-  const bottomSheetStyle = {
-    backgroundColor: theme.colors.background,
-  }
 
   return (
     <View style={{ marginBottom: getHeighByRatio(0.5) }}>
@@ -125,7 +174,6 @@ export function AddPartForm({
         style={styles.textStyle}
         error={form.errors.content || error}
       />
-
       <GestureHandlerRootView>
         <Portal>
           <BottomSheet
@@ -145,24 +193,42 @@ export function AddPartForm({
             )}
           >
             <View style={styles.voiceSetUpContainer}>
-              <VoiceSetUp
-                handleChange={form.handleChange}
-                value={form.values.voiceSetup}
-              />
-              <WriterButton
-                onPress={() => form.submitForm()}
-                style={styles.button}
-                disabled={submitting}
-              >
-                Add part
-              </WriterButton>
+              {bottomSheetContentType === BottomSheetContentType.VOICE_FORM ? (
+                <>
+                  <VoiceSetUp
+                    handleChange={form.handleChange}
+                    value={form.values.voiceSetup}
+                  />
+                  <WriterButton
+                    onPress={() => form.submitForm()}
+                    style={styles.button}
+                    disabled={submitting}
+                  >
+                    Add part
+                  </WriterButton>
+                </>
+              ) : (
+                <SparkForm
+                  genres={genres}
+                  onSubmit={({ genreIds }) => {
+                    createNextPartSuggestions({
+                      pieceId,
+                      partIds: joinedPreviousPartIds
+                        .split(',')
+                        .map((partIdAsStr) => parseInt(partIdAsStr, 10)),
+                      genreIds,
+                    })
+                  }}
+                  loading={submitting}
+                />
+              )}
             </View>
           </BottomSheet>
         </Portal>
       </GestureHandlerRootView>
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
   textStyle: {
