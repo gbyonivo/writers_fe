@@ -11,6 +11,7 @@ import { TermsAndConditions } from './terms-and-conditions'
 import { ToggleDesign } from './toggle-design'
 import { ToggleNotification } from './toggle-notification'
 import { ToggleTheme } from './toggle-theme'
+import { ToggleTips } from './toggle-tips'
 import { Version } from './version'
 
 export function SettingsScreen() {
@@ -19,6 +20,7 @@ export function SettingsScreen() {
       <ScrollView style={styles.container}>
         <ToggleTheme />
         <ToggleDesign />
+        <ToggleTips />
         <ChooseReader />
         <ToggleNotification />
         <GoPremium />

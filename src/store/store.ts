@@ -12,12 +12,13 @@ import piece from './slices/piece'
 import player from './slices/player'
 import search from './slices/search'
 import settings from './slices/settings'
+import suggestion from './slices/suggestion'
 
 Reactotron.configure({ host: '192.168.1.104', port: 8081 })
   .useReactNative()
   .connect()
 
-registerTranslation('pl', {
+registerTranslation('en', {
   save: 'Done',
   selectSingle: 'Select date',
   selectMultiple: 'Select dates',
@@ -56,6 +57,7 @@ export const createStore = async () => {
     piece,
     genre,
     player,
+    suggestion,
   })
 
   let reactotronEnhancer

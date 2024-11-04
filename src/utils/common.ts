@@ -1,4 +1,5 @@
 import { Dimensions, Platform } from 'react-native'
+import { PieceType } from 'writers_shared'
 
 import { SelectOption } from '../types/common'
 
@@ -63,4 +64,29 @@ export const createOptionsFromEnum = ({
     disabled: !!disabledMap?.[code],
     extraLabel: extraLabelMap?.[code] || '',
   }))
+}
+
+export const createKeyForSuggestions = ({
+  partIds = [],
+  pieceId = '',
+  genreIds = [],
+  title = '',
+  isSuggestion,
+  type = '',
+}: {
+  partIds?: number[]
+  pieceId?: number | string
+  title?: string
+  genreIds?: number[]
+  isSuggestion: boolean
+  type?: PieceType | string
+}): string => {
+  return [
+    pieceId,
+    ...partIds,
+    ...genreIds,
+    title,
+    `${isSuggestion}`,
+    type,
+  ].join('-')
 }

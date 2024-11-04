@@ -8,6 +8,7 @@ const initialState: SettingsState = {
   theme: null,
   shouldChainParts: false,
   shouldShowTextBasedDesgin: true,
+  shouldUseAiForOnlyTips: true,
 }
 
 export const settingsSlice = createSlice({
@@ -24,6 +25,12 @@ export const settingsSlice = createSlice({
       return {
         ...state,
         shouldChainParts: !state.shouldChainParts,
+      }
+    },
+    toggleShouldUseAiForOnlyTips: (state) => {
+      return {
+        ...state,
+        shouldUseAiForOnlyTips: !state.shouldUseAiForOnlyTips,
       }
     },
     setShouldChainPart: (state, { payload }: PayloadAction<boolean>) => {
@@ -49,6 +56,7 @@ export const {
   toggleShouldChainPart,
   setShouldChainPart,
   setShouldShowTextBasedDesign,
+  toggleShouldUseAiForOnlyTips,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer
