@@ -51,9 +51,9 @@ export function WriterTextInput({
           type="error"
           visible={!!error}
           style={[
-            errorStyle,
             styles.error,
             { fontFamily: 'Poppins-Light' as FontFamily },
+            errorStyle,
           ]}
         >
           {error}

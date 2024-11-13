@@ -37,7 +37,6 @@ export const useNextPartSuggestionsMutation = ({
     })
     const existingSuggestions = suggestionMap[suggestionKey]
     if (existingSuggestions && existingSuggestions.length) {
-      console.log(existingSuggestions)
       onSuccess?.(existingSuggestions)
       return existingSuggestions
     }
