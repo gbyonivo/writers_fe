@@ -26,7 +26,7 @@ export interface AuthenticateReturn {
 export interface AuthenticateParams {
   value: string
   formattedValue: string
-  isValidNumber: (val: string) => boolean
+  isValidNumber?: (val: string) => boolean
 }
 
 export interface UseAuthReturn {

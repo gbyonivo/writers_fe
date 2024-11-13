@@ -4,7 +4,7 @@ import { router, useLocalSearchParams } from 'expo-router'
 import jwtDecode from 'jwt-decode'
 import React, { useMemo, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { MD3Colors, ProgressBar, TextInput } from 'react-native-paper'
+import { ProgressBar, TextInput, useTheme } from 'react-native-paper'
 import {
   DatePickerInput,
   enGB,
@@ -39,6 +39,7 @@ export default function () {
   const [token, setToken] = useState<null | string>(null)
   const [submittingForm, setSubmittingForm] = useState(false)
   const showHeader = [0, 1, 2].includes(pageIndex) && !token
+  const theme = useTheme()
   const dispatch = useDispatch()
 
   const onChange = (value: string, key: keyof User) => {
@@ -102,13 +103,13 @@ export default function () {
             <WriterIconButton
               icon="keyboard-backspace"
               onPress={onPressBack}
-              style={{ marginRight: 8 }}
+              style={{ marginRight: 8, backgroundColor: 'transparent' }}
               disabled={submittingForm}
             />
             <View style={{ flex: 1, paddingTop: 24 }}>
               <ProgressBar
                 progress={(pageIndex + 1) / 5}
-                color={MD3Colors.primary40}
+                color={theme.colors.onBackground}
               />
             </View>
           </View>

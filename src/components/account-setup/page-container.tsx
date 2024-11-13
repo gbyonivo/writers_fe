@@ -23,11 +23,13 @@ export function PageContainer({
 }: Props) {
   return (
     <View>
-      <WriterText style={styles.label}>{label}</WriterText>
-      {children}
-      <HelperText type="error" visible={!!error} style={styles.error}>
-        {error}
-      </HelperText>
+      <View>
+        <WriterText style={styles.label}>{label}</WriterText>
+        {children}
+        <HelperText type="error" visible={!!error} style={styles.error}>
+          {error}
+        </HelperText>
+      </View>
       <WriterButton
         onPress={onPress}
         style={styles.nextButton}

@@ -10,7 +10,7 @@ export type TextAlgin = 'left' | 'right' | 'center'
 interface Props {
   style?: StyleProp<TextStyle>
   variant?: VariantProp<never>
-  children: string | string[] | number | number[]
+  children: string | string[] | number | number[] | JSX.Element
   align?: TextAlgin
   mb?: number
   ml?: number
@@ -21,6 +21,7 @@ interface Props {
   size?: number
   color?: string
   fontFamily?: FontFamily
+  onLayout?: any
 }
 
 export function WriterText({
@@ -37,6 +38,7 @@ export function WriterText({
   size = 16,
   color,
   fontFamily = 'Light',
+  onLayout,
 }: Props) {
   const alignmentStyle = useMemo(() => {
     return {
@@ -65,7 +67,11 @@ export function WriterText({
     : customStyle
 
   return (
-    <Text variant={variant} style={[alignmentStyle, addedColorStyle, style]}>
+    <Text
+      variant={variant}
+      style={[alignmentStyle, addedColorStyle, style]}
+      onLayout={onLayout}
+    >
       {children}
     </Text>
   )

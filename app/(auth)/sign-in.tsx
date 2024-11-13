@@ -4,43 +4,37 @@ import { useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { HelperText } from 'react-native-paper'
 import PhoneInput from 'react-native-phone-number-input'
-import { useDispatch } from 'react-redux'
+import { useToast } from 'react-native-toast-notifications'
 
 import { WakeUpServerButton } from '../../src/components/common/wake-up-server-button'
 import { WriterBackground } from '../../src/components/common/writer-background'
 import { WriterButton } from '../../src/components/common/writer-button'
 import { WriterLoginHeader } from '../../src/components/common/writer-login-header'
 import { WriterText } from '../../src/components/common/writer-text'
-import { useAuthContext } from '../../src/context/auth-context'
-import { addUser } from '../../src/store/slices/login'
-import {
-  AddUserParams,
-  LoginAttemptStatus,
-} from '../../src/types/states/LoginState'
+import { apiUrl } from '../../src/utils/constants'
 
 export default function Index() {
-  const [value, setValue] = useState('743521334')
+  const [value, setValue] = useState('74352477')
   const [formattedValue, setFormattedValue] = useState('')
   const [message, setMessage] = useState<string | null>(null)
   const phoneInput = useRef<PhoneInput>(null)
-  const dispatch = useDispatch()
-  const { login } = useAuthContext()
+  const toast = useToast()
 
   const verifyNumber = async () => {
-    const { userAndToken, status, formattedPhone } = await login({
-      value,
-      formattedValue,
-      isValidNumber: phoneInput.current?.isValidNumber,
-    })
-
-    if (status === LoginAttemptStatus.SUCCESS) {
-      dispatch(addUser(userAndToken as AddUserParams))
-    } else if (status === LoginAttemptStatus.NOT_FOUND) {
-      router.push(`/sign-up/${formattedPhone}`)
-    } else if (status === LoginAttemptStatus.INVALID_NUMBER) {
-      setMessage('Your number is invalid')
-    } else {
-      setMessage('We encounted an error')
+    // router.push(`/sign-up/${formattedValue}`)
+    // return
+    try {
+      const response = await axios.post(`${apiUrl}/verify-phone-number`, {
+        phoneNumber: formattedValue,
+      })
+      if (response.data === 'pending') {
+        router.push(`/code-verification/${formattedValue}`)
+      } else {
+        setMessage('Encountered an issue')
+      }
+    } catch (e) {
+      console.log(e)
+      toast.show('We encountered an error')
     }
   }
 
@@ -49,7 +43,7 @@ export default function Index() {
       <>
         <WriterLoginHeader style={styles.appHeaderContainer} />
         <WriterText variant="bodyLarge" style={styles.appDescription}>
-          Enter your number to start writing
+          Enter your number
         </WriterText>
         <View style={styles.phoneInput}>
           <PhoneInput
