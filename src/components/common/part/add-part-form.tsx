@@ -12,12 +12,14 @@ import React, {
 import { StyleSheet, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
+import { useSelector } from 'react-redux'
 import { Country, Part, Sex, SpeakerStyle } from 'writers_shared/dist'
 
 import { useGenres } from '../../../hooks/apollo/use-genres'
 import { useNextPartSuggestionsMutation } from '../../../hooks/apollo/use-next-part-suggestions-mutation'
 import { usePartMutation } from '../../../hooks/apollo/use-part-mutation'
 import { useAlert } from '../../../hooks/use-alert'
+import { AppState } from '../../../types/states/AppState'
 import { getHeighByRatio } from '../../../utils/common'
 import { createPartWithVoiceSetup } from '../../../utils/part'
 import {
@@ -29,6 +31,7 @@ import { WriterTextInput } from '../inputs/writer-text-input'
 import { VoiceSetUp, VoiceSetUpValue } from '../voice-set-up'
 import { WriterButton } from '../writer-button'
 import { SparkForm } from './spark-form'
+import { SuggestionCarousel } from './suggestion-carousel'
 
 export interface AddPartFormProps {
   pieceId: number
@@ -36,12 +39,12 @@ export interface AddPartFormProps {
   parentPartId: number
   joinedPreviousPartIds: string
   setInitialText: (val: string) => void
-  setAiSuggestion: (val: string) => void
 }
 
 enum BottomSheetContentType {
   VOICE_FORM,
   AI_HELP,
+  SUGGESTIONS,
 }
 
 const snapPoints = ['80%']
@@ -52,13 +55,13 @@ export const AddPartForm = forwardRef(function AddPartForm(
     position,
     pieceId,
     joinedPreviousPartIds,
-    setAiSuggestion,
     setInitialText,
   }: AddPartFormProps,
   ref,
 ) {
   const { createPart } = usePartMutation({ pieceId })
   const [submitting, setSubmitting] = useState(false)
+  const [suggestions, setSuggestions] = useState([])
   const [bottomSheetContentType, setBottomSheetContentType] = useState(
     BottomSheetContentType.VOICE_FORM,
   )
@@ -68,10 +71,12 @@ export const AddPartForm = forwardRef(function AddPartForm(
   const { genres } = useGenres()
   const theme = useTheme()
   const bottomSheetRef = useRef<BottomSheet>(null)
+  const { shouldUseAiForOnlyTips } = useSelector(
+    (state: AppState) => state.settings,
+  )
   const bottomSheetIndicator = {
     backgroundColor: theme.colors.background,
   }
-
   const bottomSheetStyle = {
     backgroundColor: theme.colors.background,
   }
@@ -131,11 +136,9 @@ export const AddPartForm = forwardRef(function AddPartForm(
   }, [])
 
   const { createNextPartSuggestions } = useNextPartSuggestionsMutation({
-    onSuccess: ([suggestion]) => {
-      setInitialText(form.values.content)
-      setAiSuggestion(suggestion)
-      form.setFieldValue('content', suggestion)
-      bottomSheetRef.current.expand()
+    onSuccess: (suggestionList) => {
+      setSuggestions(suggestionList)
+      setBottomSheetContentType(BottomSheetContentType.SUGGESTIONS)
     },
   })
 
@@ -193,7 +196,7 @@ export const AddPartForm = forwardRef(function AddPartForm(
             )}
           >
             <View style={styles.voiceSetUpContainer}>
-              {bottomSheetContentType === BottomSheetContentType.VOICE_FORM ? (
+              {bottomSheetContentType === BottomSheetContentType.VOICE_FORM && (
                 <>
                   <VoiceSetUp
                     handleChange={form.handleChange}
@@ -207,7 +210,8 @@ export const AddPartForm = forwardRef(function AddPartForm(
                     Add part
                   </WriterButton>
                 </>
-              ) : (
+              )}
+              {bottomSheetContentType === BottomSheetContentType.AI_HELP && (
                 <SparkForm
                   genres={genres}
                   onSubmit={({ genreIds }) => {
@@ -220,6 +224,16 @@ export const AddPartForm = forwardRef(function AddPartForm(
                     })
                   }}
                   loading={submitting}
+                />
+              )}
+              {bottomSheetContentType ===
+                BottomSheetContentType.SUGGESTIONS && (
+                <SuggestionCarousel
+                  suggestions={suggestions}
+                  onSelectSuggestion={
+                    !shouldUseAiForOnlyTips &&
+                    ((suggestion) => form.setFieldValue('content', suggestion))
+                  }
                 />
               )}
             </View>

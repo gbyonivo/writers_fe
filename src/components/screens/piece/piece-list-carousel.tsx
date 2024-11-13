@@ -35,7 +35,6 @@ export function PieceListCarousel({ pieceType }: Props) {
         autoPlay={isFcoused}
         data={pieces.edges}
         scrollAnimationDuration={1000}
-        // onSnapToItem={(index) => console.log('current index:', index, isFcoused)}
         style={styles.carouselStyle}
         renderItem={({ index, item }) => (
           <TouchableOpacity

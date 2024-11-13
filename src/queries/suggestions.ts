@@ -5,11 +5,13 @@ export const GET_NEXT_PART_SUGGESTIONS = gql`
     $pieceId: Int
     $partIds: [Int]
     $genreIds: [Int]
+    $isSuggestion: Boolean
   ) {
     nextPartSuggestions(
       pieceId: $pieceId
       partIds: $partIds
       genreIds: $genreIds
+      isSuggestion: $isSuggestion
     )
   }
 `
@@ -19,7 +21,13 @@ export const GET_FIRST_PART_SUGGESTIONS = gql`
     $title: String
     $genreIds: [Int]
     $type: String
+    $isSuggestion: Boolean
   ) {
-    firstPartSuggestions(title: $title, genreIds: $genreIds, type: $type)
+    firstPartSuggestions(
+      title: $title
+      genreIds: $genreIds
+      type: $type
+      isSuggestion: $isSuggestion
+    )
   }
 `
