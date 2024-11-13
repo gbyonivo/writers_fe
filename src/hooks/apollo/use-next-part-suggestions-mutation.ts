@@ -37,7 +37,6 @@ export const useNextPartSuggestionsMutation = ({
     })
     const existingSuggestions = suggestionMap[suggestionKey]
     if (existingSuggestions && existingSuggestions.length) {
-      console.log(existingSuggestions)
       onSuccess?.(existingSuggestions)
       return existingSuggestions
     }
@@ -62,7 +61,6 @@ export const useNextPartSuggestionsMutation = ({
       return suggestions
     } catch (e) {
       onFail && onFail(e)
-      console.log(e)
       setLoading(false)
     }
   }

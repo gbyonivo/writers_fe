@@ -38,8 +38,6 @@ export function PartCreationScreen() {
     return [...previousParts, undefined]
   }, [joinedPreviousPartIds, allPieceParts])
 
-  console.log('aiSuggestion --- ', aiSuggestion)
-
   const renderItem = ({ item }: { item: Part }) => {
     if (!item) {
       return (
@@ -49,7 +47,6 @@ export function PartCreationScreen() {
           parentPartId={parentPartId}
           ref={aiButtonRef}
           joinedPreviousPartIds={joinedPreviousPartIds}
-          setAiSuggestion={setAiSuggestion}
           setInitialText={setInitialText}
         />
       )

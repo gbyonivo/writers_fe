@@ -38,7 +38,6 @@ export function usePlayAudio(): Return {
 
   const { createAudios } = useAudioMutation({
     onSuccess: ({ data: { createAudios: urls } }) => {
-      console.log('urls', urls)
       setAudioUrls(audioUrls)
       play(urls)
     },

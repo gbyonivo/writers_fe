@@ -18,7 +18,7 @@ export const useAuth = (): UseAuthReturn => {
     formattedValue,
     isValidNumber,
   }): Promise<AuthenticateReturn> => {
-    const isNumberValid = isValidNumber(value)
+    const isNumberValid = isValidNumber?.(value) || true
     if (!isNumberValid) {
       return { status: LoginAttemptStatus.INVALID_NUMBER }
     }

@@ -12,7 +12,7 @@ export const usePieces = ({
   type?: PieceType
 }) => {
   const { data, loading, error, refetch, fetchMore } = useQuery(GET_PIECES, {
-    variables: { pagination: { userId, first: 6, type } },
+    variables: { pagination: { userId, first: 1, type } },
   })
 
   const pieces: Pagination<Piece> | null = data?.pieces

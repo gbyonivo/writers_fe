@@ -7,7 +7,7 @@ import { SettingsState } from '../../types/states/SettingState'
 const initialState: SettingsState = {
   theme: null,
   shouldChainParts: false,
-  shouldShowTextBasedDesgin: true,
+  shouldShowTextBasedDesgin: false,
   shouldUseAiForOnlyTips: true,
 }
 

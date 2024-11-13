@@ -9,7 +9,7 @@ interface Props {
   label: string
   onPress: () => void
   buttonLabel?: string
-  error?: string
+  error?: string | null
   buttonDisabled?: boolean
 }
 
@@ -23,11 +23,15 @@ export function PageContainer({
 }: Props) {
   return (
     <View>
-      <WriterText style={styles.label}>{label}</WriterText>
-      {children}
-      <HelperText type="error" visible={!!error} style={styles.error}>
-        {error}
-      </HelperText>
+      <View>
+        <WriterText style={styles.label}>{label}</WriterText>
+        {children}
+        {error && (
+          <HelperText type="error" visible={!!error} style={styles.error}>
+            {error}
+          </HelperText>
+        )}
+      </View>
       <WriterButton
         onPress={onPress}
         style={styles.nextButton}
@@ -43,6 +47,7 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 32,
     marginTop: 24,
+    fontSize: 24,
   },
   nextButton: {
     alignSelf: 'flex-end',
@@ -50,6 +55,7 @@ const styles = StyleSheet.create({
   },
   error: {
     marginTop: 32,
-    paddingHorizontal: 16,
+    fontSize: 16,
+    marginLeft: -8,
   },
 })

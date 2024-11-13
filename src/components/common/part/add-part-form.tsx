@@ -49,7 +49,7 @@ enum BottomSheetContentType {
 
 const snapPoints = ['80%']
 
-export const AddPartForm = forwardRef(function AddPartForm(
+export const AddPartForm = forwardRef(function AddPartFormComp(
   {
     parentPartId,
     position,

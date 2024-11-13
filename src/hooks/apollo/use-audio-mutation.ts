@@ -20,10 +20,8 @@ export const useAudioMutation = ({
       })
       setLoading(false)
       onSuccess?.(response)
-      console.log('response', response)
       return response
     } catch (e) {
-      console.log(e)
       onFail && onFail(e)
       setLoading(false)
     }

@@ -39,7 +39,7 @@ function PieceListContextProvider({ children, userId, type }: Props) {
   const endCursor = pieces?.pageInfo?.endCursor
   const hasNextPage = !!pieces?.pageInfo?.hasNextPage
 
-  const { map: pieceMap, likes } = useMemo(() => {
+  const { likes } = useMemo(() => {
     let likes = {}
     const map = (pieces?.edges || []).reduce((acc, curr) => {
       likes = {
