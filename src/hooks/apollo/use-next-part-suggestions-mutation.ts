@@ -62,7 +62,6 @@ export const useNextPartSuggestionsMutation = ({
       return suggestions
     } catch (e) {
       onFail && onFail(e)
-      console.log(e)
       setLoading(false)
     }
   }

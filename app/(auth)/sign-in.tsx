@@ -33,7 +33,6 @@ export default function Index() {
         setMessage('Encountered an issue')
       }
     } catch (e) {
-      console.log(e)
       toast.show('We encountered an error')
     }
   }

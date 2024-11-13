@@ -70,7 +70,6 @@ export default function () {
         code: value,
         phoneNumber: phone,
       })
-      console.log(response.data)
       if (response.data === 'approved') {
         await verifyNumber()
       } else {
