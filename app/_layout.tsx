@@ -2,19 +2,21 @@ import { PortalProvider } from '@gorhom/portal'
 import { useFonts } from 'expo-font'
 import { Slot, SplashScreen } from 'expo-router'
 import { Suspense, useEffect, useRef, useState } from 'react'
-import { Text } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ToastProvider } from 'react-native-toast-notifications'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import { BottomSheetHandler } from '../src/components/bottom-sheets/bottom-sheet-handler'
+import { WriterBackground } from '../src/components/common/writer-background'
 import { Apollo } from '../src/components/containers/apollo'
 import { Paper } from '../src/components/containers/paper'
 import AuthContextProvider from '../src/context/auth-context'
 import BottomSheetContextProvider from '../src/context/bottom-sheet-context'
 import SelectedColorSchemeContextProvider from '../src/context/selected-color-scheme-context'
 import { createStore } from '../src/store/store'
+import { getHeighByRatio, getWidthByRatio } from '../src/utils/common'
 
 const error = console.error
 console.error = (...args: any) => {
@@ -58,9 +60,27 @@ export default function AppLayout() {
     initApp()
   }, [])
 
-  if (!appMounted) return null
+  if (!appMounted) {
+    return (
+      <SafeAreaView
+        style={{
+          backgroundColor: '#1D1B1E',
+          height: getHeighByRatio(1),
+          width: getWidthByRatio(1),
+        }}
+      />
+    )
+  }
   if (!fontsLoaded && !fontError) {
-    return null
+    return (
+      <SafeAreaView
+        style={{
+          backgroundColor: '#1D1B1E',
+          height: getHeighByRatio(1),
+          width: getWidthByRatio(1),
+        }}
+      />
+    )
   }
 
   return (
