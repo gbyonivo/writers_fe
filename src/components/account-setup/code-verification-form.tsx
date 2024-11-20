@@ -82,55 +82,53 @@ export function CodeVerificationForm() {
 
   return (
     <WriterBackground style={styles.root}>
-      <>
-        <WriterText size={30}>
-          Enter the 4-digit code sent to you at {phone as string}
+      <WriterText size={30}>
+        Enter the 4-digit code sent to you at {phone as string}
+      </WriterText>
+      <TouchableOpacity onPress={() => router.push('sign-in')}>
+        <WriterText style={styles.changeNumberText}>
+          Changed your mobile number
         </WriterText>
-        <TouchableOpacity onPress={() => router.push('sign-in')}>
-          <WriterText style={styles.changeNumberText}>
-            Changed your mobile number
-          </WriterText>
-        </TouchableOpacity>
+      </TouchableOpacity>
 
-        <Text>{message}</Text>
-        <CodeField
-          ref={ref}
-          {...props}
-          value={value}
-          onChangeText={setValue}
-          cellCount={CELL_COUNT}
-          rootStyle={styles.codeFieldRoot}
-          keyboardType="number-pad"
-          textContentType="oneTimeCode"
-          renderCell={({ index, symbol, isFocused }) => (
-            <View style={styles.cellContainer} key={index}>
-              <Text
-                style={[
-                  {
-                    ...styles.cell,
-                    color: theme.colors.onBackground,
-                  },
-                  isFocused && { borderColor: theme.colors.primary },
-                ]}
-                onLayout={getCellOnLayoutHandler(index)}
-              >
-                {symbol || (isFocused ? <Cursor /> : null)}
-              </Text>
+      <Text>{message}</Text>
+      <CodeField
+        ref={ref}
+        {...props}
+        value={value}
+        onChangeText={setValue}
+        cellCount={CELL_COUNT}
+        rootStyle={styles.codeFieldRoot}
+        keyboardType="number-pad"
+        textContentType="oneTimeCode"
+        renderCell={({ index, symbol, isFocused }) => (
+          <View style={styles.cellContainer} key={index}>
+            <Text
+              style={[
+                {
+                  ...styles.cell,
+                  color: theme.colors.onBackground,
+                },
+                isFocused && { borderColor: theme.colors.primary },
+              ]}
+              onLayout={getCellOnLayoutHandler(index)}
+            >
+              {symbol || (isFocused ? <Cursor /> : null)}
+            </Text>
 
-              <BlurView
-                intensity={10}
-                style={[
-                  styles.blur,
-                  { backgroundColor: theme.colors.onBackground },
-                ]}
-              />
-            </View>
-          )}
-        />
-        <WriterButton onPress={() => {}} style={styles.resendButton} disabled>
-          Resend code via SMS
-        </WriterButton>
-      </>
+            <BlurView
+              intensity={10}
+              style={[
+                styles.blur,
+                { backgroundColor: theme.colors.onBackground },
+              ]}
+            />
+          </View>
+        )}
+      />
+      <WriterButton onPress={() => {}} style={styles.resendButton} disabled>
+        Resend code via SMS
+      </WriterButton>
     </WriterBackground>
   )
 }

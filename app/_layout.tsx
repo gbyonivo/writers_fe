@@ -2,7 +2,7 @@ import { PortalProvider } from '@gorhom/portal'
 import { useFonts } from 'expo-font'
 import { Slot, SplashScreen } from 'expo-router'
 import { Suspense, useEffect, useRef, useState } from 'react'
-import { SafeAreaView, Text } from 'react-native'
+import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ToastProvider } from 'react-native-toast-notifications'
 import { Provider } from 'react-redux'
@@ -16,7 +16,7 @@ import AuthContextProvider from '../src/context/auth-context'
 import BottomSheetContextProvider from '../src/context/bottom-sheet-context'
 import SelectedColorSchemeContextProvider from '../src/context/selected-color-scheme-context'
 import { createStore } from '../src/store/store'
-import { getHeighByRatio, getWidthByRatio } from '../src/utils/common'
+import { backgroundStyleBeforeAppIsMounted } from '../src/utils/theme'
 
 const error = console.error
 console.error = (...args: any) => {
@@ -62,53 +62,52 @@ export default function AppLayout() {
 
   if (!appMounted) {
     return (
-      <SafeAreaView
-        style={{
-          backgroundColor: '#1D1B1E',
-          height: getHeighByRatio(1),
-          width: getWidthByRatio(1),
-        }}
+      <WriterBackground
+        isView
+        style={backgroundStyleBeforeAppIsMounted.background}
       />
     )
   }
   if (!fontsLoaded && !fontError) {
     return (
-      <SafeAreaView
-        style={{
-          backgroundColor: '#1D1B1E',
-          height: getHeighByRatio(1),
-          width: getWidthByRatio(1),
-        }}
+      <WriterBackground
+        isView
+        style={backgroundStyleBeforeAppIsMounted.background}
       />
     )
   }
 
   return (
-    <Provider store={storeItems.current.store}>
-      <PersistGate loading={null} persistor={storeItems.current.persistor}>
-        <SelectedColorSchemeContextProvider>
-          <Paper>
-            <Suspense fallback={<Text>Loading...</Text>}>
-              <AuthContextProvider>
-                <GestureHandlerRootView>
-                  <PortalProvider>
-                    <BottomSheetContextProvider>
-                      <Apollo>
-                        <ToastProvider>
-                          <>
-                            <BottomSheetHandler />
-                            <Slot />
-                          </>
-                        </ToastProvider>
-                      </Apollo>
-                    </BottomSheetContextProvider>
-                  </PortalProvider>
-                </GestureHandlerRootView>
-              </AuthContextProvider>
-            </Suspense>
-          </Paper>
-        </SelectedColorSchemeContextProvider>
-      </PersistGate>
-    </Provider>
+    <WriterBackground
+      isView
+      style={backgroundStyleBeforeAppIsMounted.background}
+    >
+      <Provider store={storeItems.current.store}>
+        <PersistGate loading={null} persistor={storeItems.current.persistor}>
+          <SelectedColorSchemeContextProvider>
+            <Paper>
+              <Suspense fallback={<Text>Loading...</Text>}>
+                <AuthContextProvider>
+                  <GestureHandlerRootView>
+                    <PortalProvider>
+                      <BottomSheetContextProvider>
+                        <Apollo>
+                          <ToastProvider>
+                            <>
+                              <BottomSheetHandler />
+                              <Slot />
+                            </>
+                          </ToastProvider>
+                        </Apollo>
+                      </BottomSheetContextProvider>
+                    </PortalProvider>
+                  </GestureHandlerRootView>
+                </AuthContextProvider>
+              </Suspense>
+            </Paper>
+          </SelectedColorSchemeContextProvider>
+        </PersistGate>
+      </Provider>
+    </WriterBackground>
   )
 }

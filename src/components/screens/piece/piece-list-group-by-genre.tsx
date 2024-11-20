@@ -103,7 +103,6 @@ export const PiecesGroupedByGenre = forwardRef(
     if (displayedResult.length === 0) {
       return null
     }
-
     return (
       <View>
         <View style={styles.header}>

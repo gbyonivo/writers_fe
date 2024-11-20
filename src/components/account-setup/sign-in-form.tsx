@@ -37,51 +37,49 @@ export function SignInForm() {
 
   return (
     <WriterBackground>
-      <>
-        <WriterLoginHeader style={styles.appHeaderContainer} />
-        <WriterText variant="bodyLarge" style={styles.appDescription}>
-          Enter your number
-        </WriterText>
-        <View style={styles.phoneInput}>
-          <PhoneInput
-            ref={phoneInput}
-            defaultValue={value}
-            defaultCode="GB"
-            layout="second"
-            onChangeText={(text) => {
-              setValue(text)
-            }}
-            onChangeFormattedText={(text) => {
-              setFormattedValue(text)
-            }}
-            autoFocus
-            containerStyle={styles.phoneInputContainer}
-            textContainerStyle={styles.phoneTextInputContainer}
-            textInputStyle={styles.phoneTextInput}
-          />
-        </View>
-        <HelperText
-          type="error"
-          visible={!!message}
-          style={{ textAlign: 'center', marginBottom: 16 }}
+      <WriterLoginHeader style={styles.appHeaderContainer} />
+      <WriterText variant="bodyLarge" style={styles.appDescription}>
+        Enter your number
+      </WriterText>
+      <View style={styles.phoneInput}>
+        <PhoneInput
+          ref={phoneInput}
+          defaultValue={value}
+          defaultCode="GB"
+          layout="second"
+          onChangeText={(text) => {
+            setValue(text)
+          }}
+          onChangeFormattedText={(text) => {
+            setFormattedValue(text)
+          }}
+          autoFocus
+          containerStyle={styles.phoneInputContainer}
+          textContainerStyle={styles.phoneTextInputContainer}
+          textInputStyle={styles.phoneTextInput}
+        />
+      </View>
+      <HelperText
+        type="error"
+        visible={!!message}
+        style={{ textAlign: 'center', marginBottom: 16 }}
+      >
+        {message}
+      </HelperText>
+
+      <View style={styles.buttonContainer}>
+        <WriterButton
+          onPress={verifyNumber}
+          style={styles.button}
+          disabled={!formattedValue}
         >
-          {message}
-        </HelperText>
+          Verify
+        </WriterButton>
+      </View>
 
-        <View style={styles.buttonContainer}>
-          <WriterButton
-            onPress={verifyNumber}
-            style={styles.button}
-            disabled={!formattedValue}
-          >
-            Verify
-          </WriterButton>
-        </View>
-
-        <View style={styles.wakeUpServerButtonContainer}>
-          <WakeUpServerButton />
-        </View>
-      </>
+      <View style={styles.wakeUpServerButtonContainer}>
+        <WakeUpServerButton />
+      </View>
     </WriterBackground>
   )
 }
