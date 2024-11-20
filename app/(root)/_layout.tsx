@@ -4,8 +4,8 @@ import { Appbar, useTheme } from 'react-native-paper'
 import { FloatingPlayer } from '../../src/components/common/voice-player/floating-player'
 import { WithSpeaker } from '../../src/components/common/voice-player/with-speaker'
 import { WriterBackground } from '../../src/components/common/writer-background'
-import { WriterText } from '../../src/components/common/writer-text'
 import { useInitializeApp } from '../../src/hooks/use-initialize-app'
+import { backgroundStyleBeforeAppIsMounted } from '../../src/utils/theme'
 
 export default function RootLayout() {
   const router = useRouter()
@@ -16,16 +16,18 @@ export default function RootLayout() {
 
   if (initializingApp) {
     return (
-      <WriterBackground>
-        <WriterText> </WriterText>
-      </WriterBackground>
+      <WriterBackground
+        isView
+        style={backgroundStyleBeforeAppIsMounted.background}
+      />
     )
   }
   if (errorInitializingApp) {
     return (
-      <WriterBackground>
-        <WriterText> </WriterText>
-      </WriterBackground>
+      <WriterBackground
+        isView
+        style={backgroundStyleBeforeAppIsMounted.background}
+      />
     )
   }
 

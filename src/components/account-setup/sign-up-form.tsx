@@ -93,107 +93,105 @@ export function SignUpForm() {
 
   return (
     <WriterBackground style={styles.container}>
-      <>
-        {showHeader && (
-          <View style={styles.headerContainer}>
-            <WriterIconButton
-              icon="keyboard-backspace"
-              onPress={onPressBack}
-              style={{ marginRight: 8, backgroundColor: 'transparent' }}
-              disabled={submittingForm}
+      {showHeader && (
+        <View style={styles.headerContainer}>
+          <WriterIconButton
+            icon="keyboard-backspace"
+            onPress={onPressBack}
+            style={{ marginRight: 8, backgroundColor: 'transparent' }}
+            disabled={submittingForm}
+          />
+          <View style={styles.progressBarContainer}>
+            <ProgressBar
+              progress={(pageIndex + 1) / 5}
+              color={theme.colors.onBackground}
+              style={{ backgroundColor: theme.colors.backdrop }}
             />
-            <View style={styles.progressBarContainer}>
-              <ProgressBar
-                progress={(pageIndex + 1) / 5}
-                color={theme.colors.onBackground}
-                style={{ backgroundColor: theme.colors.backdrop }}
+          </View>
+        </View>
+      )}
+      <AnimatedPager
+        style={styles.pagerView}
+        initialPage={0}
+        ref={pagerViewRef}
+        onPageSelected={(e) => setPageIndex(e.nativeEvent.position)}
+        scrollEnabled={false}
+      >
+        <View key={0} style={styles.formElement}>
+          <PageContainer
+            label="What's your name so we know what to call you?"
+            onPress={onPressContinue}
+            error={errorMessage}
+          >
+            <TextInput
+              label="Name"
+              value={user.name}
+              onChangeText={(value) => onChange(value, 'name')}
+              mode="outlined"
+            />
+          </PageContainer>
+        </View>
+        <View key={1} style={styles.formElement}>
+          <PageContainer
+            label="Enter the email address you would like to use."
+            onPress={onPressContinue}
+            error={errorMessage}
+          >
+            <TextInput
+              label="Email"
+              value={user.email}
+              onChangeText={(value) => onChange(value, 'email')}
+              mode="outlined"
+            />
+          </PageContainer>
+        </View>
+        <View key={2} style={styles.formElement}>
+          <PageContainer
+            label="Tell us your date of birth so we can send you cards"
+            onPress={onPressContinue}
+            error={errorMessage}
+            buttonLabel="Terms and Conditions"
+          >
+            <View>
+              <TouchableOpacity onPress={() => setOpenDateModal(true)}>
+                <WriterTextInput
+                  disabled
+                  value={format(date, 'dd/MM/yyyy')}
+                  name=""
+                  handleChange={() => {}}
+                />
+              </TouchableOpacity>
+              <DatePicker
+                locale="en"
+                open={openDateModal}
+                date={date}
+                onDateChange={setDate}
+                mode="date"
+                modal
+                maximumDate={new Date()}
+                onCancel={() => setOpenDateModal(false)}
+                onConfirm={(newDate: any) => {
+                  setOpenDateModal(false)
+                  setDate(newDate)
+                }}
               />
             </View>
-          </View>
-        )}
-        <AnimatedPager
-          style={styles.pagerView}
-          initialPage={0}
-          ref={pagerViewRef}
-          onPageSelected={(e) => setPageIndex(e.nativeEvent.position)}
-          scrollEnabled={false}
-        >
-          <View key={0} style={styles.formElement}>
-            <PageContainer
-              label="What's your name so we know what to call you?"
-              onPress={onPressContinue}
-              error={errorMessage}
-            >
-              <TextInput
-                label="Name"
-                value={user.name}
-                onChangeText={(value) => onChange(value, 'name')}
-                mode="outlined"
-              />
-            </PageContainer>
-          </View>
-          <View key={1} style={styles.formElement}>
-            <PageContainer
-              label="Enter the email address you would like to use."
-              onPress={onPressContinue}
-              error={errorMessage}
-            >
-              <TextInput
-                label="Email"
-                value={user.email}
-                onChangeText={(value) => onChange(value, 'email')}
-                mode="outlined"
-              />
-            </PageContainer>
-          </View>
-          <View key={2} style={styles.formElement}>
-            <PageContainer
-              label="Tell us your date of birth so we can send you cards"
-              onPress={onPressContinue}
-              error={errorMessage}
-              buttonLabel="Terms and Conditions"
-            >
-              <View>
-                <TouchableOpacity onPress={() => setOpenDateModal(true)}>
-                  <WriterTextInput
-                    disabled
-                    value={format(date, 'dd/MM/yyyy')}
-                    name=""
-                    handleChange={() => {}}
-                  />
-                </TouchableOpacity>
-                <DatePicker
-                  locale="en"
-                  open={openDateModal}
-                  date={date}
-                  onDateChange={setDate}
-                  mode="date"
-                  modal
-                  maximumDate={new Date()}
-                  onCancel={() => setOpenDateModal(false)}
-                  onConfirm={(newDate: any) => {
-                    setOpenDateModal(false)
-                    setDate(newDate)
-                  }}
-                />
-              </View>
-            </PageContainer>
-          </View>
-          <View key={3} style={styles.formElement}>
-            <PageContainer
-              label="Terms and Conditions"
-              onPress={onSubmit}
-              buttonLabel="Start"
-              buttonDisabled={submittingForm || termsChecked === 'unchecked'}
-            >
-              <TermsAndConditionsForm
-                value={termsChecked}
-                setValue={setTermsChecked}
-              />
-            </PageContainer>
-          </View>
-        </AnimatedPager>
-      </>
+          </PageContainer>
+        </View>
+        <View key={3} style={styles.formElement}>
+          <PageContainer
+            label="Terms and Conditions"
+            onPress={onSubmit}
+            buttonLabel="Start"
+            buttonDisabled={submittingForm || termsChecked === 'unchecked'}
+          >
+            <TermsAndConditionsForm
+              value={termsChecked}
+              setValue={setTermsChecked}
+            />
+          </PageContainer>
+        </View>
+      </AnimatedPager>
     </WriterBackground>
   )
 }

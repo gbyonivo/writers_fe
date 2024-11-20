@@ -14,20 +14,21 @@ interface Props {
 export function ProfileContent({ userId, showLogout = false }: Props) {
   const { user: loggedInUser } = useAuthContext()
   return (
-    <WriterBackground style={{ flex: 1 }} isView>
-      <>
-        <View style={styles.container}>
-          <View style={styles.detailsContainer}>
-            <UserDetails userId={userId} />
-          </View>
-          <PieceListInTabs userId={loggedInUser?.id} showBookmark />
+    <WriterBackground style={styles.parentContainer} isView>
+      <View style={styles.container}>
+        <View style={styles.detailsContainer}>
+          <UserDetails userId={userId} />
         </View>
-      </>
+        <PieceListInTabs userId={loggedInUser?.id} showBookmark />
+      </View>
     </WriterBackground>
   )
 }
 
 const styles = StyleSheet.create({
+  parentContainer: {
+    flex: 1,
+  },
   button: {
     alignSelf: 'flex-end',
   },
