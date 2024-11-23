@@ -13,6 +13,9 @@ import { PieceType } from 'writers_shared/dist'
 
 import { usePieces } from '../../../hooks/apollo/use-pieces'
 import { getHeighByRatio, getWidthByRatio } from '../../../utils/common'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedComponentLocation } from '../../../utils/tracking/tracked-component-location'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WriterText } from '../../common/writer-text'
 
 interface Props {
@@ -38,9 +41,17 @@ export function PieceListCarousel({ pieceType }: Props) {
         style={styles.carouselStyle}
         renderItem={({ index, item }) => (
           <TouchableOpacity
-            onPress={() =>
+            onPress={() => {
+              trackEvent({
+                event: TrackedEvent.PRESS,
+                params: {
+                  id: item.node.id,
+                  title: item.node.title,
+                  location: TrackedComponentLocation.PIECE_CAROUSEL,
+                },
+              })
               router.push(`/pieces/${item.node.id}?name=${item.node.title}`)
-            }
+            }}
             style={[
               styles.container,
               styles.shadowBorder,

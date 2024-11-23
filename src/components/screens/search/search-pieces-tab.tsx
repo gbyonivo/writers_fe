@@ -6,6 +6,9 @@ import { useSelector } from 'react-redux'
 import { useSearchPieces } from '../../../hooks/apollo/use-search-piece-result'
 import { AppState } from '../../../types/states/AppState'
 import { truncateString } from '../../../utils/common'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterText } from '../../common/writer-text'
 
 export function SearchPiecesTab() {
@@ -23,7 +26,17 @@ export function SearchPiecesTab() {
     const piece = item.node
     return (
       <TouchableOpacity
-        onPress={() => router.push(`/pieces/${piece.id}?name=${piece?.title}`)}
+        onPress={() => {
+          trackEvent({
+            event: TrackedEvent.PRESS,
+            params: {
+              screen: TrackedScreen.SEARCH_SCREEN,
+              buttonName: 'View Piece',
+              id: piece.id,
+            },
+          })
+          router.push(`/pieces/${piece.id}?name=${piece?.title}`)
+        }}
       >
         <View style={{ paddingVertical: 8 }}>
           <WriterText>

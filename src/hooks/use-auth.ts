@@ -8,7 +8,9 @@ import {
   LoginAttemptStatus,
   UseAuthReturn,
 } from '../types/states/LoginState'
-import { apiUrl } from '../utils/constants'
+import { API_URL } from '../utils/constants'
+import { trackEvent } from '../utils/mixpanel'
+import { TrackedEvent } from '../utils/tracking/tracked-event'
 
 export const useAuth = (): UseAuthReturn => {
   const dispatch = useDispatch()
@@ -24,7 +26,7 @@ export const useAuth = (): UseAuthReturn => {
     }
     try {
       const { data: token } = await axios.get(
-        `${apiUrl}/login/${formattedValue}`,
+        `${API_URL}/login/${formattedValue}`,
       )
       return {
         status: LoginAttemptStatus.SUCCESS,
@@ -42,6 +44,9 @@ export const useAuth = (): UseAuthReturn => {
   }
 
   const logout = () => {
+    trackEvent({
+      event: TrackedEvent.LOGOUT,
+    })
     dispatch(removeUser())
   }
 

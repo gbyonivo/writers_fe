@@ -7,7 +7,10 @@ import { Part } from 'writers_shared'
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
 import { startPlayer } from '../../../store/slices/player'
 import { setShouldChainPart } from '../../../store/slices/settings'
+import { trackEvent } from '../../../utils/mixpanel'
 import { onPlayPiece } from '../../../utils/signal'
+import { TrackedComponentLocation } from '../../../utils/tracking/tracked-component-location'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WithSpeaker } from '../voice-player/with-speaker'
 import { BookmarkDialog } from './bookmark-dialog'
 import { NewPartButton } from './new-part-button'
@@ -104,6 +107,14 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
       `position=${newPartPosition}`,
       `previousPartId=${previousParts.join(',')}`,
     ].join('&')
+    trackEvent({
+      event: TrackedEvent.PRESS,
+      params: {
+        queryString,
+        pieceId,
+        location: TrackedComponentLocation.ADD_PART_BUTTON,
+      },
+    })
     router.push(`/pieces/${pieceId}/new-part?${queryString}`)
   }, [pieceId, map, positionToPartIdMap])
 

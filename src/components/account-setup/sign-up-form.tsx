@@ -15,9 +15,12 @@ import { WriterBackground } from '../../../src/components/common/writer-backgrou
 import { WriterIconButton } from '../../../src/components/common/writer-icon-button'
 import { AnimatedPager } from '../../../src/components/containers/page-scroller'
 import { addUser } from '../../../src/store/slices/login'
-import { apiUrl } from '../../../src/utils/constants'
+import { API_URL } from '../../../src/utils/constants'
 import { DATE_FORMATS } from '../../../src/utils/date'
 import { handleAppErrors } from '../../../src/utils/errors'
+import { identifyUser, trackEvent } from '../../utils/mixpanel'
+import { TrackedComponentLocation } from '../../utils/tracking/tracked-component-location'
+import { TrackedEvent } from '../../utils/tracking/tracked-event'
 import { WriterTextInput } from '../common/inputs/writer-text-input'
 import { TermsAndConditionsForm } from './terms-and-conditions-form'
 
@@ -59,12 +62,21 @@ export function SignUpForm() {
   )
 
   const onSubmit = async () => {
+    trackEvent({
+      event: TrackedEvent.PRESS,
+      params: {
+        location: TrackedComponentLocation.SIGN_UP_FORM,
+        buttonName: 'Submit Sign Up Form',
+      },
+    })
     try {
       // await userSchema.validateSyncAt(screenNames[pageIndex], createdUser)
       setSubmittingForm(true)
-      const { data } = await axios.post(`${apiUrl}/user`, createdUser)
+      const { data } = await axios.post(`${API_URL}/user`, createdUser)
       pagerViewRef.current.setPage(pageIndex + 1)
+      identifyUser({ user: jwtDecode(data) })
       dispatch(addUser({ user: jwtDecode(data), token: data }))
+      trackEvent({ event: TrackedEvent.REGISTER, params: { ...user } })
       setSubmittingForm(false)
     } catch (e) {
       setErrorMessage(handleAppErrors(e, true))
@@ -72,6 +84,15 @@ export function SignUpForm() {
   }
 
   const onPressContinue = async () => {
+    trackEvent({
+      event: TrackedEvent.PRESS,
+      params: {
+        location: TrackedComponentLocation.SIGN_UP_FORM,
+        current: screenNames[pageIndex],
+        to: screenNames[pageIndex - 1],
+        direction: 'forward',
+      },
+    })
     try {
       await userSchema.validateSyncAt(screenNames[pageIndex], createdUser)
       pagerViewRef.current.setPage(pageIndex + 1)
@@ -81,6 +102,15 @@ export function SignUpForm() {
   }
 
   const onPressBack = () => {
+    trackEvent({
+      event: TrackedEvent.PRESS,
+      params: {
+        location: TrackedComponentLocation.SIGN_UP_FORM,
+        current: screenNames[pageIndex],
+        to: screenNames[pageIndex - 1],
+        direction: 'backward',
+      },
+    })
     if (submittingForm) return
     if (pageIndex > 0) {
       pagerViewRef.current.setPage(pageIndex - 1)

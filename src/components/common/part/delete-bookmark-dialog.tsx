@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import { useBookmarkDeleteMutation } from '../../../hooks/apollo/use-bookmark-delete-mutation'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WriterButton } from '../writer-button'
 import { WriterDialog } from '../writer-dialog'
 import { WriterText } from '../writer-text'
@@ -35,7 +37,19 @@ export function DeleteBookmarkDialog({
       <WriterText>Delete {bookmarkName}</WriterText>
       <WriterText>Are you sure?</WriterText>
       <View style={styles.bookmarkButtonWrapper}>
-        <WriterButton onPress={() => deleteBookmark(bookmarkId)}>
+        <WriterButton
+          onPress={() => {
+            trackEvent({
+              event: TrackedEvent.PRESS,
+              params: {
+                buttonName: 'Confirm_Delete_Bookmark',
+                bookmarkId,
+                bookmarkName,
+              },
+            })
+            deleteBookmark(bookmarkId)
+          }}
+        >
           Yes
         </WriterButton>
       </View>

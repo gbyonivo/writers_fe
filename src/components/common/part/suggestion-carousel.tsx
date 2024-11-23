@@ -2,6 +2,8 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
 import { getHeighByRatio, getWidthByRatio } from '../../../utils/common'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WriterButton } from '../writer-button'
 import { WriterText } from '../writer-text'
 
@@ -19,12 +21,22 @@ export function SuggestionCarousel({ suggestions, onSelectSuggestion }: Props) {
       data={suggestions}
       scrollAnimationDuration={1000}
       style={styles.carouselStyle}
-      renderItem={({ index, item }) => (
+      renderItem={({ item }) => (
         <View>
           <WriterText>{item}</WriterText>
           {!!onSelectSuggestion && (
             <View style={styles.buttonContainer}>
-              <WriterButton onPress={() => onSelectSuggestion?.(item)}>
+              <WriterButton
+                onPress={() => {
+                  trackEvent({
+                    event: TrackedEvent.PRESS,
+                    params: {
+                      suggestionSelected: item,
+                    },
+                  })
+                  onSelectSuggestion?.(item)
+                }}
+              >
                 Use Suggestion
               </WriterButton>
             </View>

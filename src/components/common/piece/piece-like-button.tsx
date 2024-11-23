@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { usePieceLikeMutation } from '../../../hooks/apollo/use-piece-like-mutation'
 import { toggleLike } from '../../../store/slices/piece'
 import { AppState } from '../../../types/states/AppState'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WriterIcon } from '../writer-icon'
 import { WriterText } from '../writer-text'
 
@@ -43,7 +45,15 @@ export function PieceLikeButton({
   })
   return (
     <TouchableOpacity
-      onPress={() => likePiece(pieceId)}
+      onPress={() => {
+        trackEvent({
+          event: TrackedEvent.PRESS,
+          params: {
+            buttonName: `${hasLikedPiece ? 'Unlike' : 'Like'} Piece`,
+          },
+        })
+        likePiece(pieceId)
+      }}
       style={[style, styles.container, { backgroundColor: colors.onSecondary }]}
       disabled={disabled || loading}
     >

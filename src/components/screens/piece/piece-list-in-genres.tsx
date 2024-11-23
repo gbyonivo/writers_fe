@@ -13,6 +13,9 @@ import { PieceType } from 'writers_shared/dist'
 
 import { useGenres } from '../../../hooks/apollo/use-genres'
 import { getWidthByRatio } from '../../../utils/common'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterChip } from '../../common/writer-chip'
 import { PieceListCarousel } from './piece-list-carousel'
 import { PiecesGroupedByGenre } from './piece-list-group-by-genre'
@@ -64,7 +67,19 @@ export function PieceListInGenres({ containerStyle, userId, type }: Props) {
         <View style={{ flex: 1 }}>
           <View style={styles.chipContainer}>
             {Object.values(PieceType).map((pType) => (
-              <TouchableOpacity key={pType} onPress={() => setPieceType(pType)}>
+              <TouchableOpacity
+                key={pType}
+                onPress={() => {
+                  trackEvent({
+                    event: TrackedEvent.PRESS,
+                    params: {
+                      screen: TrackedScreen.HOME_SCREEN,
+                      buttonName: `Select Tab - ${pType}`,
+                    },
+                  })
+                  setPieceType(pType)
+                }}
+              >
                 <WriterChip
                   label={pType}
                   style={[

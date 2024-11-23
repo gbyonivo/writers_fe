@@ -1,13 +1,5 @@
-import React, { useState } from 'react'
-import {
-  Image,
-  ImageStyle,
-  StyleProp,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import { useTheme } from 'react-native-paper'
+import React from 'react'
+import { ImageStyle, StyleProp, StyleSheet, View } from 'react-native'
 
 import { OnChange, SelectOption } from '../../../types/common'
 import { WriterImageSegmentedControlItem } from './writer-images-segmented-control-item'
@@ -27,7 +19,6 @@ export function WriterImageSegmentedControl({
   value,
   imageStyle,
 }: Props) {
-  const theme = useTheme()
   const handlePress = (option: SelectOption) => {
     handleChange({ target: { value: option._id, name } })
   }

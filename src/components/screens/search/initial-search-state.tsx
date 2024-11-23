@@ -5,6 +5,9 @@ import { useDispatch } from 'react-redux'
 
 import { useGenres } from '../../../hooks/apollo/use-genres'
 import { setGenreValue } from '../../../store/slices/search'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 // import { CommonGenre } from 'writers_shared'
 import { WriterText } from '../../common/writer-text'
 
@@ -16,7 +19,18 @@ export function InitialSearchState() {
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
-        onPress={() => dispatch(setGenreValue(`#${item.name}`))}
+        onPress={() => {
+          trackEvent({
+            event: TrackedEvent.PRESS,
+            params: {
+              screen: TrackedScreen.SEARCH_SCREEN,
+              buttonName: 'Initial Item On Search Screen',
+              id: item.id,
+              name: item.name,
+            },
+          })
+          dispatch(setGenreValue(`#${item.name}`))
+        }}
       >
         <WriterText>#{item.name}</WriterText>
         <WriterText size={14} color={colors.secondary}>

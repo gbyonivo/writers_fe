@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux'
 import { usePiece } from '../../../hooks/apollo/use-piece'
 import { useSpeaker } from '../../../hooks/use-speaker'
 import { AppState } from '../../../types/states/AppState'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { MovingText } from './moving-text'
 import { PlayPauseButton } from './play-pause-button'
 
@@ -16,6 +18,12 @@ export function FloatingPlayer() {
   const { piece, loading } = usePiece(pieceId)
 
   const handlePress = () => {
+    trackEvent({
+      event: TrackedEvent.PRESS,
+      params: {
+        buttonName: 'Floating Player',
+      },
+    })
     router.navigate('/player')
   }
 

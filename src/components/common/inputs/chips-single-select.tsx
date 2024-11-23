@@ -3,6 +3,8 @@ import { Chip } from 'react-native-paper'
 
 import { useGenres } from '../../../hooks/apollo/use-genres'
 import { Option } from '../../../types/common'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WriterText } from '../writer-text'
 
 interface ChipsSingleSelectProps {

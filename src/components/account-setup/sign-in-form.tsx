@@ -6,7 +6,10 @@ import { HelperText } from 'react-native-paper'
 import PhoneInput from 'react-native-phone-number-input'
 import { useToast } from 'react-native-toast-notifications'
 
-import { apiUrl } from '../../utils/constants'
+import { API_URL } from '../../utils/constants'
+import { trackError, trackEvent } from '../../utils/mixpanel'
+import { TrackedError } from '../../utils/tracking/tracked-error'
+import { TrackedEvent } from '../../utils/tracking/tracked-event'
 import { WakeUpServerButton } from '../common/wake-up-server-button'
 import { WriterBackground } from '../common/writer-background'
 import { WriterButton } from '../common/writer-button'
@@ -22,15 +25,33 @@ export function SignInForm() {
 
   const verifyNumber = async () => {
     try {
-      const response = await axios.post(`${apiUrl}/verify-phone-number`, {
+      trackEvent({
+        event: TrackedEvent.PRESS,
+        params: {
+          phoneNumber: formattedValue,
+        },
+      })
+      const response = await axios.post(`${API_URL}/verify-phone-number`, {
         phoneNumber: formattedValue,
       })
       if (response.data === 'pending') {
         router.push(`/code-verification/${formattedValue}`)
       } else {
+        trackError({
+          errorCode: TrackedError.VERIFY_NUMBER_ERROR,
+          params: {
+            response,
+          },
+        })
         setMessage('Encountered an issue')
       }
     } catch (e) {
+      trackError({
+        errorCode: TrackedError.VERIFY_NUMBER_ERROR,
+        params: {
+          error: e,
+        },
+      })
       toast.show('We encountered an error')
     }
   }
