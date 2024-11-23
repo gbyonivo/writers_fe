@@ -21,11 +21,13 @@ import { usePartMutation } from '../../../hooks/apollo/use-part-mutation'
 import { useAlert } from '../../../hooks/use-alert'
 import { AppState } from '../../../types/states/AppState'
 import { getHeighByRatio } from '../../../utils/common'
+import { trackEvent } from '../../../utils/mixpanel'
 import { createPartWithVoiceSetup } from '../../../utils/part'
 import {
   onChangePartSignal,
   onPressCreatePartSignal,
 } from '../../../utils/signal'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { PartSchema } from '../../../validation-schema/part-schema'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { VoiceSetUp, VoiceSetUpValue } from '../voice-set-up'
@@ -215,11 +217,21 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
                 <SparkForm
                   genres={genres}
                   onSubmit={({ genreIds }) => {
+                    const partIds = joinedPreviousPartIds
+                      .split(',')
+                      .map((partIdAsStr) => parseInt(partIdAsStr, 10))
+                    trackEvent({
+                      event: TrackedEvent.PRESS,
+                      params: {
+                        buttonName: 'Find_Spark',
+                        genreIds,
+                        pieceId,
+                        partIds,
+                      },
+                    })
                     createNextPartSuggestions({
                       pieceId,
-                      partIds: joinedPreviousPartIds
-                        .split(',')
-                        .map((partIdAsStr) => parseInt(partIdAsStr, 10)),
+                      partIds,
                       genreIds,
                     })
                   }}

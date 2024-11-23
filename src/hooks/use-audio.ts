@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { setCurrentSound, stopPlayer } from '../store/slices/player'
-import { apiUrl } from '../utils/constants'
+import { API_URL } from '../utils/constants'
 import { useAudioMutation } from './apollo/use-audio-mutation'
 
 interface Return {

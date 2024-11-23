@@ -5,6 +5,9 @@ import { useBottomSheetContext } from '../../../context/bottom-sheet-context'
 import { useUser } from '../../../hooks/apollo/use-user'
 import { BottomSheet } from '../../../types/bottom-sheet'
 import { getInitials } from '../../../utils/common'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterActivityIndicator } from '../../common/writer-activity-indicator'
 import { WriterAvatarText } from '../../common/writer-avatar-text'
 import { WriterText } from '../../common/writer-text'
@@ -24,7 +27,14 @@ export function UserDetails({ userId }: Props) {
         <WriterActivityIndicator />
       ) : (
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
+            trackEvent({
+              event: TrackedEvent.PRESS,
+              params: {
+                screen: TrackedScreen.PROFILE_SCREEN,
+                buttonName: 'User Icon',
+              },
+            })
             selectBottomSheet({
               bottomSheet: BottomSheet.LOGOUT,
               params: {
@@ -34,7 +44,7 @@ export function UserDetails({ userId }: Props) {
                 },
               },
             })
-          }
+          }}
         >
           <WriterAvatarText label={getInitials(user?.name || '')} size={64} />
         </TouchableOpacity>

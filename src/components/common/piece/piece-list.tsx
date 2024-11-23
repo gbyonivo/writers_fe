@@ -2,15 +2,22 @@ import { FlatList, RefreshControl, StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
 import { usePieceListContext } from '../../../context/piece-list-context'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { PieceItem } from './piece-item'
 
-export function PieceList() {
+interface Props {
+  trackedScreen: TrackedScreen
+}
+
+export function PieceList({ trackedScreen }: Props) {
   const theme = useTheme()
   const { pieceList, refetch, loading, loadMore } = usePieceListContext()
   return (
     <FlatList
       data={pieceList}
-      renderItem={({ item }) => <PieceItem piece={item} />}
+      renderItem={({ item }) => (
+        <PieceItem piece={item} trackedScreen={trackedScreen} />
+      )}
       contentContainerStyle={[
         styles.container,
         { backgroundColor: theme.colors.background },

@@ -2,6 +2,7 @@
 import { StyleSheet, View } from 'react-native'
 
 import { useAuthContext } from '../../../context/auth-context'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterBackground } from '../../common/writer-background'
 import { PieceListInTabs } from '../piece/piece-list-in-tabs'
 import { UserDetails } from './user-details'
@@ -19,7 +20,11 @@ export function ProfileContent({ userId, showLogout = false }: Props) {
         <View style={styles.detailsContainer}>
           <UserDetails userId={userId} />
         </View>
-        <PieceListInTabs userId={loggedInUser?.id} showBookmark />
+        <PieceListInTabs
+          userId={loggedInUser?.id}
+          showBookmark
+          trackedScreen={TrackedScreen.PROFILE_SCREEN}
+        />
       </View>
     </WriterBackground>
   )

@@ -4,6 +4,9 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { Piece } from 'writers_shared'
 
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { GenreList } from '../genre/genre-list'
 import { WriterText } from '../writer-text'
 import { WrittenBy } from '../written-by'
@@ -11,15 +14,23 @@ import { PieceLikeButton } from './piece-like-button'
 
 interface Props {
   piece: Piece
+  trackedScreen: TrackedScreen
 }
 
-export function PieceItem({ piece }: Props) {
+export function PieceItem({ piece, trackedScreen }: Props) {
   const router = useRouter()
   const theme = useTheme()
   const containerStyle = {
     borderBottomColor: theme.colors.backdrop,
   }
   const onPress = () => {
+    trackEvent({
+      event: TrackedEvent.PRESS,
+      params: {
+        buttonName: 'Piece Item',
+        screen: trackedScreen,
+      },
+    })
     router.push(`/pieces/${piece.id}?name=${piece?.title}`)
   }
 

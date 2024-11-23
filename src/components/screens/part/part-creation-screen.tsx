@@ -5,6 +5,9 @@ import Animated from 'react-native-reanimated'
 import { Part } from 'writers_shared'
 
 import { usePieceParts } from '../../../hooks/apollo/use-piece-parts'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterFloatingButton } from '../../common/buttons/writer-floating-button'
 import { AddPartForm } from '../../common/part/add-part-form'
 import { WriterBackground } from '../../common/writer-background'
@@ -87,14 +90,20 @@ export function PartCreationScreen() {
         />
 
         <WriterFloatingButton
-          onPress={() => aiButtonRef.current?.showAiHelp(aiSuggestion)}
+          onPress={() => {
+            trackEvent({
+              event: TrackedEvent.PRESS,
+              params: {
+                screen: TrackedScreen.ADD_PART_SCREEN,
+                buttonName: 'AI Help',
+                id: pieceId,
+                ...localSearchParams,
+              },
+            })
+            aiButtonRef.current?.showAiHelp(aiSuggestion)
+          }}
           icon="plus"
         />
-        {/* <WriterFloatingButton
-          onPress={() => aiButtonRef.current?.undo(initialText)}
-          icon="backup-restore"
-          style={styles.undoBtn}
-        /> */}
       </>
     </WriterBackground>
   )

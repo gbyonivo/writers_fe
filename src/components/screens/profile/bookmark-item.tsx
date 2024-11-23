@@ -5,6 +5,9 @@ import { Bookmark } from 'writers_shared'
 
 import { startPlayer } from '../../../store/slices/player'
 import { timeAgo } from '../../../utils/date'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterIcon } from '../../common/writer-icon'
 import { WriterText } from '../../common/writer-text'
 
@@ -20,11 +23,19 @@ export function BookmarkItem({ bookmark, setBookmarkToDelete }: Props) {
     <View style={styles.bookmark}>
       <TouchableOpacity
         style={styles.description}
-        onPress={() =>
+        onPress={() => {
+          trackEvent({
+            event: TrackedEvent.PRESS,
+            params: {
+              screen: TrackedScreen.PROFILE_SCREEN,
+              buttonName: 'View Bookmark',
+              id: bookmark.id,
+            },
+          })
           router.push(
             `/pieces/${bookmark.pieceId}?partIds=${bookmark.partIds.join(',')}&locked=${bookmark.locked}`,
           )
-        }
+        }}
       >
         <WriterText fontFamily="Medium">{`${bookmark.name}`}</WriterText>
         <WriterText fontFamily="ExtraLight" size={12}>
@@ -34,6 +45,14 @@ export function BookmarkItem({ bookmark, setBookmarkToDelete }: Props) {
       <TouchableOpacity
         style={styles.buttonWrapper}
         onPress={() => {
+          trackEvent({
+            event: TrackedEvent.PRESS,
+            params: {
+              screen: TrackedScreen.PROFILE_SCREEN,
+              buttonName: 'Play Bookmark',
+              id: bookmark.id,
+            },
+          })
           dispatch(
             startPlayer({
               title: bookmark.name,
@@ -50,7 +69,17 @@ export function BookmarkItem({ bookmark, setBookmarkToDelete }: Props) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonWrapper}
-        onPress={() => setBookmarkToDelete(bookmark)}
+        onPress={() => {
+          trackEvent({
+            event: TrackedEvent.PRESS,
+            params: {
+              screen: TrackedScreen.PROFILE_SCREEN,
+              buttonName: 'Delete Bookmark',
+              id: bookmark.id,
+            },
+          })
+          setBookmarkToDelete(bookmark)
+        }}
       >
         <WriterIcon icon="delete" size={22} />
       </TouchableOpacity>

@@ -8,11 +8,12 @@ import { useFirstPartSuggestionsMutation } from '../../../hooks/apollo/use-first
 import { useGenres } from '../../../hooks/apollo/use-genres'
 import { SelectOption } from '../../../types/common'
 import { getWidthByRatio } from '../../../utils/common'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { AnimatedPager } from '../../containers/page-scroller'
 import { WriterFloatingButton } from '../buttons/writer-floating-button'
 import { GenreMultiSelect } from '../inputs/genre-multi-select'
 import { WriterImageSegmentedControl } from '../inputs/writer-image-segmented-control'
-import { WriterSegmentedButtons } from '../inputs/writer-segmented-buttons'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { VoiceSetUp } from '../voice-set-up'
 import { WriterHeaderButton } from '../writer-header-button'
@@ -46,6 +47,7 @@ interface Props {
 }
 
 const errorKeys = ['type', 'genreIds', 'title', 'firstPart.content', 'voice']
+const pages = ['Genre_Select', 'Title', 'First_Content', 'Voice_Selection']
 const nextButtonLabel = [
   'Genre',
   'Title',
@@ -75,12 +77,36 @@ export function PieceCreateForm({
   const [pageIndex, setPageIndex] = useState(0)
   const onPressNext = () => {
     if (pageIndex === nextButtonLabel.length - 1) {
+      trackEvent({
+        event: TrackedEvent.PRESS,
+        params: {
+          buttonName: 'Submit_Piece_Creation_Form',
+        },
+      })
       submitForm()
       return
     }
+    trackEvent({
+      event: TrackedEvent.PRESS,
+      params: {
+        buttonName: 'Next_Form_In_Piece_Creation',
+        current: pages[pageIndex],
+        to: pages[pageIndex + 1],
+        direct: 'forward',
+      },
+    })
     pagerViewRef.current.setPage(pageIndex + 1)
   }
   const onPressPrevious = () => {
+    trackEvent({
+      event: TrackedEvent.PRESS,
+      params: {
+        buttonName: 'Next_Form_In_Piece_Creation',
+        current: pages[pageIndex],
+        to: pages[pageIndex - 1],
+        direct: 'backward',
+      },
+    })
     pagerViewRef.current.setPage(pageIndex - 1)
   }
 
@@ -191,6 +217,15 @@ export function PieceCreateForm({
       {pageIndex === 3 && (
         <WriterFloatingButton
           onPress={async () => {
+            trackEvent({
+              event: TrackedEvent.PRESS,
+              params: {
+                buttonName: 'Press_First_Part_Suggestion',
+                title: values.title,
+                genreIds: values.genreIds,
+                type: values.type,
+              },
+            })
             await createFirstPartSuggestions({
               title: values.title,
               genreIds: values.genreIds,

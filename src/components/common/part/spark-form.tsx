@@ -1,6 +1,5 @@
 import React, { forwardRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { useTheme } from 'react-native-paper'
 
 import { GenreMultiSelect } from '../inputs/genre-multi-select'
 import { WriterButton } from '../writer-button'
@@ -29,7 +28,9 @@ export const SparkForm = forwardRef(function AddPartForm(
         hideImage
       />
       <WriterButton
-        onPress={() => onSubmit({ genreIds: selectedGenres })}
+        onPress={() => {
+          onSubmit({ genreIds: selectedGenres })
+        }}
         style={[styles.button, styles.sparkButton]}
         disabled={loading}
       >

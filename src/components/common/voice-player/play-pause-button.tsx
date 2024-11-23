@@ -13,11 +13,15 @@ import player, {
 import { AppState } from '../../../types/states/AppState'
 import { PlayingStatus } from '../../../types/states/PlayerState'
 import { isIos } from '../../../utils/common'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WriterIcon } from '../writer-icon'
 
 export const PlayPauseButton = () => {
   const [permission, requestPermission] = Camera.useMicrophonePermissions()
-  const { status } = useSelector((state: AppState) => state.player)
+  const { status, partIds, pieceId } = useSelector(
+    (state: AppState) => state.player,
+  )
   const playing = status === PlayingStatus.PLAYING
   const dispatch = useDispatch()
   const stop = () => dispatch(stopPlayer())
@@ -29,12 +33,36 @@ export const PlayPauseButton = () => {
   const play = useCallback(() => {
     const press = async () => {
       if (!permission) {
+        trackEvent({
+          event: TrackedEvent.AUDIO_PERMISSION_REQUEST,
+        })
         Alert.alert(
           'Microphone Access',
           'Allow Writers to access your microphone',
           [
-            { onPress: requestPermission, text: 'Allow' },
-            { onPress: () => {}, text: 'Cancel' },
+            {
+              onPress: () => {
+                trackEvent({
+                  event: TrackedEvent.PRESS,
+                  params: {
+                    buttonName: 'Audio Permission - Allow',
+                  },
+                })
+                requestPermission()
+              },
+              text: 'Allow',
+            },
+            {
+              onPress: () => {
+                trackEvent({
+                  event: TrackedEvent.PRESS,
+                  params: {
+                    buttonName: 'Audio Permission - Deny',
+                  },
+                })
+              },
+              text: 'Cancel',
+            },
           ],
         )
         return
@@ -60,7 +88,17 @@ export const PlayPauseButton = () => {
     <View style={[styles.container]}>
       <TouchableOpacity
         activeOpacity={0.85}
-        onPress={play}
+        onPress={() => {
+          trackEvent({
+            event: TrackedEvent.PRESS,
+            params: {
+              partIds,
+              pieceId,
+              buttonName: 'Play Piece Audio',
+            },
+          })
+          play()
+        }}
         style={[styles.button, additionButtonStyle]}
       >
         <WriterIcon
@@ -71,7 +109,17 @@ export const PlayPauseButton = () => {
       </TouchableOpacity>
       <TouchableOpacity
         activeOpacity={0.85}
-        onPress={stop}
+        onPress={() => {
+          trackEvent({
+            event: TrackedEvent.PRESS,
+            params: {
+              partIds,
+              pieceId,
+              buttonName: 'Stop Piece Audio',
+            },
+          })
+          stop()
+        }}
         style={[styles.stopButton, styles.button, additionButtonStyle]}
       >
         <WriterIcon icon="stop" size={22} color={theme.colors.onSecondary} />

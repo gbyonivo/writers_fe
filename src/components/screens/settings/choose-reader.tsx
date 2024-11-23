@@ -1,13 +1,21 @@
 import { TouchableOpacity } from 'react-native'
 
-import { useAuthContext } from '../../../context/auth-context'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterText } from '../../common/writer-text'
 import { SettingsItemContainer } from './settings-item-container'
 
 export function ChooseReader() {
-  const { logout } = useAuthContext()
-
-  const onPress = () => {}
+  const onPress = () => {
+    trackEvent({
+      event: TrackedEvent.PRESS,
+      params: {
+        screen: TrackedScreen.SETTINGS_SCREEN,
+        buttonName: 'Choose default Reader',
+      },
+    })
+  }
 
   return (
     <TouchableOpacity onPress={onPress}>

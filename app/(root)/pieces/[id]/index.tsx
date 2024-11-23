@@ -3,7 +3,10 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { PieceScreen } from '../../../../src/components/screens/piece/piece-screen'
+import { useOnFocus } from '../../../../src/hooks/use-on-focus'
 import { setShouldChainPart } from '../../../../src/store/slices/settings'
+import { trackScreenView } from '../../../../src/utils/mixpanel'
+import { TrackedScreen } from '../../../../src/utils/tracking/tracked-screen'
 
 export default function Piece() {
   const { id } = useGlobalSearchParams()
@@ -13,6 +16,12 @@ export default function Piece() {
     if (locked === undefined) return
     dispatch(setShouldChainPart(locked === 'true'))
   }, [locked])
+
+  useOnFocus(() => {
+    trackScreenView({
+      screenName: TrackedScreen.PIECE_SCREEN,
+    })
+  })
 
   return (
     <PieceScreen

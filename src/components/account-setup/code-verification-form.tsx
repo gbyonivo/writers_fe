@@ -22,7 +22,10 @@ import {
   AddUserParams,
   LoginAttemptStatus,
 } from '../../../src/types/states/LoginState'
-import { apiUrl } from '../../../src/utils/constants'
+import { API_URL } from '../../../src/utils/constants'
+import { identifyUser, trackError, trackEvent } from '../../utils/mixpanel'
+import { TrackedError } from '../../utils/tracking/tracked-error'
+import { TrackedEvent } from '../../utils/tracking/tracked-event'
 
 const CELL_COUNT = 4
 
@@ -48,6 +51,11 @@ export function CodeVerificationForm() {
     })
 
     if (status === LoginAttemptStatus.SUCCESS) {
+      identifyUser({ user: userAndToken.user })
+      trackEvent({
+        event: TrackedEvent.LOGIN,
+        params: { ...userAndToken.user },
+      })
       dispatch(addUser(userAndToken as AddUserParams))
     } else if (status === LoginAttemptStatus.NOT_FOUND) {
       router.push(`/sign-up/${formattedPhone}`)
@@ -60,7 +68,7 @@ export function CodeVerificationForm() {
 
   const verifyCode = async () => {
     try {
-      const response = await axios.post(`${apiUrl}/verify-code`, {
+      const response = await axios.post(`${API_URL}/verify-code`, {
         code: value,
         phoneNumber: phone,
       })
@@ -70,6 +78,12 @@ export function CodeVerificationForm() {
         toast.show(`Your request is ${response.data}`)
       }
     } catch (e) {
+      trackError({
+        errorCode: TrackedError.VERIFY_CODE_ERROR,
+        params: {
+          error: e,
+        },
+      })
       toast.show('There was an issues')
     }
   }

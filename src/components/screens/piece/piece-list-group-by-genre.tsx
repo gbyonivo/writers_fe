@@ -16,6 +16,9 @@ import { images } from '../../../assets/images/images'
 import { useSearchPieces } from '../../../hooks/apollo/use-search-piece-result'
 import { setSearchValue } from '../../../store/slices/search'
 import { truncateString } from '../../../utils/common'
+import { trackEvent } from '../../../utils/mixpanel'
+import { TrackedEvent } from '../../../utils/tracking/tracked-event'
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterIcon } from '../../common/writer-icon'
 import { WriterText } from '../../common/writer-text'
 
@@ -59,9 +62,17 @@ export const PiecesGroupedByGenre = forwardRef(
       const piece = item.node
       return (
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
+            trackEvent({
+              event: TrackedEvent.PRESS,
+              params: {
+                screen: TrackedScreen.HOME_SCREEN,
+                buttonName: 'Press Piece',
+                id: piece.id,
+              },
+            })
             router.push(`/pieces/${piece.id}?name=${piece?.title}`)
-          }
+          }}
         >
           <Image
             source={
@@ -112,6 +123,14 @@ export const PiecesGroupedByGenre = forwardRef(
           <TouchableOpacity
             style={{ paddingRight: 8 }}
             onPress={() => {
+              trackEvent({
+                event: TrackedEvent.PRESS,
+                params: {
+                  screen: TrackedScreen.HOME_SCREEN,
+                  buttonName: 'Press Genre',
+                  searchValue,
+                },
+              })
               dispatch(setSearchValue(searchValue))
               router.navigate('search')
             }}
