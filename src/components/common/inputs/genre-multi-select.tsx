@@ -37,8 +37,8 @@ export function GenreMultiSelect({
           }
           const option: SelectOption = {
             image: images.icons[genre.name.toLowerCase()] || images.icons.poem,
-            _id: genre.id,
-            value: genre.name,
+            value: genre.id,
+            label: genre.name,
           }
 
           if (hideImage) {

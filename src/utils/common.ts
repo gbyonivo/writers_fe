@@ -56,10 +56,10 @@ export const createOptionsFromEnum = ({
   extraLabelMap?: { [key: string]: string }
 }): SelectOption[] => {
   return Object.values(enumObject).map((code) => ({
-    _id: code === 'NotSet' ? defaultInitialOption?._id : code,
-    value:
+    value: code === 'NotSet' ? defaultInitialOption?.value : code,
+    label:
       code === 'NotSet'
-        ? labelReplacements[code] || defaultInitialOption?.value
+        ? labelReplacements[code] || defaultInitialOption?.label
         : labelReplacements[code] || code,
     disabled: !!disabledMap?.[code],
     extraLabel: extraLabelMap?.[code] || '',

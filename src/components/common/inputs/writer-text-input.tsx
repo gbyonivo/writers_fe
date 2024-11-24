@@ -1,9 +1,16 @@
 import * as React from 'react'
-import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
+import {
+  KeyboardType,
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native'
 import { HelperText, TextInput as RNPTextInput } from 'react-native-paper'
 
 import { FontFamily } from '../../../types/font'
-import { WriterText } from '../writer-text'
+import { WriterLabel } from './writer-label'
 
 interface Props {
   name: string
@@ -23,6 +30,7 @@ interface Props {
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters'
   fontFamily?: FontFamily
   numberOfLines?: number
+  keyboardType?: KeyboardType
 }
 
 export function WriterTextInput({
@@ -33,7 +41,6 @@ export function WriterTextInput({
   containerStyle,
   outlineStyle,
   multiline,
-  labelComponent,
   disabled,
   style,
   error,
@@ -43,6 +50,7 @@ export function WriterTextInput({
   autoCapitalize = 'none',
   fontFamily = 'Medium',
   numberOfLines,
+  keyboardType,
 }: Props) {
   return (
     <View style={containerStyle}>
@@ -59,8 +67,8 @@ export function WriterTextInput({
           {error}
         </HelperText>
       )}
+      {!!label && <WriterLabel label={label} />}
       <RNPTextInput
-        label={label}
         value={`${value}`}
         onChangeText={(text) => handleChange({ target: { name, value: text } })}
         mode={mode}
@@ -76,6 +84,7 @@ export function WriterTextInput({
         outlineStyle={outlineStyle}
         autoFocus={autoFocus}
         autoCapitalize={autoCapitalize}
+        keyboardType={keyboardType}
       />
     </View>
   )

@@ -1795,6 +1795,11 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
+"@react-native-picker/picker@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.9.0.tgz#0a7053ca174ec697388cb79032fb4c1445554e07"
+  integrity sha512-khEhIW/uhfMqq/+tvg4rEAiPGT8GX+Y6QydlP2TSMSmRHoSJK+ShXvXZXSr4Sii4imkj4BwvLunGywwtQDODqg==
+
 "@react-native/assets-registry@0.74.87":
   version "0.74.87"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.74.87.tgz#7dda64e48db14597e19e15f679e31abbb1c1fb4d"
@@ -6035,10 +6040,20 @@ lodash.get@^4.4.2:
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
+
 lodash.isinteger@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz#619c0af3d03f8b04c31f5882840b77b11cd68343"
   integrity sha512-DBwtEWN2caHQ9/imiNeEA5ys1JoRtRfY3d7V9wkqtbycnAmTvRRmbHKDV4a0EYc678/dia0jrte4tjYwVBaZUA==
+
+lodash.isobject@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/lodash.isobject/-/lodash.isobject-3.0.2.tgz#3c8fb8d5b5bf4bf90ae06e14f2a530a4ed935e1d"
+  integrity sha512-3/Qptq2vr7WeJbB4KHUSKlq8Pl7ASXi3UG6CMbBm8WRtXi8+GHm7mKaU3urfpSEzWe2wCIChs6/sdocUsTKJiA==
 
 lodash.merge@^4.6.2:
   version "4.6.2"
@@ -7432,6 +7447,14 @@ react-native-phone-number-input@^2.1.0:
   dependencies:
     google-libphonenumber "^3.2.10"
     react-native-country-picker-modal "^2.0.0"
+
+react-native-picker-select@^9.3.1:
+  version "9.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-picker-select/-/react-native-picker-select-9.3.1.tgz#8a2ad51c286fcd54ef60fb883842ec1895c15003"
+  integrity sha512-o621HcsKJfJkpYeP/PZQiZTKbf8W7FT08niLFL0v1pGkIQyak5IfzfinV2t+/l1vktGwAH2Tt29LrP/Hc5fk3A==
+  dependencies:
+    lodash.isequal "^4.5.0"
+    lodash.isobject "^3.0.2"
 
 react-native-ratings@^8.1.0:
   version "8.1.0"
