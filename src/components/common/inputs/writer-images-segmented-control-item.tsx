@@ -40,7 +40,7 @@ export function WriterImageSegmentedControlItem({
   return (
     <Text>
       <TouchableOpacity
-        key={option._id}
+        key={option.value}
         style={[
           styles.segment,
           selected && styles.selectedSegment,
@@ -65,7 +65,7 @@ export function WriterImageSegmentedControlItem({
             ]}
           />
         )}
-        <WriterText style={labelStyle}>{option.value}</WriterText>
+        <WriterText style={labelStyle}>{option.label}</WriterText>
       </TouchableOpacity>
     </Text>
   )

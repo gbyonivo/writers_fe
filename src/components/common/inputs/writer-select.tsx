@@ -1,10 +1,11 @@
-import { StyleProp, TextStyle, View, ViewStyle } from 'react-native'
-import { HelperText } from 'react-native-paper'
-import { PaperSelect } from 'react-native-paper-select'
+import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
+import { HelperText, useTheme } from 'react-native-paper'
+import RNPickerSelect from 'react-native-picker-select'
 
 import { SelectOption } from '../../../types/common'
 import { FontFamily } from '../../../types/font'
 import { WriterText } from '../writer-text'
+import { WriterLabel } from './writer-label'
 
 interface Props {
   name: string
@@ -26,14 +27,20 @@ export function WriterSelect({
   handleChange,
   name,
   error,
-  outlineStyle,
-  disabled,
   errorStyle,
   containerStyle,
   label,
   labelComponent,
   options,
 }: Props) {
+  const theme = useTheme()
+  const style = [
+    styles.selected,
+    {
+      borderColor: theme.colors.onBackground,
+      color: theme.colors.onBackground,
+    },
+  ]
   return (
     <View style={containerStyle}>
       {!!labelComponent && <>{labelComponent}</>}
@@ -46,27 +53,35 @@ export function WriterSelect({
           {error}
         </HelperText>
       )}
-      <PaperSelect
-        label={label}
+      <WriterLabel label={label} />
+      <RNPickerSelect
+        darkTheme
         value={value}
-        onSelection={(val: any) => {
+        onValueChange={(value) => {
           handleChange({
             target: {
-              value: val.selectedList[0]?._id,
+              value,
               name,
             },
           })
         }}
-        arrayList={options}
-        selectedArrayList={[]}
-        errorText={error}
-        multiEnable={false}
-        hideSearchBox={true}
-        textInputMode="outlined"
-        textInputOutlineStyle={outlineStyle}
-        disabled={disabled}
-        errorStyle={errorStyle}
+        items={options}
+        style={{
+          inputIOS: style,
+          inputAndroid: style,
+        }}
       />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  selected: {
+    color: 'red',
+    fontSize: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+})

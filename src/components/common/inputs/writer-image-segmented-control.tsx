@@ -20,15 +20,15 @@ export function WriterImageSegmentedControl({
   imageStyle,
 }: Props) {
   const handlePress = (option: SelectOption) => {
-    handleChange({ target: { value: option._id, name } })
+    handleChange({ target: { value: option.value, name } })
   }
 
   return (
     <View style={styles.container}>
       {options.map((option) => (
         <WriterImageSegmentedControlItem
-          selected={option._id === value}
-          key={option._id}
+          selected={option.value === value}
+          key={option.value}
           onPress={handlePress}
           option={option}
           imageStyle={imageStyle}

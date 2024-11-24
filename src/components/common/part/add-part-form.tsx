@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Keyboard, StyleSheet, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
@@ -123,6 +123,7 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
   useImperativeHandle(ref, () => {
     return {
       showAiHelp: (aiSuggestion: string) => {
+        Keyboard.dismiss()
         if (aiSuggestion) {
           setInitialText(form.values.content)
           form.setFieldValue('content', aiSuggestion)
@@ -148,6 +149,7 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
     let removeListener = null
     if (onPressCreatePartSignal.getNumberOfListeners() < 1) {
       removeListener = onPressCreatePartSignal.listen(() => {
+        Keyboard.dismiss()
         setBottomSheetContentType(BottomSheetContentType.VOICE_FORM)
         bottomSheetRef.current.expand()
       })
@@ -188,6 +190,9 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
             backgroundStyle={bottomSheetStyle}
             enablePanDownToClose
             index={-1}
+            onClose={() => {
+              Keyboard.dismiss()
+            }}
             backdropComponent={(backdropProps) => (
               <BottomSheetBackdrop
                 {...backdropProps}

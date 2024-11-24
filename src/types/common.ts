@@ -22,8 +22,8 @@ export type OnChangeParams = { target: CommonFormTarget }
 export type OnChange = (val: OnChangeParams) => void
 
 export interface SelectOption {
-  _id: string
   value: string
+  label: string
   extraLabel?: string
   disabled?: boolean
   image?: ImageSourcePropType

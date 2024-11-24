@@ -21,13 +21,13 @@ import { WriterText } from '../writer-text'
 
 const typeOptions: SelectOption[] = [
   {
+    label: PieceType.POEM,
     value: PieceType.POEM,
-    _id: PieceType.POEM,
     image: images.icons.poem,
   },
   {
+    label: PieceType.STORY,
     value: PieceType.STORY,
-    _id: PieceType.STORY,
     image: images.icons.story,
   },
 ]
@@ -47,7 +47,13 @@ interface Props {
 }
 
 const errorKeys = ['type', 'genreIds', 'title', 'firstPart.content', 'voice']
-const pages = ['Genre_Select', 'Title', 'First_Content', 'Voice_Selection']
+const pages = [
+  'Type_Select',
+  'Genre_Select',
+  'Title',
+  'First_Content',
+  'Voice_Selection',
+]
 const nextButtonLabel = [
   'Genre',
   'Title',
@@ -90,9 +96,8 @@ export function PieceCreateForm({
       event: TrackedEvent.PRESS,
       params: {
         buttonName: 'Next_Form_In_Piece_Creation',
-        current: pages[pageIndex],
+        from: pages[pageIndex],
         to: pages[pageIndex + 1],
-        direct: 'forward',
       },
     })
     pagerViewRef.current.setPage(pageIndex + 1)
@@ -102,9 +107,8 @@ export function PieceCreateForm({
       event: TrackedEvent.PRESS,
       params: {
         buttonName: 'Next_Form_In_Piece_Creation',
-        current: pages[pageIndex],
+        from: pages[pageIndex],
         to: pages[pageIndex - 1],
-        direct: 'backward',
       },
     })
     pagerViewRef.current.setPage(pageIndex - 1)

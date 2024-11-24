@@ -88,9 +88,8 @@ export function SignUpForm() {
       event: TrackedEvent.PRESS,
       params: {
         location: TrackedComponentLocation.SIGN_UP_FORM,
-        current: screenNames[pageIndex],
+        from: screenNames[pageIndex],
         to: screenNames[pageIndex - 1],
-        direction: 'forward',
       },
     })
     try {
@@ -106,9 +105,8 @@ export function SignUpForm() {
       event: TrackedEvent.PRESS,
       params: {
         location: TrackedComponentLocation.SIGN_UP_FORM,
-        current: screenNames[pageIndex],
+        from: screenNames[pageIndex],
         to: screenNames[pageIndex - 1],
-        direction: 'backward',
       },
     })
     if (submittingForm) return
