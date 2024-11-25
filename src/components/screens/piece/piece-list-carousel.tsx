@@ -16,6 +16,8 @@ import { getHeighByRatio, getWidthByRatio } from '../../../utils/common'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedComponentLocation } from '../../../utils/tracking/tracked-component-location'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
+import { GenreList } from '../../common/genre/genre-list'
+import { WriterAgeRating } from '../../common/writer-age-rating'
 import { WriterText } from '../../common/writer-text'
 
 interface Props {
@@ -37,7 +39,7 @@ export function PieceListCarousel({ pieceType }: Props) {
         height={getHeighByRatio(0.5)}
         autoPlay={isFcoused}
         data={pieces.edges}
-        scrollAnimationDuration={1000}
+        scrollAnimationDuration={4000}
         style={styles.carouselStyle}
         renderItem={({ index, item }) => (
           <TouchableOpacity
@@ -66,20 +68,26 @@ export function PieceListCarousel({ pieceType }: Props) {
               <View style={styles.blurContainer}>
                 <BlurView
                   intensity={10}
-                  style={[
-                    styles.blur,
-                    { backgroundColor: colors.onBackground },
-                  ]}
+                  style={[styles.blur, { backgroundColor: colors.backdrop }]}
                 />
                 <WriterText
-                  align="center"
-                  size={24}
+                  align="left"
+                  size={18}
+                  ml={8}
                   fontFamily="SemiBold"
                   color={colors.background}
                 >
                   {item.node.title}
                 </WriterText>
+                <GenreList
+                  genreIds={item.node.genreIds}
+                  containerStyle={styles.genreListContainer}
+                />
               </View>
+              <WriterAgeRating
+                ageRating={item.node.firstPart.ageRating}
+                style={styles.ageRating}
+              />
             </ImageBackground>
           </TouchableOpacity>
         )}
@@ -107,7 +115,7 @@ const styles = StyleSheet.create({
   blur: {
     ...StyleSheet.absoluteFillObject,
     overflow: 'hidden',
-    opacity: 0.2,
+    opacity: 0.8,
   },
   blurContainer: {
     position: 'absolute',
@@ -120,5 +128,13 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     marginHorizontal: getWidthByRatio(0.05),
     borderRadius: 16,
+  },
+  genreListContainer: {
+    marginLeft: 4,
+  },
+  ageRating: {
+    position: 'absolute',
+    right: 16,
+    top: 16,
   },
 })

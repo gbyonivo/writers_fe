@@ -19,6 +19,7 @@ import { truncateString } from '../../../utils/common'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
+import { WriterAgeRating } from '../../common/writer-age-rating'
 import { WriterIcon } from '../../common/writer-icon'
 import { WriterText } from '../../common/writer-text'
 
@@ -107,6 +108,13 @@ export const PiecesGroupedByGenre = forwardRef(
               {truncateString({ text: piece.title, maxLength: 17 })}
             </WriterText>
           </View>
+          {!!piece?.firstPart?.ageRating && (
+            <WriterAgeRating
+              ageRating={piece?.firstPart?.ageRating}
+              small
+              style={styles.ageRating}
+            />
+          )}
         </TouchableOpacity>
       )
     }
@@ -172,5 +180,10 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     justifyContent: 'space-between',
     flexDirection: 'row',
+  },
+  ageRating: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
   },
 })

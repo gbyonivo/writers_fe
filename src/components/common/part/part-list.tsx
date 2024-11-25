@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listContainer: {
-    flex: 1,
     paddingBottom: 96,
   },
   separator: {
