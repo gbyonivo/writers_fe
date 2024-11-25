@@ -9261,10 +9261,10 @@ write-file-atomic@^2.3.0:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.2"
 
-writers_shared@^1.1.30:
-  version "1.1.30"
-  resolved "https://registry.yarnpkg.com/writers_shared/-/writers_shared-1.1.30.tgz#2fd18e9a1bdc5e4ed1fa85b77322f8ce7ab3cc87"
-  integrity sha512-nQONePhFO8iEbczQReC9fnu0oXJvUqftNZG9Px2N3mbIM1y5nNg4huMcAaUH5cS40SOkgAXFcoGrn5Nggug6DQ==
+writers_shared@^1.1.32:
+  version "1.1.32"
+  resolved "https://registry.yarnpkg.com/writers_shared/-/writers_shared-1.1.32.tgz#cf7fbfc21100b06aaf50ffdfa7f2aa167a4912d6"
+  integrity sha512-yTnNpjur3YV7KQMMcvFTtv6nX2veMYHq1xqAqn4joAIlPkT1vg1qCdOfRjo6XZCutl6dipXyqwPItq560XO9bg==
   dependencies:
     tsup "^8.0.1"
     typescript "^5.3.3"

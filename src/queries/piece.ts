@@ -15,7 +15,8 @@ const PIECE_DETAILS = `
   imageUrl
   firstPart {
     id,
-    content
+    content,
+    ageRating,
   }
   title
   user {

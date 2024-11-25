@@ -8,6 +8,7 @@ import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { GenreList } from '../genre/genre-list'
+import { WriterAgeRating } from '../writer-age-rating'
 import { WriterText } from '../writer-text'
 import { WrittenBy } from '../written-by'
 import { PieceLikeButton } from './piece-like-button'
@@ -45,12 +46,19 @@ export function PieceItem({ piece, trackedScreen }: Props) {
         >
           {piece.title}
         </WriterText>
-        {!!piece.genreIds.length && (
-          <GenreList
-            genreIds={piece.genreIds}
-            containerStyle={styles.genreListContainer}
+        <View>
+          {!!piece.genreIds.length && (
+            <GenreList
+              genreIds={piece.genreIds}
+              containerStyle={styles.genreListContainer}
+            />
+          )}
+          <WriterAgeRating
+            ageRating={piece.firstPart.ageRating}
+            style={styles.ageRating}
+            small
           />
-        )}
+        </View>
         {piece.firstPart && (
           <View style={styles.pieceContent}>
             <WriterText
@@ -96,5 +104,11 @@ const styles = StyleSheet.create({
   },
   genreListContainer: {
     marginTop: 8,
+    paddingLeft: 32,
+  },
+  ageRating: {
+    position: 'absolute',
+    top: 12,
+    left: 0,
   },
 })

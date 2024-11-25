@@ -27,6 +27,7 @@ export const PART_DETAILS = `
   userRating
   rating
   numberOfRatings
+  ageRating
 `
 
 export const GET_PART = gql`

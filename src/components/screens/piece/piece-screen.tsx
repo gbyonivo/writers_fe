@@ -5,6 +5,7 @@ import { usePiece } from '../../../hooks/apollo/use-piece'
 import { GenreList } from '../../common/genre/genre-list'
 import { PartListForPiece } from '../../common/part/part-list-for-piece'
 import { WriterActivityIndicator } from '../../common/writer-activity-indicator'
+import { WriterAgeRating } from '../../common/writer-age-rating'
 import { WriterBackground } from '../../common/writer-background'
 import { WriterText } from '../../common/writer-text'
 
@@ -19,7 +20,7 @@ export function PieceScreen({ pieceId, pieceName, preselectedPartIds }: Props) {
   const { loading, piece } = usePiece(pieceId)
 
   return (
-    <WriterBackground isView>
+    <WriterBackground isView style={styles.parentContainer}>
       <View style={[styles.container]}>
         <WriterText
           style={styles.pieceNameContainer}
@@ -32,10 +33,17 @@ export function PieceScreen({ pieceId, pieceName, preselectedPartIds }: Props) {
           {piece?.title || pieceName}
         </WriterText>
         {!!piece?.genreIds?.length && (
-          <GenreList
-            genreIds={piece?.genreIds || []}
-            containerStyle={styles.genreListContainer}
-          />
+          <View style={styles.ageRatingAndGenreList}>
+            <WriterAgeRating
+              ageRating={piece?.firstPart?.ageRating}
+              small
+              style={styles.ageRating}
+            />
+            <GenreList
+              genreIds={piece?.genreIds || []}
+              containerStyle={styles.genreListContainer}
+            />
+          </View>
         )}
         {loading && <WriterActivityIndicator color={theme.colors.onPrimary} />}
         <PartListForPiece
@@ -48,6 +56,7 @@ export function PieceScreen({ pieceId, pieceName, preselectedPartIds }: Props) {
 }
 
 const styles = StyleSheet.create({
+  parentContainer: {},
   container: {
     flex: 1,
   },
@@ -57,5 +66,15 @@ const styles = StyleSheet.create({
   genreListContainer: {
     paddingHorizontal: 24,
     justifyContent: 'center',
+    flex: 1,
+  },
+  ageRatingAndGenreList: {
+    flexDirection: 'row',
+    paddingHorizontal: 24,
+  },
+  ageRating: {
+    left: 16,
+    top: 4,
+    position: 'absolute',
   },
 })
