@@ -10,7 +10,7 @@ export function WriterActivityIndicator({ size = 'large', color }: Props) {
   return (
     <ActivityIndicator
       animating
-      color={color || colors.onPrimary}
+      color={color || colors.onBackground}
       size={size}
     />
   )

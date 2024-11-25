@@ -16,6 +16,7 @@ import { GenreMultiSelect } from '../inputs/genre-multi-select'
 import { WriterImageSegmentedControl } from '../inputs/writer-image-segmented-control'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { VoiceSetUp } from '../voice-set-up'
+import { WriterActivityIndicator } from '../writer-activity-indicator'
 import { WriterHeaderButton } from '../writer-header-button'
 import { WriterText } from '../writer-text'
 
@@ -128,22 +129,31 @@ export function PieceCreateForm({
 
   return (
     <>
-      <View style={styles.header}>
-        <WriterHeaderButton
-          label={previousButtonLabel[pageIndex] || 'Previous'}
-          onPress={onPressPrevious}
-          enableButton={pageIndex > 0}
-          icon="arrow-left"
-          style={pageIndex === 0 ? { display: 'none' } : {}}
-        />
-        <WriterHeaderButton
-          label={nextButtonLabel[pageIndex] || 'Next'}
-          onPress={onPressNext}
-          enableButton={!get(formErrors, errorKeys[pageIndex])}
-          iconRight
-          icon="arrow-right"
-        />
-      </View>
+      {!loading ? (
+        <View style={styles.header}>
+          <WriterHeaderButton
+            label={previousButtonLabel[pageIndex] || 'Previous'}
+            onPress={onPressPrevious}
+            enableButton={pageIndex > 0}
+            icon="arrow-left"
+            style={pageIndex === 0 ? { display: 'none' } : {}}
+          />
+          <WriterHeaderButton
+            label={nextButtonLabel[pageIndex] || 'Next'}
+            onPress={onPressNext}
+            enableButton={!get(formErrors, errorKeys[pageIndex])}
+            iconRight
+            icon="arrow-right"
+          />
+        </View>
+      ) : (
+        <View style={[styles.header, { justifyContent: 'center' }]}>
+          <WriterText align="center" mr={4}>
+            Creating Your {values.type}
+          </WriterText>
+          <WriterActivityIndicator size={12} />
+        </View>
+      )}
       <AnimatedPager
         style={styles.pagerView}
         initialPage={0}
