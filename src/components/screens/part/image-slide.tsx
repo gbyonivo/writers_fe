@@ -10,7 +10,6 @@ interface Props {
 }
 
 export function ImageSlide({ piece }: Props) {
-  console.log('piece', piece.user?.name, piece.firstPart)
   return (
     <View style={styles.container}>
       <Image source={{ uri: piece.imageUrl }} style={styles.image} />
