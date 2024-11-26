@@ -5,6 +5,7 @@ import { PlayerState } from './PlayerState'
 import { SearchState } from './SearchState'
 import { SettingsState } from './SettingState'
 import { SuggestionState } from './SuggestionState'
+import { ScreenMonitorState } from './screen-monitor-state'
 
 export interface AppState {
   login: LoginState
@@ -14,4 +15,5 @@ export interface AppState {
   genre: GenreState
   player: PlayerState
   suggestion: SuggestionState
+  screenMonitor: ScreenMonitorState
 }

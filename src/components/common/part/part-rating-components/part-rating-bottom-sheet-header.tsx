@@ -4,9 +4,9 @@ import { useTheme } from 'react-native-paper'
 import { Rating } from 'react-native-ratings'
 import { Part } from 'writers_shared'
 
-import { getRatingDefaultConfig } from '../../../utils/common'
-import { WriterText } from '../../common/writer-text'
-import { WrittenBy } from '../../common/written-by'
+import { getRatingDefaultConfig } from '../../../../utils/common'
+import { WriterText } from '../../writer-text'
+import { WrittenBy } from '../../written-by'
 
 export interface PartRatingBottomSheetProps {
   part: Part
@@ -54,5 +54,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
+    paddingHorizontal: 16,
   },
 })

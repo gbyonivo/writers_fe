@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 
 import { usePiece } from '../../../hooks/apollo/use-piece'
 import { useSpeaker } from '../../../hooks/use-speaker'
+import { POSITION_MAP, PlayerPostion } from '../../../types/player-position'
 import { AppState } from '../../../types/states/AppState'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
@@ -16,15 +17,19 @@ export function FloatingPlayer() {
   const theme = useTheme()
   const { pieceId } = useSelector((state: AppState) => state.player)
   const { piece, loading } = usePiece(pieceId)
+  const { currentScreen } = useSelector(
+    (state: AppState) => state.screenMonitor,
+  )
+  const position = POSITION_MAP[currentScreen]
 
   const handlePress = () => {
     trackEvent({
       event: TrackedEvent.PRESS,
       params: {
-        buttonName: 'Floating Player',
+        buttonName: 'Floating_Player',
       },
     })
-    router.navigate('/player')
+    router.navigate(`/player/${pieceId}`)
   }
 
   if (loading || !piece?.title) return null
@@ -32,7 +37,13 @@ export function FloatingPlayer() {
   return (
     <TouchableOpacity
       onPress={handlePress}
-      style={[styles.container, { backgroundColor: theme.colors.secondary }]}
+      style={[
+        styles.container,
+        { backgroundColor: theme.colors.tertiary },
+        position === PlayerPostion.ABOVE_BOTTOM
+          ? styles.aboveBottomPosition
+          : styles.bottomPosition,
+      ]}
     >
       <>
         <View style={styles.trackTitleContainer}>
@@ -56,13 +67,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 8,
-    borderRadius: 12,
     paddingVertical: 10,
     position: 'absolute',
+    zIndex: 900,
+    borderRadius: 12,
+  },
+  bottomPosition: {
+    left: 4,
+    right: 4,
+    bottom: 24,
+  },
+  aboveBottomPosition: {
     left: 8,
     right: 8,
     bottom: 84,
-    zIndex: 900,
   },
   trackArtworkImage: {
     width: 40,

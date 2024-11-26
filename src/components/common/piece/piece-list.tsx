@@ -41,5 +41,6 @@ export function PieceList({ trackedScreen }: Props) {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 0,
+    paddingBottom: 96,
   },
 })

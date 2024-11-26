@@ -2,11 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { Sound } from 'expo-av/build/Audio'
 
-import {
-  ExpoVoice,
-  PlayerState,
-  PlayingStatus,
-} from '../../types/states/PlayerState'
+import { PlayerState, PlayingStatus } from '../../types/states/PlayerState'
 
 const initialState: PlayerState = {
   partIds: null,

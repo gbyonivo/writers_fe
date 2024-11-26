@@ -94,7 +94,7 @@ export const PlayPauseButton = () => {
             params: {
               partIds,
               pieceId,
-              buttonName: 'Play Piece Audio',
+              buttonName: `${playing ? 'Pause_Piece_Audio' : 'Play_Piece_Audio'}`,
             },
           })
           play()

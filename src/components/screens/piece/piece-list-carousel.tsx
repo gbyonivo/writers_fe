@@ -75,7 +75,7 @@ export function PieceListCarousel({ pieceType }: Props) {
                   size={18}
                   ml={8}
                   fontFamily="SemiBold"
-                  color={colors.background}
+                  color={colors.onBackground}
                 >
                   {item.node.title}
                 </WriterText>
@@ -119,10 +119,10 @@ const styles = StyleSheet.create({
   },
   blurContainer: {
     position: 'absolute',
-    height: 100,
+    height: 120,
     width: '100%',
     bottom: 0,
-    justifyContent: 'center',
+    paddingTop: 8,
   },
   carouselStyle: {
     marginVertical: 16,

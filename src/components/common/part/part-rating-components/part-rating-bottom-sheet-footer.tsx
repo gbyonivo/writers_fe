@@ -4,9 +4,12 @@ import { useTheme } from 'react-native-paper'
 import { Rating } from 'react-native-ratings'
 import { Part } from 'writers_shared'
 
-import { getRatingDefaultConfig } from '../../../utils/common'
-import { WriterButton } from '../../common/writer-button'
-import { WriterText } from '../../common/writer-text'
+import {
+  getRatingDefaultConfig,
+  getWidthByRatio,
+} from '../../../../utils/common'
+import { WriterButton } from '../../writer-button'
+import { WriterText } from '../../writer-text'
 
 export interface PartRatingBottomSheetProps {
   userRating?: number
@@ -47,8 +50,8 @@ export function PartRatingBottomSheetFooter({
           </WriterText>
         </View>
       ) : (
-        <>
-          <View style={styles.ratingContainer}>
+        <View style={styles.ratingContainer}>
+          <View style={styles.rating}>
             <Rating
               {...getRatingDefaultConfig(theme)}
               imageSize={30}
@@ -58,58 +61,37 @@ export function PartRatingBottomSheetFooter({
           </View>
           <WriterButton
             onPress={submitRating}
-            style={styles.submitButton}
             disabled={processing}
+            style={styles.button}
           >
             Submit Rating
           </WriterButton>
-        </>
+        </View>
       )}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 24,
-    justifyContent: 'center',
+  rating: {
+    marginVertical: 16,
   },
   ratingContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-    marginBottom: 16,
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'flex-start',
-    paddingHorizontal: 16,
-    paddingBottom: 48,
     justifyContent: 'space-between',
+    width: '100%',
+    marginVertical: 16,
+    paddingHorizontal: 16,
   },
   text: {
     lineHeight: 32,
   },
-  ratingContainerStyle: {
-    backgroundColor: 'green',
-  },
-  header: {
-    marginTop: 16,
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-between',
-  },
-  body: {
-    flex: 1,
-    width: '100%',
-    borderTopWidth: 2,
-    marginTop: 16,
-  },
   footer: {
-    width: '100%',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    width: getWidthByRatio(1),
   },
-  submitButton: {
-    padding: 12,
+  button: {
+    width: 200,
+    alignSelf: 'center',
   },
 })
