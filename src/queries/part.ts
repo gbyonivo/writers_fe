@@ -31,9 +31,22 @@ export const PART_DETAILS = `
 `
 
 export const GET_PART = gql`
-  query Piece($id: Int) {
+  query Part($id: Int) {
     part(id: $id) {
       ${PART_DETAILS}
+    }
+  }
+`
+
+export const GET_PARTS_BY_IDS = gql`
+  query PartsByIds($ids: [Int]) {
+    partsByIds(ids: $ids) {
+      ${PART_DETAILS}
+      user {
+        id,
+        name,
+        username
+      }
     }
   }
 `

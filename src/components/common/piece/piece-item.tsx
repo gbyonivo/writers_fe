@@ -1,9 +1,10 @@
 import { TouchableOpacity } from '@gorhom/bottom-sheet'
 import { useRouter } from 'expo-router'
-import { StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { Piece } from 'writers_shared'
 
+import { getWidthByRatio } from '../../../utils/common'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
@@ -39,25 +40,30 @@ export function PieceItem({ piece, trackedScreen }: Props) {
   return (
     <View style={[styles.container, containerStyle]}>
       <TouchableOpacity onPress={onPress}>
-        <WriterText
-          color={theme.colors.onSurfaceVariant}
-          size={18}
-          fontFamily="Bold"
-        >
-          {piece.title}
-        </WriterText>
-        <View>
-          {!!piece.genreIds.length && (
-            <GenreList
-              genreIds={piece.genreIds}
-              containerStyle={styles.genreListContainer}
-            />
-          )}
-          <WriterAgeRating
-            ageRating={piece.firstPart.ageRating}
-            style={styles.ageRating}
-            small
-          />
+        <View style={styles.imageAndTitle}>
+          <Image source={{ uri: piece.imageUrl }} style={styles.image} />
+          <View>
+            <WriterText
+              color={theme.colors.onSurfaceVariant}
+              size={18}
+              fontFamily="Bold"
+            >
+              {piece.title}
+            </WriterText>
+            <View>
+              {!!piece.genreIds.length && (
+                <GenreList
+                  genreIds={piece.genreIds}
+                  containerStyle={styles.genreListContainer}
+                />
+              )}
+              <WriterAgeRating
+                ageRating={piece.firstPart.ageRating}
+                style={styles.ageRating}
+                small
+              />
+            </View>
+          </View>
         </View>
         {piece.firstPart && (
           <View style={styles.pieceContent}>
@@ -105,10 +111,20 @@ const styles = StyleSheet.create({
   genreListContainer: {
     marginTop: 8,
     paddingLeft: 32,
+    width: getWidthByRatio(1) - 110,
   },
   ageRating: {
     position: 'absolute',
     top: 12,
     left: 0,
+  },
+  image: {
+    height: 96,
+    width: 96,
+    borderRadius: 8,
+    marginRight: 16,
+  },
+  imageAndTitle: {
+    flexDirection: 'row',
   },
 })

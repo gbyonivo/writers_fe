@@ -57,6 +57,17 @@ export default function RootLayout() {
             ),
           }}
         />
+        <Stack.Screen
+          name="player/[id]"
+          options={{
+            headerStyle: { backgroundColor: colors.background },
+            headerTintColor: colors.onBackground,
+            headerTitle: () => <></>,
+            headerLeft: () => (
+              <Appbar.BackAction onPress={() => router.back()} />
+            ),
+          }}
+        />
       </Stack>
 
       <WithSpeaker>

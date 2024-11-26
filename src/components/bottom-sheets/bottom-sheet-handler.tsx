@@ -2,8 +2,8 @@ import { Portal } from 'react-native-paper'
 
 import { useBottomSheetContext } from '../../context/bottom-sheet-context'
 import { BottomSheet } from '../../types/bottom-sheet'
+import { PartRatingBottomSheet } from '../common/part/part-rating-bottom-sheet'
 import { LogoutBottomSheet } from './logout-bottom-sheet'
-import { PartRatingBottomSheet } from './part-rating-bottom-sheet'
 
 export function BottomSheetHandler() {
   const { bottomSheet, resetBottomSheet, params } = useBottomSheetContext()
@@ -14,15 +14,6 @@ export function BottomSheetHandler() {
         <LogoutBottomSheet
           onClose={() => resetBottomSheet()}
           onPressLogout={params.onPressLogout}
-        />
-      )
-      break
-    case BottomSheet.PART_RATING:
-      element = (
-        <PartRatingBottomSheet
-          onClose={() => resetBottomSheet()}
-          part={params.part}
-          ratePart={params.ratePart}
         />
       )
       break
