@@ -1,10 +1,12 @@
 import { useRouter } from 'expo-router'
+import { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { usePiece } from '../../../hooks/apollo/use-piece'
 import { useSpeaker } from '../../../hooks/use-speaker'
+import { startPlayer } from '../../../store/slices/player'
 import { POSITION_MAP, PlayerPostion } from '../../../types/player-position'
 import { AppState } from '../../../types/states/AppState'
 import { trackEvent } from '../../../utils/mixpanel'
@@ -15,12 +17,37 @@ import { PlayPauseButton } from './play-pause-button'
 export function FloatingPlayer() {
   const router = useRouter()
   const theme = useTheme()
-  const { pieceId } = useSelector((state: AppState) => state.player)
+  const dispatch = useDispatch()
+  const { pieceId, partIds } = useSelector((state: AppState) => state.player)
   const { piece, loading } = usePiece(pieceId)
+  const [partsOnScreen, setPartsOnScreen] = useState({
+    pieceId: null,
+    partIds: [],
+    piece: null,
+  })
   const { currentScreen } = useSelector(
     (state: AppState) => state.screenMonitor,
   )
   const position = POSITION_MAP[currentScreen]
+
+  useEffect(() => {
+    if (!pieceId || partIds.length === 0 || !piece) return
+    setPartsOnScreen({
+      partIds,
+      pieceId,
+      piece,
+    })
+  }, [partIds, pieceId, piece])
+
+  const restart = useCallback(() => {
+    dispatch(
+      startPlayer({
+        partIds: partsOnScreen.partIds,
+        title: partsOnScreen.piece.title,
+        pieceId: partsOnScreen.pieceId,
+      }),
+    )
+  }, [partsOnScreen])
 
   const handlePress = () => {
     trackEvent({
@@ -29,10 +56,16 @@ export function FloatingPlayer() {
         buttonName: 'Floating_Player',
       },
     })
-    router.navigate(`/player/${pieceId}`)
+    router.navigate(
+      `/player/${partsOnScreen.piece.id}?partIds=${partsOnScreen.partIds.join(',')}`,
+    )
   }
 
-  if (loading || !piece?.title) return null
+  if ((loading || !piece?.title) && position === PlayerPostion.ABOVE_BOTTOM) {
+    return null
+  }
+
+  if (!partsOnScreen.piece) return null
 
   return (
     <TouchableOpacity
@@ -49,13 +82,13 @@ export function FloatingPlayer() {
         <View style={styles.trackTitleContainer}>
           <MovingText
             style={{ ...styles.trackTitle, color: theme.colors.onSecondary }}
-            text={piece.title ?? ''}
+            text={partsOnScreen?.piece?.title ?? ''}
             animationThreshold={25}
           />
         </View>
 
         <View style={styles.trackControlsContainer}>
-          <PlayPauseButton />
+          <PlayPauseButton restart={restart} />
         </View>
       </>
     </TouchableOpacity>

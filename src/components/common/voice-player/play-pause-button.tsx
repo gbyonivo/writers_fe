@@ -17,7 +17,7 @@ import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WriterIcon } from '../writer-icon'
 
-export const PlayPauseButton = () => {
+export const PlayPauseButton = ({ restart }: { restart: () => void }) => {
   const [permission, requestPermission] = Camera.useMicrophonePermissions()
   const { status, partIds, pieceId } = useSelector(
     (state: AppState) => state.player,
@@ -75,8 +75,10 @@ export const PlayPauseButton = () => {
       await Audio.setAudioModeAsync({
         playsInSilentModeIOS: true,
       })
-      if (status === PlayingStatus.PAUSED || status === PlayingStatus.STOP) {
+      if (status === PlayingStatus.PAUSED) {
         dispatch(playPlayer())
+      } else if (status === PlayingStatus.STOP) {
+        restart()
       } else if (status === PlayingStatus.PLAYING) {
         dispatch(pausePlayer())
       }

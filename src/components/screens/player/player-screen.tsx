@@ -20,10 +20,14 @@ import { PartListCarousel } from '../part/part-list-carousel'
 
 export default function PlayerScreen() {
   const { id } = useGlobalSearchParams()
+  const { partIds } = useLocalSearchParams()
   const dispatch = useDispatch()
   const [partsOnScreen, setPartsOnScreen] = useState([])
-  const player = useSelector((state: AppState) => state.player)
-  const response = usePartsByIds({ partIds: player.partIds || [] })
+  const response = usePartsByIds({
+    partIds:
+      (partIds as string).split(',').map((partId) => parseInt(partId, 10)) ||
+      [],
+  })
   useOnFocus(() => {
     dispatch(setCurrentScreen(TrackedScreen.PLAYER_SCREEN))
     trackScreenView({
