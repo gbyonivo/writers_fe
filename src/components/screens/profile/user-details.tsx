@@ -1,9 +1,8 @@
+import { useRef } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { useAuthContext } from '../../../context/auth-context'
-import { useBottomSheetContext } from '../../../context/bottom-sheet-context'
 import { useUser } from '../../../hooks/apollo/use-user'
-import { BottomSheet } from '../../../types/bottom-sheet'
 import { getInitials } from '../../../utils/common'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
@@ -11,6 +10,7 @@ import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterActivityIndicator } from '../../common/writer-activity-indicator'
 import { WriterAvatarText } from '../../common/writer-avatar-text'
 import { WriterText } from '../../common/writer-text'
+import { LogoutBottomSheet } from './logout-bottom-sheet'
 
 interface Props {
   userId: number
@@ -18,8 +18,7 @@ interface Props {
 
 export function UserDetails({ userId }: Props) {
   const { loading, user } = useUser(userId)
-  const { selectBottomSheet, resetBottomSheet } = useBottomSheetContext()
-  const { logout } = useAuthContext()
+  const logoutBottomsheetRef = useRef(null)
 
   return (
     <View style={[styles.avatarImageWrapper]}>
@@ -35,15 +34,7 @@ export function UserDetails({ userId }: Props) {
                 buttonName: 'User Icon',
               },
             })
-            selectBottomSheet({
-              bottomSheet: BottomSheet.LOGOUT,
-              params: {
-                onPressLogout: () => {
-                  logout()
-                  resetBottomSheet()
-                },
-              },
-            })
+            logoutBottomsheetRef.current.expand()
           }}
         >
           <WriterAvatarText label={getInitials(user?.name || '')} size={64} />
@@ -66,6 +57,9 @@ export function UserDetails({ userId }: Props) {
             mr={4}
           >{`Parts: ${user?.partCount}`}</WriterText>
         </View>
+      </View>
+      <View>
+        <LogoutBottomSheet ref={logoutBottomsheetRef} />
       </View>
     </View>
   )

@@ -1,7 +1,9 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { useTheme } from 'react-native-paper'
 
 import { useGenreMap } from '../../../hooks/selectors/use-genre-map'
 import { WriterChip } from '../writer-chip'
+import { WriterText } from '../writer-text'
 
 interface Props {
   genreIds: number[]
@@ -10,15 +12,19 @@ interface Props {
 }
 
 export function GenreList({ genreIds, containerStyle, chipStyle }: Props) {
+  const theme = useTheme()
   const genreMap = useGenreMap()
   return (
     <View style={[styles.container, containerStyle]}>
-      {genreIds.map((genreId) => (
-        <WriterChip
-          label={genreMap[genreId]?.name}
+      {genreIds.map((genreId, index) => (
+        <WriterText
           key={genreId}
           style={[styles.chip, chipStyle]}
-        />
+          fontFamily="Light"
+          color={theme.colors.tertiary}
+        >
+          {genreMap[genreId]?.name} {index !== genreIds.length - 1 ? '/' : ''}
+        </WriterText>
       ))}
     </View>
   )
@@ -28,6 +34,7 @@ const styles = StyleSheet.create({
   container: {
     flexWrap: 'wrap',
     flexDirection: 'row',
+    paddingRight: 16,
   },
   chip: { margin: 4 },
 })

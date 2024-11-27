@@ -109,7 +109,7 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
           pieceId,
         })
         await createPart(part)
-        bottomSheetRef.current.collapse()
+        bottomSheetRef.current.close()
         setSubmitting(false)
         show({ message: 'Your part has been added' })
         router.back()

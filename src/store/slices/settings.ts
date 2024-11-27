@@ -9,6 +9,7 @@ const initialState: SettingsState = {
   shouldChainParts: false,
   shouldShowTextBasedDesgin: false,
   shouldUseAiForOnlyTips: true,
+  isPremiumAccount: false,
 }
 
 export const settingsSlice = createSlice({
@@ -48,6 +49,12 @@ export const settingsSlice = createSlice({
         shouldShowTextBasedDesgin: payload,
       }
     },
+    togglePremiumAccount: (state) => {
+      return {
+        ...state,
+        isPremiumAccount: !state.isPremiumAccount,
+      }
+    },
   },
 })
 
@@ -57,6 +64,7 @@ export const {
   setShouldChainPart,
   setShouldShowTextBasedDesign,
   toggleShouldUseAiForOnlyTips,
+  togglePremiumAccount,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

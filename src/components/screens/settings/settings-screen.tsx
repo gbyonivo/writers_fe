@@ -1,11 +1,8 @@
 import { ScrollView, StyleSheet } from 'react-native'
 
 import { WriterBackground } from '../../common/writer-background'
-import { WriterText } from '../../common/writer-text'
-import { ChooseReader } from './choose-reader'
 import { DeleteAccount } from './delete-account'
 import { GoPremium } from './go-premium'
-import { LockParts } from './lock-parts'
 import { Logout } from './logout'
 import { TermsAndConditions } from './terms-and-conditions'
 import { ToggleDesign } from './toggle-design'
@@ -21,12 +18,11 @@ export function SettingsScreen() {
         <ToggleTheme />
         <ToggleDesign />
         <ToggleTips />
-        <ChooseReader />
         <ToggleNotification />
+        <TermsAndConditions />
         <GoPremium />
         <Logout />
         <DeleteAccount />
-        <TermsAndConditions />
         <Version />
       </ScrollView>
     </WriterBackground>
