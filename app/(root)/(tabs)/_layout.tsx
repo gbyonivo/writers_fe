@@ -66,18 +66,6 @@ export default function TabLayout() {
             tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
             headerLeft: () => <WriterText {...headerStyle}>Narate</WriterText>,
             headerShadowVisible: false,
-            // header: () => (
-            //   <View style={{ width: getHeighByRatio(1) }}>
-            //     <BlurView
-            //       intensity={30}
-            //       style={{
-            //         ...StyleSheet.absoluteFillObject,
-            //         backgroundColor: 'transparent',
-            //         overflow: 'hidden',
-            //       }}
-            //     />
-            //   </View>
-            // ),
             ...commonProps,
           }}
         />

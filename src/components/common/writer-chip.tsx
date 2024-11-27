@@ -1,3 +1,4 @@
+import { BlurView } from 'expo-blur'
 import { StyleProp, ViewStyle } from 'react-native'
 import { Chip } from 'react-native-paper'
 
@@ -7,5 +8,10 @@ interface WriterChipProps {
 }
 
 export function WriterChip({ label, style }: WriterChipProps) {
-  return <Chip style={style}>{label}</Chip>
+  return (
+    <Chip style={style}>
+      <BlurView />
+      {label}
+    </Chip>
+  )
 }
