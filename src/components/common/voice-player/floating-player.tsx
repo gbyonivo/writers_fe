@@ -1,3 +1,4 @@
+import { BlurView } from 'expo-blur'
 import { useRouter } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -5,7 +6,6 @@ import { useTheme } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { usePiece } from '../../../hooks/apollo/use-piece'
-import { useSpeaker } from '../../../hooks/use-speaker'
 import { startPlayer } from '../../../store/slices/player'
 import { POSITION_MAP, PlayerPostion } from '../../../types/player-position'
 import { AppState } from '../../../types/states/AppState'
@@ -72,16 +72,20 @@ export function FloatingPlayer() {
       onPress={handlePress}
       style={[
         styles.container,
-        { backgroundColor: theme.colors.tertiary },
+        // { backgroundColor: theme.colors.background },
         position === PlayerPostion.ABOVE_BOTTOM
           ? styles.aboveBottomPosition
           : styles.bottomPosition,
       ]}
     >
       <>
+        <BlurView
+          intensity={30}
+          style={[styles.blur, { backgroundColor: 'transparent' }]}
+        />
         <View style={styles.trackTitleContainer}>
           <MovingText
-            style={{ ...styles.trackTitle, color: theme.colors.onSecondary }}
+            style={{ ...styles.trackTitle, color: theme.colors.onBackground }}
             text={partsOnScreen?.piece?.title ?? ''}
             animationThreshold={25}
           />
@@ -96,6 +100,12 @@ export function FloatingPlayer() {
 }
 
 const styles = StyleSheet.create({
+  blur: {
+    ...StyleSheet.absoluteFillObject,
+    overflow: 'hidden',
+    opacity: 0.8,
+    borderRadius: 12,
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',

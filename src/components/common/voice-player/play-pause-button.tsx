@@ -106,7 +106,7 @@ export const PlayPauseButton = ({ restart }: { restart: () => void }) => {
         <WriterIcon
           icon={playing ? 'pause' : 'play'}
           size={22}
-          color={theme.colors.onSecondary}
+          color={theme.colors.onBackground}
         />
       </TouchableOpacity>
       <TouchableOpacity
@@ -124,7 +124,7 @@ export const PlayPauseButton = ({ restart }: { restart: () => void }) => {
         }}
         style={[styles.stopButton, styles.button, additionButtonStyle]}
       >
-        <WriterIcon icon="stop" size={22} color={theme.colors.onSecondary} />
+        <WriterIcon icon="stop" size={22} color={theme.colors.onBackground} />
       </TouchableOpacity>
     </View>
   )
