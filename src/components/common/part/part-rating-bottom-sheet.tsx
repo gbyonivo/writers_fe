@@ -47,7 +47,7 @@ export const PartRatingBottomSheet = forwardRef(function PartRatingBottomSheet(
         bottomSheetRef.current.expand()
       },
       hide: () => {
-        bottomSheetRef.current.collapse()
+        bottomSheetRef.current.close()
       },
     }
   }, [])

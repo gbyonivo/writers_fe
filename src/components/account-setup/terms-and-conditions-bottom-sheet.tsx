@@ -37,7 +37,7 @@ export const TermsAndConditionsBottomSheet = forwardRef(
           bottomSheetRef.current.expand()
         },
         hide: () => {
-          bottomSheetRef.current.collapse()
+          bottomSheetRef.current.close()
         },
       }
     }, [])

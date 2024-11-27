@@ -8,12 +8,10 @@ import { ToastProvider } from 'react-native-toast-notifications'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
-import { BottomSheetHandler } from '../src/components/bottom-sheets/bottom-sheet-handler'
 import { WriterBackground } from '../src/components/common/writer-background'
 import { Apollo } from '../src/components/containers/apollo'
 import { Paper } from '../src/components/containers/paper'
 import AuthContextProvider from '../src/context/auth-context'
-import BottomSheetContextProvider from '../src/context/bottom-sheet-context'
 import SelectedColorSchemeContextProvider from '../src/context/selected-color-scheme-context'
 import { createStore } from '../src/store/store'
 import { backgroundStyleBeforeAppIsMounted } from '../src/utils/theme'
@@ -90,16 +88,11 @@ export default function AppLayout() {
                 <AuthContextProvider>
                   <GestureHandlerRootView>
                     <PortalProvider>
-                      <BottomSheetContextProvider>
-                        <Apollo>
-                          <ToastProvider>
-                            <>
-                              <BottomSheetHandler />
-                              <Slot />
-                            </>
-                          </ToastProvider>
-                        </Apollo>
-                      </BottomSheetContextProvider>
+                      <Apollo>
+                        <ToastProvider>
+                          <Slot />
+                        </ToastProvider>
+                      </Apollo>
                     </PortalProvider>
                   </GestureHandlerRootView>
                 </AuthContextProvider>
