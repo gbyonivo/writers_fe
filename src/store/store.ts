@@ -5,6 +5,7 @@ import compact from 'lodash.compact'
 import Reactotron from 'reactotron-react-native'
 import { persistReducer, persistStore } from 'redux-persist'
 
+import audio from './slices/audio'
 import genre from './slices/genre'
 import login from './slices/login'
 import piece from './slices/piece'
@@ -38,6 +39,7 @@ export const createStore = async () => {
     player,
     suggestion,
     screenMonitor,
+    audio,
   })
 
   let reactotronEnhancer

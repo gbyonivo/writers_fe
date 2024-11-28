@@ -1,3 +1,4 @@
+import { AudioState } from './AudioState'
 import { GenreState } from './GenreState'
 import { LoginState } from './LoginState'
 import { PieceState } from './PieceState'
@@ -16,4 +17,5 @@ export interface AppState {
   player: PlayerState
   suggestion: SuggestionState
   screenMonitor: ScreenMonitorState
+  audio: AudioState
 }

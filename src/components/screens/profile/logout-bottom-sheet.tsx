@@ -8,7 +8,6 @@ import { useTheme } from 'react-native-paper'
 import { useAuthContext } from '../../../context/auth-context'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
-import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WakeUpServerButton } from '../../common/wake-up-server-button'
 import { WriterButton } from '../../common/writer-button'
 

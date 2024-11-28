@@ -31,6 +31,7 @@ import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { PartSchema } from '../../../validation-schema/part-schema'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { VoiceSetUp, VoiceSetUpValue } from '../voice-set-up'
+import { VoiceSetUpContainer } from '../voice-set-up-container'
 import { WriterButton } from '../writer-button'
 import { SparkForm } from './spark-form'
 import { SuggestionCarousel } from './suggestion-carousel'
@@ -95,10 +96,12 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
         preDelay: 1,
         postDelay: 1,
       },
+      voiceId: '',
     },
     onSubmit: async (value: {
       content: string
       voiceSetup: VoiceSetUpValue
+      voiceId: string
     }) => {
       setSubmitting(true)
       try {
@@ -107,6 +110,7 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
           parentPartId,
           position,
           pieceId,
+          voiceId: value.voiceId,
         })
         await createPart(part)
         bottomSheetRef.current.close()
@@ -204,11 +208,15 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
           >
             <View style={styles.voiceSetUpContainer}>
               {bottomSheetContentType === BottomSheetContentType.VOICE_FORM && (
-                <>
-                  <VoiceSetUp
-                    handleChange={form.handleChange}
-                    value={form.values.voiceSetup}
-                  />
+                <View>
+                  <View style={{ height: '90%' }}>
+                    <VoiceSetUpContainer
+                      handleChange={form.handleChange}
+                      value={form.values.voiceSetup}
+                      voiceId={form.values.voiceId}
+                      containerStyle={{ marginBottom: 8 }}
+                    />
+                  </View>
                   <WriterButton
                     onPress={() => form.submitForm()}
                     style={styles.button}
@@ -216,7 +224,7 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
                   >
                     Add part
                   </WriterButton>
-                </>
+                </View>
               )}
               {bottomSheetContentType === BottomSheetContentType.AI_HELP && (
                 <SparkForm

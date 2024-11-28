@@ -92,6 +92,7 @@ export const CREATE_PART = gql`
     $naratorPostContent: String
     $naratorPreBreakTime: Int
     $naratorPostBreakTime: Int
+    $voiceId: String
   ) {
     createPart(
       content: $content
@@ -112,6 +113,7 @@ export const CREATE_PART = gql`
       naratorPostContent: $naratorPostContent
       naratorPreBreakTime: $naratorPreBreakTime
       naratorPostBreakTime: $naratorPostBreakTime
+      voiceId: $voiceId
     ) {
       ${PART_DETAILS}
     }
