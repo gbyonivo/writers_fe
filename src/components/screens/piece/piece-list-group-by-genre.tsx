@@ -123,10 +123,10 @@ export const PiecesGroupedByGenre = forwardRef(
       return null
     }
     return (
-      <View>
+      <View style={styles.container}>
         <View style={styles.header}>
-          <WriterText size={14} fontFamily="Medium" mt={2}>
-            {searchValue.substring(1)}
+          <WriterText size={18} fontFamily="Medium" mt={2}>
+            {searchValue}
           </WriterText>
           <TouchableOpacity
             style={{ paddingRight: 8 }}
@@ -143,11 +143,18 @@ export const PiecesGroupedByGenre = forwardRef(
               router.navigate('search')
             }}
           >
-            <WriterIcon icon="chevron-right" size={24} />
+            <WriterIcon icon="chevron-right" size={36} />
           </TouchableOpacity>
         </View>
         <FlatList
-          contentContainerStyle={styles.listContainer}
+          contentContainerStyle={[
+            styles.listContainer,
+            {
+              backgroundColor: theme.colors.backdrop,
+              paddingVertical: 16,
+              borderRadius: 16,
+            },
+          ]}
           data={displayedResult}
           renderItem={renderItem}
           keyExtractor={(item) => item.node.id}
@@ -163,6 +170,9 @@ export const PiecesGroupedByGenre = forwardRef(
 )
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 16,
+  },
   listContainer: {
     paddingHorizontal: 16,
     marginTop: 8,

@@ -19,7 +19,7 @@ export function ToggleDesign() {
   return (
     <SettingsItemContainer>
       <View style={style.container}>
-        <WriterText fontFamily="Bold">Textual Design</WriterText>
+        <WriterText fontFamily="Bold">Textbased Design</WriterText>
         <Switch value={isTextual} onValueChange={onToggleSwitch} />
       </View>
     </SettingsItemContainer>
