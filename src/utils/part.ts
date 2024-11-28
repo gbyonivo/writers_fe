@@ -7,11 +7,13 @@ export const createPartWithVoiceSetup = ({
   pieceId,
   position,
   parentPartId,
+  voiceId,
 }: {
   value: { content: string; voiceSetup: VoiceSetUpValue }
   pieceId?: number
   position: number
   parentPartId?: number
+  voiceId: string
 }): Part => ({
   content: value.content,
   speakerPostBreakTime: parseFloat(`${value.voiceSetup.postDelay || 1}`),
@@ -23,4 +25,5 @@ export const createPartWithVoiceSetup = ({
   partId: parentPartId,
   // @ts-ignore
   speakerStyle: value.voiceSetup.style,
+  voiceId,
 })

@@ -17,7 +17,7 @@ interface Props {
   disabled?: boolean
   error?: string
   errorStyle?: TextStyle
-  outlineStyle?: ViewStyle
+  style?: StyleProp<ViewStyle>
   fontFamily?: FontFamily
   options: SelectOption[]
 }
@@ -32,6 +32,7 @@ export function WriterSelect({
   label,
   labelComponent,
   options,
+  style: selectStyle,
 }: Props) {
   const theme = useTheme()
   const style = [
@@ -40,6 +41,7 @@ export function WriterSelect({
       borderColor: theme.colors.onBackground,
       color: theme.colors.onBackground,
     },
+    selectStyle,
   ]
   return (
     <View style={containerStyle}>

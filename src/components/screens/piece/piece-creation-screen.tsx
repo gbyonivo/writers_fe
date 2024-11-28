@@ -39,6 +39,7 @@ export function PieceCreationScreen() {
       type: PieceType.STORY,
       firstPart: {
         content: '',
+        voiceId: '',
         voiceSetup: {
           sex: Sex.FEMALE,
           style: SpeakerStyle.calm,
@@ -55,6 +56,7 @@ export function PieceCreationScreen() {
         firstPart: createPartWithVoiceSetup({
           value: value.firstPart,
           position: 1,
+          voiceId: value.firstPart.voiceId,
         }),
       })
     },

@@ -16,6 +16,7 @@ import { GenreMultiSelect } from '../inputs/genre-multi-select'
 import { WriterImageSegmentedControl } from '../inputs/writer-image-segmented-control'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { VoiceSetUp } from '../voice-set-up'
+import { VoiceSetUpContainer } from '../voice-set-up-container'
 import { WriterActivityIndicator } from '../writer-activity-indicator'
 import { WriterHeaderButton } from '../writer-header-button'
 import { WriterText } from '../writer-text'
@@ -220,11 +221,12 @@ export function PieceCreateForm({
           />
         </View>
         <View key={4} style={styles.formElement}>
-          <VoiceSetUp
+          <VoiceSetUpContainer
             handleChange={handleChange}
             // @ts-ignore
             value={values.firstPart.voiceSetup}
             prefix="firstPart."
+            voiceId={values.firstPart.voiceId}
           />
         </View>
       </AnimatedPager>
@@ -246,7 +248,7 @@ export function PieceCreateForm({
               type: values.type,
             })
           }}
-          icon="plus"
+          icon="robot-excited-outline"
           style={styles.floatingButton}
         />
       )}

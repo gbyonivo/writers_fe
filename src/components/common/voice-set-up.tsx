@@ -1,4 +1,10 @@
-import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native'
 import { Country, Sex, SpeakerStyle } from 'writers_shared/dist'
 
 import { isIos } from '../../utils/common'
@@ -18,6 +24,7 @@ interface VoiceSetUpProps {
   value: VoiceSetUpValue
   handleChange: any
   prefix?: string
+  containerStyle?: StyleProp<ViewStyle>
 }
 
 const defaultValue: VoiceSetUpValue = {
@@ -32,6 +39,7 @@ export function VoiceSetUp({
   value = defaultValue,
   handleChange,
   prefix = '',
+  containerStyle,
 }: VoiceSetUpProps) {
   const onChange = ({ target: { value } }, fieldName: string) => {
     handleChange({ target: { value, name: `${prefix}${fieldName}` } })
@@ -39,7 +47,7 @@ export function VoiceSetUp({
   return (
     <KeyboardAvoidingView
       behavior={isIos ? 'padding' : 'height'}
-      style={styles.parentContainer}
+      style={[styles.parentContainer, containerStyle]}
       keyboardVerticalOffset={isIos ? 100 : 75}
       enabled
     >
