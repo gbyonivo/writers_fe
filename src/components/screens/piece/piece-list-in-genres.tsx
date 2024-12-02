@@ -17,8 +17,10 @@ import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterChip } from '../../common/writer-chip'
+import { WriterText } from '../../common/writer-text'
 import { PieceListCarousel } from './piece-list-carousel'
 import { PiecesGroupedByGenre } from './piece-list-group-by-genre'
+import { PieceListInGenreSkeleton } from './piece-list-in-genre-skeleton'
 
 interface Props {
   containerStyle?: StyleProp<ViewStyle>
@@ -42,9 +44,12 @@ export function PieceListInGenres({ containerStyle, userId, type }: Props) {
       />
     )
   }
-
-  if (loading || error) {
+  if (error) {
     return <View />
+  }
+
+  if (loading) {
+    return <PieceListInGenreSkeleton />
   }
 
   return (
@@ -80,18 +85,26 @@ export function PieceListInGenres({ containerStyle, userId, type }: Props) {
                   setPieceType(pType)
                 }}
               >
-                <WriterChip
-                  label={pType}
+                <View
                   style={[
                     styles.chipStyle,
                     {
-                      backgroundColor:
+                      borderColor:
                         pieceType === pType
-                          ? theme.colors.secondaryContainer
-                          : theme.colors.backdrop,
+                          ? theme.colors.primary
+                          : 'transparent',
+                      borderBottomWidth: 1,
+                      paddingVertical: 2,
+                      borderRadius: 8,
                     },
                   ]}
-                />
+                >
+                  <WriterText
+                    color={pieceType === pType ? theme.colors.primary : ''}
+                  >
+                    {pType}
+                  </WriterText>
+                </View>
               </TouchableOpacity>
             ))}
           </View>

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { WriterBackground } from '../../../src/components/common/writer-background'
 import { PieceListInGenres } from '../../../src/components/screens/piece/piece-list-in-genres'
 import { PieceListInTabs } from '../../../src/components/screens/piece/piece-list-in-tabs'
+import { PieceListInGenresTabs } from '../../../src/components/screens/piece/piece.list-in-genres-tabs'
 import { useOnFocus } from '../../../src/hooks/use-on-focus'
 import { setCurrentScreen } from '../../../src/store/slices/screen-monitor'
 import { AppState } from '../../../src/types/states/AppState'
@@ -12,7 +13,6 @@ import { trackScreenView } from '../../../src/utils/mixpanel'
 import { TrackedScreen } from '../../../src/utils/tracking/tracked-screen'
 
 export default function Home() {
-  const theme = useTheme()
   const { shouldShowTextBasedDesgin } = useSelector(
     (state: AppState) => state.settings,
   )
@@ -27,15 +27,12 @@ export default function Home() {
 
   return shouldShowTextBasedDesgin ? (
     <PieceListInTabs
-      containerStyle={[
-        styles.containerStyle,
-        { backgroundColor: theme.colors.background },
-      ]}
+      containerStyle={[styles.containerStyle]}
       trackedScreen={TrackedScreen.HOME_SCREEN}
     />
   ) : (
     <WriterBackground isView>
-      <PieceListInGenres containerStyle={[{ paddingBottom: 96 }]} />
+      <PieceListInGenresTabs />
     </WriterBackground>
   )
 }

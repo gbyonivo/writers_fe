@@ -125,7 +125,7 @@ export const PiecesGroupedByGenre = forwardRef(
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <WriterText size={18} fontFamily="Medium" mt={2}>
+          <WriterText size={18} fontFamily="Light" mt={2}>
             {searchValue}
           </WriterText>
           <TouchableOpacity

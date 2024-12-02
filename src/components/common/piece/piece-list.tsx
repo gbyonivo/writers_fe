@@ -20,12 +20,12 @@ export function PieceList({ trackedScreen }: Props) {
       )}
       contentContainerStyle={[
         styles.container,
-        { backgroundColor: theme.colors.background },
+        // { backgroundColor: theme.colors.background },
       ]}
       refreshControl={
         <RefreshControl refreshing={loading} onRefresh={refetch} />
       }
-      style={{ backgroundColor: theme.colors.background }}
+      // style={{ backgroundColor: theme.colors.background }}
       scrollsToTop={false}
       initialNumToRender={5}
       maxToRenderPerBatch={5}

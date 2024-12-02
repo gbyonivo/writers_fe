@@ -30,7 +30,7 @@ const commonProps: Record<string, any> = {
 
 const headerStyle = {
   ml: 16,
-  fontFamily: 'Bold' as FontFamily,
+  fontFamily: 'Light' as FontFamily,
   size: 24,
 }
 

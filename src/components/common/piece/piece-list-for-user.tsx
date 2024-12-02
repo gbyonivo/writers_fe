@@ -1,5 +1,6 @@
 import { PieceType } from 'writers_shared'
 
+import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { PieceListContainer } from './piece-list-container'
 
 export function PieceListForUser({
@@ -10,5 +11,11 @@ export function PieceListForUser({
   type?: PieceType
 }) {
   if (!userId) return null
-  return <PieceListContainer userId={userId} type={type} />
+  return (
+    <PieceListContainer
+      userId={userId}
+      type={type}
+      trackedScreen={TrackedScreen.USER_SCREEN}
+    />
+  )
 }

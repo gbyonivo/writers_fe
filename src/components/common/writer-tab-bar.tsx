@@ -15,7 +15,7 @@ export function WriterTabBar({ icon, ...props }: Props) {
     <TabBar
       {...props}
       style={{
-        backgroundColor: theme.colors.background,
+        backgroundColor: 'transparent',
       }}
       indicatorStyle={{ backgroundColor: theme.colors.onBackground }}
       renderIcon={({ focused, color }) =>
