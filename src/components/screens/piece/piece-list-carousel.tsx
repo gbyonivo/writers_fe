@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import Carousel from 'react-native-reanimated-carousel'
-import { PieceType } from 'writers_shared/dist'
+import { Piece, PieceType } from 'writers_shared/dist'
 
 import { usePieces } from '../../../hooks/apollo/use-pieces'
 import { getHeighByRatio, getWidthByRatio } from '../../../utils/common'
@@ -26,39 +26,42 @@ interface Props {
 
 export function PieceListCarousel({ pieceType }: Props) {
   const { colors } = useTheme()
-  const isFcoused = useIsFocused()
   const router = useRouter()
+  const focused = useIsFocused()
   const { loading, error, pieces } = usePieces({ type: pieceType })
+  const onPress = (item: { node: Piece }) => {
+    trackEvent({
+      event: TrackedEvent.PRESS,
+      params: {
+        id: item.node.id,
+        title: item.node.title,
+        location: TrackedComponentLocation.PIECE_CAROUSEL,
+      },
+    })
+    router.push(`/pieces/${item.node.id}?name=${item.node.title}`)
+  }
   if (loading) return null
   if (error) return null
   return (
     <View>
       <Carousel
         loop
-        width={getWidthByRatio(0.9)}
+        width={getWidthByRatio(1)}
         height={getHeighByRatio(0.5)}
-        autoPlay={isFcoused}
+        autoPlay={focused}
         data={pieces.edges}
         scrollAnimationDuration={4000}
         style={styles.carouselStyle}
+        mode="parallax"
+        autoPlayInterval={3000}
+        modeConfig={{
+          parallaxScrollingScale: 0.9,
+          parallaxScrollingOffset: 50,
+        }}
         renderItem={({ index, item }) => (
           <TouchableOpacity
-            onPress={() => {
-              trackEvent({
-                event: TrackedEvent.PRESS,
-                params: {
-                  id: item.node.id,
-                  title: item.node.title,
-                  location: TrackedComponentLocation.PIECE_CAROUSEL,
-                },
-              })
-              router.push(`/pieces/${item.node.id}?name=${item.node.title}`)
-            }}
-            style={[
-              styles.container,
-              styles.shadowBorder,
-              { shadowColor: 'transparent' },
-            ]}
+            onPress={() => onPress(item)}
+            style={[styles.container]}
           >
             <ImageBackground
               source={{ uri: item.node.imageUrl }}
@@ -97,20 +100,14 @@ export function PieceListCarousel({ pieceType }: Props) {
 }
 
 const styles = StyleSheet.create({
-  shadowBorder: {
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 16,
-    elevation: 10,
-  },
   container: {
     flex: 1,
+    borderRadius: 16,
   },
   innerContainer: {
     flex: 1,
+    borderRadius: 24,
+    overflow: 'hidden',
   },
   blur: {
     ...StyleSheet.absoluteFillObject,
@@ -125,9 +122,8 @@ const styles = StyleSheet.create({
     paddingTop: 8,
   },
   carouselStyle: {
-    marginVertical: 16,
-    marginHorizontal: getWidthByRatio(0.05),
-    borderRadius: 16,
+    marginVertical: 8,
+    borderRadius: 8,
   },
   genreListContainer: {
     marginLeft: 4,

@@ -22,8 +22,6 @@ export const lightTheme = {
   },
 }
 
-console.log(lightTheme.colors.backdrop)
-
 export const backgroundStyleBeforeAppIsMounted = StyleSheet.create({
   background: {
     backgroundColor: darkTheme.colors.background,

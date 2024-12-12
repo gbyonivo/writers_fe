@@ -1,6 +1,10 @@
-import { Icon, useTheme } from 'react-native-paper'
+import { View } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { SceneRendererProps, TabBar } from 'react-native-tab-view'
 
+import { trackEvent } from '../../utils/mixpanel'
+import { TrackedEvent } from '../../utils/tracking/tracked-event'
+import { TrackedScreen } from '../../utils/tracking/tracked-screen'
 import { WriterText } from './writer-text'
 
 interface Props extends SceneRendererProps {
@@ -17,17 +21,25 @@ export function WriterTabBar({ icon, ...props }: Props) {
       style={{
         backgroundColor: 'transparent',
       }}
-      indicatorStyle={{ backgroundColor: theme.colors.onBackground }}
-      renderIcon={({ focused, color }) =>
-        icon ? (
-          <Icon
-            source={focused ? 'account' : 'album'}
-            color={color}
-            size={12}
-          />
-        ) : null
-      }
-      renderLabel={({ route }) => <WriterText>{route.title}</WriterText>}
+      indicatorStyle={{ backgroundColor: 'transparent' }}
+      activeColor="red"
+      renderLabel={({ route, focused }) => (
+        <WriterText
+          color={focused ? theme.colors.tertiary : theme.colors.onBackground}
+          align="left"
+        >
+          {route.title}
+        </WriterText>
+      )}
+      onTabPress={(tab) => {
+        trackEvent({
+          event: TrackedEvent.PRESS,
+          params: {
+            screen: TrackedScreen.HOME_SCREEN,
+            buttonName: `Select Tab - ${tab.route.key}`,
+          },
+        })
+      }}
     />
   )
 }

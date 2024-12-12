@@ -12,7 +12,6 @@ export const usePieces = ({
   userId?: number
   type?: PieceType
 }) => {
-  console.log(type, userId)
   const { data, loading, error, refetch, fetchMore } = useQuery(GET_PIECES, {
     variables: { pagination: { userId, first: 4, type } },
   })
