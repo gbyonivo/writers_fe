@@ -54,6 +54,7 @@ export function PieceListInGenres({ containerStyle, userId, types }: Props) {
       contentContainerStyle={containerStyle}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
       ListHeaderComponent={() => (
         <View style={{ flex: 1 }}>
           <PieceListCarousel pieceType={type} />

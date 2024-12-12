@@ -146,6 +146,7 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
         keyExtractor={(item, index) => (map[item][0] ? map[item][0].id : index)}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         ListFooterComponent={
           <>
             <NewPartButton
