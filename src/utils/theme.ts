@@ -8,6 +8,7 @@ export const darkTheme = {
   colors: {
     ...MD3DarkTheme.colors,
     primary: '#dbeafe',
+    background: '#030712',
   },
 }
 // change background in constants if edittec
@@ -16,6 +17,8 @@ export const lightTheme = {
   custom: 'property',
   colors: {
     ...MD3LightTheme.colors,
+    background: '#e2e8f0',
+    backdrop: 'rgba(51, 58, 46, 0.03)',
   },
 }
 

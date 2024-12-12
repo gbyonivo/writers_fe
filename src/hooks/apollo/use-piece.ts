@@ -2,20 +2,21 @@ import { useQuery } from '@apollo/client'
 import { Piece } from 'writers_shared'
 
 import { GET_PIECE } from '../../queries/piece'
+import { useEnhancedRefetch } from './use-enhanced-refetch'
 
 export const usePiece = (pieceId: number) => {
   const { data, loading, error, refetch } = useQuery(GET_PIECE, {
     variables: { id: pieceId },
   })
 
-  const piece: Piece | null = data?.piece
+  const { response, refetching, enhancedRefetch, errorRefetching } =
+    useEnhancedRefetch(refetch)
+
+  const piece: Piece | null = data?.piece || response?.piece
   return {
-    loading,
-    error,
+    loading: loading || refetching,
+    error: error || errorRefetching,
+    refetch: enhancedRefetch,
     piece,
-    refetch: () => {
-      if (loading) return
-      refetch()
-    },
   }
 }

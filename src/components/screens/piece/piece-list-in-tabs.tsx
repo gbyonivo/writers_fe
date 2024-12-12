@@ -53,6 +53,7 @@ export function PieceListInTabs({
 
     bookmarks: () => <Bookmarks userId={userId} />,
   })
+
   return (
     <TabView
       navigationState={{ index, routes }}

@@ -3,30 +3,25 @@ import { Appbar, useTheme } from 'react-native-paper'
 
 import { FloatingPlayer } from '../../src/components/common/voice-player/floating-player'
 import { WithSpeaker } from '../../src/components/common/voice-player/with-speaker'
-import { WriterBackground } from '../../src/components/common/writer-background'
+import { InitialiseScreen } from '../../src/components/screens/utility/initialise-screen'
 import { useInitializeApp } from '../../src/hooks/use-initialize-app'
-import { backgroundStyleBeforeAppIsMounted } from '../../src/utils/theme'
 
 export default function RootLayout() {
   const router = useRouter()
   const { colors } = useTheme()
 
-  const { loading: initializingApp, error: errorInitializingApp } =
-    useInitializeApp()
+  const {
+    loading: initializingApp,
+    error: errorInitializingApp,
+    reinitialise,
+  } = useInitializeApp()
 
-  if (initializingApp) {
+  if (initializingApp || errorInitializingApp) {
     return (
-      <WriterBackground
-        isView
-        style={backgroundStyleBeforeAppIsMounted.background}
-      />
-    )
-  }
-  if (errorInitializingApp) {
-    return (
-      <WriterBackground
-        isView
-        style={backgroundStyleBeforeAppIsMounted.background}
+      <InitialiseScreen
+        error={errorInitializingApp}
+        loading={initializingApp}
+        reinitialise={reinitialise}
       />
     )
   }

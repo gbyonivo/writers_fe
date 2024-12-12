@@ -22,6 +22,7 @@ import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterAgeRating } from '../../common/writer-age-rating'
 import { WriterIcon } from '../../common/writer-icon'
 import { WriterText } from '../../common/writer-text'
+import { PieceListGroupedByGenreItem } from './piece-list-group-by-genre-item'
 
 interface Props {
   searchValue: string
@@ -60,63 +61,7 @@ export const PiecesGroupedByGenre = forwardRef(
     }, [pieceResult.pieces])
 
     const renderItem = ({ item }) => {
-      const piece = item.node
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            trackEvent({
-              event: TrackedEvent.PRESS,
-              params: {
-                screen: TrackedScreen.HOME_SCREEN,
-                buttonName: 'Press Piece',
-                id: piece.id,
-              },
-            })
-            router.push(`/pieces/${piece.id}?name=${piece?.title}`)
-          }}
-        >
-          <Image
-            source={
-              piece.imageUrl ? { uri: piece.imageUrl } : images.icons.poem
-            }
-            style={[
-              styles.item,
-              { backgroundColor: theme.colors.primaryContainer },
-            ]}
-          />
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 20,
-              width: '100%',
-            }}
-          >
-            <BlurView
-              intensity={20}
-              style={{
-                ...StyleSheet.absoluteFillObject,
-                backgroundColor: 'transparent',
-                overflow: 'hidden',
-              }}
-            />
-            <WriterText
-              size={14}
-              align="center"
-              fontFamily="Bold"
-              color={theme.colors.error}
-            >
-              {truncateString({ text: piece.title, maxLength: 17 })}
-            </WriterText>
-          </View>
-          {!!piece?.firstPart?.ageRating && (
-            <WriterAgeRating
-              ageRating={piece?.firstPart?.ageRating}
-              small
-              style={styles.ageRating}
-            />
-          )}
-        </TouchableOpacity>
-      )
+      return <PieceListGroupedByGenreItem piece={item.node} />
     }
 
     if (displayedResult.length === 0) {
@@ -124,37 +69,27 @@ export const PiecesGroupedByGenre = forwardRef(
     }
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <WriterText size={18} fontFamily="Medium" mt={2}>
+        <TouchableOpacity
+          style={styles.header}
+          onPress={() => {
+            trackEvent({
+              event: TrackedEvent.PRESS,
+              params: {
+                screen: TrackedScreen.HOME_SCREEN,
+                buttonName: 'Press Genre',
+                searchValue,
+              },
+            })
+            dispatch(setSearchValue(searchValue))
+            router.navigate('search')
+          }}
+        >
+          <WriterText size={18} fontFamily="Light" mt={2}>
             {searchValue}
           </WriterText>
-          <TouchableOpacity
-            style={{ paddingRight: 8 }}
-            onPress={() => {
-              trackEvent({
-                event: TrackedEvent.PRESS,
-                params: {
-                  screen: TrackedScreen.HOME_SCREEN,
-                  buttonName: 'Press Genre',
-                  searchValue,
-                },
-              })
-              dispatch(setSearchValue(searchValue))
-              router.navigate('search')
-            }}
-          >
-            <WriterIcon icon="chevron-right" size={36} />
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
         <FlatList
-          contentContainerStyle={[
-            styles.listContainer,
-            {
-              backgroundColor: theme.colors.backdrop,
-              paddingVertical: 16,
-              borderRadius: 16,
-            },
-          ]}
+          contentContainerStyle={[styles.listContainer]}
           data={displayedResult}
           renderItem={renderItem}
           keyExtractor={(item) => item.node.id}
@@ -171,11 +106,12 @@ export const PiecesGroupedByGenre = forwardRef(
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 16,
+    marginTop: 0,
   },
   listContainer: {
-    paddingHorizontal: 16,
-    marginTop: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 16,
+    borderRadius: 16,
   },
   separator: {
     width: 8,
@@ -187,13 +123,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   header: {
-    paddingLeft: 16,
-    justifyContent: 'space-between',
+    paddingHorizontal: 8,
     flexDirection: 'row',
-  },
-  ageRating: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
+    justifyContent: 'flex-start',
   },
 })

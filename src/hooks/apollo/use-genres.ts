@@ -4,12 +4,15 @@ import { useDispatch } from 'react-redux'
 
 import { GET_GENRES } from '../../queries/genre'
 import { setGenreIdToGenre } from '../../store/slices/genre'
+import { useEnhancedRefetch } from './use-enhanced-refetch'
 
 export const useGenres = () => {
   const dispatch = useDispatch()
   const { data, loading, error, refetch } = useQuery(GET_GENRES)
+  const { response, refetching, enhancedRefetch, errorRefetching } =
+    useEnhancedRefetch(refetch)
 
-  const genres: any[] = data?.genres || []
+  const genres: any[] = data?.genres || response?.genres || []
 
   useEffect(() => {
     dispatch(
@@ -20,12 +23,9 @@ export const useGenres = () => {
   }, [genres])
 
   return {
-    loading,
-    error,
+    loading: loading || refetching,
+    error: error || errorRefetching,
     genres,
-    refetch: () => {
-      if (loading) return
-      refetch()
-    },
+    refetch: enhancedRefetch,
   }
 }

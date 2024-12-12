@@ -11,4 +11,7 @@ export const images = {
     comedy: require('./icons/comedy-icon.png'),
     thriller: require('./icons/thriller-icon.png'),
   },
+  utility: {
+    splash: require('./app/narate-splash.png'),
+  },
 }
