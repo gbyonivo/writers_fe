@@ -56,6 +56,7 @@ export function SearchUsersTab() {
       keyExtractor={(item) => item.node.id}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
     />
   )
 }

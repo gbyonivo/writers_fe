@@ -48,6 +48,7 @@ export function InitialSearchState() {
       keyExtractor={(item) => item.id}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
     />
   )
 }

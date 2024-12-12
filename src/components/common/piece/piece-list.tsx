@@ -32,6 +32,7 @@ export function PieceList({ trackedScreen }: Props) {
       windowSize={7}
       onScroll={() => {}}
       showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
       disableIntervalMomentum
       onEndReached={loadMore}
     />

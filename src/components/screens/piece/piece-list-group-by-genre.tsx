@@ -95,6 +95,7 @@ export const PiecesGroupedByGenre = forwardRef(
           keyExtractor={(item) => item.node.id}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           horizontal
           bounces
           disableIntervalMomentum

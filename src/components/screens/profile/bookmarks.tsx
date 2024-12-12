@@ -44,6 +44,8 @@ export function Bookmarks({ userId }: Props) {
     <>
       <FlatList
         data={items}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
         renderItem={renderItem}
         keyExtractor={(item) => item.node.id}
