@@ -50,10 +50,10 @@ export function PieceListCarousel({ pieceType }: Props) {
         height={getHeighByRatio(0.5)}
         autoPlay={focused}
         data={pieces.edges}
-        scrollAnimationDuration={4000}
+        scrollAnimationDuration={2000}
         style={styles.carouselStyle}
         mode="parallax"
-        autoPlayInterval={3000}
+        autoPlayInterval={4000}
         modeConfig={{
           parallaxScrollingScale: 0.9,
           parallaxScrollingOffset: 50,
@@ -71,7 +71,7 @@ export function PieceListCarousel({ pieceType }: Props) {
               <View style={styles.blurContainer}>
                 <BlurView
                   intensity={10}
-                  style={[styles.blur, { backgroundColor: colors.backdrop }]}
+                  style={[styles.blur, { backgroundColor: colors.background }]}
                 />
                 <WriterText
                   align="left"
@@ -116,10 +116,9 @@ const styles = StyleSheet.create({
   },
   blurContainer: {
     position: 'absolute',
-    height: 120,
     width: '100%',
     bottom: 0,
-    paddingTop: 8,
+    paddingVertical: 8,
   },
   carouselStyle: {
     marginVertical: 8,

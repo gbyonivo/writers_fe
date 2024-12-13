@@ -19,12 +19,13 @@ export function WriterBackground({ children, style, isView }: Props) {
       style={[styles.background, { backgroundColor: colors.background }, style]}
     >
       <LinearGradient
-        colors={[colors.background, colors.onSecondary, colors.backdrop]}
+        // @ts-ignore
+        colors={[colors.background, colors.linearBackground, colors.background]}
         style={[
           styles.linearBackground,
           isView ? styles.linearGradienView : styles.linearGradienVSafeArea,
         ]}
-        start={{ x: 0.2, y: 0.3 }}
+        start={{ x: 0.2, y: 0.6 }}
       />
       {children ? children : <View />}
     </Comp>

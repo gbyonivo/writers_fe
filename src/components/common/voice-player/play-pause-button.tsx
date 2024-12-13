@@ -5,7 +5,7 @@ import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
 
-import player, {
+import {
   pausePlayer,
   playPlayer,
   stopPlayer,

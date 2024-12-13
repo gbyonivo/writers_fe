@@ -20,7 +20,7 @@ export function GenreList({ genreIds, containerStyle, chipStyle }: Props) {
         <WriterText
           key={genreId}
           style={[styles.chip, chipStyle]}
-          fontFamily="Light"
+          fontFamily="SemiBold"
           color={theme.colors.tertiary}
         >
           {genreMap[genreId]?.name} {index !== genreIds.length - 1 ? '/' : ''}

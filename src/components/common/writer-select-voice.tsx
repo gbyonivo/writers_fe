@@ -80,7 +80,7 @@ export function WriterSelectVoice({
         style={[
           styles.item,
           isSelected ? styles.selected : {},
-          isSelected ? { borderColor: theme.colors.primary } : {},
+          isSelected ? { borderColor: theme.colors.tertiary } : {},
         ]}
       >
         <BlurView
