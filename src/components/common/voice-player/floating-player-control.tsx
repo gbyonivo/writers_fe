@@ -23,6 +23,8 @@ interface FloatingPlayerControlProps {
   handleUnpause: () => void
   handleSeek: (newPosition: number) => void
   piece: Piece
+  pieceId: number
+  partIds: number[]
 }
 
 export function FloatingPlayerControl({
@@ -31,6 +33,8 @@ export function FloatingPlayerControl({
   currentPartId,
   piece,
   isPaused,
+  pieceId,
+  partIds,
   handlePause,
   handleSeek,
   handleStop,
@@ -39,7 +43,6 @@ export function FloatingPlayerControl({
   const router = useRouter()
 
   const { colors } = useTheme()
-  const audio = useSelector((state: AppState) => state.audio)
   const { parts: [part] = [] } = usePartsByIds({ partIds: [currentPartId] })
 
   const handlePress = () => {
@@ -49,9 +52,7 @@ export function FloatingPlayerControl({
         buttonName: 'Floating_Player',
       },
     })
-    router.navigate(
-      `/player/${audio.pieceId}?partIds=${audio.partIds.join(',')}`,
-    )
+    router.navigate(`/player/${pieceId}?partIds=${partIds.join(',')}`)
   }
 
   if (!piece && !part) {

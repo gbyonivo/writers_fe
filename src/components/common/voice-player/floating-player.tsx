@@ -153,6 +153,8 @@ export function FloatingPlayer() {
         }}
         piece={piece}
         isPaused={isPaused}
+        pieceId={currentPieceAndPart.pieceId}
+        partIds={currentPieceAndPart.partIds}
       />
     </View>
   )
