@@ -7,6 +7,7 @@ import { useEnhancedRefetch } from './use-enhanced-refetch'
 export const usePiece = (pieceId: number) => {
   const { data, loading, error, refetch } = useQuery(GET_PIECE, {
     variables: { id: pieceId },
+    skip: !pieceId,
   })
 
   const { response, refetching, enhancedRefetch, errorRefetching } =

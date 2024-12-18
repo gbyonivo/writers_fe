@@ -1,101 +1,160 @@
-import { BlurView } from 'expo-blur'
-import { useRouter } from 'expo-router'
-import { useCallback, useEffect, useState } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { useTheme } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useRef, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import TrackPlayer, { Event } from 'react-native-track-player'
+import { useSelector } from 'react-redux'
 
 import { usePiece } from '../../../hooks/apollo/use-piece'
-import { startPlayer } from '../../../store/slices/player'
+import { useAudioHelpers } from '../../../hooks/use-audio-funcs'
+import { useAudioPermissionRequest } from '../../../hooks/use-audio-permission-request'
 import { POSITION_MAP, PlayerPostion } from '../../../types/player-position'
 import { AppState } from '../../../types/states/AppState'
-import { trackEvent } from '../../../utils/mixpanel'
-import { TrackedEvent } from '../../../utils/tracking/tracked-event'
-import { MovingText } from './moving-text'
-import { PlayPauseButton } from './play-pause-button'
+import { onStartPlaying } from '../../../utils/signal'
+import { FloatingPlayerControl } from './floating-player-control'
+import { FloatingPlayerIndexControl } from './floating-player-index-control'
+
+interface CurrentPieceAndParts {
+  partIds: number[]
+  pieceId: number | null
+}
+
+const DEFAULT_PIECE_AND_PART: CurrentPieceAndParts = {
+  pieceId: null,
+  partIds: [],
+}
 
 export function FloatingPlayer() {
-  const router = useRouter()
-  const theme = useTheme()
-  const dispatch = useDispatch()
-  const { pieceId, partIds } = useSelector((state: AppState) => state.player)
-  const { piece, loading } = usePiece(pieceId)
-  const [partsOnScreen, setPartsOnScreen] = useState({
-    pieceId: null,
-    partIds: [],
-    piece: null,
-  })
-  const { currentScreen } = useSelector(
-    (state: AppState) => state.screenMonitor,
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+  const [trackPosition, setTrackPosition] = useState(0)
+  const [trackDuration, setTrackDuration] = useState(1)
+  const [positionToSeek, setPositionToSeek] = useState(-1)
+  const positionToSeekTimeoutRef = useRef(null)
+  const [currentPieceAndPart, setCurrentPieceAndPart] =
+    useState<CurrentPieceAndParts>(DEFAULT_PIECE_AND_PART)
+  const [urls, setUrls] = useState([])
+  const askForPermission = useAudioPermissionRequest()
+  const position = useSelector(
+    (state: AppState) => POSITION_MAP[state.screenMonitor.currentScreen],
   )
-  const position = POSITION_MAP[currentScreen]
+  const currentPieceAndPartRef = useRef<CurrentPieceAndParts>(
+    DEFAULT_PIECE_AND_PART,
+  )
+  const { piece } = usePiece(currentPieceAndPart.pieceId)
+  const urlsRef = useRef<string[]>([])
+  const { fetchUrlsForParts } = useAudioHelpers({
+    ...currentPieceAndPart,
+    onDoneFetchingUrls: setUrls,
+  })
+  const hasChanged = !(
+    currentPieceAndPart.pieceId === currentPieceAndPartRef.current.pieceId &&
+    JSON.stringify(currentPieceAndPart.partIds) ===
+      JSON.stringify(currentPieceAndPartRef.current.partIds)
+  )
+  const resetPlayer = () => {
+    currentPieceAndPartRef.current = DEFAULT_PIECE_AND_PART
+    setCurrentPieceAndPart(DEFAULT_PIECE_AND_PART)
+    setUrls([])
+    urlsRef.current = []
+    setPositionToSeek(-1)
+  }
 
   useEffect(() => {
-    if (!pieceId || partIds.length === 0 || !piece) return
-    setPartsOnScreen({
-      partIds,
-      pieceId,
-      piece,
+    if (!hasChanged) {
+      return
+    }
+    if (currentPieceAndPart.partIds && currentPieceAndPart.pieceId) {
+      fetchUrlsForParts(currentPieceAndPart)
+    }
+
+    currentPieceAndPartRef.current = currentPieceAndPart
+  }, [currentPieceAndPart, hasChanged])
+
+  useEffect(() => {
+    if (JSON.stringify(urlsRef.current) === JSON.stringify(urls)) {
+      return
+    }
+    TrackPlayer.reset()
+    urls.forEach((url) => {
+      TrackPlayer.add({ url })
     })
-  }, [partIds, pieceId, piece])
+    TrackPlayer.play()
+    urlsRef.current = urls
+  }, [urls])
 
-  const restart = useCallback(() => {
-    dispatch(
-      startPlayer({
-        partIds: partsOnScreen.partIds,
-        title: partsOnScreen.piece.title,
-        pieceId: partsOnScreen.pieceId,
-      }),
-    )
-  }, [partsOnScreen])
-
-  const handlePress = () => {
-    trackEvent({
-      event: TrackedEvent.PRESS,
-      params: {
-        buttonName: 'Floating_Player',
-      },
+  useEffect(() => {
+    TrackPlayer.updateOptions({
+      progressUpdateEventInterval: 1,
     })
-    router.navigate(
-      `/player/${partsOnScreen.piece.id}?partIds=${partsOnScreen.partIds.join(',')}`,
-    )
-  }
+    TrackPlayer.addEventListener(Event.PlaybackQueueEnded, () => {
+      resetPlayer()
+    })
+    TrackPlayer.addEventListener(Event.PlaybackActiveTrackChanged, (e) => {
+      setCurrentIndex(e.index)
+    })
+    TrackPlayer.addEventListener(Event.PlaybackState, ({ state }) => {
+      setIsPaused(state === 'paused')
+    })
+    TrackPlayer.addEventListener(Event.PlaybackProgressUpdated, (progress) => {
+      setTrackDuration(progress.duration)
+      setTrackPosition(progress.position)
+    })
+  }, [])
 
-  if ((loading || !piece?.title) && position === PlayerPostion.ABOVE_BOTTOM) {
-    return null
-  }
+  useEffect(() => {
+    let removeListener = null
+    if (onStartPlaying.getNumberOfListeners() < 1) {
+      removeListener = onStartPlaying.listen(({ pieceId, partIds }) => {
+        setCurrentPieceAndPart({ partIds, pieceId })
+      })
+    }
+    return () => {
+      removeListener?.()
+    }
+  }, [])
 
-  if (!partsOnScreen.piece) return null
+  useEffect(() => {
+    positionToSeekTimeoutRef.current = setTimeout(async () => {
+      if (positionToSeek < 0) {
+        return
+      }
+      await TrackPlayer.seekTo(positionToSeek)
+    }, 100)
+    return () => clearTimeout(positionToSeekTimeoutRef.current)
+  }, [positionToSeek])
 
   return (
-    <TouchableOpacity
-      onPress={handlePress}
+    <View
       style={[
         styles.container,
-        // { backgroundColor: theme.colors.background },
+        // { backgroundColor: colors.background },
         position === PlayerPostion.ABOVE_BOTTOM
           ? styles.aboveBottomPosition
           : styles.bottomPosition,
       ]}
     >
-      <>
-        <BlurView
-          intensity={30}
-          style={[styles.blur, { backgroundColor: 'transparent' }]}
-        />
-        <View style={styles.trackTitleContainer}>
-          <MovingText
-            style={{ ...styles.trackTitle, color: theme.colors.onBackground }}
-            text={partsOnScreen?.piece?.title ?? ''}
-            animationThreshold={25}
-          />
-        </View>
-
-        <View style={styles.trackControlsContainer}>
-          <PlayPauseButton restart={restart} />
-        </View>
-      </>
-    </TouchableOpacity>
+      <FloatingPlayerIndexControl
+        partIds={currentPieceAndPart.partIds}
+        handlePressIndexControl={async (index: number) => {
+          await TrackPlayer.skip(index)
+        }}
+      />
+      <FloatingPlayerControl
+        durationMillis={trackDuration}
+        positionMillis={trackPosition}
+        currentPartId={currentPieceAndPart.partIds[currentIndex]}
+        handlePause={() => TrackPlayer.pause()}
+        handleUnpause={() => TrackPlayer.play()}
+        handleStop={() => {
+          TrackPlayer.stop()
+          resetPlayer()
+        }}
+        handleSeek={async (position: number) => {
+          setPositionToSeek(position)
+        }}
+        piece={piece}
+        isPaused={isPaused}
+      />
+    </View>
   )
 }
 
@@ -107,8 +166,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    // flexDirection: 'row',
+    // alignItems: 'center',
     padding: 8,
     paddingVertical: 10,
     position: 'absolute',
@@ -142,8 +201,37 @@ const styles = StyleSheet.create({
   trackControlsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: 20,
-    marginRight: 16,
-    paddingLeft: 16,
+    // marginTop: -16,
+  },
+  image: { height: 44, width: 44, borderRadius: 4 },
+  controlContainer: {
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+  },
+  imageAndTitleContainer: {
+    flexDirection: 'row',
+  },
+  playPauseContainer: {
+    flexDirection: 'row',
+    marginBottom: 8,
+    justifyContent: 'space-between',
+  },
+  indexContainer: {
+    marginBottom: 8,
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  indexItem: {
+    marginLeft: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  linearGradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    height: 80,
+    borderRadius: 8,
   },
 })

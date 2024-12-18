@@ -12,7 +12,6 @@ import { AppState } from '../../../types/states/AppState'
 import { getWidthByRatio } from '../../../utils/common'
 import { trackScreenView } from '../../../utils/mixpanel'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
-import { FloatingPlayer } from '../../common/voice-player/floating-player'
 import { WriterActivityIndicator } from '../../common/writer-activity-indicator'
 import { WriterBackground } from '../../common/writer-background'
 import { WriterText } from '../../common/writer-text'
@@ -67,7 +66,6 @@ export default function PlayerScreen() {
           piece={piece}
         />
       </View>
-      <FloatingPlayer />
     </WriterBackground>
   )
 }
