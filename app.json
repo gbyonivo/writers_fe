@@ -17,6 +17,7 @@
       "bundleIdentifier": "ivo.tertsegha",
       "buildNumber": "40",
       "infoPlist": {
+        "UIBackgroundModes": ["audio"],
         "NSCameraUsageDescription": "Allow Writers to access your camera",
         "NSMicrophoneUsageDescription": "Allow Writers to access your microphone"
       }

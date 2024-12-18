@@ -15,6 +15,7 @@ export function PieceList({ trackedScreen }: Props) {
   return (
     <FlatList
       data={pieceList}
+      keyExtractor={(item) => `${item.id}`}
       renderItem={({ item }) => (
         <PieceItem piece={item} trackedScreen={trackedScreen} />
       )}

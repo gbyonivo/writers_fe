@@ -40,7 +40,6 @@ export const PiecesGroupedByGenre = forwardRef(
     const pieceResult = useSearchPieces({ searchValue, type, userId })
     const [displayedResult, setDisplayedResult] = useState([])
     const router = useRouter()
-    const theme = useTheme()
 
     useEffect(() => {
       if (pieceResult.loading) return
@@ -84,8 +83,8 @@ export const PiecesGroupedByGenre = forwardRef(
             router.navigate('search')
           }}
         >
-          <WriterText size={18} fontFamily="Light" mt={2}>
-            {searchValue}
+          <WriterText size={18} fontFamily="Bold">
+            {searchValue.substring(1)}
           </WriterText>
         </TouchableOpacity>
         <FlatList

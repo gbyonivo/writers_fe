@@ -123,7 +123,7 @@ export function CodeVerificationForm() {
                   ...styles.cell,
                   color: theme.colors.onBackground,
                 },
-                isFocused && { borderColor: theme.colors.primary },
+                isFocused && { borderColor: theme.colors.tertiary },
               ]}
               onLayout={getCellOnLayoutHandler(index)}
             >

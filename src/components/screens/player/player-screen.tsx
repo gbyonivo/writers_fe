@@ -1,18 +1,14 @@
 import { useGlobalSearchParams, useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { Image, StyleSheet, View } from 'react-native'
-import Carousel from 'react-native-reanimated-carousel'
-import { useDispatch, useSelector } from 'react-redux'
+import { StyleSheet, View } from 'react-native'
+import { useDispatch } from 'react-redux'
 
 import { usePartsByIds } from '../../../hooks/apollo/use-parts-by-ids'
 import { usePiece } from '../../../hooks/apollo/use-piece'
 import { useOnFocus } from '../../../hooks/use-on-focus'
 import { setCurrentScreen } from '../../../store/slices/screen-monitor'
-import { AppState } from '../../../types/states/AppState'
-import { getWidthByRatio } from '../../../utils/common'
 import { trackScreenView } from '../../../utils/mixpanel'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
-import { FloatingPlayer } from '../../common/voice-player/floating-player'
 import { WriterActivityIndicator } from '../../common/writer-activity-indicator'
 import { WriterBackground } from '../../common/writer-background'
 import { WriterText } from '../../common/writer-text'
@@ -67,7 +63,6 @@ export default function PlayerScreen() {
           piece={piece}
         />
       </View>
-      <FloatingPlayer />
     </WriterBackground>
   )
 }

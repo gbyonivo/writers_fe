@@ -3,9 +3,10 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { Bookmark } from 'writers_shared'
 
-import { startPlayer } from '../../../store/slices/player'
+import { setAudio } from '../../../store/slices/audio'
 import { timeAgo } from '../../../utils/date'
 import { trackEvent } from '../../../utils/mixpanel'
+import { onStartPlaying } from '../../../utils/signal'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterIcon } from '../../common/writer-icon'
@@ -53,13 +54,10 @@ export function BookmarkItem({ bookmark, setBookmarkToDelete }: Props) {
               id: bookmark.id,
             },
           })
-          dispatch(
-            startPlayer({
-              title: bookmark.name,
-              partIds: bookmark.partIds,
-              pieceId: bookmark.pieceId,
-            }),
-          )
+          onStartPlaying.emit({
+            partIds: bookmark.partIds,
+            pieceId: bookmark.pieceId,
+          })
         }}
       >
         <WriterIcon icon="play" size={22} />

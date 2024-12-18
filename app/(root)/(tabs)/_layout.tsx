@@ -22,15 +22,15 @@ const PremiumColor = '#f43f5e'
 
 const commonProps: Record<string, any> = {
   headerTitleStyle: {
-    fontFamily: 'Light' as FontFamily,
+    fontFamily: 'Medium' as FontFamily,
   },
   tabBarLabelStyle: { display: 'none' },
   headerTitle: '',
 }
 
 const headerStyle = {
-  ml: 16,
-  fontFamily: 'Light' as FontFamily,
+  ml: 8,
+  fontFamily: 'Medium' as FontFamily,
   size: 24,
 }
 

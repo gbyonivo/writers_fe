@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux'
 import { Part } from 'writers_shared'
 
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
-import { startPlayer } from '../../../store/slices/player'
+import { playAudio, setAudio } from '../../../store/slices/audio'
 import { setShouldChainPart } from '../../../store/slices/settings'
 import { trackEvent } from '../../../utils/mixpanel'
-import { onPlayPiece } from '../../../utils/signal'
+import { onPlayPiece, onStartPlaying } from '../../../utils/signal'
 import { TrackedComponentLocation } from '../../../utils/tracking/tracked-component-location'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WithSpeaker } from '../voice-player/with-speaker'
@@ -61,12 +61,10 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
     let removeListener = null
     if (onPlayPiece.getNumberOfListeners() < 1) {
       removeListener = onPlayPiece.listen(() => {
-        dispatch(
-          startPlayer({
-            partIds: Object.values(positionToPartIdMapRef.current),
-            pieceId,
-          }),
-        )
+        onStartPlaying.emit({
+          partIds: Object.values(positionToPartIdMapRef.current),
+          pieceId,
+        })
       })
     }
 

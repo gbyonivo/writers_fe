@@ -47,8 +47,8 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
     ...types.map((type) => typeLabelReplacement[type] || type),
     ...genres.map((genre) => genre.name),
   ]
-  const firstThree = combinedFilter.slice(0, 3)
-  const remainingLength = combinedFilter.length - 3
+  const firstThree = combinedFilter.slice(0, 5)
+  const remainingLength = combinedFilter.length - 5
 
   return (
     <View style={styles.container}>
@@ -59,10 +59,16 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
         }}
       >
         {combinedFilter.length === 0 ? (
-          <WriterText>Filter</WriterText>
+          <WriterText fontFamily="SemiBold" color={colors.tertiary}>
+            Filter
+          </WriterText>
         ) : (
           firstThree.map((item, index) => (
-            <WriterText key={item} color={colors.tertiary}>
+            <WriterText
+              fontFamily="SemiBold"
+              key={item}
+              color={colors.tertiary}
+            >
               {`${item}${index < firstThree.length - 1 ? ' / ' : ''}`}
             </WriterText>
           ))
@@ -102,7 +108,10 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
                     style={styles.item}
                     onPress={() => selectPieceType(pieceType as PieceType)}
                   >
-                    <WriterText color={isSelected ? colors.tertiary : ''}>
+                    <WriterText
+                      fontFamily="SemiBold"
+                      color={isSelected ? colors.tertiary : ''}
+                    >
                       {typeLabelReplacement[pieceType] || pieceType}
                     </WriterText>
                   </TouchableOpacity>
@@ -118,7 +127,10 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
                 style={styles.item}
                 onPress={() => selectGenre(genre)}
               >
-                <WriterText color={isSelected ? 'red' : ''}>
+                <WriterText
+                  fontFamily="SemiBold"
+                  color={isSelected ? colors.tertiary : ''}
+                >
                   {genre.name}
                 </WriterText>
               </TouchableOpacity>
@@ -133,7 +145,7 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
 const styles = StyleSheet.create({
   container: {
     height: 48,
-    marginHorizontal: 8,
+    marginHorizontal: 0,
     paddingVertical: 2,
   },
   dropdown: {

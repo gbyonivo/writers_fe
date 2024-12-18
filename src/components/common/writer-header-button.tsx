@@ -36,7 +36,7 @@ export function WriterHeaderButton({
         style={{
           color: !enableButton
             ? theme.colors.onSecondary
-            : theme.colors.primary,
+            : theme.colors.tertiary,
         }}
         fontFamily="SemiBold"
       >
