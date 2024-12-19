@@ -1,10 +1,8 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Switch } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { useAuthContext } from '../../../context/auth-context'
-import { togglePremiumAccount } from '../../../store/slices/settings'
-import { AppState } from '../../../types/states/AppState'
+import { useAccountTypeMutation } from '../../../hooks/apollo/use-account-type-mutation'
+import { useIsPremium } from '../../../hooks/use-is-premium'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
@@ -12,24 +10,19 @@ import { WriterText } from '../../common/writer-text'
 import { SettingsItemContainer } from './settings-item-container'
 
 export function GoPremium() {
-  const dispatch = useDispatch()
-  const isPremiumAccount = useSelector(
-    (state: AppState) => state.settings.isPremiumAccount,
-  )
-  const onPress = () => {
+  const isPremiumAccount = useIsPremium()
+  const { updateAccountType } = useAccountTypeMutation()
+  const onToggleSwitch = async () => {
+    const accountType = isPremiumAccount ? 'STANDARD' : 'PREMIUM'
     trackEvent({
       event: TrackedEvent.PRESS,
       params: {
         screen: TrackedScreen.SETTINGS_SCREEN,
         buttonName: 'Go Premium',
+        accountType,
       },
     })
-  }
-  const onToggleSwitch = () => {
-    if (!isPremiumAccount) {
-      onPress()
-    }
-    dispatch(togglePremiumAccount())
+    await updateAccountType({ accountType })
   }
   return (
     <SettingsItemContainer>

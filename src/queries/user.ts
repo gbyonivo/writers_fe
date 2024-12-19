@@ -12,3 +12,11 @@ export const GET_USER = gql`
     }
   }
 `
+
+export const UPDATE_ACCOUNT_TYPE = gql`
+  mutation UpdateAccountType($accountType: String) {
+    updateAccountType(accountType: $accountType) {
+      accountType
+    }
+  }
+`

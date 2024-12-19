@@ -62,9 +62,7 @@ export const WriterBottomSheet = forwardRef(function WriterBottomSheet(
             />
           )}
         >
-          <View style={[styles.contentContainer, containerStyle]}>
-            {children}
-          </View>
+          {children}
         </BottomSheet>
       </Portal>
     </GestureHandlerRootView>
@@ -73,6 +71,6 @@ export const WriterBottomSheet = forwardRef(function WriterBottomSheet(
 
 const styles = StyleSheet.create({
   contentContainer: {
-    flex: 1,
+    // flex: 1,
   },
 })

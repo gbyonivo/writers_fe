@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 
 import WriterSearchBar from '../../../src/components/common/writer-search-bar'
 import { WriterText } from '../../../src/components/common/writer-text'
+import { useIsPremium } from '../../../src/hooks/use-is-premium'
 import { FontFamily } from '../../../src/types/font'
 import { AppState } from '../../../src/types/states/AppState'
 
@@ -36,9 +37,7 @@ const headerStyle = {
 
 export default function TabLayout() {
   const theme = useTheme()
-  const isPremiumAccount = useSelector(
-    (state: AppState) => state.settings.isPremiumAccount,
-  )
+  const isPremiumAccount = useIsPremium()
   return (
     <>
       <Tabs

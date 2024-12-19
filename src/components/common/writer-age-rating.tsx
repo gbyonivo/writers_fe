@@ -44,12 +44,12 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 60,
-    padding: 10,
+    padding: 8,
   },
   smallContainer: {
     width: 30,
     height: 30,
     borderRadius: 30,
-    padding: 3,
+    padding: 3.5,
   },
 })

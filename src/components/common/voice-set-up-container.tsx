@@ -8,6 +8,7 @@ import {
 import { SceneMap, TabView } from 'react-native-tab-view'
 import { useSelector } from 'react-redux'
 
+import { useIsPremium } from '../../hooks/use-is-premium'
 import { AppState } from '../../types/states/AppState'
 import { VoiceSetUp, VoiceSetUpValue } from './voice-set-up'
 import { WriterSelectVoice } from './writer-select-voice'
@@ -29,7 +30,7 @@ const routes = [
 export function VoiceSetUpContainer(props: VoiceSetUpProps) {
   const [index, setIndex] = useState(0)
   const layout = useWindowDimensions()
-  const { isPremiumAccount } = useSelector((state: AppState) => state.settings)
+  const isPremiumAccount = useIsPremium()
 
   const renderScene = ({ route }) => {
     switch (route.key) {

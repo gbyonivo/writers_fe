@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
 import { getHeighByRatio, getWidthByRatio } from '../../../utils/common'
@@ -15,14 +15,14 @@ interface Props {
 export function SuggestionCarousel({ suggestions, onSelectSuggestion }: Props) {
   return (
     <Carousel
-      width={getWidthByRatio(0.9)}
-      height={getHeighByRatio(0.7)}
+      width={getWidthByRatio(1)}
+      height={getHeighByRatio(0.6)}
       autoPlay={false}
       data={suggestions}
       scrollAnimationDuration={1000}
       style={styles.carouselStyle}
       renderItem={({ item }) => (
-        <View>
+        <View key={item} style={{ padding: 8 }}>
           <WriterText>{item}</WriterText>
           {!!onSelectSuggestion && (
             <View style={styles.buttonContainer}>
