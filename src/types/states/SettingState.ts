@@ -5,5 +5,4 @@ export interface SettingsState {
   shouldChainParts: boolean
   shouldShowTextBasedDesgin: boolean
   shouldUseAiForOnlyTips: boolean
-  isPremiumAccount: boolean
 }

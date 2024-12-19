@@ -27,7 +27,7 @@ export function WriterFloatingButton({
     <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
       <BlurView
         intensity={10}
-        style={[styles.blur, { backgroundColor: colors.onBackground }]}
+        style={[styles.blur, { backgroundColor: colors.backdrop }]}
       />
       <WriterIcon icon={icon} size={iconSize} />
     </TouchableOpacity>
@@ -37,9 +37,9 @@ export function WriterFloatingButton({
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 60,
+    height: 60,
+    borderRadius: 60,
     alignItems: 'center',
     justifyContent: 'center',
     right: 20,

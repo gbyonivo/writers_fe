@@ -29,9 +29,18 @@ export const loginSlice = createSlice({
         token: '',
       }
     },
+    setAccountType: (state, { payload }: PayloadAction<string>) => {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          accountType: payload,
+        },
+      }
+    },
   },
 })
 
-export const { addUser, removeUser } = loginSlice.actions
+export const { addUser, removeUser, setAccountType } = loginSlice.actions
 
 export default loginSlice.reducer
