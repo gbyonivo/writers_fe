@@ -102,7 +102,7 @@ export function PartCreationScreen() {
             })
             aiButtonRef.current?.showAiHelp(aiSuggestion)
           }}
-          icon="robot-excited-outline"
+          icon="alien"
         />
       </>
     </WriterBackground>

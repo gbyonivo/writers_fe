@@ -38,7 +38,7 @@ export function SeekBar({
         style={{ flex: 1, marginBottom: -16 }}
         minimumValue={0}
         maximumValue={1}
-        minimumTrackTintColor={theme.colors.tertiary}
+        minimumTrackTintColor={theme.colors.outlineVariant}
         maximumTrackTintColor={theme.colors.onBackground}
         step={0.0001}
         thumbTintColor="transparent"

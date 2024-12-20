@@ -22,9 +22,6 @@ interface Props {
 export function PieceItem({ piece, trackedScreen }: Props) {
   const router = useRouter()
   const theme = useTheme()
-  const containerStyle = {
-    borderBottomColor: theme.colors.backdrop,
-  }
   const onPress = () => {
     trackEvent({
       event: TrackedEvent.PRESS,
@@ -38,7 +35,7 @@ export function PieceItem({ piece, trackedScreen }: Props) {
 
   if (!piece) return null
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View style={[styles.container]}>
       <TouchableOpacity onPress={onPress}>
         <View style={styles.imageAndTitle}>
           <Image source={{ uri: piece.imageUrl }} style={styles.image} />
@@ -89,12 +86,13 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     marginHorizontal: 8,
     marginVertical: 8,
-    borderBottomWidth: 2,
   },
   pieceContent: {
     marginTop: 20,
     overflow: 'hidden',
     height: 100,
+    paddingHorizontal: 8,
+    width: getWidthByRatio(0.96),
   },
   pieceContentText: {
     lineHeight: 28,
@@ -115,7 +113,7 @@ const styles = StyleSheet.create({
   },
   ageRating: {
     position: 'absolute',
-    top: 12,
+    top: 8,
     left: 0,
   },
   image: {

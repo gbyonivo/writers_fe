@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { setShouldShowTextBasedDesign } from '../../../store/slices/settings'
 import { AppState } from '../../../types/states/AppState'
+import { WriterSwitch } from '../../common/writer-switch'
 import { WriterText } from '../../common/writer-text'
 import { SettingsItemContainer } from './settings-item-container'
 
@@ -20,7 +21,7 @@ export function ToggleDesign() {
     <SettingsItemContainer>
       <View style={style.container}>
         <WriterText fontFamily="Bold">Textbased Design</WriterText>
-        <Switch value={isTextual} onValueChange={onToggleSwitch} />
+        <WriterSwitch value={isTextual} handleChange={onToggleSwitch} />
       </View>
     </SettingsItemContainer>
   )

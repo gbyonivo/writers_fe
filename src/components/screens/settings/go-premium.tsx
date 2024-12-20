@@ -6,6 +6,7 @@ import { useIsPremium } from '../../../hooks/use-is-premium'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
+import { WriterSwitch } from '../../common/writer-switch'
 import { WriterText } from '../../common/writer-text'
 import { SettingsItemContainer } from './settings-item-container'
 
@@ -28,7 +29,7 @@ export function GoPremium() {
     <SettingsItemContainer>
       <View style={style.container}>
         <WriterText fontFamily="Bold">Premium Account</WriterText>
-        <Switch value={isPremiumAccount} onValueChange={onToggleSwitch} />
+        <WriterSwitch value={isPremiumAccount} handleChange={onToggleSwitch} />
       </View>
     </SettingsItemContainer>
   )

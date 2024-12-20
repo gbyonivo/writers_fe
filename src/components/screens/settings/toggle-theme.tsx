@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import { Switch } from 'react-native-paper'
 
 import { useSelectedColorSchemeContext } from '../../../context/selected-color-scheme-context'
+import { WriterSwitch } from '../../common/writer-switch'
 import { WriterText } from '../../common/writer-text'
 import { SettingsItemContainer } from './settings-item-container'
 
@@ -16,7 +17,7 @@ export function ToggleTheme() {
     <SettingsItemContainer>
       <View style={style.container}>
         <WriterText fontFamily="Bold">Dark Theme</WriterText>
-        <Switch value={isDark} onValueChange={onToggleSwitch} />
+        <WriterSwitch value={isDark} handleChange={onToggleSwitch} />
       </View>
     </SettingsItemContainer>
   )

@@ -54,16 +54,16 @@ export function PieceLikeButton({
         })
         likePiece(pieceId)
       }}
-      style={[style, styles.container, { backgroundColor: colors.onSecondary }]}
+      style={[style, styles.container]}
       disabled={disabled || loading}
     >
       <View style={styles.buttonStyle}>
         <WriterIcon
           icon="heart"
-          color={hasLikedPiece ? colors.errorContainer : ''}
-          size={18}
+          color={hasLikedPiece ? colors.outlineVariant : ''}
+          size={24}
         />
-        <WriterText style={styles.count}>
+        <WriterText style={styles.count} size={20} mt={-2}>
           {millify(likes + hasLikedPiece ? 1 : 0)}
         </WriterText>
       </View>
@@ -73,7 +73,7 @@ export function PieceLikeButton({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 6,
+    // paddingVertical: 6,
     paddingHorizontal: 8,
     borderRadius: 16,
   },

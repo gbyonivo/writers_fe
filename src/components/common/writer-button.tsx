@@ -1,5 +1,5 @@
 import { StyleProp, TextStyle, ViewStyle } from 'react-native'
-import { Button } from 'react-native-paper'
+import { Button, useTheme } from 'react-native-paper'
 import { IconSource } from 'react-native-paper/lib/typescript/components/Icon'
 
 interface Props {
@@ -23,6 +23,7 @@ export function WriterButton({
   iconRight,
   labelStyle,
 }: Props) {
+  const { colors } = useTheme()
   return (
     <Button
       icon={icon}
@@ -34,6 +35,7 @@ export function WriterButton({
       disabled={disabled}
       textColor={textColor}
       labelStyle={labelStyle}
+      buttonColor={disabled ? undefined : colors.scrim}
     >
       {children}
     </Button>

@@ -54,7 +54,7 @@ export function PieceListGroupedByGenreItem({ piece }: Props) {
           size={14}
           align="center"
           fontFamily="Light"
-          color={theme.colors.tertiary}
+          color={theme.colors.outlineVariant}
         >
           {truncateString({ text: piece.title, maxLength: 17 })}
         </WriterText>

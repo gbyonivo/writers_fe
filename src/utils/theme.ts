@@ -7,9 +7,9 @@ export const darkTheme = {
   custom: 'property',
   colors: {
     ...MD3DarkTheme.colors,
-    background: '#111827',
-    linearBackground: '#1a2e05',
-    tertiary: '#84cc16',
+    background: '#09090b',
+    scrim: '#18181b', // used as linear background
+    outlineVariant: '#f97316', // highlight
   },
 }
 // change background in constants if edittec
@@ -19,8 +19,8 @@ export const lightTheme = {
   colors: {
     ...MD3LightTheme.colors,
     background: '#e2e8f0',
-    linearBackground: '#f5d0fe',
-    tertiary: '#be185d',
+    scrim: '#ddd6fe', // used as linear background
+    outlineVariant: '#991b1b', // highlight
   },
 }
 

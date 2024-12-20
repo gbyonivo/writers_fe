@@ -97,10 +97,6 @@ export function SignInForm() {
           Verify
         </WriterButton>
       </View>
-
-      <View style={styles.wakeUpServerButtonContainer}>
-        <WakeUpServerButton />
-      </View>
     </WriterBackground>
   )
 }

@@ -54,7 +54,7 @@ export function WriterImageSegmentedControlItem({
             style={[
               styles.selectedIndicationAbsolute,
               {
-                backgroundColor: theme.colors.tertiary,
+                backgroundColor: theme.colors.outlineVariant,
               },
               {
                 height: indicatorSize,
