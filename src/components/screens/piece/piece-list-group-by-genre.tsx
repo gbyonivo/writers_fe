@@ -28,7 +28,7 @@ interface Props {
   searchValue: string
   userId?: number
   type?: PieceType
-  refetchCount: number
+  refetchCount?: number
 }
 
 export const PiecesGroupedByGenre = forwardRef(

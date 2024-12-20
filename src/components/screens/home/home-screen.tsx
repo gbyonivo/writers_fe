@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux'
 import { PieceType } from 'writers_shared/dist'
 
 import { WriterBackground } from '../../../components/common/writer-background'
-import { PieceListInTabs } from '../../../components/screens/piece/piece-list-in-tabs'
 import { AppState } from '../../../types/states/AppState'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { HomeScreenFilter } from '../../common/home/home-screen-filter'
+import { PieceListContainer } from '../../common/piece/piece-list-container'
 import { PieceListInGenres } from '../piece/piece-list-in-genres'
 
 export function HomeScreen() {
@@ -18,14 +18,11 @@ export function HomeScreen() {
 
   return (
     <WriterBackground isView>
-      <HomeScreenFilter
-        onSetTypes={(types: PieceType[]) => setTypes(types)}
-        hideTypes={shouldShowTextBasedDesgin}
-      />
+      <HomeScreenFilter onSetTypes={(types: PieceType[]) => setTypes(types)} />
       {shouldShowTextBasedDesgin ? (
-        <PieceListInTabs
-          containerStyle={[styles.containerStyle]}
+        <PieceListContainer
           trackedScreen={TrackedScreen.HOME_SCREEN}
+          type={types.length === 1 ? types[0] : undefined}
         />
       ) : (
         <PieceListInGenres

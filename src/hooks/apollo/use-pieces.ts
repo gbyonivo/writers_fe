@@ -16,6 +16,12 @@ export const usePieces = ({
     variables: { pagination: { userId, first: 4, type } },
   })
 
+  console.log(
+    'data',
+    data?.pieces?.edges?.length,
+    JSON.stringify({ variables: { pagination: { userId, first: 4, type } } }),
+  )
+
   const { response, refetching, enhancedRefetch, errorRefetching } =
     useEnhancedRefetch(refetch)
 

@@ -20,7 +20,7 @@ export function WriterBackground({ children, style, isView }: Props) {
     >
       <LinearGradient
         // @ts-ignore
-        colors={[colors.background, colors.linearBackground, colors.background]}
+        colors={[colors.background, colors.scrim, colors.background]}
         style={[
           styles.linearBackground,
           isView ? styles.linearGradienView : styles.linearGradienVSafeArea,

@@ -5,7 +5,6 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ToastProvider } from 'react-native-toast-notifications'
-import TrackPlayer from 'react-native-track-player'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -15,7 +14,6 @@ import { Paper } from '../src/components/containers/paper'
 import AuthContextProvider from '../src/context/auth-context'
 import SelectedColorSchemeContextProvider from '../src/context/selected-color-scheme-context'
 import { createStore } from '../src/store/store'
-import { PlaybackService } from '../src/utils/audio-service'
 import { backgroundStyleBeforeAppIsMounted } from '../src/utils/theme'
 
 const error = console.error
@@ -24,7 +22,7 @@ console.error = (...args: any) => {
   error(...args)
 }
 
-TrackPlayer.registerPlaybackService(() => PlaybackService)
+// TrackPlayer.registerPlaybackService(() => PlaybackService)
 
 export const unstable_settings = {
   initialRouteName: '(auth)/sign-in',
@@ -56,7 +54,6 @@ export default function AppLayout() {
   useEffect(() => {
     const initApp = async () => {
       const { store, persistor } = await createStore()
-      await TrackPlayer.setupPlayer()
       storeItems.current = { store, persistor }
       setAppMounted(true)
     }

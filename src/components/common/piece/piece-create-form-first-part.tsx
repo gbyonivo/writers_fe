@@ -43,7 +43,6 @@ export function PieceCreateFormFirstPart({
       />
       <WriterFloatingButton
         onPress={async () => {
-          console.log('this aint funny')
           trackEvent({
             event: TrackedEvent.PRESS,
             params: {

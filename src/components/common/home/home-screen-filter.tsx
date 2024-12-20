@@ -59,7 +59,7 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
         }}
       >
         {combinedFilter.length === 0 ? (
-          <WriterText fontFamily="SemiBold" color={colors.tertiary}>
+          <WriterText fontFamily="SemiBold" color={colors.outlineVariant}>
             Filter
           </WriterText>
         ) : (
@@ -67,7 +67,7 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
             <WriterText
               fontFamily="SemiBold"
               key={item}
-              color={colors.tertiary}
+              color={colors.outlineVariant}
             >
               {`${item}${index < firstThree.length - 1 ? ' / ' : ''}`}
             </WriterText>
@@ -75,7 +75,7 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
         )}
         {remainingLength > 0 && (
           <WriterText
-            color={colors.tertiary}
+            color={colors.outlineVariant}
             ml={8}
           >{`${remainingLength}+`}</WriterText>
         )}
@@ -110,7 +110,7 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
                   >
                     <WriterText
                       fontFamily="SemiBold"
-                      color={isSelected ? colors.tertiary : ''}
+                      color={isSelected ? colors.outlineVariant : ''}
                     >
                       {typeLabelReplacement[pieceType] || pieceType}
                     </WriterText>
@@ -129,7 +129,7 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
               >
                 <WriterText
                   fontFamily="SemiBold"
-                  color={isSelected ? colors.tertiary : ''}
+                  color={isSelected ? colors.outlineVariant : ''}
                 >
                   {genre.name}
                 </WriterText>

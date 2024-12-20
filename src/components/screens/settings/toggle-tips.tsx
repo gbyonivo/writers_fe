@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { toggleShouldUseAiForOnlyTips } from '../../../store/slices/settings'
 import { AppState } from '../../../types/states/AppState'
+import { WriterSwitch } from '../../common/writer-switch'
 import { WriterText } from '../../common/writer-text'
 import { SettingsItemContainer } from './settings-item-container'
 
@@ -19,7 +20,10 @@ export function ToggleTips() {
     <SettingsItemContainer>
       <View style={style.container}>
         <WriterText fontFamily="Bold">AI for only tips</WriterText>
-        <Switch value={shouldUseAiForOnlyTips} onValueChange={onToggleSwitch} />
+        <WriterSwitch
+          value={shouldUseAiForOnlyTips}
+          handleChange={onToggleSwitch}
+        />
       </View>
     </SettingsItemContainer>
   )

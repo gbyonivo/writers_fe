@@ -58,10 +58,8 @@ export const LogoutBottomSheet = forwardRef(function LogoutBottomSheet(
           )}
         >
           <View style={[styles.contentContainer]}>
-            <WakeUpServerButton />
-          </View>
-          <View style={[styles.contentContainer]}>
             <WriterButton
+              style={{ backgroundColor: theme.colors.scrim }}
               onPress={() => {
                 trackEvent({
                   event: TrackedEvent.PRESS,

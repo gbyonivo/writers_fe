@@ -66,7 +66,7 @@ export function FloatingPlayerControl({
           colors={[
             colors.background,
             // @ts-ignore
-            colors.linearBackground,
+            colors.scrim,
             colors.background,
           ]}
           style={[styles.linearGradient]}
@@ -85,7 +85,7 @@ export function FloatingPlayerControl({
                 <WriterText
                   size={12}
                   fontFamily="Medium"
-                  color={colors.tertiary}
+                  color={colors.outlineVariant}
                 >
                   {part?.user?.name}
                 </WriterText>

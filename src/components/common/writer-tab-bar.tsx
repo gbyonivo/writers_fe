@@ -25,7 +25,9 @@ export function WriterTabBar({ icon, ...props }: Props) {
       activeColor="red"
       renderLabel={({ route, focused }) => (
         <WriterText
-          color={focused ? theme.colors.tertiary : theme.colors.onBackground}
+          color={
+            focused ? theme.colors.outlineVariant : theme.colors.onBackground
+          }
           align="left"
         >
           {route.title}

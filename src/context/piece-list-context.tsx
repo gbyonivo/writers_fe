@@ -35,9 +35,13 @@ function PieceListContextProvider({ children, userId, type }: Props) {
     userId,
     type,
   })
-  const pieceList = []
+
   const endCursor = pieces?.pageInfo?.endCursor
   const hasNextPage = !!pieces?.pageInfo?.hasNextPage
+
+  const pieceList = useMemo(() => {
+    return (pieces?.edges || []).map(({ node }) => node)
+  }, [pieces])
 
   const { likes } = useMemo(() => {
     let likes = {}
@@ -46,7 +50,6 @@ function PieceListContextProvider({ children, userId, type }: Props) {
         ...likes,
         [curr.node.id]: curr.node.hasBeenLiked,
       }
-      pieceList.push(curr.node)
       return {
         ...acc,
         [curr.node.id]: curr.node,

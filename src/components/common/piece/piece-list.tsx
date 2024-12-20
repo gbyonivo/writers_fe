@@ -1,4 +1,4 @@
-import { FlatList, RefreshControl, StyleSheet } from 'react-native'
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
 import { usePieceListContext } from '../../../context/piece-list-context'
@@ -12,6 +12,7 @@ interface Props {
 export function PieceList({ trackedScreen }: Props) {
   const theme = useTheme()
   const { pieceList, refetch, loading, loadMore } = usePieceListContext()
+
   return (
     <FlatList
       data={pieceList}
@@ -36,6 +37,14 @@ export function PieceList({ trackedScreen }: Props) {
       showsVerticalScrollIndicator={false}
       disableIntervalMomentum
       onEndReached={loadMore}
+      ItemSeparatorComponent={() => (
+        <View
+          style={{
+            height: 2,
+            backgroundColor: theme.colors.backdrop,
+          }}
+        />
+      )}
     />
   )
 }

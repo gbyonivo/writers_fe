@@ -81,7 +81,6 @@ export function InitialiseScreen({ loading, error, reinitialise }: Props) {
               >
                 <WriterText>Restart</WriterText>
               </WriterButton>
-              <WakeUpServerButton />
             </View>
           </View>
         </ErrorBottomSheet>
