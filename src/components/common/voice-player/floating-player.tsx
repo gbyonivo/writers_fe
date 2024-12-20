@@ -33,11 +33,6 @@ export function FloatingPlayer() {
     useState<CurrentPieceAndParts>(DEFAULT_PIECE_AND_PART)
   const [urls, setUrls] = useState([])
   const askForPermission = useAudioPermissionRequest()
-  useEffect(() => {
-    try {
-      TrackPlayer.setupPlayer()
-    } catch (e) {}
-  }, [])
   const position = useSelector(
     (state: AppState) => POSITION_MAP[state.screenMonitor.currentScreen],
   )

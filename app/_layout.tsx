@@ -5,6 +5,7 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import { Text } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ToastProvider } from 'react-native-toast-notifications'
+import TrackPlayer from 'react-native-track-player'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
@@ -22,6 +23,13 @@ console.error = (...args: any) => {
   error(...args)
 }
 
+const setupPlayer = () => {
+  try {
+    TrackPlayer.setupPlayer()
+  } catch (e) {}
+}
+
+setupPlayer()
 // TrackPlayer.registerPlaybackService(() => PlaybackService)
 
 export const unstable_settings = {
