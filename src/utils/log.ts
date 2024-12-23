@@ -1,3 +1,3 @@
 export const log = (...params) => {
-  console.log(params)
+  // console.log(params)
 }

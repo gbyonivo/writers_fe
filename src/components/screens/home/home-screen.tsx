@@ -16,10 +16,13 @@ export function HomeScreen() {
   )
   const [types, setTypes] = useState<PieceType[]>([])
 
+  // todo
+  const override = true || shouldShowTextBasedDesgin
+
   return (
     <WriterBackground isView>
       <HomeScreenFilter onSetTypes={(types: PieceType[]) => setTypes(types)} />
-      {shouldShowTextBasedDesgin ? (
+      {override ? (
         <PieceListContainer
           trackedScreen={TrackedScreen.HOME_SCREEN}
           type={types.length === 1 ? types[0] : undefined}

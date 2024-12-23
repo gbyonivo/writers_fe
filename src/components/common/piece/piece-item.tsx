@@ -41,7 +41,7 @@ export function PieceItem({ piece, trackedScreen }: Props) {
           <Image source={{ uri: piece.imageUrl }} style={styles.image} />
           <View>
             <WriterText
-              color={theme.colors.onSurfaceVariant}
+              color={theme.colors.onBackground}
               size={18}
               fontFamily="Bold"
             >
