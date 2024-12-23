@@ -59,7 +59,7 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
         }}
       >
         {combinedFilter.length === 0 ? (
-          <WriterText fontFamily="SemiBold" color={colors.outlineVariant}>
+          <WriterText fontFamily="SemiBold" color={colors.secondaryContainer}>
             Filter
           </WriterText>
         ) : (

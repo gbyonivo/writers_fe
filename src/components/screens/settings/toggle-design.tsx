@@ -20,8 +20,8 @@ export function ToggleDesign() {
   return (
     <SettingsItemContainer>
       <View style={style.container}>
-        <WriterText fontFamily="Bold">Textbased Design</WriterText>
-        <WriterSwitch value={isTextual} handleChange={onToggleSwitch} />
+        <WriterText fontFamily="Bold">Textbased Design (disabled)</WriterText>
+        <WriterSwitch value={true} handleChange={onToggleSwitch} disabled />
       </View>
     </SettingsItemContainer>
   )

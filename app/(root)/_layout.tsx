@@ -2,7 +2,6 @@ import { Stack, useRouter } from 'expo-router'
 import { Appbar, useTheme } from 'react-native-paper'
 
 import { FloatingPlayer } from '../../src/components/common/voice-player/floating-player'
-import { WithSpeaker } from '../../src/components/common/voice-player/with-speaker'
 import { InitialiseScreen } from '../../src/components/screens/utility/initialise-screen'
 import { useInitializeApp } from '../../src/hooks/use-initialize-app'
 
@@ -65,9 +64,7 @@ export default function RootLayout() {
         />
       </Stack>
 
-      <WithSpeaker>
-        <FloatingPlayer />
-      </WithSpeaker>
+      <FloatingPlayer />
     </>
   )
 }

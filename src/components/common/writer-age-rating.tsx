@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { AgeRating } from 'writers_shared/dist'
 
 import { WriterText } from '../common/writer-text'
@@ -10,22 +11,23 @@ interface Props {
   small?: boolean
 }
 
-const ageRatingColor: Record<AgeRating, string> = {
-  U: '#ff7d12',
-  PG: '#ff7d12',
-  '12': '#ff7d12',
-  '15': '#fb4e93',
-  '18': '#dc090a',
-}
+// const ageRatingColor: Record<AgeRating, string> = {
+//   U: '#ff7d12',
+//   PG: '#ff7d12',
+//   '12': '#ff7d12',
+//   '15': '#fb4e93',
+//   '18': '#dc090a',
+// }
 
 export function WriterAgeRating({ ageRating, style, small }: Props) {
+  const theme = useTheme()
   return (
     <View
       style={[
         style,
         styles.container,
         small ? styles.smallContainer : styles.bigContainer,
-        { backgroundColor: ageRatingColor[ageRating] },
+        { backgroundColor: theme.colors.scrim },
       ]}
     >
       <WriterText fontFamily="Bold" size={small ? 14 : 28} align="center">

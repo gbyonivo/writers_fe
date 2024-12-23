@@ -1,4 +1,5 @@
-import { Avatar } from 'react-native-paper'
+import { StyleSheet } from 'react-native'
+import { Avatar, useTheme } from 'react-native-paper'
 
 interface Props {
   label: string
@@ -6,5 +7,13 @@ interface Props {
 }
 
 export function WriterAvatarText({ label, size = 24 }: Props) {
-  return <Avatar.Text size={size} label={label} />
+  const theme = useTheme()
+  return (
+    <Avatar.Text
+      size={size}
+      label={label}
+      color={theme.colors.background}
+      style={{ backgroundColor: theme.colors.scrim }}
+    />
+  )
 }

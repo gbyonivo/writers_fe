@@ -25,20 +25,7 @@ export function UserDetails({ userId }: Props) {
       {loading ? (
         <WriterActivityIndicator />
       ) : (
-        <TouchableOpacity
-          onPress={() => {
-            trackEvent({
-              event: TrackedEvent.PRESS,
-              params: {
-                screen: TrackedScreen.PROFILE_SCREEN,
-                buttonName: 'User Icon',
-              },
-            })
-            logoutBottomsheetRef.current.expand()
-          }}
-        >
-          <WriterAvatarText label={getInitials(user?.name || '')} size={64} />
-        </TouchableOpacity>
+        <WriterAvatarText label={getInitials(user?.name || '')} size={64} />
       )}
       <View style={styles.detailsContainer}>
         <View style={styles.details}>

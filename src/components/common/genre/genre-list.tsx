@@ -22,7 +22,7 @@ export function GenreList({ genreIds, containerStyle, chipStyle }: Props) {
           style={[styles.chip, chipStyle]}
           fontFamily="Light"
           size={14}
-          color={theme.colors.outlineVariant}
+          color={theme.colors.secondary}
         >
           {genreMap[genreId]?.name} {index !== genreIds.length - 1 ? '/' : ''}
         </WriterText>
