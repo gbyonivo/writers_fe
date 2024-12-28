@@ -20,3 +20,16 @@ export const UPDATE_ACCOUNT_TYPE = gql`
     }
   }
 `
+
+export const GET_LIMITATION_CONFIG = gql`
+  query LimitationConfig {
+    limitationConfig {
+      partsPerWeek
+      partsInCurrentWeek
+      piecesStartedInCurrentWeek
+      piecesPerWeek
+      partsPerLine
+      partsPerPiece
+    }
+  }
+`

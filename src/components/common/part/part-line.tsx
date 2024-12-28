@@ -1,22 +1,31 @@
-import { useEffect, useMemo, useRef } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import Animated from 'react-native-reanimated'
 import { Part } from 'writers_shared'
 
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
 import { getWidthByRatio } from '../../../utils/common'
 import { WriterIconButton } from '../writer-icon-button'
+import { WriterText } from '../writer-text'
 import { PartItem } from './part-item'
+
+enum OtherItem {
+  ADD_BUTTON = 'ADD_BUTTON',
+}
+
+type ListItem = Part | OtherItem
 
 interface Props {
   parts: Part[]
   onPressAdd: () => void
   shouldShowAddButton: boolean
   disabled?: boolean
-  setPartIdForPosition: (val: { partId: number; position: number }) => void
+  onSwipeToPart: (val: { partId: number; position: number }) => void
   position: number
   filterParentPieceId?: number
   preselectedPartId?: string
+  lineIndex: number
 }
 
 export function PartLine({
@@ -24,19 +33,40 @@ export function PartLine({
   onPressAdd,
   shouldShowAddButton,
   disabled,
-  setPartIdForPosition,
+  onSwipeToPart,
   position,
   filterParentPieceId,
   preselectedPartId,
+  lineIndex,
 }: Props) {
   const shouldChainParts = useShouldChainParts()
+  const theme = useTheme()
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null)
   const flatlistRef = useRef<Animated.FlatList<Part>>()
-  const onViewableItemsChanged = useRef(({ viewableItems }) => {
-    setPartIdForPosition({ partId: viewableItems[0]?.item?.id, position })
+  const onViewableItemsChanged = useRef(({ viewableItems, changed }) => {
+    setCurrentIndex(changed[0]?.index)
+    onSwipeToPart({ partId: viewableItems[0]?.item?.id, position })
   }).current
 
-  const renderItem = ({ item }: { item: Part }) => {
-    return <PartItem part={item} containerStyle={styles.partContainer} />
+  const renderItem = ({ item }: { item: ListItem }) => {
+    if (item === OtherItem.ADD_BUTTON) {
+      return (
+        <View style={[styles.partContainer, styles.buttonContainer]}>
+          <WriterIconButton
+            icon="plus"
+            onPress={onPressAdd}
+            style={styles.buttonStyle}
+          />
+        </View>
+      )
+    }
+    return (
+      <PartItem
+        part={item as Part}
+        containerStyle={styles.partContainer}
+        lineIndex={lineIndex}
+      />
+    )
   }
 
   const initialPartIdIndex = useMemo(() => {
@@ -58,46 +88,60 @@ export function PartLine({
   }, [initialPartIdIndex])
 
   const filteredParts = useMemo(() => {
-    if (!filterParentPieceId || !shouldChainParts) return parts
-    return parts.filter((part) => part.partId === filterParentPieceId)
-  }, [parts, filterParentPieceId, shouldChainParts])
+    const partsToDisplay =
+      !filterParentPieceId || !useShouldChainParts
+        ? parts
+        : parts.filter((part) => part.partId === filterParentPieceId)
+    return shouldShowAddButton && shouldChainParts
+      ? [...partsToDisplay, OtherItem.ADD_BUTTON]
+      : partsToDisplay
+  }, [parts, filterParentPieceId, shouldChainParts, shouldShowAddButton])
+
+  const goToAddButton = () => {
+    flatlistRef.current.scrollToEnd()
+  }
 
   return (
-    <Animated.FlatList
-      onViewableItemsChanged={onViewableItemsChanged}
-      ref={flatlistRef}
-      viewabilityConfig={{
-        itemVisiblePercentThreshold: 99,
-      }}
-      data={filteredParts}
-      renderItem={renderItem}
-      keyExtractor={(item) => `${item.id}`}
-      contentContainerStyle={styles.container}
-      horizontal
-      scrollEnabled={!disabled}
-      scrollsToTop={false}
-      initialNumToRender={5}
-      maxToRenderPerBatch={5}
-      windowSize={7}
-      onScroll={() => {}}
-      showsHorizontalScrollIndicator={false}
-      disableIntervalMomentum
-      pagingEnabled
-      snapToAlignment="start"
-      onScrollToIndexFailed={(e) => console.log(e)}
-      snapToInterval={getWidthByRatio(1)}
-      ListFooterComponent={
-        shouldShowAddButton ? (
-          <View style={[styles.partContainer, styles.buttonContainer]}>
-            <WriterIconButton
-              icon="plus"
-              onPress={onPressAdd}
-              style={styles.buttonStyle}
-            />
-          </View>
-        ) : null
-      }
-    />
+    <View>
+      <Animated.FlatList
+        onViewableItemsChanged={onViewableItemsChanged}
+        ref={flatlistRef}
+        viewabilityConfig={{
+          itemVisiblePercentThreshold: 99,
+        }}
+        data={filteredParts}
+        renderItem={renderItem}
+        keyExtractor={(item) => `${(item as Part).id || item}`}
+        contentContainerStyle={styles.container}
+        horizontal
+        scrollEnabled={!disabled}
+        scrollsToTop={false}
+        initialNumToRender={5}
+        maxToRenderPerBatch={5}
+        windowSize={7}
+        showsHorizontalScrollIndicator={false}
+        disableIntervalMomentum
+        pagingEnabled
+        snapToAlignment="start"
+        onScrollToIndexFailed={(e) => console.log(e)}
+        snapToInterval={getWidthByRatio(1)}
+        ListFooterComponent={shouldShowAddButton ? null : null}
+      />
+      {shouldShowAddButton &&
+        currentIndex !== null &&
+        filteredParts.length - 1 !== currentIndex &&
+        shouldChainParts && (
+          <TouchableOpacity onPress={goToAddButton}>
+            <WriterText
+              align="center"
+              mt={16}
+              color={theme.colors.outlineVariant}
+            >
+              Swipe Right To Add
+            </WriterText>
+          </TouchableOpacity>
+        )}
+    </View>
   )
 }
 

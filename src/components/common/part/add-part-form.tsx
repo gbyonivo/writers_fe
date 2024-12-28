@@ -272,11 +272,13 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
 const styles = StyleSheet.create({
   textStyle: {
     fontSize: 18,
+    backgroundColor: 'transparent',
   },
   contentContainer: {
     flex: 1,
     borderColor: 'transparent',
     borderWidth: 0,
+    backgroundColor: 'transparent',
   },
 
   inputOutlineStyle: {

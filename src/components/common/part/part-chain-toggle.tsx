@@ -3,7 +3,11 @@ import { useDispatch } from 'react-redux'
 
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
 import { toggleShouldChainPart } from '../../../store/slices/settings'
-import { onBookmarkPiece, onPlayPiece } from '../../../utils/signal'
+import {
+  onBookmarkPiece,
+  onPlayPiece,
+  onSharePiece,
+} from '../../../utils/signal'
 import { WriterIconButton } from '../writer-icon-button'
 
 export function PartChainToggle({ style }: { style?: StyleProp<ViewStyle> }) {
@@ -17,22 +21,22 @@ export function PartChainToggle({ style }: { style?: StyleProp<ViewStyle> }) {
       <WriterIconButton
         icon="play"
         onPress={() => onPlayPiece.emit()}
-        style={[{ backgroundColor: 'transparent' }, style]}
+        style={[styles.iconStyle, style]}
       />
       <WriterIconButton
         icon="share"
-        onPress={() => console.log('share')}
-        style={[{ backgroundColor: 'transparent' }, style]}
+        onPress={() => onSharePiece.emit()}
+        style={[styles.iconStyle, style]}
       />
       <WriterIconButton
         icon="bookmark"
         onPress={() => onBookmarkPiece.emit()}
-        style={[{ backgroundColor: 'transparent' }, style]}
+        style={[styles.iconStyle, style]}
       />
       <WriterIconButton
         icon={!shouldChainParts ? 'lock-open-variant' : 'lock'}
         onPress={onPressLock}
-        style={[{ backgroundColor: 'transparent' }, style]}
+        style={[styles.iconStyle, style]}
       />
     </View>
   )
@@ -41,5 +45,8 @@ export function PartChainToggle({ style }: { style?: StyleProp<ViewStyle> }) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+  },
+  iconStyle: {
+    backgroundColor: 'transparent',
   },
 })

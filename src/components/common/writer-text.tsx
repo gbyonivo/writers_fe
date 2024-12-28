@@ -10,7 +10,12 @@ export type TextAlgin = 'left' | 'right' | 'center'
 interface Props {
   style?: StyleProp<TextStyle>
   variant?: VariantProp<never>
-  children: string | string[] | number | number[] | (JSX.Element | string)[]
+  children:
+    | string
+    | string[]
+    | number
+    | number[]
+    | (JSX.Element | string | number)[]
   align?: TextAlgin
   mb?: number
   ml?: number

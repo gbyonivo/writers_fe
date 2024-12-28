@@ -73,7 +73,7 @@ export const useSearchBarStyles = ({
     () => ({
       backgroundColor: 'transparent',
       placeholderColor: theme.colors.surfaceVariant,
-      textInputBackground: theme.colors.surfaceVariant,
+      textInputBackground: theme.colors.backdrop,
       textColor: theme.colors.onBackground,
       selectionColor: '#2979ff', // blue
       clearIconColor: '#c7c7cc',
