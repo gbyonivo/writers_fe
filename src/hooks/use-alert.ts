@@ -19,7 +19,7 @@ export const useAlert = (): Return => {
     toast.show(message, {
       type: rest.type || 'success',
       animationType: rest.animationType || 'slide-in',
-      placement: rest.placement || 'top',
+      placement: rest.placement || 'bottom',
     })
   }, [])
 

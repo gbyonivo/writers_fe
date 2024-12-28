@@ -1,17 +1,22 @@
 import { useRouter } from 'expo-router'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
 import { Part } from 'writers_shared'
 
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
-import { playAudio, setAudio } from '../../../store/slices/audio'
+import { useCopyParts } from '../../../hooks/use-copy-parts'
 import { setShouldChainPart } from '../../../store/slices/settings'
 import { trackEvent } from '../../../utils/mixpanel'
-import { onPlayPiece, onStartPlaying } from '../../../utils/signal'
+import {
+  onPlayPiece,
+  onSharePiece,
+  onStartPlaying,
+} from '../../../utils/signal'
 import { TrackedComponentLocation } from '../../../utils/tracking/tracked-component-location'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
-import { WithSpeaker } from '../voice-player/with-speaker'
+import { WriterText } from '../writer-text'
 import { BookmarkDialog } from './bookmark-dialog'
 import { NewPartButton } from './new-part-button'
 import { PartLine } from './part-line'
@@ -33,6 +38,7 @@ interface OnSwipeToPartParams {
 export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
   const dispatch = useDispatch()
   const router = useRouter()
+  const { colors } = useTheme()
   const shouldChainParts = useShouldChainParts()
   const partIds = useMemo(() => {
     if (!!preselectedPartIds) {
@@ -44,18 +50,20 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
   // the ref is needed coz the state keeps resetting
   const positionToPartIdMapRef = useRef({})
   const [positionToPartIdMap, setPositionToPartIdMap] = useState(() => ({}))
+  const { writeToClipboard } = useCopyParts({
+    partIds: Object.values(positionToPartIdMap),
+  })
 
   const map = useMemo(() => {
-    return parts.reduce(
-      (acc, part) => ({
+    return parts.reduce((acc, part) => {
+      return {
         ...acc,
         [part.position]: acc[part.position]
           ? [part, ...acc[part.position]]
           : [part],
-      }),
-      {},
-    )
-  }, [parts])
+      }
+    }, {})
+  }, [parts, shouldChainParts])
 
   useEffect(() => {
     let removeListener = null
@@ -65,6 +73,19 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
           partIds: Object.values(positionToPartIdMapRef.current),
           pieceId,
         })
+      })
+    }
+
+    return () => {
+      removeListener?.()
+    }
+  }, [])
+
+  useEffect(() => {
+    let removeListener = null
+    if (onSharePiece.getNumberOfListeners() < 1) {
+      removeListener = onSharePiece.listen(() => {
+        writeToClipboard()
       })
     }
 
@@ -83,11 +104,24 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
     positionToPartIdMapRef.current = newValue
   }
 
+  const getShouldGoNextLine = useCallback(() => {
+    const positions = Object.keys(positionToPartIdMap)
+    if (positions.length === 1) {
+      return true
+    }
+    const highestPosition = positions[positions.length - 1]
+    const positionBeforeHighest = positionToPartIdMap[positions.length - 2]
+    const numberOfPartsInHighestPosition = (map[highestPosition] || []).filter(
+      (part: Part) => part.partId === positionBeforeHighest,
+    ).length
+
+    return numberOfPartsInHighestPosition === 2 || positions.length === 1
+  }, [map, positionToPartIdMap])
+
   const onPressAddPart = useCallback(() => {
     const positions = Object.keys(positionToPartIdMap)
     const highestPosition = positions[positions.length - 1]
-    const numberOfPartsInHighestPosition = map[highestPosition].length
-    const shouldGoNextLine = numberOfPartsInHighestPosition === 3
+    const shouldGoNextLine = getShouldGoNextLine()
 
     let newPartPosition =
       parseInt(highestPosition, 10) === 1 ? 2 : parseInt(highestPosition, 10)
@@ -114,7 +148,7 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
       },
     })
     router.push(`/pieces/${pieceId}/new-part?${queryString}`)
-  }, [pieceId, map, positionToPartIdMap])
+  }, [pieceId, map, positionToPartIdMap, getShouldGoNextLine])
 
   const renderItem = ({ item, index }) => {
     const partListForPosition = map[item]
@@ -122,11 +156,14 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
       <PartLine
         parts={partListForPosition}
         onPressAdd={onPressAddPart}
-        shouldShowAddButton={false}
-        setPartIdForPosition={onSwipeToPart}
+        shouldShowAddButton={
+          !getShouldGoNextLine() && index === Object.keys(map).length - 1
+        }
+        onSwipeToPart={onSwipeToPart}
         position={item}
         filterParentPieceId={positionToPartIdMap[item - 1]}
         preselectedPartId={partIds[index]}
+        lineIndex={index}
       />
     )
   }
@@ -142,16 +179,44 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
         data={Object.keys(map)}
         renderItem={renderItem}
         keyExtractor={(item, index) => (map[item][0] ? map[item][0].id : index)}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        ItemSeparatorComponent={(props) => {
+          return (
+            <View style={styles.separator}>
+              <View
+                style={[
+                  styles.separatorLine,
+                  { backgroundColor: colors.backdrop },
+                ]}
+              />
+              <WriterText
+                size={24}
+                color={colors.scrim}
+                style={styles.separatorNumber}
+              >
+                {parseInt(props.leadingItem, 10) + 1}
+              </WriterText>
+              <View
+                style={[
+                  styles.separatorLine,
+                  { backgroundColor: colors.backdrop },
+                ]}
+              />
+            </View>
+          )
+        }}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={
-          <>
-            <NewPartButton
-              onPressAddPart={onPressAddPart}
-              showAddPartToLineButton={shouldChainParts}
-            />
-          </>
+          getShouldGoNextLine() && (
+            <>
+              <NewPartButton
+                onPressAddPart={onPressAddPart}
+                showAddPartToLineButton={
+                  shouldChainParts && Object.keys(map).length < 3
+                }
+              />
+            </>
+          )
         }
       />
     </View>
@@ -166,7 +231,14 @@ const styles = StyleSheet.create({
     paddingBottom: 96,
   },
   separator: {
-    height: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+  },
+  separatorLine: {
+    height: 1,
+    flex: 1,
+    marginTop: 16,
   },
   bookmarkButtonWrapper: {
     display: 'flex',
@@ -174,4 +246,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 8,
   },
+  separatorNumber: { paddingHorizontal: 8 },
 })

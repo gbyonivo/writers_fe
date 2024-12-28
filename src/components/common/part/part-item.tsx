@@ -6,6 +6,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { Part } from 'writers_shared'
 
 import { useRatePartMutation } from '../../../hooks/apollo/use-rate-part-mutation'
@@ -17,11 +18,14 @@ import { PartRatingBottomSheet } from './part-rating-bottom-sheet'
 interface Props {
   part: Part
   containerStyle?: StyleProp<ViewStyle>
+  lineIndex: number
 }
 
-export function PartItem({ part, containerStyle }: Props) {
+export function PartItem({ part, containerStyle, lineIndex }: Props) {
   const { ratePart } = useRatePartMutation()
+  const { colors } = useTheme()
   const bottomsheetRef = useRef(null)
+  const [firstWord, ...rest] = part.content.trimStart().split(' ')
   return (
     <View>
       <TouchableOpacity
@@ -37,8 +41,17 @@ export function PartItem({ part, containerStyle }: Props) {
         }}
       >
         <View style={[styles.pieceContentContainer, containerStyle]}>
-          <WriterText style={styles.pieceContentText}>
-            {part.content}
+          <WriterText>
+            <WriterText
+              style={styles.pieceStartWord}
+              size={20}
+              color={colors.outlineVariant}
+            >
+              {`${firstWord}`}
+            </WriterText>
+            <WriterText style={styles.pieceContentText}>
+              {` ${rest.join(' ')}`}
+            </WriterText>
           </WriterText>
         </View>
       </TouchableOpacity>
@@ -52,10 +65,13 @@ export function PartItem({ part, containerStyle }: Props) {
 }
 
 const styles = StyleSheet.create({
+  pieceContentContainer: {
+    paddingVertical: 8,
+  },
   pieceContentText: {
     lineHeight: 28,
   },
-  pieceContentContainer: {
-    paddingVertical: 8,
+  pieceStartWord: {
+    lineHeight: 28,
   },
 })

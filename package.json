@@ -35,6 +35,7 @@
     "expo-av": "~14.0.7",
     "expo-blur": "~13.0.2",
     "expo-camera": "~15.0.15",
+    "expo-clipboard": "~6.0.3",
     "expo-dev-client": "~4.0.26",
     "expo-font": "~12.0.10",
     "expo-image-picker": "^15.0.7",

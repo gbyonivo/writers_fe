@@ -36,10 +36,7 @@ export function PieceListGroupedByGenreItem({ piece }: Props) {
     >
       <Image
         source={piece.imageUrl ? { uri: piece.imageUrl } : images.icons.poem}
-        style={[
-          styles.item,
-          { backgroundColor: theme.colors.primaryContainer },
-        ]}
+        style={[styles.item, { backgroundColor: theme.colors.backdrop }]}
       />
       <View style={styles.titleContainer}>
         <BlurView

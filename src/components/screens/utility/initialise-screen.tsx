@@ -20,7 +20,6 @@ interface Props {
 }
 
 export function InitialiseScreen({ loading, error, reinitialise }: Props) {
-  console.log('error', error, loading)
   const bottomSheetRef = useRef(null)
   const timeout = useRef(null)
   useEffect(() => {

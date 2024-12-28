@@ -38,12 +38,29 @@ export function PieceItem({ piece, trackedScreen }: Props) {
     <View style={[styles.container]}>
       <TouchableOpacity onPress={onPress}>
         <View style={styles.imageAndTitle}>
-          <Image source={{ uri: piece.imageUrl }} style={styles.image} />
+          <View>
+            <Image
+              source={{ uri: piece.imageUrl }}
+              style={[styles.image, { borderColor: theme.colors.scrim }]}
+            />
+            <WriterAgeRating
+              ageRating={piece.firstPart.ageRating}
+              style={[
+                styles.ageRating,
+                {
+                  backgroundColor: theme.colors.backdrop,
+                },
+              ]}
+              small
+            />
+          </View>
+
           <View>
             <WriterText
               color={theme.colors.onBackground}
               size={18}
               fontFamily="Bold"
+              style={styles.pieceTitle}
             >
               {piece.title}
             </WriterText>
@@ -54,11 +71,6 @@ export function PieceItem({ piece, trackedScreen }: Props) {
                   containerStyle={styles.genreListContainer}
                 />
               )}
-              <WriterAgeRating
-                ageRating={piece.firstPart.ageRating}
-                style={styles.ageRating}
-                small
-              />
             </View>
           </View>
         </View>
@@ -66,7 +78,6 @@ export function PieceItem({ piece, trackedScreen }: Props) {
           <View style={styles.pieceContent}>
             <WriterText
               style={styles.pieceContentText}
-              fontFamily="Medium"
             >{`${piece.firstPart.content}`}</WriterText>
           </View>
         )}
@@ -87,6 +98,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     marginVertical: 8,
   },
+  pieceTitle: {
+    width: getWidthByRatio(0.6),
+    flexWrap: 'wrap',
+  },
   pieceContent: {
     marginTop: 20,
     overflow: 'hidden',
@@ -96,7 +111,6 @@ const styles = StyleSheet.create({
   },
   pieceContentText: {
     lineHeight: 28,
-    fontStyle: 'italic',
   },
   pieceWriter: {
     marginBottom: 4,
@@ -107,20 +121,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   genreListContainer: {
-    marginTop: 8,
-    paddingLeft: 32,
+    marginTop: 4,
+    marginLeft: -4,
     width: getWidthByRatio(1) - 110,
   },
   ageRating: {
     position: 'absolute',
-    top: 8,
-    left: 0,
+    bottom: 2,
+    left: 2,
+    borderWidth: 0,
   },
   image: {
     height: 96,
     width: 96,
     borderRadius: 8,
     marginRight: 16,
+    borderWidth: 1,
   },
   imageAndTitle: {
     flexDirection: 'row',

@@ -24,10 +24,10 @@ export function WriterAgeRating({ ageRating, style, small }: Props) {
   return (
     <View
       style={[
-        style,
         styles.container,
         small ? styles.smallContainer : styles.bigContainer,
         { backgroundColor: theme.colors.scrim },
+        style,
       ]}
     >
       <WriterText fontFamily="Bold" size={small ? 14 : 28} align="center">

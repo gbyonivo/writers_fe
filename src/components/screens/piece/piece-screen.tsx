@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   ageRating: {
     left: 16,
-    top: 4,
+    top: -2,
     position: 'absolute',
   },
 })

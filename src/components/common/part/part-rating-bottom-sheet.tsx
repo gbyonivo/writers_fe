@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useTheme } from 'react-native-paper'
 import { Part } from 'writers_shared'
@@ -31,8 +31,8 @@ export const PartRatingBottomSheet = forwardRef(function PartRatingBottomSheet(
   const [newRating, setNewRating] = useState<null | number>(null)
   const bottomSheetRef = useRef<BottomSheet>(null)
 
-  const bottomSheetIndicator = {
-    backgroundColor: theme.colors.background,
+  const bottomSheetIndicator: ViewStyle = {
+    backgroundColor: theme.colors.outlineVariant,
   }
 
   const bottomSheetStyle = {
@@ -77,14 +77,7 @@ export const PartRatingBottomSheet = forwardRef(function PartRatingBottomSheet(
               part={partInMemo}
               newRating={newRating}
             />
-            <ScrollView
-              style={[
-                styles.body,
-                {
-                  borderColor: theme.colors.onSecondary,
-                },
-              ]}
-            >
+            <ScrollView style={[styles.body]}>
               <WriterText style={styles.text}>{part.content}</WriterText>
             </ScrollView>
             <PartRatingBottomSheetFooter
