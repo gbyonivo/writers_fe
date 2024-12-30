@@ -14,6 +14,7 @@ import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { AnimatedPager } from '../../containers/page-scroller'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { VoiceSetUpContainer } from '../voice-set-up-container'
+import { WriterHeader } from '../writer-header'
 import { PieceCreateFormFirstPart } from './piece-create-form-first-part'
 import { PieceCreateFormGenres } from './piece-create-form-genres'
 import { PieceCreateFormHeader } from './piece-create-form-header'
@@ -90,17 +91,20 @@ export function PieceCreateForm({
 
   return (
     <>
-      <PieceCreateFormHeader
-        type={values.type}
-        loading={loading}
-        formErrors={formErrors}
-        pageIndex={pageIndex}
-        onPressNext={onPressNext}
-        onPressPrevious={onPressPrevious}
-        errorKey={errorKeys[pageIndex]}
-        previousBtnLabel={previousButtonLabel[pageIndex]}
-        nextBtnLabel={nextButtonLabel[pageIndex]}
-      />
+      <WriterHeader title="" hideBackButton containerStyle={styles.header}>
+        <PieceCreateFormHeader
+          type={values.type}
+          loading={loading}
+          formErrors={formErrors}
+          pageIndex={pageIndex}
+          onPressNext={onPressNext}
+          onPressPrevious={onPressPrevious}
+          errorKey={errorKeys[pageIndex]}
+          previousBtnLabel={previousButtonLabel[pageIndex]}
+          nextBtnLabel={nextButtonLabel[pageIndex]}
+        />
+      </WriterHeader>
+
       <AnimatedPager
         style={styles.pagerView}
         initialPage={0}
@@ -160,12 +164,10 @@ const styles = StyleSheet.create({
   pagerView: {
     flex: 1,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 32,
-  },
   floatingButton: {
     bottom: 100,
+  },
+  header: {
+    justifyContent: 'flex-end',
   },
 })

@@ -3,6 +3,7 @@ import { useTheme } from 'react-native-paper'
 import { Piece } from 'writers_shared'
 
 import { getWidthByRatio } from '../../../utils/common'
+import { WriterButton } from '../../common/writer-button'
 import { WriterText } from '../../common/writer-text'
 import { WrittenBy } from '../../common/written-by'
 
@@ -27,6 +28,11 @@ export function ImageSlide({ piece }: Props) {
         </WriterText>
         <WrittenBy name={piece.user?.name} createdAt={piece.createdAt} />
       </View>
+      <View style={styles.buttonContainer}>
+        <WriterButton icon="video" onPress={() => {}} iconRight>
+          Make Video
+        </WriterButton>
+      </View>
     </View>
   )
 }
@@ -41,5 +47,9 @@ const styles = StyleSheet.create({
     width: getWidthByRatio(0.9),
     borderRadius: 16,
     height: 350,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    marginTop: 16,
   },
 })

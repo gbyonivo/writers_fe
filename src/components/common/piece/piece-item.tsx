@@ -4,7 +4,7 @@ import { Image, StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { Piece } from 'writers_shared'
 
-import { getWidthByRatio } from '../../../utils/common'
+import { TYPE_LABEL_REPLACEMENTS, getWidthByRatio } from '../../../utils/common'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
@@ -71,6 +71,11 @@ export function PieceItem({ piece, trackedScreen }: Props) {
                   containerStyle={styles.genreListContainer}
                 />
               )}
+            </View>
+            <View>
+              <WriterText color={theme.colors.outline} size={14}>
+                {TYPE_LABEL_REPLACEMENTS[piece.type]}
+              </WriterText>
             </View>
           </View>
         </View>

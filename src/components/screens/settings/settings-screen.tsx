@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet } from 'react-native'
 
 import { WriterBackground } from '../../common/writer-background'
+import { WriterHeader } from '../../common/writer-header'
 import { DeleteAccount } from './delete-account'
 import { GoPremium } from './go-premium'
 import { Logout } from './logout'
@@ -14,6 +15,7 @@ import { Version } from './version'
 export function SettingsScreen() {
   return (
     <WriterBackground style={{ flex: 1 }} isView>
+      <WriterHeader title="Settings" hideBackButton />
       <ScrollView style={styles.container}>
         <ToggleTheme />
         <ToggleDesign />

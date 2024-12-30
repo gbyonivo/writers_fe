@@ -74,7 +74,7 @@ export function PieceCreationScreen() {
   }, [created])
 
   return (
-    <WriterBackground>
+    <WriterBackground isView>
       <PieceCreateForm
         values={form.values}
         handleChange={form.handleChange}

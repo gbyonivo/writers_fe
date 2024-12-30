@@ -90,3 +90,8 @@ export const createKeyForSuggestions = ({
     type,
   ].join('-')
 }
+
+export const TYPE_LABEL_REPLACEMENTS: Record<PieceType, string> = {
+  POEM: 'Poem',
+  STORY: 'Story',
+}
