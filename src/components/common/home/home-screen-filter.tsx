@@ -6,13 +6,9 @@ import { useSelector } from 'react-redux'
 import { PieceType } from 'writers_shared/dist'
 
 import { AppState } from '../../../types/states/AppState'
+import { TYPE_LABEL_REPLACEMENTS } from '../../../utils/common'
 import { WriterBottomSheet } from '../writer-bottom-sheet'
 import { WriterText } from '../writer-text'
-
-const typeLabelReplacement: Record<PieceType, string> = {
-  POEM: 'Poem',
-  STORY: 'Story',
-}
 
 interface Props {
   onSetTypes: (value: PieceType[]) => void
@@ -44,11 +40,11 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
   }
 
   const combinedFilter = [
-    ...types.map((type) => typeLabelReplacement[type] || type),
+    ...types.map((type) => TYPE_LABEL_REPLACEMENTS[type] || type),
     ...genres.map((genre) => genre.name),
   ]
-  const firstThree = combinedFilter.slice(0, 5)
-  const remainingLength = combinedFilter.length - 5
+  const firstThree = combinedFilter.slice(0, 3)
+  const remainingLength = combinedFilter.length - 3
 
   return (
     <View style={styles.container}>
@@ -112,7 +108,7 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
                       fontFamily="SemiBold"
                       color={isSelected ? colors.outlineVariant : ''}
                     >
-                      {typeLabelReplacement[pieceType] || pieceType}
+                      {TYPE_LABEL_REPLACEMENTS[pieceType] || pieceType}
                     </WriterText>
                   </TouchableOpacity>
                 )
@@ -145,7 +141,7 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
 const styles = StyleSheet.create({
   container: {
     height: 48,
-    marginHorizontal: 0,
+    marginTop: 8,
     paddingVertical: 2,
   },
   dropdown: {

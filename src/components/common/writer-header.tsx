@@ -1,11 +1,11 @@
 import { useNavigation } from 'expo-router'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { FontFamily } from '../../types/font'
 import { truncateString } from '../../utils/common'
 import { MovingText } from './voice-player/moving-text'
-import { WriterIcon } from './writer-icon'
 import { WriterIconButton } from './writer-icon-button'
 import { WriterText } from './writer-text'
 
@@ -15,8 +15,11 @@ interface Props {
   containerStyle?: StyleProp<ViewStyle>
   movingTextStyle?: StyleProp<ViewStyle>
   movingTextContainerStyle?: StyleProp<ViewStyle>
+  headerTextStyle?: StyleProp<TextStyle>
   maxTitleLength?: number
   isMoving?: boolean
+  hideBackButton?: boolean
+  fontFamily?: FontFamily
 }
 
 export function WriterHeader({
@@ -27,20 +30,31 @@ export function WriterHeader({
   isMoving,
   movingTextStyle,
   movingTextContainerStyle,
+  hideBackButton,
+  headerTextStyle,
+  fontFamily,
 }: Props) {
   const { top } = useSafeAreaInsets()
   const { colors } = useTheme()
   const { goBack } = useNavigation()
   return (
-    <View style={[{ marginTop: top }, style.container, containerStyle]}>
-      <WriterIconButton
-        icon="chevron-left"
-        size={48}
-        iconColor={colors.outlineVariant}
-        bacgroundColor="transparent"
-        style={{ backgroundColor: 'transparent', top: -12 }}
-        onPress={() => goBack()}
-      />
+    <View
+      style={[
+        { marginTop: top, marginLeft: hideBackButton ? 16 : 0 },
+        style.container,
+        containerStyle,
+      ]}
+    >
+      {!hideBackButton && (
+        <WriterIconButton
+          icon="chevron-left"
+          size={48}
+          iconColor={colors.outlineVariant}
+          bacgroundColor="transparent"
+          style={{ backgroundColor: 'transparent', top: -12 }}
+          onPress={() => goBack()}
+        />
+      )}
       {!!title && (
         <>
           {isMoving ? (
@@ -57,7 +71,12 @@ export function WriterHeader({
               />
             </View>
           ) : (
-            <WriterText mt={16} color={colors.outlineVariant}>
+            <WriterText
+              mt={16}
+              color={colors.outlineVariant}
+              style={headerTextStyle}
+              fontFamily={fontFamily}
+            >
               {truncateString({ text: title, maxLength: maxTitleLength })}
             </WriterText>
           )}

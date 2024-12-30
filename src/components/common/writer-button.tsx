@@ -1,4 +1,4 @@
-import { StyleProp, TextStyle, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, TextStyle, ViewStyle } from 'react-native'
 import { Button, useTheme } from 'react-native-paper'
 import { IconSource } from 'react-native-paper/lib/typescript/components/Icon'
 
@@ -30,7 +30,10 @@ export function WriterButton({
       mode="contained-tonal"
       onPress={onPress}
       style={style}
-      contentStyle={[iconRight ? { flexDirection: 'row-reverse' } : {}]}
+      contentStyle={[
+        iconRight ? { flexDirection: 'row-reverse' } : {},
+        styles.button,
+      ]}
       uppercase
       disabled={disabled}
       textColor={textColor}
@@ -41,3 +44,9 @@ export function WriterButton({
     </Button>
   )
 }
+
+const styles = StyleSheet.create({
+  button: {
+    borderRadius: 2,
+  },
+})

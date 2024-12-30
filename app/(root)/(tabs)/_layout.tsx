@@ -75,6 +75,7 @@ export default function TabLayout() {
             ),
             headerLeft: () => <WriterText {...headerStyle}>Narate</WriterText>,
             headerShadowVisible: false,
+            headerShown: false,
             ...commonProps,
           }}
         />
@@ -120,6 +121,7 @@ export default function TabLayout() {
               />
             ),
             headerLeft: () => <WriterText {...headerStyle}>Profile</WriterText>,
+            headerShown: false,
             ...commonProps,
           }}
         />
@@ -135,6 +137,7 @@ export default function TabLayout() {
             headerLeft: () => (
               <WriterText {...headerStyle}>Settings</WriterText>
             ),
+            headerShown: false,
             ...commonProps,
           }}
         />

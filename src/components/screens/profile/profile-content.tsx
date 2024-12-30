@@ -19,7 +19,7 @@ export function ProfileContent({ userId, showLogout = false }: Props) {
   const { user } = useUser(userId)
   return (
     <WriterBackground style={styles.parentContainer} isView>
-      <WriterHeader title={user?.name || ''} />
+      <WriterHeader title={user?.name || ''} hideBackButton />
       <View style={styles.container}>
         <View style={styles.detailsContainer}>
           <UserDetails userId={userId} />
