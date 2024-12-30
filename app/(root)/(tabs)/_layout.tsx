@@ -19,8 +19,6 @@ function TabBarIcon(props: {
   return <FontAwesome size={26} style={{ marginBottom: -3 }} {...props} />
 }
 
-const PremiumColor = '#f43f5e'
-
 const commonProps: Record<string, any> = {
   headerTitleStyle: {
     fontFamily: 'Medium' as FontFamily,
@@ -38,6 +36,7 @@ const headerStyle = {
 export default function TabLayout() {
   const theme = useTheme()
   const isPremiumAccount = useIsPremium()
+  const PREMIUM_COLOR = theme.colors.outlineVariant
   return (
     <>
       <Tabs
@@ -49,7 +48,7 @@ export default function TabLayout() {
           headerStyle: {
             backgroundColor: theme.colors.background,
           },
-          headerTintColor: theme.colors.onBackground,
+          headerTintColor: theme.colors.background,
           headerShadowVisible: false,
           tabBarBackground: () => (
             <BlurView
@@ -71,7 +70,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color, focused }) => (
               <TabBarIcon
                 name="home"
-                color={isPremiumAccount && focused ? PremiumColor : color}
+                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
               />
             ),
             headerLeft: () => <WriterText {...headerStyle}>Narate</WriterText>,
@@ -85,7 +84,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color, focused }) => (
               <TabBarIcon
                 name="search"
-                color={isPremiumAccount && focused ? PremiumColor : color}
+                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
               />
             ),
             ...commonProps,
@@ -104,7 +103,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color, focused }) => (
               <TabBarIcon
                 name="plus-square"
-                color={isPremiumAccount && focused ? PremiumColor : color}
+                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
               />
             ),
             ...commonProps,
@@ -117,7 +116,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color, focused }) => (
               <TabBarIcon
                 name="user"
-                color={isPremiumAccount && focused ? PremiumColor : color}
+                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
               />
             ),
             headerLeft: () => <WriterText {...headerStyle}>Profile</WriterText>,
@@ -130,7 +129,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color, focused }) => (
               <TabBarIcon
                 name="cog"
-                color={isPremiumAccount && focused ? PremiumColor : color}
+                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
               />
             ),
             headerLeft: () => (

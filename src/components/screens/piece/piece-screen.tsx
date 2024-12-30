@@ -3,10 +3,13 @@ import { useTheme } from 'react-native-paper'
 
 import { usePiece } from '../../../hooks/apollo/use-piece'
 import { GenreList } from '../../common/genre/genre-list'
+import { PartChainToggle } from '../../common/part/part-chain-toggle'
 import { PartListForPiece } from '../../common/part/part-list-for-piece'
+import { MovingText } from '../../common/voice-player/moving-text'
 import { WriterActivityIndicator } from '../../common/writer-activity-indicator'
 import { WriterAgeRating } from '../../common/writer-age-rating'
 import { WriterBackground } from '../../common/writer-background'
+import { WriterHeader } from '../../common/writer-header'
 import { WriterText } from '../../common/writer-text'
 
 interface Props {
@@ -21,17 +24,17 @@ export function PieceScreen({ pieceId, pieceName, preselectedPartIds }: Props) {
 
   return (
     <WriterBackground isView style={styles.parentContainer}>
+      {/* <WriterHeader title={piece?.title}> */}
+      <WriterHeader
+        title={piece?.title}
+        containerStyle={{ justifyContent: 'space-between' }}
+        maxTitleLength={12}
+        isMoving
+        movingTextContainerStyle={styles.movingTextContainer}
+      >
+        <PartChainToggle />
+      </WriterHeader>
       <View style={[styles.container]}>
-        <WriterText
-          style={styles.pieceNameContainer}
-          mb={8}
-          mt={8}
-          fontFamily="Bold"
-          size={24}
-          align="center"
-        >
-          {piece?.title || pieceName}
-        </WriterText>
         {!!piece?.genreIds?.length && (
           <View style={styles.ageRatingAndGenreList}>
             <WriterAgeRating
@@ -76,5 +79,8 @@ const styles = StyleSheet.create({
     left: 16,
     top: -2,
     position: 'absolute',
+  },
+  movingTextContainer: {
+    width: 100,
   },
 })

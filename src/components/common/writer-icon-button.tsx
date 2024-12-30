@@ -7,9 +7,20 @@ interface Props {
   style?: StyleProp<ViewStyle>
   icon: IconSource
   disabled?: boolean
+  size?: number
+  iconColor?: string
+  bacgroundColor?: string
 }
 
-export function WriterIconButton({ onPress, style, icon, disabled }: Props) {
+export function WriterIconButton({
+  onPress,
+  style,
+  icon,
+  disabled,
+  size,
+  iconColor,
+  bacgroundColor,
+}: Props) {
   return (
     <IconButton
       icon={icon}
@@ -17,6 +28,9 @@ export function WriterIconButton({ onPress, style, icon, disabled }: Props) {
       onPress={onPress}
       style={style}
       disabled={disabled}
+      size={size}
+      iconColor={iconColor}
+      background={bacgroundColor}
     />
   )
 }

@@ -26,10 +26,11 @@ export default function Layout() {
         name="index"
         options={{
           headerStyle: { backgroundColor: colors.background },
-          headerTintColor: colors.onBackground,
+          headerTintColor: colors.background,
           headerTitle: () => <></>,
           headerLeft: () => <Appbar.BackAction onPress={onPressBack} />,
           headerRight: () => <PartChainToggle />,
+          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -37,7 +38,7 @@ export default function Layout() {
         options={{
           animation: 'slide_from_left',
           headerStyle: { backgroundColor: colors.background },
-          headerTintColor: colors.onBackground,
+          headerTintColor: colors.background,
           headerTitleStyle: {
             fontWeight: 'bold',
           },

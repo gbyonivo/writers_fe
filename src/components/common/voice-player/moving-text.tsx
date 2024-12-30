@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useTheme } from 'react-native-paper'
 import Animated, {
   Easing,
   StyleProps,
@@ -14,17 +15,19 @@ export type MovingTextProps = {
   text: string
   animationThreshold: number
   style?: StyleProps
+  multiplier?: number
 }
 
 export const MovingText = ({
   text,
   animationThreshold,
   style,
+  multiplier = 5,
 }: MovingTextProps) => {
   const translateX = useSharedValue(0)
   const shouldAnimate = text.length >= animationThreshold
-
-  const textWidth = text.length * 3
+  const { colors } = useTheme()
+  const textWidth = text.length * multiplier
 
   useEffect(() => {
     translateX.value = 0
@@ -64,8 +67,8 @@ export const MovingText = ({
         style,
         animatedStyle,
         shouldAnimate && {
-          width: 9999, // preventing the ellipsis from appearing
-          paddingLeft: 16, // avoid the initial character being barely visible
+          width: 9999,
+          paddingLeft: 16,
         },
       ]}
     >

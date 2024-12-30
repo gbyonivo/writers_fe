@@ -7,9 +7,11 @@ import { Part, Piece } from 'writers_shared/dist'
 
 import { usePartsByIds } from '../../../hooks/apollo/use-parts-by-ids'
 import { AppState } from '../../../types/states/AppState'
+import { getWidthByRatio } from '../../../utils/common'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WriterText } from '../writer-text'
+import { MovingText } from './moving-text'
 import { PlayPauseButton } from './play-pause-button'
 import { SeekBar } from './seek-bar'
 
@@ -77,9 +79,11 @@ export function FloatingPlayerControl({
             <Image source={{ uri: piece.imageUrl }} style={styles.image} />
             <View>
               <View style={styles.trackTitleContainer}>
-                <WriterText size={12} fontFamily="Medium">
-                  {piece?.title}
-                </WriterText>
+                <MovingText
+                  text={piece?.title}
+                  animationThreshold={8}
+                  style={{ color: colors.onBackground }}
+                />
               </View>
               <View style={styles.trackTitleContainer}>
                 <WriterText
@@ -120,6 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     overflow: 'hidden',
     marginLeft: 10,
+    width: getWidthByRatio(1) - 240,
   },
   trackControlsContainer: {
     flexDirection: 'row',

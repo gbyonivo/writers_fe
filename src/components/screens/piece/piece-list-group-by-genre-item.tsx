@@ -40,7 +40,7 @@ export function PieceListGroupedByGenreItem({ piece }: Props) {
       />
       <View style={styles.titleContainer}>
         <BlurView
-          intensity={20}
+          intensity={10}
           style={{
             ...StyleSheet.absoluteFillObject,
             backgroundColor: theme.colors.background,
@@ -50,8 +50,8 @@ export function PieceListGroupedByGenreItem({ piece }: Props) {
         <WriterText
           size={14}
           align="center"
-          fontFamily="Light"
-          color={theme.colors.outlineVariant}
+          fontFamily="Medium"
+          color={theme.colors.onBackground}
         >
           {truncateString({ text: piece.title, maxLength: 17 })}
         </WriterText>
