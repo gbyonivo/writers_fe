@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
   },
   pieceContentText: {
     lineHeight: 28,
+    marginLeft: -8,
   },
   pieceWriter: {
     marginBottom: 4,

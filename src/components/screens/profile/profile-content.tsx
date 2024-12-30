@@ -2,8 +2,10 @@
 import { StyleSheet, View } from 'react-native'
 
 import { useAuthContext } from '../../../context/auth-context'
+import { useUser } from '../../../hooks/apollo/use-user'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterBackground } from '../../common/writer-background'
+import { WriterHeader } from '../../common/writer-header'
 import { PieceListInTabs } from '../piece/piece-list-in-tabs'
 import { UserDetails } from './user-details'
 
@@ -14,8 +16,10 @@ interface Props {
 
 export function ProfileContent({ userId, showLogout = false }: Props) {
   const { user: loggedInUser } = useAuthContext()
+  const { user } = useUser(userId)
   return (
     <WriterBackground style={styles.parentContainer} isView>
+      <WriterHeader title={user?.name || ''} />
       <View style={styles.container}>
         <View style={styles.detailsContainer}>
           <UserDetails userId={userId} />

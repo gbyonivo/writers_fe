@@ -14,7 +14,7 @@ interface Props {
 export function PartListCarousel({ data, piece }: Props) {
   return (
     <Carousel
-      loop
+      loop={false}
       width={getWidthByRatio(0.9)}
       height={getHeighByRatio(0.8)}
       data={data}

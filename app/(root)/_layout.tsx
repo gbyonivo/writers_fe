@@ -44,22 +44,24 @@ export default function RootLayout() {
           name="users/[id]"
           options={{
             headerStyle: { backgroundColor: colors.background },
-            headerTintColor: colors.onBackground,
+            headerTintColor: colors.background,
             headerTitle: () => <></>,
             headerLeft: () => (
               <Appbar.BackAction onPress={() => router.back()} />
             ),
+            headerShown: false,
           }}
         />
         <Stack.Screen
           name="player/[id]"
           options={{
             headerStyle: { backgroundColor: colors.background },
-            headerTintColor: colors.onBackground,
+            headerTintColor: colors.backdrop,
             headerTitle: () => <></>,
             headerLeft: () => (
               <Appbar.BackAction onPress={() => router.back()} />
             ),
+            headerShown: false,
           }}
         />
       </Stack>

@@ -1,4 +1,5 @@
 import { Image, StyleSheet, View } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { Piece } from 'writers_shared'
 
 import { getWidthByRatio } from '../../../utils/common'
@@ -10,11 +11,18 @@ interface Props {
 }
 
 export function ImageSlide({ piece }: Props) {
+  const { colors } = useTheme()
   return (
     <View style={styles.container}>
       <Image source={{ uri: piece.imageUrl }} style={styles.image} />
       <View>
-        <WriterText align="center" mt={16} fontFamily="ExtraLight" size={18}>
+        <WriterText
+          mt={16}
+          mb={8}
+          fontFamily="Medium"
+          size={24}
+          color={colors.onBackground}
+        >
           {piece.title}
         </WriterText>
         <WrittenBy name={piece.user?.name} createdAt={piece.createdAt} />
