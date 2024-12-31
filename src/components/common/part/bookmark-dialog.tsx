@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 
 import { useBookmarkMutation } from '../../../hooks/apollo/use-bookmark-mutation'
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
-import { onBookmarkPiece } from '../../../utils/signal'
+import { onBookmarkPieceSignal } from '../../../utils/signal'
 import { WriterTextInput } from '../inputs/writer-text-input'
 import { WriterButton } from '../writer-button'
 import { WriterDialog } from '../writer-dialog'
@@ -24,8 +24,8 @@ export function BookmarkDialog({ partIds = [], pieceId }: Props) {
 
   useEffect(() => {
     let removeListener = null
-    if (onBookmarkPiece.getNumberOfListeners() < 1) {
-      removeListener = onBookmarkPiece.listen(() => {
+    if (onBookmarkPieceSignal.getNumberOfListeners() < 1) {
+      removeListener = onBookmarkPieceSignal.listen(() => {
         setVisible(true)
       })
     }

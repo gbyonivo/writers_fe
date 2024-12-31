@@ -19,6 +19,7 @@ interface Props {
   children: JSX.Element
   userId?: number
   type?: PieceType
+  genreIds?: number[]
 }
 
 export const PieceListContext = React.createContext<IPieceListContext>(
@@ -29,11 +30,12 @@ export function usePieceListContext(): IPieceListContext {
   return React.useContext<IPieceListContext>(PieceListContext)
 }
 
-function PieceListContextProvider({ children, userId, type }: Props) {
+function PieceListContextProvider({ children, userId, type, genreIds }: Props) {
   const dispatch = useDispatch()
   const { loading, error, pieces, refetch, fetchMore } = usePieces({
     userId,
     type,
+    genreIds,
   })
 
   const endCursor = pieces?.pageInfo?.endCursor

@@ -36,57 +36,59 @@ export function PieceItem({ piece, trackedScreen }: Props) {
   if (!piece) return null
   return (
     <View style={[styles.container]}>
-      <TouchableOpacity onPress={onPress}>
-        <View style={styles.imageAndTitle}>
-          <View>
+      <View style={styles.imageAndTitle}>
+        <View>
+          <TouchableOpacity onPress={onPress}>
             <Image
               source={{ uri: piece.imageUrl }}
               style={[styles.image, { borderColor: theme.colors.scrim }]}
             />
-            <WriterAgeRating
-              ageRating={piece.firstPart.ageRating}
-              style={[
-                styles.ageRating,
-                {
-                  backgroundColor: theme.colors.backdrop,
-                },
-              ]}
-              small
-            />
-          </View>
+          </TouchableOpacity>
+          <WriterAgeRating
+            ageRating={piece.firstPart.ageRating}
+            style={[
+              styles.ageRating,
+              {
+                backgroundColor: theme.colors.backdrop,
+              },
+            ]}
+            small
+          />
+        </View>
 
+        <View>
+          <WriterText
+            color={theme.colors.onBackground}
+            size={18}
+            fontFamily="Bold"
+            style={styles.pieceTitle}
+          >
+            {piece.title}
+          </WriterText>
           <View>
-            <WriterText
-              color={theme.colors.onBackground}
-              size={18}
-              fontFamily="Bold"
-              style={styles.pieceTitle}
-            >
-              {piece.title}
+            {!!piece.genreIds.length && (
+              <GenreList
+                genreIds={piece.genreIds}
+                containerStyle={styles.genreListContainer}
+              />
+            )}
+          </View>
+          <View>
+            <WriterText color={theme.colors.outline} size={14}>
+              {TYPE_LABEL_REPLACEMENTS[piece.type]}
             </WriterText>
-            <View>
-              {!!piece.genreIds.length && (
-                <GenreList
-                  genreIds={piece.genreIds}
-                  containerStyle={styles.genreListContainer}
-                />
-              )}
-            </View>
-            <View>
-              <WriterText color={theme.colors.outline} size={14}>
-                {TYPE_LABEL_REPLACEMENTS[piece.type]}
-              </WriterText>
-            </View>
           </View>
         </View>
-        {piece.firstPart && (
+      </View>
+      {piece.firstPart && (
+        <TouchableOpacity onPress={onPress}>
           <View style={styles.pieceContent}>
             <WriterText
               style={styles.pieceContentText}
             >{`${piece.firstPart.content}`}</WriterText>
           </View>
-        )}
-      </TouchableOpacity>
+        </TouchableOpacity>
+      )}
       <View style={styles.pieceFooter}>
         <WrittenBy name={piece.user.name} createdAt={piece.createdAt} />
         <View>
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
   genreListContainer: {
     marginTop: 4,
     marginLeft: -4,
-    width: getWidthByRatio(1) - 110,
+    width: getWidthByRatio(1) - 150,
   },
   ageRating: {
     position: 'absolute',

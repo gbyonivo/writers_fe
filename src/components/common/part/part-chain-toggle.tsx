@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux'
 import { useShouldChainParts } from '../../../hooks/selectors/use-should-chain-parts'
 import { toggleShouldChainPart } from '../../../store/slices/settings'
 import {
-  onBookmarkPiece,
-  onPlayPiece,
-  onSharePiece,
+  onBookmarkPieceSignal,
+  onPlayPieceSignal,
+  onSharePieceSignal,
 } from '../../../utils/signal'
 import { WriterIconButton } from '../writer-icon-button'
 
@@ -20,17 +20,17 @@ export function PartChainToggle({ style }: { style?: StyleProp<ViewStyle> }) {
     <View style={styles.container}>
       <WriterIconButton
         icon="play"
-        onPress={() => onPlayPiece.emit()}
+        onPress={() => onPlayPieceSignal.emit()}
         style={[styles.iconStyle, style]}
       />
       <WriterIconButton
         icon="share"
-        onPress={() => onSharePiece.emit()}
+        onPress={() => onSharePieceSignal.emit()}
         style={[styles.iconStyle, style]}
       />
       <WriterIconButton
         icon="bookmark"
-        onPress={() => onBookmarkPiece.emit()}
+        onPress={() => onBookmarkPieceSignal.emit()}
         style={[styles.iconStyle, style]}
       />
       <WriterIconButton

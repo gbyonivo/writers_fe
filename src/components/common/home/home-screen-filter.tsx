@@ -1,5 +1,5 @@
 import { BlurView } from 'expo-blur'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
@@ -12,10 +12,15 @@ import { WriterText } from '../writer-text'
 
 interface Props {
   onSetTypes: (value: PieceType[]) => void
+  onSetGenreIds: (value: number[]) => void
   hideTypes?: boolean
 }
 
-export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
+export function HomeScreenFilter({
+  onSetTypes,
+  hideTypes,
+  onSetGenreIds,
+}: Props) {
   const { colors } = useTheme()
   const [types, setTypes] = useState<PieceType[]>([])
   const [genres, setGenres] = useState([])
@@ -32,19 +37,19 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
   }
 
   const selectGenre = (genre: string) => {
-    if (genres.includes(genre)) {
-      setGenres(genres.filter((t) => t !== genre))
-    } else {
-      setGenres([...genres, genre])
-    }
+    const selectedGenres = genres.includes(genre)
+      ? genres.filter((t) => t !== genre)
+      : [...genres, genre]
+    setGenres(selectedGenres)
+    onSetGenreIds(selectedGenres.map((genre) => genre.id))
   }
 
   const combinedFilter = [
     ...types.map((type) => TYPE_LABEL_REPLACEMENTS[type] || type),
     ...genres.map((genre) => genre.name),
   ]
-  const firstThree = combinedFilter.slice(0, 3)
-  const remainingLength = combinedFilter.length - 3
+  const firstThree = combinedFilter.slice(0, 2)
+  const remainingLength = combinedFilter.length - 2
 
   return (
     <View style={styles.container}>
@@ -141,7 +146,7 @@ export function HomeScreenFilter({ onSetTypes, hideTypes }: Props) {
 const styles = StyleSheet.create({
   container: {
     height: 48,
-    marginTop: 8,
+    // marginTop: 8,
     paddingVertical: 2,
   },
   dropdown: {

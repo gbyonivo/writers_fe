@@ -10,9 +10,10 @@ import { useCopyParts } from '../../../hooks/use-copy-parts'
 import { setShouldChainPart } from '../../../store/slices/settings'
 import { trackEvent } from '../../../utils/mixpanel'
 import {
-  onPlayPiece,
-  onSharePiece,
-  onStartPlaying,
+  onGoToPlayerSignal,
+  onPlayPieceSignal,
+  onSharePieceSignal,
+  onStartPlayingSignal,
 } from '../../../utils/signal'
 import { TrackedComponentLocation } from '../../../utils/tracking/tracked-component-location'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
@@ -67,12 +68,15 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
 
   useEffect(() => {
     let removeListener = null
-    if (onPlayPiece.getNumberOfListeners() < 1) {
-      removeListener = onPlayPiece.listen(() => {
-        onStartPlaying.emit({
+    if (onPlayPieceSignal.getNumberOfListeners() < 1) {
+      removeListener = onPlayPieceSignal.listen(() => {
+        onStartPlayingSignal.emit({
           partIds: Object.values(positionToPartIdMapRef.current),
           pieceId,
         })
+        router.navigate(
+          `/player/${pieceId}?partIds=${Object.values(positionToPartIdMapRef.current).join(',')}`,
+        )
       })
     }
 
@@ -83,8 +87,23 @@ export function PartList({ parts = [], pieceId, preselectedPartIds }: Props) {
 
   useEffect(() => {
     let removeListener = null
-    if (onSharePiece.getNumberOfListeners() < 1) {
-      removeListener = onSharePiece.listen(() => {
+    if (onGoToPlayerSignal.getNumberOfListeners() < 1) {
+      removeListener = onGoToPlayerSignal.listen(() => {
+        router.navigate(
+          `/player/${pieceId}?partIds=${Object.values(positionToPartIdMapRef.current).join(',')}`,
+        )
+      })
+    }
+
+    return () => {
+      removeListener?.()
+    }
+  }, [])
+
+  useEffect(() => {
+    let removeListener = null
+    if (onSharePieceSignal.getNumberOfListeners() < 1) {
+      removeListener = onSharePieceSignal.listen(() => {
         writeToClipboard()
       })
     }

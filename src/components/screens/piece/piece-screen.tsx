@@ -2,15 +2,14 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
 import { usePiece } from '../../../hooks/apollo/use-piece'
+import { onGoToPlayerSignal } from '../../../utils/signal'
 import { GenreList } from '../../common/genre/genre-list'
 import { PartChainToggle } from '../../common/part/part-chain-toggle'
 import { PartListForPiece } from '../../common/part/part-list-for-piece'
-import { MovingText } from '../../common/voice-player/moving-text'
 import { WriterActivityIndicator } from '../../common/writer-activity-indicator'
 import { WriterAgeRating } from '../../common/writer-age-rating'
 import { WriterBackground } from '../../common/writer-background'
 import { WriterHeader } from '../../common/writer-header'
-import { WriterText } from '../../common/writer-text'
 
 interface Props {
   pieceId: number
@@ -31,6 +30,7 @@ export function PieceScreen({ pieceId, pieceName, preselectedPartIds }: Props) {
         maxTitleLength={12}
         isMoving
         movingTextContainerStyle={styles.movingTextContainer}
+        onPressHeaderTitle={() => onGoToPlayerSignal.emit()}
       >
         <PartChainToggle />
       </WriterHeader>
@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
   },
   genreListContainer: {
     paddingHorizontal: 24,
-    justifyContent: 'center',
     flex: 1,
+    overflow: 'hidden',
   },
   ageRatingAndGenreList: {
     flexDirection: 'row',

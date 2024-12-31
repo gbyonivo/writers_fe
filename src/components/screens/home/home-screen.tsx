@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { StyleSheet } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 import { PieceType } from 'writers_shared/dist'
 
@@ -18,6 +19,8 @@ export function HomeScreen() {
     (state: AppState) => state.settings,
   )
   const [types, setTypes] = useState<PieceType[]>([])
+  const [genreIds, setGenreIds] = useState<number[]>([])
+  const { colors } = useTheme()
 
   // todo
   const override = true || shouldShowTextBasedDesgin
@@ -29,15 +32,18 @@ export function HomeScreen() {
         hideBackButton
         containerStyle={styles.header}
         fontFamily="Bold"
+        headerTextStyle={{ fontSize: 28, marginTop: 0, color: colors.backdrop }}
       >
         <HomeScreenFilter
           onSetTypes={(types: PieceType[]) => setTypes(types)}
+          onSetGenreIds={(genreIds: number[]) => setGenreIds(genreIds)}
         />
       </WriterHeader>
       {override ? (
         <PieceListContainer
           trackedScreen={TrackedScreen.HOME_SCREEN}
           type={types.length === 1 ? types[0] : undefined}
+          genreIds={genreIds}
         />
       ) : (
         <PieceListInGenres

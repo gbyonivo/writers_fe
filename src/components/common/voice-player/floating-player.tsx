@@ -8,7 +8,7 @@ import { useAudioHelpers } from '../../../hooks/use-audio-funcs'
 import { useAudioPermissionRequest } from '../../../hooks/use-audio-permission-request'
 import { POSITION_MAP, PlayerPostion } from '../../../types/player-position'
 import { AppState } from '../../../types/states/AppState'
-import { onStartPlaying } from '../../../utils/signal'
+import { onStartPlayingSignal } from '../../../utils/signal'
 import { FloatingPlayerControl } from './floating-player-control'
 import { FloatingPlayerIndexControl } from './floating-player-index-control'
 
@@ -102,8 +102,8 @@ export function FloatingPlayer() {
 
   useEffect(() => {
     let removeListener = null
-    if (onStartPlaying.getNumberOfListeners() < 1) {
-      removeListener = onStartPlaying.listen(({ pieceId, partIds }) => {
+    if (onStartPlayingSignal.getNumberOfListeners() < 1) {
+      removeListener = onStartPlayingSignal.listen(({ pieceId, partIds }) => {
         setCurrentPieceAndPart({ partIds, pieceId })
       })
     }

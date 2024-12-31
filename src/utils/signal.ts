@@ -29,7 +29,8 @@ export const createSignal = <T = any>(): Signal<T> => {
 
 export const onPressCreatePartSignal = createSignal()
 export const onChangePartSignal = createSignal()
-export const onBookmarkPiece = createSignal()
-export const onPlayPiece = createSignal()
-export const onSharePiece = createSignal()
-export const onStartPlaying = createSignal()
+export const onBookmarkPieceSignal = createSignal()
+export const onPlayPieceSignal = createSignal()
+export const onGoToPlayerSignal = createSignal()
+export const onSharePieceSignal = createSignal()
+export const onStartPlayingSignal = createSignal()
