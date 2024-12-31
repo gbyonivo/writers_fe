@@ -6,7 +6,7 @@ import { Bookmark } from 'writers_shared'
 import { setAudio } from '../../../store/slices/audio'
 import { timeAgo } from '../../../utils/date'
 import { trackEvent } from '../../../utils/mixpanel'
-import { onStartPlaying } from '../../../utils/signal'
+import { onStartPlayingSignal } from '../../../utils/signal'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { WriterIcon } from '../../common/writer-icon'
@@ -54,7 +54,7 @@ export function BookmarkItem({ bookmark, setBookmarkToDelete }: Props) {
               id: bookmark.id,
             },
           })
-          onStartPlaying.emit({
+          onStartPlayingSignal.emit({
             partIds: bookmark.partIds,
             pieceId: bookmark.pieceId,
           })

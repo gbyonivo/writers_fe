@@ -1,5 +1,12 @@
 import { useNavigation } from 'expo-router'
-import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native'
+import {
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -20,6 +27,7 @@ interface Props {
   isMoving?: boolean
   hideBackButton?: boolean
   fontFamily?: FontFamily
+  onPressHeaderTitle: () => void
 }
 
 export function WriterHeader({
@@ -33,6 +41,7 @@ export function WriterHeader({
   hideBackButton,
   headerTextStyle,
   fontFamily,
+  onPressHeaderTitle,
 }: Props) {
   const { top } = useSafeAreaInsets()
   const { colors } = useTheme()
@@ -56,7 +65,7 @@ export function WriterHeader({
         />
       )}
       {!!title && (
-        <>
+        <TouchableOpacity onPress={() => onPressHeaderTitle?.()}>
           {isMoving ? (
             <View style={[style.movingTextContainer, movingTextContainerStyle]}>
               <MovingText
@@ -80,7 +89,7 @@ export function WriterHeader({
               {truncateString({ text: title, maxLength: maxTitleLength })}
             </WriterText>
           )}
-        </>
+        </TouchableOpacity>
       )}
       {children}
     </View>

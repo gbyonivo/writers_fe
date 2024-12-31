@@ -9,11 +9,17 @@ interface Props {
   userId?: number
   type?: PieceType
   trackedScreen: TrackedScreen
+  genreIds?: number[]
 }
 
-export function PieceListContainer({ userId, type, trackedScreen }: Props) {
+export function PieceListContainer({
+  userId,
+  type,
+  trackedScreen,
+  genreIds,
+}: Props) {
   return (
-    <PieceListContextProvider userId={userId} type={type}>
+    <PieceListContextProvider userId={userId} type={type} genreIds={genreIds}>
       <PieceList trackedScreen={trackedScreen} />
     </PieceListContextProvider>
   )

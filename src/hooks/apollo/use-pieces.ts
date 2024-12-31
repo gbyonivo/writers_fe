@@ -8,12 +8,14 @@ import { useEnhancedRefetch } from './use-enhanced-refetch'
 export const usePieces = ({
   userId,
   type,
+  genreIds = [],
 }: {
   userId?: number
   type?: PieceType
+  genreIds?: number[]
 }) => {
   const { data, loading, error, refetch, fetchMore } = useQuery(GET_PIECES, {
-    variables: { pagination: { userId, first: 4, type } },
+    variables: { pagination: { userId, first: 4, type, genreIds } },
   })
 
   const { response, refetching, enhancedRefetch, errorRefetching } =
