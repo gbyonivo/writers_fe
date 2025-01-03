@@ -1,16 +1,14 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { BlurView } from 'expo-blur'
 import { Tabs } from 'expo-router'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useSelector } from 'react-redux'
 
 import WriterSearchBar from '../../../src/components/common/writer-search-bar'
 import { WriterText } from '../../../src/components/common/writer-text'
 import { useIsPremium } from '../../../src/hooks/use-is-premium'
 import { FontFamily } from '../../../src/types/font'
-import { AppState } from '../../../src/types/states/AppState'
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name']
@@ -64,6 +62,19 @@ export default function TabLayout() {
         backBehavior="none"
         initialRouteName="home"
       >
+        <Tabs.Screen
+          name="video"
+          options={{
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarIcon
+                name="video-camera"
+                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
+              />
+            ),
+            headerShown: false,
+            ...commonProps,
+          }}
+        />
         <Tabs.Screen
           name="home"
           options={{
@@ -121,22 +132,6 @@ export default function TabLayout() {
               />
             ),
             headerLeft: () => <WriterText {...headerStyle}>Profile</WriterText>,
-            headerShown: false,
-            ...commonProps,
-          }}
-        />
-        <Tabs.Screen
-          name="settings"
-          options={{
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name="cog"
-                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
-              />
-            ),
-            headerLeft: () => (
-              <WriterText {...headerStyle}>Settings</WriterText>
-            ),
             headerShown: false,
             ...commonProps,
           }}

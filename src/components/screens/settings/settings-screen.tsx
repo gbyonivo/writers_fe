@@ -15,7 +15,7 @@ import { Version } from './version'
 export function SettingsScreen() {
   return (
     <WriterBackground style={{ flex: 1 }} isView>
-      <WriterHeader title="Settings" hideBackButton />
+      <WriterHeader title="Settings" />
       <ScrollView style={styles.container}>
         <ToggleTheme />
         <ToggleDesign />

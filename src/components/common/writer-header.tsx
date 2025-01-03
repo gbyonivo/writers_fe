@@ -27,7 +27,7 @@ interface Props {
   isMoving?: boolean
   hideBackButton?: boolean
   fontFamily?: FontFamily
-  onPressHeaderTitle: () => void
+  onPressHeaderTitle?: () => void
 }
 
 export function WriterHeader({
