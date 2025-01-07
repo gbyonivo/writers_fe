@@ -2,6 +2,7 @@ import { Image, StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { Piece } from 'writers_shared'
 
+import { useVideoMutation } from '../../../hooks/apollo/use-video-mutation'
 import { getWidthByRatio } from '../../../utils/common'
 import { WriterButton } from '../../common/writer-button'
 import { WriterText } from '../../common/writer-text'
@@ -9,9 +10,11 @@ import { WrittenBy } from '../../common/written-by'
 
 interface Props {
   piece: Piece
+  partIds: number[]
 }
 
-export function ImageSlide({ piece }: Props) {
+export function ImageSlide({ piece, partIds }: Props) {
+  const { createVideo, loading } = useVideoMutation({ showAlert: true })
   const { colors } = useTheme()
   return (
     <View style={styles.container}>
@@ -29,7 +32,17 @@ export function ImageSlide({ piece }: Props) {
         <WrittenBy name={piece.user?.name} createdAt={piece.createdAt} />
       </View>
       <View style={styles.buttonContainer}>
-        <WriterButton icon="video" onPress={() => {}} iconRight>
+        <WriterButton
+          icon="video"
+          onPress={() =>
+            createVideo({
+              partIds,
+              pieceId: piece.id,
+            })
+          }
+          iconRight
+          disabled={loading}
+        >
           Make Video
         </WriterButton>
       </View>

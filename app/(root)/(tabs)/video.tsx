@@ -1,3 +1,4 @@
+import { View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
 import { VideoScreen } from '../../../src/components/screens/video/video-screen'
@@ -6,7 +7,7 @@ import { setCurrentScreen } from '../../../src/store/slices/screen-monitor'
 import { trackScreenView } from '../../../src/utils/mixpanel'
 import { TrackedScreen } from '../../../src/utils/tracking/tracked-screen'
 
-export default function Profile() {
+export default function Video() {
   const dispatch = useDispatch()
   useOnFocus(() => {
     dispatch(setCurrentScreen(TrackedScreen.VIDEO_SCREEN))

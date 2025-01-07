@@ -73,10 +73,7 @@ export default function PlayerScreen() {
         />
         <WriterHeader title={piece.title} isMoving />
         <View style={styles.upper}>
-          <PartListCarousel
-            data={[piece.imageUrl, ...partsOnScreen]}
-            piece={piece}
-          />
+          <PartListCarousel parts={partsOnScreen} piece={piece} />
         </View>
       </ImageBackground>
     </WriterBackground>

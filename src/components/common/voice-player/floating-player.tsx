@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { usePiece } from '../../../hooks/apollo/use-piece'
 import { useAudioHelpers } from '../../../hooks/use-audio-funcs'
 import { useAudioPermissionRequest } from '../../../hooks/use-audio-permission-request'
-import { POSITION_MAP, PlayerPostion } from '../../../types/player-position'
+import { POSITION_MAP, PlayerPosition } from '../../../types/player-position'
 import { AppState } from '../../../types/states/AppState'
 import { onStartPlayingSignal } from '../../../utils/signal'
 import { FloatingPlayerControl } from './floating-player-control'
@@ -122,12 +122,16 @@ export function FloatingPlayer() {
     return () => clearTimeout(positionToSeekTimeoutRef.current)
   }, [positionToSeek])
 
+  if (position === PlayerPosition.NONE) {
+    return null
+  }
+
   return (
     <View
       style={[
         styles.container,
         // { backgroundColor: colors.background },
-        position === PlayerPostion.ABOVE_BOTTOM
+        position === PlayerPosition.ABOVE_BOTTOM
           ? styles.aboveBottomPosition
           : styles.bottomPosition,
       ]}

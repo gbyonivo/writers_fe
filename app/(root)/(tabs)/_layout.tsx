@@ -3,9 +3,7 @@ import { BlurView } from 'expo-blur'
 import { Tabs } from 'expo-router'
 import { StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
-import WriterSearchBar from '../../../src/components/common/writer-search-bar'
 import { WriterText } from '../../../src/components/common/writer-text'
 import { useIsPremium } from '../../../src/hooks/use-is-premium'
 import { FontFamily } from '../../../src/types/font'
@@ -17,24 +15,23 @@ function TabBarIcon(props: {
   return <FontAwesome size={26} style={{ marginBottom: -3 }} {...props} />
 }
 
-const commonProps: Record<string, any> = {
-  headerTitleStyle: {
-    fontFamily: 'Medium' as FontFamily,
-  },
-  tabBarLabelStyle: { display: 'none' },
-  headerTitle: '',
-}
-
-const headerStyle = {
-  ml: 8,
-  fontFamily: 'Medium' as FontFamily,
-  size: 24,
-}
+/**
+ * Remember to to check position map after adding new screen
+ */
 
 export default function TabLayout() {
   const theme = useTheme()
   const isPremiumAccount = useIsPremium()
   const PREMIUM_COLOR = theme.colors.outlineVariant
+  const getColor = ({
+    focused,
+    color,
+  }: {
+    focused: boolean
+    color: string
+  }) => {
+    return isPremiumAccount && focused ? PREMIUM_COLOR : color
+  }
   return (
     <>
       <Tabs
@@ -63,30 +60,14 @@ export default function TabLayout() {
         initialRouteName="home"
       >
         <Tabs.Screen
-          name="video"
-          options={{
-            tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name="video-camera"
-                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
-              />
-            ),
-            headerShown: false,
-            ...commonProps,
-          }}
-        />
-        <Tabs.Screen
           name="home"
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name="home"
-                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
-              />
+              <TabBarIcon name="home" color={getColor({ color, focused })} />
             ),
-            headerLeft: () => <WriterText {...headerStyle}>Narate</WriterText>,
-            headerShadowVisible: false,
-            headerShown: false,
+            headerLeft: () => (
+              <WriterText style={styles.headerStyle}>Narate</WriterText>
+            ),
             ...commonProps,
           }}
         />
@@ -100,13 +81,16 @@ export default function TabLayout() {
               />
             ),
             ...commonProps,
-            header: () => (
-              <SafeAreaView
-                style={{ backgroundColor: theme.colors.background }}
-              >
-                <WriterSearchBar />
-              </SafeAreaView>
+          }}
+        />
+
+        <Tabs.Screen
+          name="video"
+          options={{
+            tabBarIcon: ({ color, focused }) => (
+              <TabBarIcon name="film" color={getColor({ color, focused })} />
             ),
+            ...commonProps,
           }}
         />
         <Tabs.Screen
@@ -115,28 +99,38 @@ export default function TabLayout() {
             tabBarIcon: ({ color, focused }) => (
               <TabBarIcon
                 name="plus-square"
-                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
+                color={getColor({ color, focused })}
               />
             ),
             ...commonProps,
-            header: () => <></>,
           }}
         />
         <Tabs.Screen
           name="profile"
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name="user"
-                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
-              />
+              <TabBarIcon name="user" color={getColor({ color, focused })} />
             ),
-            headerLeft: () => <WriterText {...headerStyle}>Profile</WriterText>,
-            headerShown: false,
             ...commonProps,
           }}
         />
       </Tabs>
     </>
   )
+}
+
+const styles = StyleSheet.create({
+  headerStyle: {
+    marginLeft: 8,
+    fontFamily: 'Medium' as FontFamily,
+    fontSize: 24,
+  },
+  tabBarLabel: {
+    display: 'none',
+  },
+})
+
+const commonProps = {
+  headerShown: false,
+  tabBarLabelStyle: styles.tabBarLabel,
 }

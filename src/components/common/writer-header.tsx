@@ -17,7 +17,7 @@ import { WriterIconButton } from './writer-icon-button'
 import { WriterText } from './writer-text'
 
 interface Props {
-  title: string
+  title?: string
   children?: JSX.Element
   containerStyle?: StyleProp<ViewStyle>
   movingTextStyle?: StyleProp<ViewStyle>
