@@ -7,17 +7,17 @@ import { ImageSlide } from './image-slide'
 import { PartSlide } from './part-slide'
 
 interface Props {
-  data: (string | Part)[]
+  parts: Part[]
   piece: Piece
 }
 
-export function PartListCarousel({ data, piece }: Props) {
+export function PartListCarousel({ parts, piece }: Props) {
   return (
     <Carousel
       loop={false}
       width={getWidthByRatio(0.9)}
       height={getHeighByRatio(0.8)}
-      data={data}
+      data={[piece.imageUrl, ...parts]}
       scrollAnimationDuration={1000}
       style={styles.carouselStyle}
       renderItem={({ index, item }) => {
@@ -25,10 +25,10 @@ export function PartListCarousel({ data, piece }: Props) {
         return itemAsPart.id ? (
           <PartSlide
             part={itemAsPart}
-            indexLabel={`${index} of ${data.length - 1}`}
+            indexLabel={`${index} of ${parts.length}`}
           />
         ) : (
-          <ImageSlide piece={piece} />
+          <ImageSlide piece={piece} partIds={parts.map((part) => part.id)} />
         )
       }}
     />

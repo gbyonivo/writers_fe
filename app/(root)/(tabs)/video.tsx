@@ -1,19 +1,19 @@
+import { View } from 'react-native'
 import { useDispatch } from 'react-redux'
 
-import { SettingsScreen } from '../../../src/components/screens/settings/settings-screen'
+import { VideoScreen } from '../../../src/components/screens/video/video-screen'
 import { useOnFocus } from '../../../src/hooks/use-on-focus'
 import { setCurrentScreen } from '../../../src/store/slices/screen-monitor'
 import { trackScreenView } from '../../../src/utils/mixpanel'
 import { TrackedScreen } from '../../../src/utils/tracking/tracked-screen'
 
-export default function Settings() {
+export default function Video() {
   const dispatch = useDispatch()
-
   useOnFocus(() => {
-    dispatch(setCurrentScreen(TrackedScreen.SETTINGS_SCREEN))
+    dispatch(setCurrentScreen(TrackedScreen.VIDEO_SCREEN))
     trackScreenView({
-      screenName: TrackedScreen.SETTINGS_SCREEN,
+      screenName: TrackedScreen.VIDEO_SCREEN,
     })
   })
-  return <SettingsScreen />
+  return <VideoScreen />
 }

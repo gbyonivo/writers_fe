@@ -18,3 +18,9 @@ Theme update -> search for paper.tsx
 
 Problem
 Restarting DB on render
+
+Problem
+Autoincrement primary key
+
+Solution
+Set Type to SERIAL

@@ -17,7 +17,7 @@ import { WriterIconButton } from './writer-icon-button'
 import { WriterText } from './writer-text'
 
 interface Props {
-  title: string
+  title?: string
   children?: JSX.Element
   containerStyle?: StyleProp<ViewStyle>
   movingTextStyle?: StyleProp<ViewStyle>
@@ -27,7 +27,7 @@ interface Props {
   isMoving?: boolean
   hideBackButton?: boolean
   fontFamily?: FontFamily
-  onPressHeaderTitle: () => void
+  onPressHeaderTitle?: () => void
 }
 
 export function WriterHeader({
