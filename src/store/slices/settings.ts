@@ -7,8 +7,9 @@ import { SettingsState } from '../../types/states/SettingState'
 const initialState: SettingsState = {
   theme: null,
   shouldChainParts: false,
-  shouldShowTextBasedDesgin: true,
+  shouldShowTextBasedDesign: true,
   shouldUseAiForOnlyTips: true,
+  isAdmin: false,
 }
 
 export const settingsSlice = createSlice({
@@ -48,6 +49,12 @@ export const settingsSlice = createSlice({
         shouldShowTextBasedDesgin: payload,
       }
     },
+    becomeAdmin: (state, { payload }: PayloadAction<string>) => {
+      return {
+        ...state,
+        isAdmin: payload === 'BEAR',
+      }
+    },
   },
 })
 
@@ -57,6 +64,7 @@ export const {
   setShouldChainPart,
   setShouldShowTextBasedDesign,
   toggleShouldUseAiForOnlyTips,
+  becomeAdmin,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

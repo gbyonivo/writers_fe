@@ -8,6 +8,7 @@ export const VIDEO_DETAILS = `
   updatedAt
   pieceId
   partIds
+  url
 `
 
 export const GET_VIDEO = gql`
@@ -48,5 +49,13 @@ export const CREATE_VIDEO = gql`
 export const DELETE_VIDEO = gql`
   mutation DeleteVideo($id: Int) {
     deleteVideo(id: $id)
+  }
+`
+
+export const UPLOAD_VIDEO_URL = gql`
+  mutation UploadVideoUrl($id: Int, $url: String) {
+    uploadVideoUrl(id: $id, url: $url) {
+      ${VIDEO_DETAILS}
+    }
   }
 `

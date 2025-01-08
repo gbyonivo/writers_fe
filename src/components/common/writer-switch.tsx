@@ -3,7 +3,7 @@ import { Switch, useTheme } from 'react-native-paper'
 interface Props {
   value: boolean
   handleChange: () => void
-  disabled: boolean
+  disabled?: boolean
 }
 
 export function WriterSwitch({ value, handleChange, disabled }: Props) {
