@@ -20,7 +20,7 @@ export const useVideoUploadUrlMutation = (
   const { refetch: refetchVideos } = useVideos()
   const [action] = useMutation(UPLOAD_VIDEO_URL, {
     refetchQueries: [
-      { query: GET_VIDEOS, variables: { userId: user.id, first: 12 } },
+      { query: GET_VIDEOS, variables: { userId: user?.id, first: 12 } },
     ],
   })
 

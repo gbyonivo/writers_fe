@@ -46,7 +46,7 @@ function AuthContextProvider({ children }) {
 
   const value = useMemo(
     () => ({
-      user,
+      user: user,
       login,
       logout,
     }),

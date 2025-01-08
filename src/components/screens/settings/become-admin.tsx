@@ -53,12 +53,12 @@ export function BecomeAdmin() {
             label="Code"
           />
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
+            <WriterButton
               onPress={onPressBecomeAdmin}
               style={styles.uploadButton}
             >
               <WriterText>Become {isAdmin ? 'User' : 'Admin'}</WriterText>
-            </TouchableOpacity>
+            </WriterButton>
           </View>
         </View>
       </WriterBottomSheet>

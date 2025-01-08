@@ -10,7 +10,6 @@ import { API_URL } from '../../utils/constants'
 import { trackError, trackEvent } from '../../utils/mixpanel'
 import { TrackedError } from '../../utils/tracking/tracked-error'
 import { TrackedEvent } from '../../utils/tracking/tracked-event'
-import { WakeUpServerButton } from '../common/wake-up-server-button'
 import { WriterBackground } from '../common/writer-background'
 import { WriterButton } from '../common/writer-button'
 import { WriterLoginHeader } from '../common/writer-login-header'
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     letterSpacing: 4,
   },
   button: {
-    width: 128,
+    width: 120,
   },
   buttonContainer: {
     alignItems: 'flex-end',
