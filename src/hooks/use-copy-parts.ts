@@ -1,5 +1,5 @@
 import * as Clipboard from 'expo-clipboard'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { usePartsByIds } from './apollo/use-parts-by-ids'
 import { useAlert } from './use-alert'
@@ -23,7 +23,6 @@ export const useCopyParts = ({ partIds }: { partIds: number[] }) => {
     const copy = async () => {
       try {
         setCopying(true)
-        console.log(combinedContentRef.current)
         await Clipboard.setStringAsync(combinedContentRef.current)
         setCopying(false)
         show({ message: 'Copied to clipboard' })

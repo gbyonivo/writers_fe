@@ -30,11 +30,11 @@ export function VideoScreen() {
     })
   }).current
   const renderItem = ({ item, index }) => {
-    console.log(item.node)
     return (
       <VideoItem
         url={item.node.url || videoUrl}
         pieceId={item.node.pieceId}
+        videoId={item.node.id}
         index={index}
         ref={(ref) => {
           videoItemRefs.current = {

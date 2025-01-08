@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet } from 'react-native'
 
 import { WriterBackground } from '../../common/writer-background'
 import { WriterHeader } from '../../common/writer-header'
+import { BecomeAdmin } from './become-admin'
 import { DeleteAccount } from './delete-account'
 import { GoPremium } from './go-premium'
 import { Logout } from './logout'
@@ -23,6 +24,7 @@ export function SettingsScreen() {
         <ToggleNotification />
         <TermsAndConditions />
         <GoPremium />
+        <BecomeAdmin />
         <Logout />
         <DeleteAccount />
         <Version />

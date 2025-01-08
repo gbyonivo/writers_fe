@@ -15,7 +15,7 @@ import { WriterHeader } from '../../common/writer-header'
 import { PieceListInGenres } from '../piece/piece-list-in-genres'
 
 export function HomeScreen() {
-  const { shouldShowTextBasedDesgin } = useSelector(
+  const { shouldShowTextBasedDesign: shouldShowTextBasedDesgin } = useSelector(
     (state: AppState) => state.settings,
   )
   const [types, setTypes] = useState<PieceType[]>([])

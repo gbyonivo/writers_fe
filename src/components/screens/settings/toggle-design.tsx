@@ -11,7 +11,7 @@ import { SettingsItemContainer } from './settings-item-container'
 export function ToggleDesign() {
   const dispatch = useDispatch()
   const isTextual = useSelector(
-    (state: AppState) => state.settings.shouldShowTextBasedDesgin,
+    (state: AppState) => state.settings.shouldShowTextBasedDesign,
   )
   const onToggleSwitch = () => {
     dispatch(setShouldShowTextBasedDesign(!isTextual))
