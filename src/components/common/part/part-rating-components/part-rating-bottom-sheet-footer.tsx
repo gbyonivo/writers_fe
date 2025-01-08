@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     width: getWidthByRatio(1),
   },
   button: {
-    width: 200,
     alignSelf: 'center',
   },
 })

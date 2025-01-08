@@ -31,6 +31,9 @@ export function WriterHeaderButton({
       style={[{ backgroundColor: 'transparent' }, style]}
       icon={icon}
       iconRight={iconRight}
+      iconColor={
+        !enableButton ? theme.colors.onSecondary : theme.colors.outlineVariant
+      }
     >
       <WriterText
         style={{

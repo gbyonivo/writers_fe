@@ -33,19 +33,23 @@ export function PieceCreateFormHeader({
     <>
       {!loading ? (
         <View style={styles.header}>
-          <WriterHeaderButton
-            label={previousBtnLabel || 'Previous'}
-            onPress={onPressPrevious}
-            enableButton={pageIndex > 0}
-            icon="arrow-left"
-            style={pageIndex === 0 ? { display: 'none' } : {}}
-          />
+          {!!previousBtnLabel ? (
+            <WriterHeaderButton
+              label={previousBtnLabel || 'Previous'}
+              onPress={onPressPrevious}
+              enableButton={pageIndex > 0}
+              icon="chevron-left"
+              style={pageIndex === 0 ? { display: 'none' } : {}}
+            />
+          ) : (
+            <View />
+          )}
           <WriterHeaderButton
             label={nextBtnLabel || 'Next'}
             onPress={onPressNext}
             enableButton={!get(formErrors, errorKey)}
             iconRight
-            icon="arrow-right"
+            icon="chevron-right"
           />
         </View>
       ) : (
