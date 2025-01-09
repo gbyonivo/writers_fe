@@ -38,7 +38,7 @@ export function PieceCreateFormHeader({
               label={previousBtnLabel || 'Previous'}
               onPress={onPressPrevious}
               enableButton={pageIndex > 0}
-              icon="chevron-left"
+              // icon="chevron-left"
               style={pageIndex === 0 ? { display: 'none' } : {}}
             />
           ) : (
@@ -49,7 +49,7 @@ export function PieceCreateFormHeader({
             onPress={onPressNext}
             enableButton={!get(formErrors, errorKey)}
             iconRight
-            icon="chevron-right"
+            // icon="chevron-right"
           />
         </View>
       ) : (
