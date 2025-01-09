@@ -9,7 +9,8 @@ export const darkTheme = {
     ...MD3DarkTheme.colors,
     background: '#09090b',
     scrim: '#18181b', // used as linear background
-    outlineVariant: '#f97316', // highlight
+    outlineVariant: '#db2777',
+    // outlineVariant: '#f97316', // highlight
   },
 }
 // change background in constants if edittec

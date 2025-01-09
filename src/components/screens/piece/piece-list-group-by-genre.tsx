@@ -1,26 +1,15 @@
-import { BlurView } from 'expo-blur'
 import { useRouter } from 'expo-router'
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
 import { PieceType } from 'writers_shared'
 
-import { images } from '../../../assets/images/images'
 import { useSearchPieces } from '../../../hooks/apollo/use-search-piece-result'
 import { setSearchValue } from '../../../store/slices/search'
-import { truncateString } from '../../../utils/common'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
-import { WriterAgeRating } from '../../common/writer-age-rating'
-import { WriterIcon } from '../../common/writer-icon'
 import { WriterText } from '../../common/writer-text'
 import { PieceListGroupedByGenreItem } from './piece-list-group-by-genre-item'
 
@@ -40,6 +29,7 @@ export const PiecesGroupedByGenre = forwardRef(
     const pieceResult = useSearchPieces({ searchValue, type, userId })
     const [displayedResult, setDisplayedResult] = useState([])
     const router = useRouter()
+    const { colors } = useTheme()
 
     useEffect(() => {
       if (pieceResult.loading) return
@@ -83,7 +73,13 @@ export const PiecesGroupedByGenre = forwardRef(
             router.navigate('search')
           }}
         >
-          <WriterText size={18} fontFamily="Bold">
+          <WriterText
+            size={18}
+            fontFamily="Light"
+            mb={8}
+            mt={8}
+            color={colors.outlineVariant}
+          >
             {searchValue.substring(1)}
           </WriterText>
         </TouchableOpacity>

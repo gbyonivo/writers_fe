@@ -86,3 +86,11 @@ export const CREATE_PIECE = gql`
     }
   }
 `
+
+export const UPDATE_PIECE_IMAGE_URL = gql`
+  mutation UpdatePieceImageUrl($id: Int, $imageUrl: String) {
+    updatePieceImageUrl(id: $id, imageUrl: $imageUrl) {
+      ${PIECE_DETAILS}
+    }
+  }
+`

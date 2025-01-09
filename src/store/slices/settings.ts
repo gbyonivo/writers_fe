@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { Theme } from '../../types/Theme'
 import { SettingsState } from '../../types/states/SettingState'
+import { USABLE_IMAGE_URLS } from '../../utils/common'
 
 const initialState: SettingsState = {
   theme: null,
@@ -10,6 +11,7 @@ const initialState: SettingsState = {
   shouldShowTextBasedDesign: true,
   shouldUseAiForOnlyTips: true,
   isAdmin: false,
+  images: USABLE_IMAGE_URLS,
 }
 
 export const settingsSlice = createSlice({
@@ -55,6 +57,12 @@ export const settingsSlice = createSlice({
         isAdmin: payload === 'BEAR',
       }
     },
+    addImages: (state, { payload }: PayloadAction<string>) => {
+      return {
+        ...state,
+        images: [...new Set([...state.images, payload])],
+      }
+    },
   },
 })
 
@@ -65,6 +73,7 @@ export const {
   setShouldShowTextBasedDesign,
   toggleShouldUseAiForOnlyTips,
   becomeAdmin,
+  addImages,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

@@ -2,9 +2,11 @@ import { BlurView } from 'expo-blur'
 import { useRouter } from 'expo-router'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
+import { useSelector } from 'react-redux'
 import { Piece } from 'writers_shared/dist'
 
 import { images } from '../../../assets/images/images'
+import { AppState } from '../../../types/states/AppState'
 import { truncateString } from '../../../utils/common'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
@@ -19,6 +21,7 @@ interface Props {
 export function PieceListGroupedByGenreItem({ piece }: Props) {
   const router = useRouter()
   const theme = useTheme()
+  const isAdmin = useSelector((appState: AppState) => appState.settings.isAdmin)
 
   return (
     <TouchableOpacity
@@ -47,14 +50,16 @@ export function PieceListGroupedByGenreItem({ piece }: Props) {
             overflow: 'hidden',
           }}
         />
-        <WriterText
-          size={14}
-          align="center"
-          fontFamily="Medium"
-          color={theme.colors.onBackground}
-        >
-          {truncateString({ text: piece.title, maxLength: 17 })}
-        </WriterText>
+        {!isAdmin && (
+          <WriterText
+            size={14}
+            align="center"
+            fontFamily="Medium"
+            color={theme.colors.onBackground}
+          >
+            {truncateString({ text: piece.title, maxLength: 17 })}
+          </WriterText>
+        )}
       </View>
       {!!piece?.firstPart?.ageRating && (
         <WriterAgeRating

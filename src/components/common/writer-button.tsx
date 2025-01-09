@@ -50,13 +50,19 @@ export function WriterButton({
       onPress={onPress}
     >
       {typeof children === 'string' ? (
-        <WriterText align="center" color={textColor}>
-          {children}
-        </WriterText>
+        <View style={{ justifyContent: 'center' }}>
+          <WriterText align="center" color={textColor}>
+            {children}
+          </WriterText>
+        </View>
       ) : (
         children
       )}
-      {!!icon && <WriterIcon icon={icon} color={iconColor} size={24} />}
+      {!!icon && (
+        <View>
+          <WriterIcon icon={icon} color={iconColor} size={24} />
+        </View>
+      )}
     </TouchableOpacity>
   )
 }

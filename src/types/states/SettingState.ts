@@ -6,4 +6,5 @@ export interface SettingsState {
   shouldShowTextBasedDesign: boolean
   shouldUseAiForOnlyTips: boolean
   isAdmin: boolean
+  images: string[]
 }
