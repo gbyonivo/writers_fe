@@ -7,6 +7,7 @@ import { useTheme } from 'react-native-paper'
 import { WriterText } from '../../../src/components/common/writer-text'
 import { useIsPremium } from '../../../src/hooks/use-is-premium'
 import { FontFamily } from '../../../src/types/font'
+import { APP_TITLE } from '../../../src/utils/constants'
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name']
@@ -63,10 +64,10 @@ export default function TabLayout() {
           name="home"
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name="home" color={getColor({ color, focused })} />
+              <TabBarIcon name="tree" color={getColor({ color, focused })} />
             ),
             headerLeft: () => (
-              <WriterText style={styles.headerStyle}>Narate</WriterText>
+              <WriterText style={styles.headerStyle}>{APP_TITLE}</WriterText>
             ),
             ...commonProps,
           }}

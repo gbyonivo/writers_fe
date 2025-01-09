@@ -1,38 +1,36 @@
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
+import { Part } from 'writers_shared'
 
-import { useAuthContext } from '../../context/auth-context'
-import { GET_VIDEOS, UPLOAD_VIDEO_URL } from '../../queries/video'
+import { CREATE_PART, UPDATE_PART } from '../../queries/part'
+import { GET_PIECE_PARTS } from '../../queries/piece'
 import { MutationHooKParams } from '../../types/mutation'
 import { useAlert } from '../use-alert'
-import { useVideos } from './use-videos'
 
 interface Params extends MutationHooKParams {
   pieceId?: number
 }
 
-export const useVideoUploadUrlMutation = (
-  { onSuccess, onFail, showAlert }: Params = { showAlert: true },
-) => {
+export const useUpdatePartMutation = ({
+  onSuccess,
+  onFail,
+  pieceId,
+  showAlert,
+}: Params = {}) => {
   const { show } = useAlert()
-  const { user } = useAuthContext()
   const [loading, setLoading] = useState<boolean>(false)
-  const { refetch: refetchVideos } = useVideos()
-  const [action] = useMutation(UPLOAD_VIDEO_URL, {
-    refetchQueries: [
-      { query: GET_VIDEOS, variables: { userId: user?.id, first: 12 } },
-    ],
+  const [action] = useMutation(UPDATE_PART, {
+    refetchQueries: [{ query: GET_PIECE_PARTS, variables: { id: pieceId } }],
   })
 
-  const uploadVideoUrl = async ({ id, url }: { id: number; url: string }) => {
+  const updatePart = async (part: Partial<Part>) => {
     try {
       setLoading(true)
       const response = await action({
-        variables: { id, url },
+        variables: { ...part },
       })
       setLoading(false)
       onSuccess && onSuccess(response)
-      refetchVideos()
       if (showAlert) {
         show({ message: 'Successfully videoed' })
       }
@@ -46,7 +44,7 @@ export const useVideoUploadUrlMutation = (
   }
 
   return {
-    uploadVideoUrl,
+    updatePart,
     loading,
   }
 }

@@ -18,4 +18,5 @@ export const POSITION_MAP: Record<TrackedScreen, PlayerPosition> = {
   [TrackedScreen.HOME_SCREEN]: PlayerPosition.ABOVE_BOTTOM,
   [TrackedScreen.SEARCH_SCREEN]: PlayerPosition.ABOVE_BOTTOM,
   [TrackedScreen.VIDEO_SCREEN]: PlayerPosition.NONE,
+  [TrackedScreen.EDIT_PART_SCREEN]: PlayerPosition.NONE,
 }

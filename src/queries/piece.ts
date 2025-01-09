@@ -39,6 +39,11 @@ export const GET_PIECE_PARTS = gql`
   query PieceParts($id: Int) {
     pieceParts(id: $id) {
       ${PART_DETAILS}
+      userId
+      user {
+        id,
+        name
+      }
     }
   }
 `

@@ -11,10 +11,10 @@ export const createPartWithVoiceSetup = ({
 }: {
   value: { content: string; voiceSetup: VoiceSetUpValue }
   pieceId?: number
-  position: number
+  position?: number
   parentPartId?: number
   voiceId: string
-}): Part => ({
+}): Partial<Part> => ({
   content: value.content,
   speakerPostBreakTime: parseFloat(`${value.voiceSetup.postDelay || 1}`),
   speakerPreBreakTime: parseFloat(`${value.voiceSetup.preDelay || 1}`),

@@ -8,6 +8,7 @@ import { PieceType } from 'writers_shared/dist'
 import { AppState } from '../../../types/states/AppState'
 import { TYPE_LABEL_REPLACEMENTS } from '../../../utils/common'
 import { WriterBottomSheet } from '../writer-bottom-sheet'
+import { WriterIcon } from '../writer-icon'
 import { WriterText } from '../writer-text'
 
 interface Props {
@@ -60,9 +61,13 @@ export function HomeScreenFilter({
         }}
       >
         {combinedFilter.length === 0 ? (
-          <WriterText fontFamily="SemiBold" color={colors.secondaryContainer}>
-            Filter
-          </WriterText>
+          <>
+            <WriterIcon
+              icon="filter-variant"
+              size={28}
+              color={colors.outlineVariant}
+            />
+          </>
         ) : (
           firstThree.map((item, index) => (
             <WriterText

@@ -125,9 +125,7 @@ const styles = StyleSheet.create({
   phoneTextInput: {
     letterSpacing: 4,
   },
-  button: {
-    width: 120,
-  },
+  button: {},
   buttonContainer: {
     alignItems: 'flex-end',
     width: '100%',
