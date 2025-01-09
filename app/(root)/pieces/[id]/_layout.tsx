@@ -25,11 +25,12 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-          headerStyle: { backgroundColor: colors.background },
-          headerTintColor: colors.background,
-          headerTitle: () => <></>,
-          headerLeft: () => <Appbar.BackAction onPress={onPressBack} />,
-          headerRight: () => <PartChainToggle />,
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="parts/[partId]"
+        options={{
           headerShown: false,
         }}
       />
@@ -42,7 +43,6 @@ export default function Layout() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerTitle: () => <WriterDefaultHeaderTitle />,
           headerLeft: () => (
             <WriterButton
               onPress={() => router.back()}

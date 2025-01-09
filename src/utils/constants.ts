@@ -1,4 +1,4 @@
-export const APP_TITLE = 'Narate'
+export const APP_TITLE = 'TweaknTwist'
 export const API_URL =
   process.env.EXPO_PUBLIC_API_URL || 'https://writers-be.onrender.com'
 export const ENVIRONMENT = process.env.EXPO_PUBLIC_NODE_ENV

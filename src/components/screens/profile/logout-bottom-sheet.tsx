@@ -9,6 +9,7 @@ import { useAuthContext } from '../../../context/auth-context'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WakeUpServerButton } from '../../common/wake-up-server-button'
+import { WriterBottomSheet } from '../../common/writer-bottom-sheet'
 import { WriterButton } from '../../common/writer-button'
 
 export interface LogoutBottomSheetProps {
@@ -22,61 +23,33 @@ export const LogoutBottomSheet = forwardRef(function LogoutBottomSheet(
   const { logout } = useAuthContext()
   const snapPoints = useMemo(() => ['20%'], [])
   const theme = useTheme()
-  const bottomsheetRef = useRef<BottomSheet>(null)
-
-  const bottomSheetIndicator = {
-    backgroundColor: theme.colors.backdrop,
-  }
-
-  const bottomSheetStyle = {
-    backgroundColor: theme.colors.background,
-  }
+  const bottomsheetRef = useRef(null)
 
   useImperativeHandle(ref, () => ({
-    hide: () => bottomsheetRef.current.close(),
+    hide: () => bottomsheetRef.current.hide(),
     expand: () => bottomsheetRef.current.expand(),
   }))
 
   return (
-    <GestureHandlerRootView>
-      <Portal>
-        <BottomSheet
-          snapPoints={snapPoints}
-          ref={bottomsheetRef}
-          handleIndicatorStyle={bottomSheetIndicator}
-          onClose={onClose}
-          backgroundStyle={bottomSheetStyle}
-          enablePanDownToClose
-          index={-1}
-          backdropComponent={(backdropProps) => (
-            <BottomSheetBackdrop
-              {...backdropProps}
-              disappearsOnIndex={-1}
-              enableTouchThrough
-              opacity={0.6}
-            />
-          )}
+    <WriterBottomSheet ref={bottomsheetRef} snapPoints={snapPoints}>
+      <View style={[styles.contentContainer]}>
+        <WriterButton
+          style={{ backgroundColor: theme.colors.scrim }}
+          onPress={() => {
+            trackEvent({
+              event: TrackedEvent.PRESS,
+              params: {
+                buttonName: 'Confirm_logout_out',
+              },
+            })
+            bottomsheetRef.current.hide()
+            logout()
+          }}
         >
-          <View style={[styles.contentContainer]}>
-            <WriterButton
-              style={{ backgroundColor: theme.colors.scrim }}
-              onPress={() => {
-                trackEvent({
-                  event: TrackedEvent.PRESS,
-                  params: {
-                    buttonName: 'Confirm_logout_out',
-                  },
-                })
-                bottomsheetRef.current.close()
-                logout()
-              }}
-            >
-              Logout
-            </WriterButton>
-          </View>
-        </BottomSheet>
-      </Portal>
-    </GestureHandlerRootView>
+          Logout
+        </WriterButton>
+      </View>
+    </WriterBottomSheet>
   )
 })
 

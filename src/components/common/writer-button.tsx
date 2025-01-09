@@ -42,6 +42,7 @@ export function WriterButton({
         {
           backgroundColor: colors.scrim,
           flexDirection: iconRight ? 'row' : 'row-reverse',
+          justifyContent: 'center',
         },
         style,
         styles.container,
@@ -49,7 +50,7 @@ export function WriterButton({
       onPress={onPress}
     >
       {typeof children === 'string' ? (
-        <WriterText align="center" color={textColor} style={{ flex: 1 }}>
+        <WriterText align="center" color={textColor}>
           {children}
         </WriterText>
       ) : (
@@ -71,5 +72,7 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     marginTop: 8,
+    alignSelf: 'auto',
+    verticalAlign: 'auto',
   },
 })

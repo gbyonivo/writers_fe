@@ -28,6 +28,7 @@ export const PART_DETAILS = `
   rating
   numberOfRatings
   ageRating
+  voiceId
 `
 
 export const GET_PART = gql`
@@ -95,6 +96,56 @@ export const CREATE_PART = gql`
     $voiceId: String
   ) {
     createPart(
+      content: $content
+      detectedLanguage: $detectedLanguage
+      likes: $likes
+      aiAssisted: $aiAssisted
+      pieceId: $pieceId
+      partId: $partId
+      position: $position
+      status: $status
+      speakerName: $speakerName
+      speakerStyle: $speakerStyle
+      speakerRatePercentage: $speakerRatePercentage
+      speakerPitchPercentage: $speakerPitchPercentage
+      speakerPreBreakTime: $speakerPreBreakTime
+      speakerPostBreakTime: $speakerPostBreakTime
+      naratorPreContent: $naratorPreContent
+      naratorPostContent: $naratorPostContent
+      naratorPreBreakTime: $naratorPreBreakTime
+      naratorPostBreakTime: $naratorPostBreakTime
+      voiceId: $voiceId
+    ) {
+      ${PART_DETAILS}
+    }
+  }
+`
+
+export const UPDATE_PART = gql`
+  mutation UpdatePart(
+    $id: Int
+    $content: String
+    $detectedLanguage: String
+    $likes: Int
+    $aiAssisted: Int
+    $pieceId: Int
+    $partId: Int
+    $position: Int
+    $status: String
+    $speakerName: String
+    $speakerStyle: String
+    $speakerRatePercentage: Int
+    $speakerPitchPercentage: Int
+    $speakerPreBreakTime: Int
+    $speakerPostBreakTime: Int
+    $naratorPreContent: String
+    $naratorPostContent: String
+    $naratorPreBreakTime: Int
+    $naratorPostBreakTime: Int
+    $voiceId: String
+  ) {
+    updatePart(
+      id: $id
       content: $content
       detectedLanguage: $detectedLanguage
       likes: $likes

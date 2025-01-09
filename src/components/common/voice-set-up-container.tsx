@@ -20,6 +20,7 @@ interface VoiceSetUpProps {
   prefix?: string
   voiceId?: string
   containerStyle?: StyleProp<ViewStyle>
+  voiceContainerStyle?: StyleProp<ViewStyle>
 }
 
 const routes = [
@@ -36,7 +37,13 @@ export function VoiceSetUpContainer(props: VoiceSetUpProps) {
     switch (route.key) {
       case 'voices':
         return (
-          <VoiceSetUp {...props} containerStyle={styles.voiceSetUpContainer} />
+          <VoiceSetUp
+            {...props}
+            containerStyle={[
+              styles.voiceSetUpContainer,
+              props.voiceContainerStyle,
+            ]}
+          />
         )
       case 'premium':
         return (

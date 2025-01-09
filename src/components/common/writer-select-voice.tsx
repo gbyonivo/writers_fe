@@ -160,7 +160,7 @@ export function WriterSelectVoice({
 
 const styles = StyleSheet.create({
   listContainer: {
-    paddingBottom: 142,
+    paddingBottom: 180,
   },
   separator: {},
   item: {
