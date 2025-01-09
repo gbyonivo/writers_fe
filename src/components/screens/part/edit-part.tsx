@@ -95,7 +95,6 @@ export function EditPart() {
     })
 
     form.setFieldValue('content', part?.content || '')
-    console.log(part?.voiceId)
     form.setFieldValue('voiceId', part?.voiceId || '')
   }, [part])
 
