@@ -31,8 +31,12 @@ export function HomeScreen() {
         title={APP_TITLE}
         hideBackButton
         containerStyle={styles.header}
-        fontFamily="Bold"
-        headerTextStyle={{ fontSize: 28, marginTop: 0, color: colors.backdrop }}
+        fontFamily="Light"
+        headerTextStyle={{
+          fontSize: 24,
+          marginTop: 8,
+          color: colors.outline,
+        }}
       >
         <HomeScreenFilter
           onSetTypes={(types: PieceType[]) => setTypes(types)}
