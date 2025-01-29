@@ -17,9 +17,10 @@ import { PieceLikeButton } from './piece-like-button'
 interface Props {
   piece: Piece
   trackedScreen: TrackedScreen
+  liked: boolean
 }
 
-export function PieceItem({ piece, trackedScreen }: Props) {
+export function PieceItem({ piece, trackedScreen, liked }: Props) {
   const router = useRouter()
   const theme = useTheme()
   const onPress = () => {
@@ -92,7 +93,7 @@ export function PieceItem({ piece, trackedScreen }: Props) {
       <View style={styles.pieceFooter}>
         <WrittenBy name={piece.user.name} createdAt={piece.createdAt} />
         <View>
-          <PieceLikeButton pieceId={piece.id} likes={piece.likes} />
+          <PieceLikeButton pieceId={piece.id} liked={liked} />
         </View>
       </View>
     </View>

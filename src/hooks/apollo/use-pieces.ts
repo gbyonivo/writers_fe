@@ -9,13 +9,15 @@ export const usePieces = ({
   userId,
   type,
   genreIds = [],
+  liked,
 }: {
   userId?: number
   type?: PieceType
   genreIds?: number[]
+  liked?: boolean
 }) => {
   const { data, loading, error, refetch, fetchMore } = useQuery(GET_PIECES, {
-    variables: { pagination: { userId, first: 4, type, genreIds } },
+    variables: { pagination: { userId, first: 4, type, genreIds, liked } },
   })
 
   const { response, refetching, enhancedRefetch, errorRefetching } =

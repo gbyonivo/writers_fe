@@ -67,6 +67,12 @@ export const LIKE_PIECE = gql`
   }
 `
 
+export const UNLIKE_PIECE = gql`
+  mutation UnlikePiece($id: Int) {
+    unlikePiece(id: $id)
+  }
+`
+
 export const CREATE_PIECE = gql`
   mutation CreatePiece(
     $title: String
@@ -92,5 +98,11 @@ export const UPDATE_PIECE_IMAGE_URL = gql`
     updatePieceImageUrl(id: $id, imageUrl: $imageUrl) {
       ${PIECE_DETAILS}
     }
+  }
+`
+
+export const GET_LIKED_PIECE_IDS = gql`
+  query LikedPieceIds {
+    likedPieceIds
   }
 `

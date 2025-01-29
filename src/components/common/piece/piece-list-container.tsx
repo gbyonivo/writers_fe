@@ -10,6 +10,7 @@ interface Props {
   type?: PieceType
   trackedScreen: TrackedScreen
   genreIds?: number[]
+  liked?: boolean
 }
 
 export function PieceListContainer({
@@ -17,9 +18,15 @@ export function PieceListContainer({
   type,
   trackedScreen,
   genreIds,
+  liked,
 }: Props) {
   return (
-    <PieceListContextProvider userId={userId} type={type} genreIds={genreIds}>
+    <PieceListContextProvider
+      userId={userId}
+      type={type}
+      genreIds={genreIds}
+      liked={liked}
+    >
       <PieceList trackedScreen={trackedScreen} />
     </PieceListContextProvider>
   )

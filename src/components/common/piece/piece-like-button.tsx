@@ -1,4 +1,3 @@
-import millify from 'millify'
 import {
   StyleProp,
   StyleSheet,
@@ -7,22 +6,21 @@ import {
   ViewStyle,
 } from 'react-native'
 import { useTheme } from 'react-native-paper'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { usePieceLikeMutation } from '../../../hooks/apollo/use-piece-like-mutation'
-import { toggleLike } from '../../../store/slices/piece'
+import { usePieceUnlikeMutation } from '../../../hooks/apollo/use-piece-unlike.mutation'
 import { AppState } from '../../../types/states/AppState'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WriterIcon } from '../writer-icon'
-import { WriterText } from '../writer-text'
 
 interface Props {
   pieceId: number
   style?: StyleProp<ViewStyle>
-  icon?: any
+  icon?: string
   disabled?: boolean
-  likes: number
+  liked: boolean
 }
 
 export function PieceLikeButton({
@@ -30,42 +28,33 @@ export function PieceLikeButton({
   style,
   icon = 'heart',
   disabled,
-  likes,
+  liked,
 }: Props) {
-  const dispatch = useDispatch()
-  const hasLikedPiece = useSelector(
-    (state: AppState) => state.piece.likes[pieceId],
-  )
+  // console.log('hasLikedPiece', hasLikedPiece, likes, pieceId)
   const { colors } = useTheme()
-  const togglePieceLike = () => {
-    dispatch(toggleLike({ pieceId }))
-  }
-  const { likePiece, loading } = usePieceLikeMutation({
-    onSuccess: togglePieceLike,
-  })
+  const { likePiece, loading } = usePieceLikeMutation()
+  const { unlikePiece, loading: unlikingPiece } = usePieceUnlikeMutation()
+
   return (
     <TouchableOpacity
       onPress={() => {
         trackEvent({
           event: TrackedEvent.PRESS,
           params: {
-            buttonName: `${hasLikedPiece ? 'Unlike' : 'Like'} Piece`,
+            buttonName: `${liked ? 'Unlike' : 'Like'} Piece`,
           },
         })
-        likePiece(pieceId)
+        liked ? unlikePiece(pieceId) : likePiece(pieceId)
       }}
       style={[style, styles.container]}
-      disabled={disabled || loading}
+      disabled={disabled || loading || unlikingPiece}
     >
       <View style={styles.buttonStyle}>
         <WriterIcon
-          icon="heart"
-          color={hasLikedPiece ? colors.outlineVariant : ''}
+          icon={icon}
+          color={liked ? colors.outlineVariant : ''}
           size={24}
         />
-        <WriterText style={styles.count} size={20} mt={-2}>
-          {millify(likes + hasLikedPiece ? 1 : 0)}
-        </WriterText>
       </View>
     </TouchableOpacity>
   )
