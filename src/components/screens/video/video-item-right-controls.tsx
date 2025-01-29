@@ -3,7 +3,6 @@ import { forwardRef } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
-import { getHeighByRatio, getWidthByRatio } from '../../../utils/common'
 import { WriterIcon } from '../../common/writer-icon'
 import { WriterText } from '../../common/writer-text'
 
@@ -12,6 +11,7 @@ interface Props {
   paused: boolean
   pieceId: number
   bottomsheetRef: any
+  partIds: number[]
 }
 
 export function VideoItemRightControls({
@@ -19,6 +19,7 @@ export function VideoItemRightControls({
   togglePause,
   pieceId,
   bottomsheetRef,
+  partIds,
 }: Props) {
   const router = useRouter()
   const { colors } = useTheme()
@@ -53,7 +54,11 @@ export function VideoItemRightControls({
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.piece, styles.button]}
-        onPress={() => router.push(`/pieces/${pieceId}`)}
+        onPress={() =>
+          router.push(
+            `/pieces/${pieceId}?partIds=${(partIds || []).join(',')}&locked=${true}`,
+          )
+        }
       >
         <View style={styles.iconWrapper}>
           <WriterIcon icon="book" {...props} />

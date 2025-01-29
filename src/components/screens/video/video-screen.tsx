@@ -36,6 +36,7 @@ export function VideoScreen() {
         pieceId={item.node.pieceId}
         videoId={item.node.id}
         index={index}
+        partIds={item.node.partIds}
         ref={(ref) => {
           videoItemRefs.current = {
             ...videoItemRefs.current,

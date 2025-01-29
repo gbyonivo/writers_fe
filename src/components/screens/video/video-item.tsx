@@ -27,14 +27,14 @@ interface Props {
   index: number
   pieceId: number
   videoId: number
+  partIds: number[]
 }
 
 export const VideoItem = forwardRef(function VideoItemInner(
-  { url, pieceId, videoId }: Props,
+  { url, pieceId, videoId, partIds }: Props,
   ref,
 ) {
   const videoRef = useRef<VideoRef>(null)
-  const router = useRouter()
   const [paused, setPaused] = useState(true)
   const isFocused = useIsFocused()
   const { colors } = useTheme()
@@ -84,6 +84,7 @@ export const VideoItem = forwardRef(function VideoItemInner(
         togglePause={() => setPaused(!paused)}
         paused={paused}
         bottomsheetRef={bottomsheetRef}
+        partIds={partIds}
       />
       <VideoItemBottomSheet ref={bottomsheetRef} videoId={videoId} />
     </View>

@@ -80,11 +80,15 @@ export function PartLine({
   useEffect(() => {
     if (!initialPartIdIndex) return
     setTimeout(() => {
-      flatlistRef?.current?.scrollToIndex({
-        animated: true,
-        index: initialPartIdIndex,
-      })
-    }, 500)
+      try {
+        flatlistRef?.current?.scrollToIndex({
+          animated: true,
+          index: initialPartIdIndex,
+        })
+      } catch (e) {
+        console.log('errrrr', e)
+      }
+    }, 1000)
   }, [initialPartIdIndex])
 
   const filteredParts = useMemo(() => {
