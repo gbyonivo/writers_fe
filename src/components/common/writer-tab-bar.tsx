@@ -2,6 +2,7 @@ import { View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { SceneRendererProps, TabBar } from 'react-native-tab-view'
 
+import { getWidthByRatio } from '../../utils/common'
 import { trackEvent } from '../../utils/mixpanel'
 import { TrackedEvent } from '../../utils/tracking/tracked-event'
 import { TrackedScreen } from '../../utils/tracking/tracked-screen'
@@ -18,6 +19,7 @@ export function WriterTabBar({ icon, ...props }: Props) {
     // @ts-ignore
     <TabBar
       {...props}
+      scrollEnabled
       style={{
         backgroundColor: 'transparent',
       }}

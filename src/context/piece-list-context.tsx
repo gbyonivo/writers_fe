@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useEffect, useMemo } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useCallback, useMemo } from 'react'
 import { Piece, PieceType } from 'writers_shared'
 
 import { usePieces } from '../hooks/apollo/use-pieces'
-import { setLikes } from '../store/slices/piece'
 
 interface IPieceListContext {
   pieceList: Piece[]
@@ -20,6 +18,7 @@ interface Props {
   userId?: number
   type?: PieceType
   genreIds?: number[]
+  liked?: boolean
 }
 
 export const PieceListContext = React.createContext<IPieceListContext>(
@@ -30,12 +29,18 @@ export function usePieceListContext(): IPieceListContext {
   return React.useContext<IPieceListContext>(PieceListContext)
 }
 
-function PieceListContextProvider({ children, userId, type, genreIds }: Props) {
-  const dispatch = useDispatch()
+function PieceListContextProvider({
+  children,
+  userId,
+  type,
+  genreIds,
+  liked,
+}: Props) {
   const { loading, error, pieces, refetch, fetchMore } = usePieces({
     userId,
     type,
     genreIds,
+    liked,
   })
 
   const endCursor = pieces?.pageInfo?.endCursor
@@ -43,21 +48,6 @@ function PieceListContextProvider({ children, userId, type, genreIds }: Props) {
 
   const pieceList = useMemo(() => {
     return (pieces?.edges || []).map(({ node }) => node)
-  }, [pieces])
-
-  const { likes } = useMemo(() => {
-    let likes = {}
-    const map = (pieces?.edges || []).reduce((acc, curr) => {
-      likes = {
-        ...likes,
-        [curr.node.id]: curr.node.hasBeenLiked,
-      }
-      return {
-        ...acc,
-        [curr.node.id]: curr.node,
-      }
-    }, {})
-    return { map, likes }
   }, [pieces])
 
   const loadMore = useCallback(() => {
@@ -69,10 +59,6 @@ function PieceListContextProvider({ children, userId, type, genreIds }: Props) {
       },
     })
   }, [endCursor, fetchMore])
-
-  useEffect(() => {
-    dispatch(setLikes(likes))
-  }, [likes])
 
   const value = useMemo(
     () => ({

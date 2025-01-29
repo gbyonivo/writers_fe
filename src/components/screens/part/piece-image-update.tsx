@@ -31,7 +31,6 @@ export function PieceImageUpdate({ pieceId }: Props) {
   const onPressButton = () => {
     updatePieceImageUrl({ id: pieceId, imageUrl })
   }
-  console.log(typeof imageUrl, existingImageUrls)
   const imagesOptions = useMemo<SelectOption[]>(() => {
     return USABLE_IMAGE_URLS.map((url) => {
       return {

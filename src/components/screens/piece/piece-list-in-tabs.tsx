@@ -29,8 +29,9 @@ export function PieceListInTabs({
       { key: 'stories', title: 'Stories' },
     ]
     if (showBookmark) {
-      return initialRoutes.concat({ key: 'bookmarks', title: 'Bookmarks' })
+      initialRoutes.push({ key: 'bookmarks', title: 'Bookmarks' })
     }
+    initialRoutes.push({ key: 'likes', title: 'Likes' })
     return initialRoutes
   }, [showBookmark])
 
@@ -52,6 +53,7 @@ export function PieceListInTabs({
     ),
 
     bookmarks: () => <Bookmarks userId={userId} />,
+    likes: () => <PieceListContainer trackedScreen={trackedScreen} liked />,
   })
 
   return (
