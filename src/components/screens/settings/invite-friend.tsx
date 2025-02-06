@@ -42,7 +42,7 @@ export function InviteFriend() {
           <WriterText fontFamily="Bold">Invite Friend</WriterText>
         </SettingsItemContainer>
       </TouchableOpacity>
-      <WriterBottomSheet ref={bottomsheetRef} snapPoints={['40%']}>
+      <WriterBottomSheet ref={bottomsheetRef} snapPoints={['80%']}>
         <View style={styles.container}>
           <WriterTextInput
             value={email}
