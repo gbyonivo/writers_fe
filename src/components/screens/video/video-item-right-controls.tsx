@@ -12,6 +12,7 @@ interface Props {
   pieceId: number
   bottomsheetRef: any
   partIds: number[]
+  scriptId: number
 }
 
 export function VideoItemRightControls({
@@ -20,6 +21,7 @@ export function VideoItemRightControls({
   pieceId,
   bottomsheetRef,
   partIds,
+  scriptId,
 }: Props) {
   const router = useRouter()
   const { colors } = useTheme()
@@ -43,8 +45,7 @@ export function VideoItemRightControls({
       <TouchableOpacity
         style={[styles.script, styles.button]}
         onPress={() => {
-          // @ts-ignore
-          bottomsheetRef.current?.expand?.()
+          router.push(`/pieces/${pieceId}/scripts/${scriptId}`)
         }}
       >
         <View style={styles.iconWrapper}>

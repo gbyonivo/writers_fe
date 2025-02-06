@@ -37,6 +37,7 @@ export function VideoScreen() {
         videoId={item.node.id}
         index={index}
         partIds={item.node.partIds}
+        scriptId={item.node.scriptId}
         ref={(ref) => {
           videoItemRefs.current = {
             ...videoItemRefs.current,
@@ -80,7 +81,7 @@ export function VideoScreen() {
         onViewableItemsChanged={onViewableItemsChanged}
         onEndReachedThreshold={4}
         onEndReached={() => {
-          console.log('who tf are')
+          console.log('End Reached - Video List')
         }}
       />
     </View>

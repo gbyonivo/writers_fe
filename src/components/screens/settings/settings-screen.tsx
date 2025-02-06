@@ -5,6 +5,7 @@ import { WriterHeader } from '../../common/writer-header'
 import { BecomeAdmin } from './become-admin'
 import { DeleteAccount } from './delete-account'
 import { GoPremium } from './go-premium'
+import { InviteFriend } from './invite-friend'
 import { Logout } from './logout'
 import { TermsAndConditions } from './terms-and-conditions'
 import { ToggleDesign } from './toggle-design'
@@ -16,13 +17,14 @@ import { Version } from './version'
 export function SettingsScreen() {
   return (
     <WriterBackground style={{ flex: 1 }} isView>
-      <WriterHeader title="Settings" />
+      <WriterHeader title="Settings" containerStyle={{ height: 40 }} />
       <ScrollView style={styles.container}>
         <ToggleTheme />
         <ToggleDesign />
         <ToggleTips />
         <ToggleNotification />
         <TermsAndConditions />
+        <InviteFriend />
         <GoPremium />
         <BecomeAdmin />
         <Logout />

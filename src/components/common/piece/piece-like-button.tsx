@@ -6,11 +6,9 @@ import {
   ViewStyle,
 } from 'react-native'
 import { useTheme } from 'react-native-paper'
-import { useSelector } from 'react-redux'
 
 import { usePieceLikeMutation } from '../../../hooks/apollo/use-piece-like-mutation'
 import { usePieceUnlikeMutation } from '../../../hooks/apollo/use-piece-unlike.mutation'
-import { AppState } from '../../../types/states/AppState'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
 import { WriterIcon } from '../writer-icon'
@@ -51,8 +49,8 @@ export function PieceLikeButton({
     >
       <View style={styles.buttonStyle}>
         <WriterIcon
-          icon={icon}
-          color={liked ? colors.outlineVariant : ''}
+          icon={liked ? icon : `${icon}-outline`}
+          color={liked ? colors.outlineVariant : colors.onBackground}
           size={24}
         />
       </View>
