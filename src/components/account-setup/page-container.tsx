@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { HelperText } from 'react-native-paper'
 
 import { WriterButton } from '../common/writer-button'
@@ -11,6 +11,8 @@ interface Props {
   buttonLabel?: string
   error?: string | null
   buttonDisabled?: boolean
+  leftComponent?: JSX.Element
+  footerContainerStyle?: StyleProp<ViewStyle>
 }
 
 export function PageContainer({
@@ -20,6 +22,8 @@ export function PageContainer({
   buttonLabel = 'Continue',
   error,
   buttonDisabled,
+  leftComponent,
+  footerContainerStyle,
 }: Props) {
   return (
     <View>
@@ -32,13 +36,16 @@ export function PageContainer({
           </HelperText>
         )}
       </View>
-      <WriterButton
-        onPress={onPress}
-        style={styles.nextButton}
-        disabled={buttonDisabled}
-      >
-        {buttonLabel}
-      </WriterButton>
+      <View style={footerContainerStyle}>
+        {!!leftComponent && <>{leftComponent}</>}
+        <WriterButton
+          onPress={onPress}
+          style={styles.nextButton}
+          disabled={buttonDisabled}
+        >
+          {buttonLabel}
+        </WriterButton>
+      </View>
     </View>
   )
 }

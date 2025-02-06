@@ -28,10 +28,11 @@ interface Props {
   pieceId: number
   videoId: number
   partIds: number[]
+  scriptId: number
 }
 
 export const VideoItem = forwardRef(function VideoItemInner(
-  { url, pieceId, videoId, partIds }: Props,
+  { url, pieceId, videoId, partIds, scriptId }: Props,
   ref,
 ) {
   const videoRef = useRef<VideoRef>(null)
@@ -85,6 +86,7 @@ export const VideoItem = forwardRef(function VideoItemInner(
         paused={paused}
         bottomsheetRef={bottomsheetRef}
         partIds={partIds}
+        scriptId={scriptId}
       />
       <VideoItemBottomSheet ref={bottomsheetRef} videoId={videoId} />
     </View>

@@ -35,6 +35,12 @@ export default function Layout() {
         }}
       />
       <Stack.Screen
+        name="scripts/[scriptId]"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="new-part"
         options={{
           animation: 'slide_from_left',

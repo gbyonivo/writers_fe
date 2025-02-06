@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { useInvitationMutation } from '../../../hooks/apollo/use-invitation-mutation'
 import { becomeAdmin } from '../../../store/slices/settings'
 import { AppState } from '../../../types/states/AppState'
 import { trackEvent } from '../../../utils/mixpanel'
@@ -13,14 +14,13 @@ import { WriterButton } from '../../common/writer-button'
 import { WriterText } from '../../common/writer-text'
 import { SettingsItemContainer } from './settings-item-container'
 
-export function BecomeAdmin() {
+export function InviteFriend() {
   const bottomsheetRef = useRef(null)
-  const [code, setCode] = useState('')
-  const dispatch = useDispatch()
-  const { isAdmin } = useSelector((state: AppState) => state.settings)
+  const [email, setEmail] = useState('')
+  const { createInvitation } = useInvitationMutation()
 
-  const onPressBecomeAdmin = () => {
-    dispatch(becomeAdmin(code))
+  const onPressInviteFriend = () => {
+    createInvitation(email)
     bottomsheetRef.current.hide()
   }
 
@@ -32,32 +32,30 @@ export function BecomeAdmin() {
             event: TrackedEvent.PRESS,
             params: {
               screen: TrackedScreen.SETTINGS_SCREEN,
-              buttonName: 'BecomeAdmin',
+              buttonName: 'InviteFriend',
             },
           })
           bottomsheetRef.current.expand()
         }}
       >
         <SettingsItemContainer>
-          <WriterText fontFamily="Bold">
-            Become {isAdmin ? 'User' : 'Admin'}
-          </WriterText>
+          <WriterText fontFamily="Bold">Invite Friend</WriterText>
         </SettingsItemContainer>
       </TouchableOpacity>
       <WriterBottomSheet ref={bottomsheetRef} snapPoints={['40%']}>
         <View style={styles.container}>
           <WriterTextInput
-            value={code}
-            handleChange={({ target }) => setCode(target.value)}
+            value={email}
+            handleChange={({ target }) => setEmail(target.value)}
             name="url"
-            label="Code"
+            label="Email"
           />
           <View style={styles.buttonContainer}>
             <WriterButton
-              onPress={onPressBecomeAdmin}
+              onPress={onPressInviteFriend}
               style={styles.uploadButton}
             >
-              <WriterText>Become {isAdmin ? 'User' : 'Admin'}</WriterText>
+              <WriterText>Invite Friend</WriterText>
             </WriterButton>
           </View>
         </View>

@@ -86,7 +86,7 @@ export function PartLine({
           index: initialPartIdIndex,
         })
       } catch (e) {
-        console.log('errrrr', e)
+        console.log('Error scrolling to index', e)
       }
     }, 1000)
   }, [initialPartIdIndex])

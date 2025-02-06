@@ -8,6 +8,7 @@ export const VIDEO_DETAILS = `
   updatedAt
   pieceId
   partIds
+  scriptId
   url
 `
 

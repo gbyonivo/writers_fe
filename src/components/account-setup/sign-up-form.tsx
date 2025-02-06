@@ -7,6 +7,7 @@ import { StyleSheet, View } from 'react-native'
 import DatePicker from 'react-native-date-picker'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { ProgressBar, TextInput, useTheme } from 'react-native-paper'
+import { useToast } from 'react-native-toast-notifications'
 import { useDispatch } from 'react-redux'
 import { User, userSchema } from 'writers_shared/dist/index'
 
@@ -18,6 +19,7 @@ import { addUser } from '../../../src/store/slices/login'
 import { API_URL } from '../../../src/utils/constants'
 import { DATE_FORMATS } from '../../../src/utils/date'
 import { handleAppErrors } from '../../../src/utils/errors'
+import { useAlert } from '../../hooks/use-alert'
 import { identifyUser, trackEvent } from '../../utils/mixpanel'
 import { TrackedComponentLocation } from '../../utils/tracking/tracked-component-location'
 import { TrackedEvent } from '../../utils/tracking/tracked-event'
@@ -30,10 +32,12 @@ const screenNames: ScreenName[] = ['name', 'email', 'dob', 'terms']
 
 export function SignUpForm() {
   const pagerViewRef = useRef<any>(null)
+  const toast = useToast()
   const { phone } = useLocalSearchParams()
   const [pageIndex, setPageIndex] = useState(0)
   const [user, setUser] = useState<Partial<User>>({})
   const [date, setDate] = useState<Date>(new Date())
+  const [invitationCode, setInvitationCode] = useState<string>('')
   const [openDateModal, setOpenDateModal] = useState(false)
   const [termsChecked, setTermsChecked] = useState<'checked' | 'unchecked'>(
     'unchecked',
@@ -72,14 +76,19 @@ export function SignUpForm() {
     try {
       // await userSchema.validateSyncAt(screenNames[pageIndex], createdUser)
       setSubmittingForm(true)
-      const { data } = await axios.post(`${API_URL}/user`, createdUser)
+      const { data } = await axios.post(`${API_URL}/user`, {
+        ...createdUser,
+        invitationCode,
+      })
       pagerViewRef.current.setPage(pageIndex + 1)
       identifyUser({ user: jwtDecode(data) })
       dispatch(addUser({ user: jwtDecode(data), token: data }))
       trackEvent({ event: TrackedEvent.REGISTER, params: { ...user } })
       setSubmittingForm(false)
     } catch (e) {
+      setSubmittingForm(false)
       setErrorMessage(handleAppErrors(e, true))
+      toast.show("We've encounted an error", { type: 'danger' })
     }
   }
 
@@ -212,6 +221,16 @@ export function SignUpForm() {
             onPress={onSubmit}
             buttonLabel="Start"
             buttonDisabled={submittingForm || termsChecked === 'unchecked'}
+            footerContainerStyle={styles.termsAndConditionsFooter}
+            leftComponent={
+              <WriterTextInput
+                value={invitationCode}
+                handleChange={(e) => setInvitationCode(e.target.value)}
+                name="invitationCode"
+                containerStyle={{ flex: 1, marginRight: 8, marginTop: 32 }}
+                label="Invitation Code"
+              />
+            }
           >
             <TermsAndConditionsForm
               value={termsChecked}
@@ -261,5 +280,10 @@ const styles = StyleSheet.create({
   progressBarContainer: {
     flex: 1,
     paddingTop: 24,
+  },
+  termsAndConditionsFooter: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 })

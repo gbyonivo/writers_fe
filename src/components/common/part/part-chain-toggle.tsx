@@ -24,7 +24,7 @@ export function PartChainToggle({ style }: { style?: StyleProp<ViewStyle> }) {
         style={[styles.iconStyle, style]}
       />
       <WriterIconButton
-        icon="share"
+        icon="content-copy"
         onPress={() => onSharePieceSignal.emit()}
         style={[styles.iconStyle, style]}
       />

@@ -51,7 +51,10 @@ export function WriterButton({
     >
       {typeof children === 'string' ? (
         <View style={{ justifyContent: 'center' }}>
-          <WriterText align="center" color={textColor}>
+          <WriterText
+            align="center"
+            color={disabled ? colors.backdrop : textColor}
+          >
             {children}
           </WriterText>
         </View>
