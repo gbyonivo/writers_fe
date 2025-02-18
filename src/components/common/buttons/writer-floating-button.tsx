@@ -7,12 +7,12 @@ import {
 } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
-import { WriterIcon } from '../writer-icon'
+import { Icon, WriterIcon } from '../writer-icon'
 
 interface Props {
   onPress: () => void
   style?: StyleProp<ViewStyle>
-  icon: string
+  icon: Icon
   iconSize?: number
 }
 

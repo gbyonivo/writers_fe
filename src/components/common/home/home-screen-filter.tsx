@@ -62,11 +62,7 @@ export function HomeScreenFilter({
       >
         {combinedFilter.length === 0 ? (
           <>
-            <WriterIcon
-              icon="filter-variant"
-              size={28}
-              color={colors.outlineVariant}
-            />
+            <WriterIcon icon="filter" size={28} color={colors.outlineVariant} />
           </>
         ) : (
           firstThree.map((item, index) => (

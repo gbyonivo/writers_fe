@@ -127,7 +127,6 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
   useImperativeHandle(ref, () => {
     return {
       showAiHelp: (aiSuggestion: string) => {
-        Keyboard.dismiss()
         if (aiSuggestion) {
           setInitialText(form.values.content)
           form.setFieldValue('content', aiSuggestion)
@@ -153,7 +152,6 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
     let removeListener = null
     if (onPressCreatePartSignal.getNumberOfListeners() < 1) {
       removeListener = onPressCreatePartSignal.listen(() => {
-        Keyboard.dismiss()
         setBottomSheetContentType(BottomSheetContentType.VOICE_FORM)
         bottomSheetRef.current.expand()
       })
@@ -188,15 +186,17 @@ export const AddPartForm = forwardRef(function AddPartFormComp(
       <GestureHandlerRootView>
         <Portal>
           <BottomSheet
+            onChange={(val) => {
+              if (val === -1) {
+                Keyboard.dismiss()
+              }
+            }}
             ref={bottomSheetRef}
             snapPoints={snapPoints}
             handleIndicatorStyle={bottomSheetIndicator}
             backgroundStyle={bottomSheetStyle}
             enablePanDownToClose
             index={-1}
-            onClose={() => {
-              Keyboard.dismiss()
-            }}
             backdropComponent={(backdropProps) => (
               <BottomSheetBackdrop
                 {...backdropProps}

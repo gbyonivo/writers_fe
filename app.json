@@ -11,15 +11,21 @@
       "resizeMode": "contain",
       "backgroundColor": "#1D1B1E"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "ivo.tertsegha",
       "buildNumber": "53",
       "infoPlist": {
-        "UIBackgroundModes": ["audio"],
+        "UIBackgroundModes": [
+          "audio",
+          "audio"
+        ],
         "NSCameraUsageDescription": "Allow Writers to access your camera",
-        "NSMicrophoneUsageDescription": "Allow Writers to access your microphone"
+        "NSMicrophoneUsageDescription": "Allow Writers to access your microphone",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {

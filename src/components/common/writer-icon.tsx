@@ -1,19 +1,50 @@
-import { Icon, useTheme } from 'react-native-paper'
-import { IconSource } from 'react-native-paper/lib/typescript/components/Icon'
+import {
+  Book,
+  CogIcon,
+  CopyIcon,
+  DeleteIcon,
+  DoorOpen,
+  HeartIcon,
+  MessageCircleQuestion,
+  Notebook,
+  PauseIcon,
+  PlayIcon,
+  ShareIcon,
+  SlidersHorizontal,
+  Square,
+  TrashIcon,
+} from 'lucide-react-native'
 
-interface Props {
-  size?: number
-  icon: IconSource
-  color?: string
+const icons = {
+  heart: HeartIcon,
+  'exit-to-app': DoorOpen,
+  book: Book,
+  pause: PauseIcon,
+  play: PlayIcon,
+  notebook: Notebook,
+  copy: CopyIcon,
+  cog: CogIcon,
+  bin: TrashIcon,
+  share: ShareIcon,
+  delete: DeleteIcon,
+  stop: Square,
+  filter: SlidersHorizontal,
 }
 
-export function WriterIcon({ size = 14, icon, color }: Props) {
-  const theme = useTheme()
-  return (
-    <Icon
-      source={icon}
-      size={size}
-      color={color || theme.colors.onBackground}
-    />
-  )
+export type Icon = keyof typeof icons
+
+interface Props {
+  icon: Icon
+  color?: string
+  size: number
+  fillColor?: string
+}
+
+export const WriterIcon = ({ icon, color, size, fillColor }: Props) => {
+  const LucideIcon = icons[icon]
+  if (!LucideIcon) {
+    return <MessageCircleQuestion color={color} size={size} />
+  }
+
+  return <LucideIcon color={color} size={size} fill={fillColor} />
 }

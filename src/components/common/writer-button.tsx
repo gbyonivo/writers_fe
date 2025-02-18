@@ -6,10 +6,9 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
-import { Button, useTheme } from 'react-native-paper'
-import { IconSource } from 'react-native-paper/lib/typescript/components/Icon'
+import { useTheme } from 'react-native-paper'
 
-import { WriterIcon } from './writer-icon'
+import { Icon, WriterIcon } from './writer-icon'
 import { WriterText } from './writer-text'
 
 interface Props {
@@ -17,7 +16,7 @@ interface Props {
   style?: StyleProp<ViewStyle>
   labelStyle?: StyleProp<TextStyle>
   children: JSX.Element | string
-  icon?: IconSource
+  icon?: Icon
   disabled?: boolean
   textColor?: string
   iconColor?: string
@@ -40,7 +39,7 @@ export function WriterButton({
       disabled={disabled}
       style={[
         {
-          backgroundColor: colors.scrim,
+          backgroundColor: disabled ? colors.backdrop : colors.scrim,
           flexDirection: iconRight ? 'row' : 'row-reverse',
           justifyContent: 'center',
         },
@@ -51,10 +50,7 @@ export function WriterButton({
     >
       {typeof children === 'string' ? (
         <View style={{ justifyContent: 'center' }}>
-          <WriterText
-            align="center"
-            color={disabled ? colors.backdrop : textColor}
-          >
+          <WriterText align="center" color={disabled ? '#999' : textColor}>
             {children}
           </WriterText>
         </View>
@@ -63,7 +59,11 @@ export function WriterButton({
       )}
       {!!icon && (
         <View>
-          <WriterIcon icon={icon} color={iconColor} size={24} />
+          <WriterIcon
+            icon={icon}
+            color={disabled ? '#999' : iconColor}
+            size={24}
+          />
         </View>
       )}
     </TouchableOpacity>

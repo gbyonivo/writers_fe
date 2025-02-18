@@ -5,6 +5,7 @@ import { usePiece } from '../../../hooks/apollo/use-piece'
 import { onGoToPlayerSignal } from '../../../utils/signal'
 import { GenreList } from '../../common/genre/genre-list'
 import { PartChainToggle } from '../../common/part/part-chain-toggle'
+import { PartList } from '../../common/part/part-list'
 import { PartListForPiece } from '../../common/part/part-list-for-piece'
 import { WriterActivityIndicator } from '../../common/writer-activity-indicator'
 import { WriterAgeRating } from '../../common/writer-age-rating'
@@ -49,10 +50,7 @@ export function PieceScreen({ pieceId, pieceName, preselectedPartIds }: Props) {
           </View>
         )}
         {loading && <WriterActivityIndicator color={theme.colors.onPrimary} />}
-        <PartListForPiece
-          pieceId={pieceId}
-          preselectedPartIds={preselectedPartIds}
-        />
+        <PartList pieceId={pieceId} preselectedPartIds={preselectedPartIds} />
       </View>
     </WriterBackground>
   )
