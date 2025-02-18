@@ -69,7 +69,7 @@ export default function PlayerScreen() {
       >
         <BlurView
           intensity={90}
-          style={[styles.blur, { backgroundColor: colors.background }]}
+          style={[styles.blur, { backgroundColor: colors.scrim }]}
         />
         <WriterHeader title={piece.title} isMoving />
         <View style={styles.upper}>

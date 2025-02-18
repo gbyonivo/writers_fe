@@ -11,12 +11,12 @@ import { usePieceLikeMutation } from '../../../hooks/apollo/use-piece-like-mutat
 import { usePieceUnlikeMutation } from '../../../hooks/apollo/use-piece-unlike.mutation'
 import { trackEvent } from '../../../utils/mixpanel'
 import { TrackedEvent } from '../../../utils/tracking/tracked-event'
-import { WriterIcon } from '../writer-icon'
+import { Icon, WriterIcon } from '../writer-icon'
 
 interface Props {
   pieceId: number
   style?: StyleProp<ViewStyle>
-  icon?: string
+  icon?: Icon
   disabled?: boolean
   liked: boolean
 }
@@ -49,8 +49,9 @@ export function PieceLikeButton({
     >
       <View style={styles.buttonStyle}>
         <WriterIcon
-          icon={liked ? icon : `${icon}-outline`}
+          icon={liked ? icon : icon}
           color={liked ? colors.outlineVariant : colors.onBackground}
+          fillColor={liked ? colors.outlineVariant : ''}
           size={24}
         />
       </View>

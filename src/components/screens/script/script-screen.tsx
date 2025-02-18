@@ -35,7 +35,7 @@ export function ScriptScreen() {
               await Clipboard.setStringAsync(script?.script)
             }}
           >
-            <WriterIcon icon="content-copy" size={22} />
+            <WriterIcon icon="copy" size={22} />
           </TouchableOpacity>
         </View>
       </WriterHeader>

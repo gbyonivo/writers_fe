@@ -5,6 +5,7 @@ import { Piece } from 'writers_shared'
 
 import { useVideoMutation } from '../../../hooks/apollo/use-video-mutation'
 import { getWidthByRatio } from '../../../utils/common'
+import { MIN_NUMBER_OF_PARTS_FOR_VIDEO } from '../../../utils/constants'
 import { WriterButton } from '../../common/writer-button'
 import { WriterText } from '../../common/writer-text'
 import { WrittenBy } from '../../common/written-by'
@@ -44,11 +45,17 @@ export function ImageSlide({ piece, partIds }: Props) {
               })
             }
             iconRight
-            disabled={loading}
+            disabled={loading || partIds.length < MIN_NUMBER_OF_PARTS_FOR_VIDEO}
           >
-            Make Video
+            Request Video
           </WriterButton>
         </View>
+        {partIds.length < MIN_NUMBER_OF_PARTS_FOR_VIDEO && (
+          <WriterText style={styles.warning}>
+            To request video you need at least {MIN_NUMBER_OF_PARTS_FOR_VIDEO}{' '}
+            parts
+          </WriterText>
+        )}
         <PieceImageUpdate pieceId={piece.id} />
       </ScrollView>
     </View>
@@ -88,5 +95,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 16,
+  },
+  warning: {
+    marginTop: 8,
   },
 })

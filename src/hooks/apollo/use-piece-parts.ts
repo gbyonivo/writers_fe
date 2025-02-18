@@ -13,7 +13,7 @@ export const usePieceParts = (pieceId: number) => {
   const { response, refetching, enhancedRefetch, errorRefetching } =
     useEnhancedRefetch(refetch)
 
-  const parts: Part[] | null = data?.pieceParts || response?.pieceParts
+  const parts: Part[] | null = data?.pieceParts || response?.pieceParts || []
 
   return {
     loading: loading || refetching,
