@@ -7367,7 +7367,7 @@ prop-types@15.7.2:
     object-assign "^4.1.1"
     react-is "^16.8.1"
 
-prop-types@15.8.1, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@15.8.1, prop-types@^15.6.1, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -7467,7 +7467,7 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
-react-fast-compare@^2.0.1:
+react-fast-compare@^2.0.1, react-fast-compare@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
@@ -7683,6 +7683,14 @@ react-native-video@^6.8.2:
   version "6.8.2"
   resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-6.8.2.tgz#3c53524b9f74591b5e6d7964e7aa2e9f0328a95d"
   integrity sha512-lAf6pa/eqksaQnZ+rx9XWx9HpfNt0xr/XmSXMASynJJ8EqMJTr8gHJe4Wfkebo5W8qAMKRuHYtZs+4Shzl3IIQ==
+
+react-native-walkthrough-tooltip@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-walkthrough-tooltip/-/react-native-walkthrough-tooltip-1.6.0.tgz#a9b9196973d2fdef8f36bbcae57c93069cd9fb3e"
+  integrity sha512-8DHpcqsF+2VULYnKJCSZtllhlFUFiZcWCwOlw5RLkS451ElxPWJn9ShOFVZtkPMcwQAirq3SovumVM7Y/li0Fw==
+  dependencies:
+    prop-types "^15.6.1"
+    react-fast-compare "^2.0.4"
 
 react-native@0.74.5:
   version "0.74.5"

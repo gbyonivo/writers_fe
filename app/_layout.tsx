@@ -23,13 +23,6 @@ console.error = (...args: any) => {
   error(...args)
 }
 
-const setupPlayer = () => {
-  try {
-    TrackPlayer.setupPlayer()
-  } catch (e) {}
-}
-
-setupPlayer()
 // TrackPlayer.registerPlaybackService(() => PlaybackService)
 
 export const unstable_settings = {
@@ -40,6 +33,7 @@ SplashScreen.preventAutoHideAsync()
 
 export default function AppLayout() {
   const [appMounted, setAppMounted] = useState(false)
+  const playerHasBeenSetOffRef = useRef(false)
   const [fontsLoaded, fontError] = useFonts({
     Light: require('../src/assets/fonts/Poppins-Light.ttf'),
     Bold: require('../src/assets/fonts/Poppins-Bold.ttf'),
@@ -54,6 +48,18 @@ export default function AppLayout() {
     store: null,
     persistor: null,
   })
+
+  useEffect(() => {
+    if (playerHasBeenSetOffRef.current) return
+    const setupPlayer = () => {
+      try {
+        TrackPlayer.setupPlayer()
+        playerHasBeenSetOffRef.current = true
+      } catch (e) {}
+    }
+
+    setupPlayer()
+  }, [])
 
   useEffect(() => {
     SplashScreen.hideAsync()

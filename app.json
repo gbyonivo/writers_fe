@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "TweaknTwist",
+    "name": "Narate",
     "slug": "writers_fe",
-    "version": "1.0.53",
+    "version": "1.0.54",
     "orientation": "portrait",
     "icon": "./src/assets/images/app/icon.png",
     "userInterfaceStyle": "light",
@@ -11,18 +11,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#1D1B1E"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "ivo.tertsegha",
-      "buildNumber": "53",
+      "buildNumber": "54",
       "infoPlist": {
-        "UIBackgroundModes": [
-          "audio",
-          "audio"
-        ],
+        "UIBackgroundModes": ["audio", "audio"],
         "NSCameraUsageDescription": "Allow Writers to access your camera",
         "NSMicrophoneUsageDescription": "Allow Writers to access your microphone",
         "ITSAppUsesNonExemptEncryption": false

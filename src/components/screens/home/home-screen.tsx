@@ -1,29 +1,19 @@
 import { useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
-import { useSelector } from 'react-redux'
 import { PieceType } from 'writers_shared/dist'
 
 import { WriterBackground } from '../../../components/common/writer-background'
-import { FontFamily } from '../../../types/font'
-import { AppState } from '../../../types/states/AppState'
 import { APP_TITLE } from '../../../utils/constants'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
 import { HomeScreenFilter } from '../../common/home/home-screen-filter'
-import { PieceListContainer } from '../../common/piece/piece-list-container'
 import { WriterHeader } from '../../common/writer-header'
-import { PieceListInGenres } from '../piece/piece-list-in-genres'
+import { Feed } from './feed'
 
 export function HomeScreen() {
-  const { shouldShowTextBasedDesign: shouldShowTextBasedDesgin } = useSelector(
-    (state: AppState) => state.settings,
-  )
   const [types, setTypes] = useState<PieceType[]>([])
   const [genreIds, setGenreIds] = useState<number[]>([])
   const { colors } = useTheme()
-
-  // todo
-  const override = true || shouldShowTextBasedDesgin
 
   return (
     <WriterBackground isView>
@@ -43,18 +33,11 @@ export function HomeScreen() {
           onSetGenreIds={(genreIds: number[]) => setGenreIds(genreIds)}
         />
       </WriterHeader>
-      {override ? (
-        <PieceListContainer
-          trackedScreen={TrackedScreen.HOME_SCREEN}
-          type={types.length === 1 ? types[0] : undefined}
-          genreIds={genreIds}
-        />
-      ) : (
-        <PieceListInGenres
-          types={types}
-          containerStyle={styles.pieceListInGenresContainer}
-        />
-      )}
+      <Feed
+        trackedScreen={TrackedScreen.HOME_SCREEN}
+        type={types.length === 1 ? types[0] : undefined}
+        genreIds={genreIds}
+      />
     </WriterBackground>
   )
 }

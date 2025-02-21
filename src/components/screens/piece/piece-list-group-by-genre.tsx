@@ -18,11 +18,12 @@ interface Props {
   userId?: number
   type?: PieceType
   refetchCount?: number
+  hideHeader?: boolean
 }
 
 export const PiecesGroupedByGenre = forwardRef(
   function PiecesGroupedByGenreInner(
-    { searchValue, type, userId, refetchCount }: Props,
+    { searchValue, type, userId, refetchCount, hideHeader }: Props,
     ref,
   ) {
     const dispatch = useDispatch()
@@ -58,31 +59,33 @@ export const PiecesGroupedByGenre = forwardRef(
     }
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.header}
-          onPress={() => {
-            trackEvent({
-              event: TrackedEvent.PRESS,
-              params: {
-                screen: TrackedScreen.HOME_SCREEN,
-                buttonName: 'Press Genre',
-                searchValue,
-              },
-            })
-            dispatch(setSearchValue(searchValue))
-            router.navigate('search')
-          }}
-        >
-          <WriterText
-            size={18}
-            fontFamily="Light"
-            mb={8}
-            mt={8}
-            color={colors.outlineVariant}
+        {!hideHeader && (
+          <TouchableOpacity
+            style={styles.header}
+            onPress={() => {
+              trackEvent({
+                event: TrackedEvent.PRESS,
+                params: {
+                  screen: TrackedScreen.HOME_SCREEN,
+                  buttonName: 'Press Genre',
+                  searchValue,
+                },
+              })
+              dispatch(setSearchValue(searchValue))
+              router.navigate('search')
+            }}
           >
-            {searchValue.substring(1)}
-          </WriterText>
-        </TouchableOpacity>
+            <WriterText
+              size={18}
+              fontFamily="Light"
+              mb={8}
+              mt={8}
+              color={colors.outlineVariant}
+            >
+              {searchValue.substring(1)}
+            </WriterText>
+          </TouchableOpacity>
+        )}
         <FlatList
           contentContainerStyle={[styles.listContainer]}
           data={displayedResult}

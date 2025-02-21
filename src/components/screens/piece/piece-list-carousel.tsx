@@ -21,7 +21,7 @@ import { WriterAgeRating } from '../../common/writer-age-rating'
 import { WriterText } from '../../common/writer-text'
 
 interface Props {
-  pieceType: PieceType
+  pieceType?: PieceType
 }
 
 export function PieceListCarousel({ pieceType }: Props) {

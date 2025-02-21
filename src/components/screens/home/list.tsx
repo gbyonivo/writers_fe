@@ -4,18 +4,14 @@ import { useTheme } from 'react-native-paper'
 
 import { usePieceListContext } from '../../../context/piece-list-context'
 import { useLikedPieceIds } from '../../../hooks/apollo/use-get-liked-piece-ids'
+import { OtherFeedItem } from '../../../types/feed'
 import { getWidthByRatio } from '../../../utils/common'
 import { TrackedScreen } from '../../../utils/tracking/tracked-screen'
-import { PieceItem } from './piece-item'
+import { PieceItem } from '../../common/piece/piece-item'
+import { FeedItem } from './feed-item'
 
 interface Props {
   trackedScreen: TrackedScreen
-}
-
-enum OtherItem {
-  AD = 'AD',
-  FOR_YOU = 'FOR_YOU',
-  MOST_LIKED = 'MOST_LIKED',
 }
 
 export function PieceList({ trackedScreen }: Props) {
@@ -37,61 +33,49 @@ export function PieceList({ trackedScreen }: Props) {
   const data = useMemo(() => {
     return pieceList
       .map((piece, index) => {
-        if (index === 0) return piece
-        if (index % 4 === 0)
+        if (index === 0) {
+          return {
+            id: `${piece.id}-${OtherFeedItem.CAROUSEL}`,
+            name: OtherFeedItem.CAROUSEL,
+          }
+        }
+        if (index === 8) {
           return [
-            { id: `${piece.id}-${OtherItem.FOR_YOU}`, name: OtherItem.FOR_YOU },
+            {
+              id: `${piece.id}-${OtherFeedItem.MOST_LIKED}`,
+              name: OtherFeedItem.MOST_LIKED,
+            },
             piece,
           ]
-        if (index % 2 === 0)
+        }
+        if (index % 5 === 0)
           return [
-            { id: `${piece.id}-${OtherItem.AD}`, name: OtherItem.AD },
+            {
+              id: `${piece.id}-${OtherFeedItem.AD}`,
+              name: OtherFeedItem.AD,
+            },
             piece,
           ]
+        if (index === 3) {
+          return [
+            {
+              id: `${piece.id}-${OtherFeedItem.FOR_YOU}`,
+              name: OtherFeedItem.FOR_YOU,
+            },
+            piece,
+          ]
+        }
         return piece
       })
       .flat()
   }, [pieceList])
 
   const renderItem = ({ item }) => {
-    if (item.name === OtherItem.AD) {
-      return (
-        <View
-          style={{
-            height: 40,
-            width: getWidthByRatio(1),
-            backgroundColor: 'red',
-          }}
-        ></View>
-      )
-    }
-    if (item.name === OtherItem.FOR_YOU) {
-      return (
-        <View
-          style={{
-            height: 40,
-            width: getWidthByRatio(1),
-            backgroundColor: 'blue',
-          }}
-        ></View>
-      )
-    }
-    if (item.name === OtherItem.MOST_LIKED) {
-      return (
-        <View
-          style={{
-            height: 40,
-            width: getWidthByRatio(1),
-            backgroundColor: 'green',
-          }}
-        ></View>
-      )
-    }
     return (
-      <PieceItem
-        piece={item}
+      <FeedItem
+        item={item}
         trackedScreen={trackedScreen}
-        liked={likedPieceIdMap[item.id]}
+        likedPieceIdMap={likedPieceIdMap}
       />
     )
   }
@@ -147,5 +131,6 @@ const styles = StyleSheet.create({
     height: 2,
     width: getWidthByRatio(0.7),
     marginLeft: getWidthByRatio(0.15),
+    marginVertical: 8,
   },
 })

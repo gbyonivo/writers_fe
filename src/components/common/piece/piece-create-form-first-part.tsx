@@ -58,7 +58,7 @@ export function PieceCreateFormFirstPart({
             type: values.type,
           })
         }}
-        icon="alien"
+        icon="lightbulb"
         style={styles.floatingButton}
       />
       <WriterBottomSheet ref={bottomsheetRef} snapPoints={['80%']}>

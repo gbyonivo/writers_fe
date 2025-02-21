@@ -1,4 +1,3 @@
-import { useRouter } from 'expo-router'
 import omit from 'lodash.omit'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
@@ -62,14 +61,13 @@ export function PartList({ pieceId, preselectedPartIds }: Props) {
     )
   }, [groupedParts, positionMap])
 
-  const canStartNewPosition =
-    Object.keys(groupedParts).length < ROW_LIMITS_PER_PIECE
+  const isEndOfPiece = Object.keys(positionMap).length >= ROW_LIMITS_PER_PIECE
   const highestPosition = parseInt(Object.keys(groupedParts).sort().pop(), 10)
   const shouldAddToNewPostion =
     (highestPosition === 1 ||
       lineCount[highestPosition] >= MAX_NUMBER_OF_PARTS_PER_LINE) &&
     shouldChainParts &&
-    canStartNewPosition
+    !isEndOfPiece
 
   const onSwipeToPart = useCallback(
     (val: { position?: number; partId?: number }) => {
@@ -111,6 +109,7 @@ export function PartList({ pieceId, preselectedPartIds }: Props) {
         parentPartId={parentPartId}
         onPressAddToPosition={onPressAddToPosition}
         iniitialPartId={selectedPartId}
+        isEndOfPiece={isEndOfPiece}
       />
     )
   }
@@ -143,11 +142,9 @@ export function PartList({ pieceId, preselectedPartIds }: Props) {
                 </WriterButton>
               </View>
             )}
-            {!canStartNewPosition && (
+            {isEndOfPiece && (
               <View style={styles.end}>
-                <WriterText color={colors.outlineVariant}>
-                  ~ The end ~
-                </WriterText>
+                <WriterText color={colors.onSecondary}>~The End~</WriterText>
               </View>
             )}
           </>

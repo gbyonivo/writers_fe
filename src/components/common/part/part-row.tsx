@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Animated, StyleSheet, View } from 'react-native'
+import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { useTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 import { Part } from 'writers_shared'
 
@@ -7,6 +8,7 @@ import { AppState } from '../../../types/states/AppState'
 import { getWidthByRatio } from '../../../utils/common'
 import { MAX_NUMBER_OF_PARTS_PER_LINE } from '../../../utils/constants'
 import { WriterIconButton } from '../writer-icon-button'
+import { WriterText } from '../writer-text'
 import { PartItem } from './part-item'
 
 interface Props {
@@ -19,6 +21,8 @@ interface Props {
     parentPartId: number
   }) => void
   iniitialPartId?: number
+  // this just means an ending already exists for the piece
+  isEndOfPiece?: boolean
 }
 
 enum OtherItem {
@@ -34,13 +38,17 @@ export function PartRow({
   parentPartId,
   onPressAddToPosition,
   iniitialPartId,
+  isEndOfPiece,
 }: Props) {
   const [current, setCurrent] = useState({ position: null, partId: null })
   const position = parts[0]?.position
+  const theme = useTheme()
   const flatlistRef = useRef(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
   const { shouldChainParts } = useSelector((state: AppState) => state.settings)
   const onViewableItemsChanged = useRef(({ viewableItems, changed }) => {
     const key = viewableItems[0]?.item?.position || changed[0]?.item?.position
+    setCurrentIndex(viewableItems[0]?.index)
     setCurrent({
       position: key,
       partId: viewableItems[0]?.item?.id,
@@ -71,6 +79,9 @@ export function PartRow({
     }
     return parts
   }, [shouldChainParts, parts, parentPartId])
+
+  const hasSlotToAdd =
+    partsDisplayed[partsDisplayed.length - 1] === OtherItem.ADD_BUTTON
 
   const renderItem = ({ item }: { item: ListItem }) => {
     if (item === OtherItem.ADD_BUTTON) {
@@ -107,6 +118,16 @@ export function PartRow({
         showsHorizontalScrollIndicator={false}
         ref={flatlistRef}
       />
+      {hasSlotToAdd && currentIndex !== partsDisplayed.length - 1 && (
+        <TouchableOpacity
+          style={styles.leftRightControls}
+          onPress={() => flatlistRef.current.scrollToEnd()}
+        >
+          <WriterText align="center" color={theme.colors.outlineVariant}>
+            Swipe Right To Add Your {isEndOfPiece ? 'End' : 'Part'}
+          </WriterText>
+        </TouchableOpacity>
+      )}
     </View>
   )
 }
@@ -132,5 +153,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     paddingHorizontal: 8,
+  },
+  leftRightControls: {
+    height: 48,
+    width: getWidthByRatio(0.8),
+    marginLeft: getWidthByRatio(0.1),
+    paddingTop: 8,
+    marginTop: 16,
   },
 })

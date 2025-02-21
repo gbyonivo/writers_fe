@@ -29,7 +29,7 @@ export function WriterFloatingButton({
         intensity={10}
         style={[styles.blur, { backgroundColor: colors.backdrop }]}
       />
-      <WriterIcon icon={icon} size={iconSize} />
+      <WriterIcon icon={icon} size={iconSize} color={colors.outlineVariant} />
     </TouchableOpacity>
   )
 }

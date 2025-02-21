@@ -102,7 +102,7 @@ export function PartCreationScreen() {
             })
             aiButtonRef.current?.showAiHelp(aiSuggestion)
           }}
-          icon="alien"
+          icon="lightbulb"
         />
       </>
     </WriterBackground>

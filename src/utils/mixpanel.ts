@@ -1,4 +1,5 @@
 import { Mixpanel } from 'mixpanel-react-native'
+import { Alert } from 'react-native'
 import { User } from 'writers_shared/dist'
 
 import { ENVIRONMENT } from './constants'
@@ -59,7 +60,7 @@ export const trackError = ({
     log('Error tracking ----------')
     return
   }
-  mixpanel.track(errorCode, params)
+  mixpanel.track(errorCode)
 }
 
 export const trackScreenView = ({

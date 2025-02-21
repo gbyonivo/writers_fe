@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { router } from 'expo-router'
 import { useRef, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Alert, StyleSheet, View } from 'react-native'
 import { HelperText } from 'react-native-paper'
 import PhoneInput from 'react-native-phone-number-input'
 import { useToast } from 'react-native-toast-notifications'
@@ -21,7 +21,6 @@ export function SignInForm() {
   const [message, setMessage] = useState<string | null>(null)
   const phoneInput = useRef<PhoneInput>(null)
   const toast = useToast()
-
   const verifyNumber = async () => {
     try {
       trackEvent({
@@ -48,7 +47,7 @@ export function SignInForm() {
       trackError({
         errorCode: TrackedError.VERIFY_NUMBER_ERROR,
         params: {
-          error: e,
+          error: e?.response?.data,
         },
       })
       toast.show('We encountered an error')

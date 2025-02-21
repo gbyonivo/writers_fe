@@ -4,17 +4,11 @@ import { Tabs } from 'expo-router'
 import { StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 
+import { WriterIcon } from '../../../src/components/common/writer-icon'
 import { WriterText } from '../../../src/components/common/writer-text'
 import { useIsPremium } from '../../../src/hooks/use-is-premium'
 import { FontFamily } from '../../../src/types/font'
 import { APP_TITLE } from '../../../src/utils/constants'
-
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name']
-  color: string
-}) {
-  return <FontAwesome size={26} style={{ marginBottom: -3 }} {...props} />
-}
 
 /**
  * Remember to to check position map after adding new screen
@@ -24,15 +18,17 @@ export default function TabLayout() {
   const theme = useTheme()
   const isPremiumAccount = useIsPremium()
   const PREMIUM_COLOR = theme.colors.outlineVariant
-  const getColor = ({
+  const iconProps = ({
     focused,
     color,
   }: {
     focused: boolean
     color: string
-  }) => {
-    return isPremiumAccount && focused ? PREMIUM_COLOR : color
-  }
+  }) => ({
+    size: 30,
+    color: isPremiumAccount && focused ? PREMIUM_COLOR : color,
+    style: styles.tabBarIcon,
+  })
   return (
     <>
       <Tabs
@@ -64,7 +60,7 @@ export default function TabLayout() {
           name="home"
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name="tree" color={getColor({ color, focused })} />
+              <WriterIcon icon="puzzle" {...iconProps({ focused, color })} />
             ),
             headerLeft: () => (
               <WriterText style={styles.headerStyle}>{APP_TITLE}</WriterText>
@@ -76,10 +72,7 @@ export default function TabLayout() {
           name="search"
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name="search"
-                color={isPremiumAccount && focused ? PREMIUM_COLOR : color}
-              />
+              <WriterIcon icon="search" {...iconProps({ focused, color })} />
             ),
             ...commonProps,
           }}
@@ -89,7 +82,7 @@ export default function TabLayout() {
           name="video"
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name="film" color={getColor({ color, focused })} />
+              <WriterIcon icon="film" {...iconProps({ focused, color })} />
             ),
             ...commonProps,
           }}
@@ -98,10 +91,7 @@ export default function TabLayout() {
           name="new-piece"
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon
-                name="plus-square"
-                color={getColor({ color, focused })}
-              />
+              <WriterIcon icon="plus" {...iconProps({ focused, color })} />
             ),
             ...commonProps,
           }}
@@ -110,7 +100,7 @@ export default function TabLayout() {
           name="profile"
           options={{
             tabBarIcon: ({ color, focused }) => (
-              <TabBarIcon name="user" color={getColor({ color, focused })} />
+              <WriterIcon icon="user" {...iconProps({ focused, color })} />
             ),
             ...commonProps,
           }}
@@ -128,6 +118,9 @@ const styles = StyleSheet.create({
   },
   tabBarLabel: {
     display: 'none',
+  },
+  tabBarIcon: {
+    marginTop: 8,
   },
 })
 
